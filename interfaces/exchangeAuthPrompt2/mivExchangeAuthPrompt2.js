@@ -270,6 +270,9 @@ mivExchangeAuthPrompt2.prototype = {
 				+ aURL + "'. Not going to try again until the active one has finished.");
 			return;
 		}
+		else {
+			this.details[aURL].showing = true;
+		}
 
 		if (this.details[aURL].queue.length === 0) {
 			this.logInfo("asyncPromptAuthNotifyCallback: This is strange, We do not have a request in queue for URL '"
@@ -423,6 +426,7 @@ mivExchangeAuthPrompt2.prototype = {
 				}
 			}
 		}
+		this.details[aURL].showing = false;
 	},
 
 	asyncPromptAuthCancelCallback: function _asyncPromptAuthCallBack(aReason, aURL, aUUID)
