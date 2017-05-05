@@ -331,14 +331,14 @@ mivExchangeAuthPrompt2.prototype = {
 					try {
 						var acceptedAuthentications = aChannel.getResponseHeader("WWW-Authenticate");
 						acceptedAuthentications = acceptedAuthentications.split("\n");
-						for each (var index in acceptedAuthentications) {
-							this.logInfo("asyncPromptAuthNotifyCallback: WWW-Authenticate:"+index);
-							if (index.indexOf("realm=") > -1) {
-								realm = index.substr(index.indexOf("realm=")+6);
-								while (realm.indexOf('"') > -1) {
-									realm = realm.replace('"', "");
-								}
-								this.logInfo("asyncPromptAuthNotifyCallback: Found a realm going to use it. realm="+realm);
+
+						for (var i = 0; i < acceptedAuthentications.length ; i++) {
+							var acceptAuth = acceptedAuthentications[i];
+							this.logInfo("asyncPromptAuthNotifyCallback: WWW-Authenticate:" + acceptAuth);
+							if (acceptAuth.indexOf("realm=") > -1) {
+								realm = acceptAuth.substr(index.indexOf("realm=") + 6);
+								realm = realm.replace(/"/g, "");
+								this.logInfo("asyncPromptAuthNotifyCallback: Found a realm going to use it. realm=" + realm);
 								canUseBasicAuth = true;
 							}
 						}
