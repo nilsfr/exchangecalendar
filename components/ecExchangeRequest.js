@@ -430,8 +430,11 @@ ExchangeRequest.prototype = {
 
 		//////////////////////////////////////////////////////////
 		// Check if error is related to TLS certification issue //
+		// Connection is terminated and HTTP status is 0 (none) //
 		//////////////////////////////////////////////////////////
-		if ((!this.shutdown) && (xmlReq.readyState === 4) && (xmlReq.status === 0)) {
+		if ((!this.shutdown)
+			&& (xmlReq.readyState === xmlReq.DONE)
+			&& (xmlReq.status === 0)) {
 			this.logInfo(": ExchangeRequest.error : badCert going to check if it is a cert problem.");
 			var result = null;
 
@@ -559,9 +562,7 @@ ExchangeRequest.prototype = {
 				+ xmlReq.readyState + ", xmlReq.status:" + xmlReq.status);
 		}
 
-		// This is not a redirection
-		// TODO Documentation
-		if (xmlReq.readyState != 4) {
+		if (xmlReq.readyState != xmlReq.DONE) {
 			return false;
 		}
 
@@ -805,9 +806,9 @@ ExchangeRequest.prototype = {
 			this.logInfo(": ExchangeRequest.onLoad :" + xmlReq.responseText, 2);
 		}
 
-		if (xmlReq.readyState != 4) {
+		if (xmlReq.readyState != xmlReq.DONE) {
 			if (this.debug) {
-				this.logInfo("readyState != 4. THIS SHOULD NEVER HAPPEN. PLEASE REPORT.");
+				this.logInfo("readyState is not DONE inside the onLoad internal function. THIS SHOULD NEVER HAPPEN. PLEASE REPORT.");
 			}
 			this.fail(this.ER_ERROR_OPEN_FAILED,
 				"Ready state != 4, readyState:" + xmlReq.readyState);
@@ -928,7 +929,7 @@ ExchangeRequest.prototype = {
 
 		let xmlReq = this.mXmlReq;
 
-		if (xmlReq.readyState != 4) {
+		if (xmlReq.readyState != xmlReq.DONE) {
 			xmlReq.abort();
 		}
 
