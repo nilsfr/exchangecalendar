@@ -109,8 +109,6 @@ mivExchangeAuthPrompt2.prototype = {
 //		var realm = aRealm;
 		var realm = "Exchange Web Service";
 
-		//this.logInfo("getPassword: useCached:"+useCached);
-
 		if (!realm) {
 			this.logInfo("getPassword: No realm specified. Trying to get it from the URL.");
 			var ioService = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService);
@@ -129,7 +127,7 @@ mivExchangeAuthPrompt2.prototype = {
 	if we have password from cache or manager, and we have a password in the channel. We are going to match them.
 	Because when they are equal then the cached and stored password were wrong. Otherwise we did not get here.
 
-	When no password at al always ask. */
+	When no password at all always ask. */
 
 		var password;
 		if (this.passwordCache[username+"|"+aURL+"|"+realm]) {
@@ -166,17 +164,18 @@ mivExchangeAuthPrompt2.prototype = {
 			this.logInfo("getPassword: password(2)=********");
 		}
 
-		if ((password) && (aChannel) && (aChannel.URI.password) && (decodeURIComponent(aChannel.URI.password) != "")) {
+		if ((password) && (aChannel) && (aChannel.URI.password)
+			&& (decodeURIComponent(aChannel.URI.password) != "")) {
 			this.logInfo("getPassword: There was a password in cache or passwordManager and one on the channel. Going to see if they are the same.");
-			if ((password == decodeURIComponent(aChannel.URI.password)) && (!useCached)) {
+			if ((password === decodeURIComponent(aChannel.URI.password)) && (!useCached)) {
 				this.logInfo("getPassword: There was a password in cache or passwordManager and one on the channel. And they are the same. Going to ask user to provide a new password.");
-				if ((this.details[aURL]) && (this.details[aURL].ntlmCount == 1)) {
+				if ((this.details[aURL]) && (this.details[aURL].ntlmCount === 1)) {
 					this.logInfo("getPassword: There was a password in cache or passwordManager and one on the channel. And they are the same. But it is a first pass on an NTLM authentication. Using stored password and going to see if it can be used.");
 				}
 				else { 
 					this.logInfo("getPassword: There was a password in cache or passwordManager and one on the channel. And they are the same. Going to ask user to provide a new password.");
 					var channel = aChannel.QueryInterface(Ci.nsIHttpChannel); 
-					 if( channel.responseStatus == 401 ){
+					 if( channel.responseStatus === 401 ){
 						 password=null;
 						 this.logInfo("getPassword: Login Failed, Going to ask user to provide a new password.");
 					 } 
@@ -261,17 +260,20 @@ mivExchangeAuthPrompt2.prototype = {
 	asyncPromptAuthNotifyCallback: function _asyncPromptAuthNotifyCallback(aURL)
 	{
 		if (!this.details[aURL]) {
-			this.logInfo("asyncPromptAuthNotifyCallback: This is strange, We do not have this URL '"+aURL+"' in queue");
+			this.logInfo("asyncPromptAuthNotifyCallback: This is strange, We do not have this URL '"
+				+ aURL + "' in queue");
 			return;
 		}
 
 		if (this.details[aURL].showing) {
-			this.logInfo("asyncPromptAuthNotifyCallback: Allready showing a prompt or trying to get the password for URL '"+aURL+"'. Not going to try again until the active one has finished.");
+			this.logInfo("asyncPromptAuthNotifyCallback: Already showing a prompt or trying to get the password for URL '"
+				+ aURL + "'. Not going to try again until the active one has finished.");
 			return;
 		}
 
-		if (this.details[aURL].queue.length == 0) {
-			this.logInfo("asyncPromptAuthNotifyCallback: This is strange, We do not have a request in queue for URL '"+aURL+"'.");
+		if (this.details[aURL].queue.length === 0) {
+			this.logInfo("asyncPromptAuthNotifyCallback: This is strange, We do not have a request in queue for URL '"
+				+ aURL +"'.");
 			return;
 		}
 
@@ -279,7 +281,9 @@ mivExchangeAuthPrompt2.prototype = {
 
 			// We grab the first one from the queue.
 			var request = this.details[aURL].queue.shift();
-			this.logInfo("asyncPromptAuthNotifyCallback: Removed request from queue["+aURL+"]. There are now '"+this.details[aURL].queue.length+"' requests in queue left.");
+			this.logInfo("asyncPromptAuthNotifyCallback: Removed request from queue["
+				+ aURL + "]. There are now '"
+				+ this.details[aURL].queue.length + "' requests in queue left.");
 			var aChannel = request.channel;
 			var aCallback = request.callback;
 			var aContext = request.context;
@@ -288,7 +292,9 @@ mivExchangeAuthPrompt2.prototype = {
 			var canUseBasicAuth = false;
 
 			if (this.details[aURL].previousFailedCount > 4) { // Maybe make this a user preference
-				this.logInfo("asyncPromptAuthNotifyCallback: We have more than '"+this.details[aURL].previousFailedCount+"' previous failed for '"+aURL+"'.");
+				this.logInfo("asyncPromptAuthNotifyCallback: We have more than '"
+					+ this.details[aURL].previousFailedCount + "' previous failed for '"
+					+ aURL +"'.");
 				aCallback.onAuthCancelled(aContext, false);
 				return;
 			}
@@ -309,7 +315,7 @@ mivExchangeAuthPrompt2.prototype = {
 					username = this.globalFunctions.trim(decodeURIComponent(aChannel.URI.username));
 				}
 
-				if (username == "") {
+				if (username === "") {
 					// We do not have a username. We need to prompt for one.
 					// This should always be filled in. So for now we error.
 					this.logInfo("asyncPromptAuthNotifyCallback: username is empty. This is not allowed.");
@@ -319,7 +325,8 @@ mivExchangeAuthPrompt2.prototype = {
 				this.logInfo("asyncPromptAuthNotifyCallback: username="+username);
 
 				if (!error) {
-					// Trying to get realm from response header. This is used when basic authentication is available.
+					// Trying to get realm from response header.
+					// This is used when basic authentication is available.
 					var realm = "exchange.server";
 					try {
 						var acceptedAuthentications = aChannel.getResponseHeader("WWW-Authenticate");
@@ -337,7 +344,7 @@ mivExchangeAuthPrompt2.prototype = {
 						}
 					}
 					catch(err) {
-							this.logInfo("asyncPromptAuthNotifyCallback: NO WWW-Authenticate in response header!?");
+							this.logInfo("asyncPromptAuthNotifyCallback: WWW-Authenticate HTTP response header not found !");
 					}
 
 					// try to get password.
@@ -350,7 +357,7 @@ mivExchangeAuthPrompt2.prototype = {
 						error = true;
 					}
 
-					if ((!password) || (password == null)) {
+					if ((!password)) {
 						error = true;
 					}
 					else {
@@ -359,8 +366,8 @@ mivExchangeAuthPrompt2.prototype = {
 				}
 			}
 
+			// Return credentials we have obtained
 			if (!error) {
-				// Return credentials we have obtained
 				if (!(authInfo.flags & Ci.nsIAuthInformation.ONLY_PASSWORD)) {
 					this.logInfo("asyncPromptAuthNotifyCallback: authInfo wants username and password and possibly domainname.");
 					if (authInfo.flags & Ci.nsIAuthInformation.NEED_DOMAIN) {
@@ -379,7 +386,7 @@ mivExchangeAuthPrompt2.prototype = {
 						else {
 								this.logInfo("asyncPromptAuthNotifyCallback: We do not have a domainname part in the username. Specifying empty one.");
 								authInfo.username = username;
-						}						
+						}
 					}
 					else {
 						authInfo.username = username;
@@ -416,9 +423,6 @@ mivExchangeAuthPrompt2.prototype = {
 				}
 			}
 		}
-
-		//this.details[aURL].showing = false;
-
 	},
 
 	asyncPromptAuthCancelCallback: function _asyncPromptAuthCallBack(aReason, aURL, aUUID)
