@@ -89,7 +89,7 @@ function ExchangeRequest(aArgument, aCbOk, aCbError, aListener)
 	this.shutdown = false;
 	this.badCert = false;
 	this.badCertCount = 0;
-	this._notificationCallbacks = null;
+	this.channelCallbackEcAuthPrompt2 = null;
 
 	this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
 		.getService(Ci.mivFunctions);
@@ -352,8 +352,8 @@ ExchangeRequest.prototype = {
 		this.xmlReq.setRequestHeader("Connection", "keep-alive");
 
 		/* set channel notifications for password processing */
-		this._notificationCallbacks = new ecnsIAuthPrompt2(this);
-		this.xmlReq.channel.notificationCallbacks = this._notificationCallbacks;
+		this.channelCallbackEcAuthPrompt2 = new ecnsIAuthPrompt2(this);
+		this.xmlReq.channel.notificationCallbacks = this.channelCallbackEcAuthPrompt2;
 		this.xmlReq.channel.loadGroup = null;
 
 		var httpChannel = this.xmlReq.channel.QueryInterface(Ci.nsIHttpChannel);
@@ -422,7 +422,7 @@ ExchangeRequest.prototype = {
 		if (this.debug) {
 			this.logInfo(": ExchangeRequest.error :" + evt.type
 				+ ", readyState:" + xmlReq.readyState + ", status:" + xmlReq.status
-				+ ", lastStatus:" + this._notificationCallbacks.lastStatus);
+				+ ", lastStatus:" + this.channelCallbackEcAuthPrompt2.lastStatus);
 			this.logInfo(": ExchangeRequest.error :" + xmlReq.responseText, 2);
 			this.logInfo(': xmlReq.getResponseHeader("Location") :'
 				+ xmlReq.getResponseHeader("Location"), 2);
@@ -465,18 +465,18 @@ ExchangeRequest.prototype = {
 			return;
 		}
 
-		this.observerService.notifyObservers(this._notificationCallbacks,
+		this.observerService.notifyObservers(this.channelCallbackEcAuthPrompt2,
 			"onExchangeConnectionError",
-			this.currentUrl + "|" + this._notificationCallbacks.lastStatus
-			+ "|" + this._notificationCallbacks.lastStatusArg);
+			this.currentUrl + "|" + this.channelCallbackEcAuthPrompt2.lastStatus
+			+ "|" + this.channelCallbackEcAuthPrompt2.lastStatusArg);
 
-		switch (this._notificationCallbacks.lastStatus) {
+		switch (this.channelCallbackEcAuthPrompt2.lastStatus) {
 			// On these status, we abort current connection, reset try counter and return
 			case 0x804b0003:
 			case 0x804b000b:
 				this.fail(this.ER_ERROR_RESOLVING_HOST,
 					"Error resolving hostname '"
-					+ this._notificationCallbacks.lastStatusArg
+					+ this.channelCallbackEcAuthPrompt2.lastStatusArg
 					+ "'. Did you type the right hostname. (STATUS_RESOLVED)");
 				xmlReq.abort();
 				if (exchWebService.prePasswords[this.mArgument.user+"@"+this.currentUrl]) {
@@ -485,7 +485,7 @@ ExchangeRequest.prototype = {
 				return;
 			case 0x804b0007:
 				this.fail(this.ER_ERROR_CONNECTING_TO, "Error during connecting to hostname '"
-					+ this._notificationCallbacks.lastStatusArg
+					+ this.channelCallbackEcAuthPrompt2.lastStatusArg
 					+ "'. Is the host down?. (STATUS_CONNECTING_TO)");
 				xmlReq.abort();
 				if (exchWebService.prePasswords[this.mArgument.user+"@"+this.currentUrl]) {
@@ -495,28 +495,28 @@ ExchangeRequest.prototype = {
 			// On these status we just reset try counter and continue
 			case 0x804b0004:
 				this.fail(this.ER_ERROR_CONNECED_TO, "Error during connection to hostname '"
-					+ this._notificationCallbacks.lastStatusArg + "'. (STATUS_CONNECTED_TO)");
+					+ this.channelCallbackEcAuthPrompt2.lastStatusArg + "'. (STATUS_CONNECTED_TO)");
 				if (exchWebService.prePasswords[this.mArgument.user+"@"+this.currentUrl]) {
 					exchWebService.prePasswords[this.mArgument.user+"@"+this.currentUrl].tryCount = 0;
 				}
 				break;
 			case 0x804b0005:
 				this.fail(this.ER_ERROR_SENDING_TO, "Error during sending data to hostname '"
-					+ this._notificationCallbacks.lastStatusArg + "'. (STATUS_SENDING_TO)");
+					+ this.channelCallbackEcAuthPrompt2.lastStatusArg + "'. (STATUS_SENDING_TO)");
 				if (exchWebService.prePasswords[this.mArgument.user+"@"+this.currentUrl]) {
 					exchWebService.prePasswords[this.mArgument.user+"@"+this.currentUrl].tryCount = 0;
 				}
 				break;
 			case 0x804b000a:
 				this.fail(this.ER_ERROR_WAITING_FOR, "Error during waiting for data of hostname '"
-					+ this._notificationCallbacks.lastStatusArg + "'. (STATUS_WAITING_FOR)");
+					+ this.channelCallbackEcAuthPrompt2.lastStatusArg + "'. (STATUS_WAITING_FOR)");
 				if (exchWebService.prePasswords[this.mArgument.user+"@"+this.currentUrl]) {
 					exchWebService.prePasswords[this.mArgument.user+"@"+this.currentUrl].tryCount = 0;
 				}
 				break;
 			case 0x804b0006:
 				this.fail(this.ER_ERROR_RECEIVING_FROM, "Error during receiving of data from hostname '"
-					+ this._notificationCallbacks.lastStatusArg + "'. (STATUS_RECEIVING_FROM)");
+					+ this.channelCallbackEcAuthPrompt2.lastStatusArg + "'. (STATUS_RECEIVING_FROM)");
 				if (exchWebService.prePasswords[this.mArgument.user+"@"+this.currentUrl]) {
 					exchWebService.prePasswords[this.mArgument.user+"@"+this.currentUrl].tryCount = 0;
 				}
@@ -524,8 +524,8 @@ ExchangeRequest.prototype = {
 			// Unknown status
 			default:
 				this.fail(this.ER_ERROR_UNKNOWN_CONNECTION, "Unknown error during communication with hostname '"
-					+ this._notificationCallbacks.lastStatusArg
-					+ "'. (" + this._notificationCallbacks.lastStatus + ")");
+					+ this.channelCallbackEcAuthPrompt2.lastStatusArg
+					+ "'. (" + this.channelCallbackEcAuthPrompt2.lastStatus + ")");
 		}
 
 	},
@@ -918,7 +918,7 @@ ExchangeRequest.prototype = {
 		}
 
 		newXML = null;
-		this.observerService.notifyObservers(this._notificationCallbacks, "onExchangeConnectionOk", this.currentUrl);
+		this.observerService.notifyObservers(this.channelCallbackEcAuthPrompt2, "onExchangeConnectionOk", this.currentUrl);
 	},
 
 	retryCurrentUrl: function()
@@ -956,7 +956,7 @@ ExchangeRequest.prototype = {
 			var tmpColon = tmpURL.indexOf("://");
 			tmpURL = tmpURL.substr(0, tmpColon + 3) + aUser + "@" + tmpURL.substr(tmpColon+3);
 		}
-		return this._notificationCallbacks.getPrePassword(aUser, tmpURL);
+		return this.channelCallbackEcAuthPrompt2.getPrePassword(aUser, tmpURL);
 	},
 
 	isHTTPError: function()
@@ -1163,7 +1163,7 @@ ExchangeRequest.prototype = {
 								var tmpColon = tmpURL.indexOf("://");
 								tmpURL = tmpURL.substr(0, tmpColon+3) + this.mArgument.user + "@" + tmpURL.substr(tmpColon+3);
 							}
-							this._notificationCallbacks.passwordManagerRemove(this.mArgument.user, tmpURL, title);
+							this.channelCallbackEcAuthPrompt2.passwordManagerRemove(this.mArgument.user, tmpURL, title);
 						}
 
 						// Finally reset password cache
