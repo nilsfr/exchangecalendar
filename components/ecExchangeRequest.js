@@ -642,16 +642,21 @@ ExchangeRequest.prototype = {
 		return false;
 	},
 
-	unchunk: function _unchunk(aStr)
+	/*
+	 * Revert chunk process on data:
+	 * this function take string splitted in big pieces of data
+	 * and gather them in one big string.
+	 */
+	unchunk: function _unchunk(aChunkedString)
 	{
-		var pos = aStr.indexOf("\r\n");
+		var pos = aChunkedString.indexOf("\r\n");
 		if ((pos > -1) && (pos < 5)) {
 			var chunkCounter = 1;
-			var chunkLength = parseInt(aStr.substr(0,pos), 16);
+			var chunkLength = parseInt(aChunkedString.substr(0,pos), 16);
 
 			if (isNaN(chunkLength)) {
 				if (this.debug){
-					this.logInfo("unchunk: 1st chunk is not a number:" + aStr.substr(0,pos));
+					this.logInfo("unchunk: 1st chunk is not a number:" + aChunkedString.substr(0,pos));
 				}
 				return "";
 			}
@@ -660,21 +665,21 @@ ExchangeRequest.prototype = {
 				this.logInfo("unchunk: 1st chunk has length:" + chunkLength);
 			}
 
-			var newStr = "";
+			var gatheredString = "";
 			while (chunkLength > 0) {
 				var bytesToCopy = chunkLength;
 				pos = pos + 2;
 				var charCode;
 				while (bytesToCopy > 0) {
-					newStr = newStr + aStr.substr(pos, 1);
-					charCode = aStr.charCodeAt(pos);
+					gatheredString = gatheredString + aChunkedString.substr(pos, 1);
+					charCode = aChunkedString.charCodeAt(pos);
 					if (charCode <= 0xFF) {
 						bytesToCopy--;
 					}
 					else {
 						if (charCode <= 0xFFFF) {
 							if (this.debug) {
-								this.logInfo("unchunk: TWO bytes copied '" + aStr.substr(pos, 1) + "'="+charCode);
+								this.logInfo("unchunk: TWO bytes copied '" + aChunkedString.substr(pos, 1) + "'="+charCode);
 							}
 							bytesToCopy = bytesToCopy - 2;
 
@@ -682,7 +687,7 @@ ExchangeRequest.prototype = {
 						else {
 							if (charCode <= 0xFFFFFF) {
 								if (this.debug) {
-									this.logInfo("unchunk: THREE bytes copied '" + aStr.substr(pos, 1) + "'="+charCode);
+									this.logInfo("unchunk: THREE bytes copied '" + aChunkedString.substr(pos, 1) + "'="+charCode);
 								}
 								bytesToCopy = bytesToCopy - 3;
 							}
@@ -692,11 +697,11 @@ ExchangeRequest.prototype = {
 				}
 
 				if (this.debug) {
-					this.logInfo("unchunk: pos:" + pos + ", CunkStr:" + newStr + "|");
+					this.logInfo("unchunk: pos:" + pos + ", CunkStr:" + gatheredString + "|");
 				}
 
 				// Next two bytes should be \r\n
-				var check = aStr.substr(pos, 2);
+				var check = aChunkedString.substr(pos, 2);
 				if (check != "\r\n") {
 					if (this.debug) {
 						this.logInfo("unchunk: Strange. Expected 0D0A (Cr+Lf) but found:"
@@ -705,7 +710,7 @@ ExchangeRequest.prototype = {
 					return "";
 				}
 				pos = pos + 2;
-				var tmpStr = aStr.substr(pos, 6);
+				var tmpStr = aChunkedString.substr(pos, 6);
 				var pos2 = tmpStr.indexOf("\r\n");
 				chunkCounter++;
 				if (pos2 > -1) {
@@ -732,13 +737,13 @@ ExchangeRequest.prototype = {
 					return "";
 				}
 			}
-			return newStr;
+			return gatheredString;
 		}
 		else {
 			if (this.debug) {
 				this.logInfo("unchunk: Trying to determine first chunk length but it is very big...!! size:" + pos);
 			}
-			return aStr;
+			return aChunkedString;
 		}
 	},
 
