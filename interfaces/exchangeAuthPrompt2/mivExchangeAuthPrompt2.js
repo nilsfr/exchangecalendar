@@ -335,8 +335,7 @@ mivExchangeAuthPrompt2.prototype = {
 						var acceptedAuthentications = aChannel.getResponseHeader("WWW-Authenticate");
 						acceptedAuthentications = acceptedAuthentications.split("\n");
 
-						for (var i = 0; i < acceptedAuthentications.length ; i++) {
-							var acceptAuth = acceptedAuthentications[i];
+						for (let acceptAuth of acceptedAuthentications) {
 							this.logInfo("asyncPromptAuthNotifyCallback: WWW-Authenticate:" + acceptAuth);
 							if (acceptAuth.indexOf("realm=") > -1) {
 								realm = acceptAuth.substr(index.indexOf("realm=") + 6);
@@ -572,11 +571,11 @@ mivExchangeAuthPrompt2.prototype = {
 			try {
 				var acceptedAuthentications = aChannel.getResponseHeader("WWW-Authenticate");
 				acceptedAuthentications = acceptedAuthentications.split("\n");
-				for each (var index in acceptedAuthentications) {
-					this.logInfo("promptAuth: WWW-Authenticate:"+index);
-					if (index.indexOf("realm=") > -1) {
-						realm = index.substr(index.indexOf("realm=")+6);
-						this.logInfo("promptAuth: Found a realm going to use it. realm="+realm);
+				for (let authenticateHeader of acceptedAuthentications) {
+					this.logInfo("promptAuth: WWW-Authenticate:" + authenticateHeader);
+					if (authenticateHeader.indexOf("realm=") > -1) {
+						realm = index.substr(authenticateHeader.indexOf("realm=")+6);
+						this.logInfo("promptAuth: Found a realm going to use it. realm=" + realm);
 					}
 				}
 			}
@@ -633,7 +632,7 @@ mivExchangeAuthPrompt2.prototype = {
 						.getService(Ci.nsILoginManager);
 
 			var logins = loginManager.findLogins({}, aURL, null, aRealm);
-			for each (var loginInfo in logins) {
+			for (let loginInfo of logins) {
 				if (loginInfo.username == aUsername) {
 					this.logInfo("passwordManagerGet found password for: username="+aUsername+", aURL="+aURL+", aRealm="+aRealm);
 					return { result: true, password: loginInfo.password};
@@ -662,12 +661,12 @@ mivExchangeAuthPrompt2.prototype = {
 
 			if (logins.length > 0) {
 				var modified = false;
-				for each (let loginInfo in logins) {
-					if (loginInfo.username == aUsername) {
+				for (let loginInfo of logins) {
+					if (loginInfo.username === aUsername) {
 						this.logInfo("Login credentials updated:username="+aUsername+", aURL="+aURL+", aRealm="+aRealm);
 						loginManager.removeLogin(loginInfo);
 						modified = true;
-				    		break;
+				    break;
 					}
 				}
 				if (!modified) {
@@ -707,7 +706,7 @@ mivExchangeAuthPrompt2.prototype = {
 
 			if (logins.length > 0) {
 				var modified = false;
-				for each (let loginInfo in logins) {
+				for (let loginInfo of logins) {
 					if (loginInfo.username == aUsername) {
 						this.logInfo("Login credentials updated:username="+aUsername+", aURL="+aURL+", aRealm="+aRealm);
 						loginManager.modifyLogin(loginInfo, newLoginInfo);
