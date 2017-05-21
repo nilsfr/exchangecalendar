@@ -34,7 +34,7 @@ var Cc = Components.classes;
 Cu.import("resource://calendar/modules/calUtils.jsm");
 Cu.import("resource://gre/modules/Services.jsm");
 
-function exchEventDialog(aDocument, aWindow)
+function exchangeEventDialog(aDocument, aWindow)
 {
 	this._document = aDocument;
 	this._window = aWindow;
@@ -43,10 +43,13 @@ function exchEventDialog(aDocument, aWindow)
 				.getService(Ci.mivFunctions);
 }
 
-exchEventDialog.prototype = {
+exchangeEventDialog.prototype = {
 	_initialized: false,
 	_oldCallback: null,
 
+	/*
+	 * onAcceptCallback: read caller content to save extra information if caller was exchangecalendar
+	 */
 	onAcceptCallback: function _onAcceptCallback(aItem, aCalendar, aOriginalItem, aIsClosing)
 	{
 		if (aCalendar.type === "exchangecalendar") {
@@ -80,7 +83,7 @@ exchEventDialog.prototype = {
 				aItem.bodyType = "HTML";
 				aItem.body = this._document.getElementById("exchWebService-body-editor").content;
 			}
-			else if (aItem.bodyType == "HTML") {
+			else if (aItem.bodyType === "HTML") {
 				aItem.body = this._document.getElementById("exchWebService-body-editor").content;
 			}
 		} catch(err) {
@@ -92,92 +95,17 @@ exchEventDialog.prototype = {
 		}
 	},
 
-	onLoad: function _onLoad()
+	// This will remove the time value from the repeat part and tooltip.
+	updateRepeat: function _updateRepeat()
 	{
-		if (this._document.getElementById("exchWebService-body-editor")) {
-			this._document.getElementById("exchWebService-body-editor").setAttribute("scrollbars","yes");
-		}
-
- 		if (this._window.arguments[0].calendarEvent.calendar.type != "exchangecalendar") {
-			if (this._document.getElementById("item-description")) {
-				this._document.getElementById("item-description").hidden = false;
-			}
-
-			if (this._document.getElementById("exchWebService-body-editor")) {
-				this._document.getElementById("exchWebService-body-editor").hidden = true;
-			}
-
-			return;
-		}
-
-		if (this._initialized) {
-			return;
-		}
-
-		// Save current acceptCallback function in temporary place to be excuted later by ourself
-		this._oldCallback = this._window.onAcceptCallback;
-		var self = this;
-		// Ovverride acceptCallback with our own function
-		this._window.onAcceptCallback = function(aItem, aCalendar, aOriginalItem, aIsClosing) {
-			self.onAcceptCallback(aItem, aCalendar, aOriginalItem, aIsClosing);
-		};
-
-		// If DOM contain a "todo-entrydate", we check if we need to display our HTML body editor
-		if (this._document.getElementById("todo-entrydate")) {
-			this._initialized = true;
-
-			var args = this._window.arguments[0];
-			var item = args.calendarEvent;
-			this.updateScreen(item, item.calendar);
-
-			// Display (or not) our body HTML editor
-
-			if (item.bodyType === undefined // item is not already defined
-					|| item.bodyType.toLowerCase() === "html" // current item contains HTML
-				) {
-				// Hidde original item description
-				if (this._document.getElementById("item-description")) {
-					this._document.getElementById("item-description").hidden = true;
-				}
-
-				// Display our own body editor
-				if (this._document.getElementById("exchWebService-body-editor")) {
-					this._document.getElementById("exchWebService-body-editor").hidden = false;
-				}
-			}
-
-			// Set content to our body HTML editor
-
-			// If item contains already HTML content, just use it
-			if (item.bodyType.toLowerCase() === "html") {
-				this._document.getElementById("exchWebService-body-editor").content = item.body;
-			}
-			else {
-				this.newItem = true;
-			}
-
-			// If the body is already filled and it contains HTML, save it to our body editor
-			if (item.body
-				&& item.body.toLowerCase().indexOf("<body>") > -1) {
-				this._document.getElementById("exchWebService-body-editor").content = item.body;
-			}
-			else {
-				// Otherwise, translate the DESCRIPTION property to HTML and give it to editor
-				this._document.getElementById("exchWebService-body-editor").content = this.globalFunctions.fromText2HTML(item.getProperty("DESCRIPTION"));
-			}
-		}
-		else {
-			// DOM doesn't containt "todo-entrydate"
-
-			// Display original editor and hidde our own HTML body editor
-
-			if (this._document.getElementById("item-description")) {
-				this._document.getElementById("item-description").hidden = false;
-			}
-
-			if (this._document.getElementById("exchWebService-body-editor")) {
-				this._document.getElementById("exchWebService-body-editor").hidden = true;
-			}
+		var repeatDetails = this._document.getElementById("repeat-details").childNodes;
+		if (repeatDetails.length === 3) {
+			this._document.getElementById("repeat-details").removeChild(repeatDetails[2]);
+			var toolTip = repeatDetails[0].getAttribute("tooltiptext");
+			var tmpArray = toolTip.split("\n");
+			tmpArray.splice(2,1);
+			repeatDetails[0].setAttribute("tooltiptext", tmpArray.join("\n"));
+			repeatDetails[1].setAttribute("tooltiptext", tmpArray.join("\n"));
 		}
 	},
 
@@ -275,20 +203,101 @@ exchEventDialog.prototype = {
 		}
 	},
 
-	// This will remove the time value from the repeat part and tooltip.
-	updateRepeat: function _updateRepeat()
+	/*
+	 * onLoad: setup event dialog window
+	 * - Add callback
+	 **/
+	onLoad: function _onLoad()
 	{
-		var repeatDetails = this._document.getElementById("repeat-details").childNodes;
-		if (repeatDetails.length === 3) {
-			this._document.getElementById("repeat-details").removeChild(repeatDetails[2]);
-			var toolTip = repeatDetails[0].getAttribute("tooltiptext");
-			var tmpArray = toolTip.split("\n");
-			tmpArray.splice(2,1);
-			repeatDetails[0].setAttribute("tooltiptext", tmpArray.join("\n"));
-			repeatDetails[1].setAttribute("tooltiptext", tmpArray.join("\n"));
+		if (this._document.getElementById("exchWebService-body-editor")) {
+			this._document.getElementById("exchWebService-body-editor").setAttribute("scrollbars","yes");
+		}
+
+ 		if (this._window.arguments[0].calendarEvent.calendar.type != "exchangecalendar") {
+			if (this._document.getElementById("item-description")) {
+				this._document.getElementById("item-description").hidden = false;
+			}
+
+			if (this._document.getElementById("exchWebService-body-editor")) {
+				this._document.getElementById("exchWebService-body-editor").hidden = true;
+			}
+
+			return;
+		}
+
+		if (this._initialized) {
+			return;
+		}
+
+		// Override dialog callback to add extra exchangecalendar information processing
+		this._oldCallback = this._window.onAcceptCallback;
+		var self = this;
+		this._window.onAcceptCallback = function(aItem, aCalendar, aOriginalItem, aIsClosing) {
+			self.onAcceptCallback(aItem, aCalendar, aOriginalItem, aIsClosing);
+		};
+
+		// If DOM contain a "todo-entrydate", we check if we need to display our HTML body editor
+		if (this._document.getElementById("todo-entrydate")) {
+			this._initialized = true;
+
+			var args = this._window.arguments[0];
+			var item = args.calendarEvent;
+			this.updateScreen(item, item.calendar);
+
+			// Display (or not) our body HTML editor
+
+			if (item.bodyType === undefined // item is not already defined
+					|| item.bodyType.toLowerCase() === "html" // current item contains HTML
+				) {
+				// Hidde original item description
+				if (this._document.getElementById("item-description")) {
+					this._document.getElementById("item-description").hidden = true;
+				}
+
+				// Display our own body editor
+				if (this._document.getElementById("exchWebService-body-editor")) {
+					this._document.getElementById("exchWebService-body-editor").hidden = false;
+				}
+			}
+
+			// Set content to our body HTML editor
+
+			// If item contains already HTML content, just use it
+			if (item.bodyType.toLowerCase() === "html") {
+				this._document.getElementById("exchWebService-body-editor").content = item.body;
+			}
+			else {
+				this.newItem = true;
+			}
+
+			// If the body is already filled and it contains HTML, save it to our body editor
+			if (item.body
+				&& item.body.toLowerCase().indexOf("<body>") > -1) {
+				this._document.getElementById("exchWebService-body-editor").content = item.body;
+			}
+			else {
+				// Otherwise, translate the DESCRIPTION property to HTML and give it to editor
+				this._document.getElementById("exchWebService-body-editor").content = this.globalFunctions.fromText2HTML(item.getProperty("DESCRIPTION"));
+			}
+		}
+		else {
+			// DOM doesn't contain "todo-entrydate"
+
+			// Display original editor and hidde our own HTML body editor
+
+			if (this._document.getElementById("item-description")) {
+				this._document.getElementById("item-description").hidden = false;
+			}
+
+			if (this._document.getElementById("exchWebService-body-editor")) {
+				this._document.getElementById("exchWebService-body-editor").hidden = true;
+			}
 		}
 	},
 
+	/*
+	 * selectedCalendarChanged: modify event-dialog to add extra exchangecalendar info when an exchange calendar is selected
+	 */
 	selectedCalendarChanged: function _selectedCalendarChanged(aMenuList)
 	{
 		updateCalendar();
@@ -296,34 +305,17 @@ exchEventDialog.prototype = {
 		this.updateScreen(this._window.calendarItem, getCurrentCalendar());
 	},
 
-}
-
-function exchToolsEventDialog(aDocument, aWindow)
-{
-	this._document = aDocument;
-	this._window = aWindow;
-
-	this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-				.getService(Ci.mivFunctions);
-}
-
-exchToolsEventDialog.prototype = {
-	_initialized: false,
-
-  onLoad: function _onLoad() {
-  	if (this._initialized) {
-  		return ;
-		}
-	},
-
-  editAttendees: function _editAttendees() {
+	/*
+	 * editAttendees: call editAttendees with some already known informations
+	 */
+	editAttendees: function _editAttendees() {
 		var eventDialog = window;
 		var calendar = getCurrentCalendar();
 
 		var callback = function (attendees, organizer, startTime, endTime) {
 			eventDialog.attendees = attendees;
 
-	    if (organizer) {
+			if (organizer) {
 				// In case we didn't have an organizer object before we
 				// added attendees to our event we take the one created
 				// by the 'invite attendee'-dialog.
@@ -382,19 +374,20 @@ exchToolsEventDialog.prototype = {
 
 		var menuItem = this._document.getElementById('options-timezone-menuitem');
 		var displayTimezone = true;
-		if( menuItem != null)
-		    displayTimezone = menuItem.getAttribute('checked') == 'true';
+		if( menuItem != null){
+			displayTimezone = menuItem.getAttribute('checked') == 'true';
+		}
 
-    var ewsDialogAttendees = {};
-    ewsDialogAttendees.endTime = endTime;
-    ewsDialogAttendees.startTime = startTime;
-    ewsDialogAttendees.displayTimezone = displayTimezone;
-    ewsDialogAttendees.attendees = this._window.attendees;
-    ewsDialogAttendees.organizer = this._window.organizer && this._window.organizer.clone();
-    ewsDialogAttendees.calendar = calendar;
-    ewsDialogAttendees.item = this._window.calendarItem;
-    ewsDialogAttendees.onOk = callback;
-    ewsDialogAttendees.fbWrapper = this._window.fbWrapper;
+		var ewsDialogAttendees = {};
+		ewsDialogAttendees.endTime = endTime;
+		ewsDialogAttendees.startTime = startTime;
+		ewsDialogAttendees.displayTimezone = displayTimezone;
+		ewsDialogAttendees.attendees = this._window.attendees;
+		ewsDialogAttendees.organizer = this._window.organizer && this._window.organizer.clone();
+		ewsDialogAttendees.calendar = calendar;
+		ewsDialogAttendees.item = this._window.calendarItem;
+		ewsDialogAttendees.onOk = callback;
+		ewsDialogAttendees.fbWrapper = this._window.fbWrapper;
 
 		// open the dialog modally
 		openDialog(
@@ -405,6 +398,7 @@ exchToolsEventDialog.prototype = {
 	}
 }
 
-var exchToolsEventDialog = new exchToolsEventDialog(document, window);
+
+var exchToolsEventDialog = new exchangeEventDialog(document, window);
 window.addEventListener("load", function () { window.removeEventListener("load",arguments.callee,false); exchToolsEventDialog.onLoad(); }, true);
 
