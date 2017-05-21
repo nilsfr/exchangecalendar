@@ -48,8 +48,11 @@
     xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
     <script type="application/javascript" src="chrome://exchangecalendar/content/calendar-event-dialog.js"/>
     <script type="application/javascript" src="chrome://calendar/content/calendar-event-dialog.js"/>
+
+    <!-- Override default attendees command for Options menu -->
     <command id="cmd_attendees"
-			 oncommand="exchWebService.eventDialog.editAttendees();"/>
+             oncommand="exchToolsEventDialog.editAttendees();"/>
+
     <rows id="event-grid-rows" insertbefore = "event-grid-alarmrow">
         <row id="exchWebService-owner-row" collapsed="true" insertafter="event-grid-title-row">
             <label value="&exchWebService.owner.label;"/>
@@ -57,7 +60,7 @@
         </row>
         <row id="event-grid-category-color-row">
             <hbox id="event-grid-category-box">
-                <menulist id="item-calendar" oncommand="tmpEventDialog.selectedCalendarChanged(this);"/>
+                <menulist id="item-calendar" oncommand="exchToolsEventDialog.selectedCalendarChanged(this);"/>
             </hbox>
         </row>
         <separator id="exchWebService-details-separator" hidden="true" class="groove" insertafter="event-grid-todo-status-row"/>
@@ -99,7 +102,7 @@
         </row>
         <row id="event-grid-category-color-row">
             <hbox id="event-grid-category-box">
-                <menulist id="item-calendar" oncommand="tmpEventDialog.selectedCalendarChanged(this);"/>
+                <menulist id="item-calendar" oncommand="exchToolsEventDialog.selectedCalendarChanged(this);"/>
             </hbox>
         </row>
         <separator id="exchWebService-details-separator" hidden="true" class="groove" insertafter="event-grid-todo-status-row"/>

@@ -298,9 +298,16 @@ exchEventDialog.prototype = {
 
 }
 
-if (!exchWebService) var exchWebService = {};
+function exchToolsEventDialog(aDocument, aWindow)
+{
+	this._document = aDocument;
+	this._window = aWindow;
 
-exchWebService.eventDialog = {
+	this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
+				.getService(Ci.mivFunctions);
+}
+
+exchToolsEventDialog.prototype = {
 	_initialized: false,
 
   onLoad: function _onLoad() {
@@ -373,7 +380,7 @@ exchWebService.eventDialog = {
 		    endTime.isDate = false;
 		}
 
-		var menuItem = document.getElementById('options-timezone-menuitem');
+		var menuItem = this._document.getElementById('options-timezone-menuitem');
 		var displayTimezone = true;
 		if( menuItem != null)
 		    displayTimezone = menuItem.getAttribute('checked') == 'true';
@@ -382,12 +389,12 @@ exchWebService.eventDialog = {
     ewsDialogAttendees.endTime = endTime;
     ewsDialogAttendees.startTime = startTime;
     ewsDialogAttendees.displayTimezone = displayTimezone;
-    ewsDialogAttendees.attendees = window.attendees;
-    ewsDialogAttendees.organizer = window.organizer && window.organizer.clone();
+    ewsDialogAttendees.attendees = this._window.attendees;
+    ewsDialogAttendees.organizer = this._window.organizer && this._window.organizer.clone();
     ewsDialogAttendees.calendar = calendar;
-    ewsDialogAttendees.item = window.calendarItem;
+    ewsDialogAttendees.item = this._window.calendarItem;
     ewsDialogAttendees.onOk = callback;
-    ewsDialogAttendees.fbWrapper = window.fbWrapper;
+    ewsDialogAttendees.fbWrapper = this._window.fbWrapper;
 
 		// open the dialog modally
 		openDialog(
@@ -398,7 +405,6 @@ exchWebService.eventDialog = {
 	}
 }
 
-window.addEventListener("load", exchWebService.eventDialog.onLoad, false);
-var tmpEventDialog = new exchEventDialog(document, window);
-window.addEventListener("load", function () { window.removeEventListener("load",arguments.callee,false); tmpEventDialog.onLoad(); }, true);
+var exchToolsEventDialog = new exchToolsEventDialog(document, window);
+window.addEventListener("load", function () { window.removeEventListener("load",arguments.callee,false); exchToolsEventDialog.onLoad(); }, true);
 
