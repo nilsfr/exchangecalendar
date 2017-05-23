@@ -229,6 +229,11 @@ exchangeEventDialog.prototype = {
 			return;
 		}
 
+		// Set window.calendarItem to be able to call getCalendar()
+		var args = this._window.arguments[0];
+		var item = args.calendarEvent;
+		this._window.calendarItem = item.clone();
+
 		// Override dialog callback to add extra exchangecalendar information processing
 		this._oldCallback = this._window.onAcceptCallback;
 		var self = this;
@@ -240,8 +245,6 @@ exchangeEventDialog.prototype = {
 		if (this._document.getElementById("todo-entrydate")) {
 			this._initialized = true;
 
-			var args = this._window.arguments[0];
-			var item = args.calendarEvent;
 			this.updateScreen(item, item.calendar);
 
 			// Display (or not) our body HTML editor
@@ -309,8 +312,8 @@ exchangeEventDialog.prototype = {
 	 * editAttendees: call editAttendees with some already known informations
 	 */
 	editAttendees: function _editAttendees() {
-		var eventDialog = window;
-		var calendar = getCurrentCalendar();
+		var eventDialog = this._window;
+		var calendar = eventDialog.getCurrentCalendar();
 
 		var callback = function (attendees, organizer, startTime, endTime) {
 			eventDialog.attendees = attendees;
@@ -342,15 +345,15 @@ exchangeEventDialog.prototype = {
   		}
 
 			var duration = endTime.subtractDate(startTime);
-			startTime = startTime.clone();
-			endTime = endTime.clone();
+			var startTime = startTime.clone();
+			var endTime = endTime.clone();
 
 			var kDefaultTimezone = calendarDefaultTimezone();
-			gStartTimezone = startTime.timezone;
-			gEndTimezone = endTime.timezone;
-			gStartTime = startTime.getInTimezone(kDefaultTimezone);
-			gEndTime = endTime.getInTimezone(kDefaultTimezone);
-			gItemDuration = duration;
+			var gStartTimezone = startTime.timezone;
+			var gEndTimezone = endTime.timezone;
+			var gStartTime = startTime.getInTimezone(kDefaultTimezone);
+			var gEndTime = endTime.getInTimezone(kDefaultTimezone);
+			var gItemDuration = duration;
 
 			updateDateTime();
 			updateAllDay();
@@ -359,35 +362,46 @@ exchangeEventDialog.prototype = {
 			}
 		};
 
-		var startTime = gStartTime.getInTimezone(gStartTimezone);
-		var endTime = gEndTime.getInTimezone(gEndTimezone);
+		var startTime = {};
+		var endTime = {};
 
-		var isAllDay = getElementValue("event-all-day", "checked");
+		if (eventDialog.gStartTime) {
+			startTime = eventDialog.gStartTime.getInTimezone(eventDialog.gStartTimezone);
+		}
+		if (eventDialog.gEndTime) {
+			endTime = eventDialog.gEndTime.getInTimezone(eventDialog.gEndTimezone);
+		}
+
+		var isAllDay = null;
+		var isAllDayBox = this._document.getElementById("event-all-day");
+		if (isAllDayBox) {
+			isAllDay = isAllDayBox.getAttribute('checked');
+		}
 		if (isAllDay) {
-		    startTime.isDate = true;
-		    endTime.isDate = true;
-		    endTime.day += 1;
+			startTime.isDate = true;
+			endTime.isDate = true;
+			endTime.day += 1;
 		} else {
-		    startTime.isDate = false;
-		    endTime.isDate = false;
+			startTime.isDate = false;
+			endTime.isDate = false;
 		}
 
 		var menuItem = this._document.getElementById('options-timezone-menuitem');
 		var displayTimezone = true;
-		if( menuItem != null){
-			displayTimezone = menuItem.getAttribute('checked') == 'true';
+		if( menuItem ){
+			displayTimezone = menuItem.getAttribute('checked');
 		}
 
 		var ewsDialogAttendees = {};
 		ewsDialogAttendees.endTime = endTime;
 		ewsDialogAttendees.startTime = startTime;
 		ewsDialogAttendees.displayTimezone = displayTimezone;
-		ewsDialogAttendees.attendees = this._window.attendees;
-		ewsDialogAttendees.organizer = this._window.organizer && this._window.organizer.clone();
+		ewsDialogAttendees.attendees = eventDialog.attendees;
+		ewsDialogAttendees.organizer = eventDialog.organizer && eventDialog.organizer.clone();
 		ewsDialogAttendees.calendar = calendar;
-		ewsDialogAttendees.item = this._window.calendarItem;
+		ewsDialogAttendees.item = eventDialog.calendarItem;
 		ewsDialogAttendees.onOk = callback;
-		ewsDialogAttendees.fbWrapper = this._window.fbWrapper;
+		ewsDialogAttendees.fbWrapper = eventDialog.fbWrapper;
 
 		// open the dialog modally
 		openDialog(
