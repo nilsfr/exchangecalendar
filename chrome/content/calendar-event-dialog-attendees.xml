@@ -66,7 +66,7 @@
                          completedefaultindex="true"
                          forcecomplete="true"
                          minresultsforpopup="1"
-                         onblur="if (this.localName == 'textbox') document.getBindingParent(this).onBlurInput(event);"
+                         onblur="if (this.localName === 'textbox') document.getBindingParent(this).onBlurInput(event);"
                          ignoreblurwhilesearching="true"
                          oninput="this.setAttribute('dirty', 'true');">
             </xul:textbox>
@@ -138,7 +138,7 @@
 						  numRowsAdded++;
 					      }
 					  }
-					  if (numRowsAdded == 0) {
+					  if (numRowsAdded === 0) {
 					      this.appendAttendee(null, listbox, template, false);
 					  }
 

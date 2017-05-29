@@ -34,7 +34,7 @@ var Cc = Components.classes;
 Cu.import("resource://calendar/modules/calUtils.jsm");
 Cu.import("resource://gre/modules/Services.jsm");
 
-function exchEventDialog(aDocument, aWindow)
+function exchangeEventDialog(aDocument, aWindow)
 {
 	this._document = aDocument;
 	this._window = aWindow;
@@ -43,118 +43,69 @@ function exchEventDialog(aDocument, aWindow)
 				.getService(Ci.mivFunctions);
 }
 
-exchEventDialog.prototype = {
-
+exchangeEventDialog.prototype = {
 	_initialized: false,
 	_oldCallback: null,
 
+	/*
+	 * onAcceptCallback: read caller content to save extra information if caller was exchangecalendar
+	 */
 	onAcceptCallback: function _onAcceptCallback(aItem, aCalendar, aOriginalItem, aIsClosing)
 	{
-		if ((cal.isEvent(aItem)) && (aCalendar.type == "exchangecalendar")) {
-			if (!aItem.className) {
-				var newItem = Cc["@1st-setup.nl/exchange/calendarevent;1"]
+		if (aCalendar.type === "exchangecalendar") {
+			if (cal.isEvent(aItem)) {
+				if (!aItem.className) {
+					var newItem = Cc["@1st-setup.nl/exchange/calendarevent;1"]
 						.createInstance(Ci.mivExchangeEvent);
-				newItem.cloneToCalEvent(aItem);
-				aItem = newItem;
+					newItem.cloneToCalEvent(aItem);
+					aItem = newItem;
+				}
 			}
-		}
-
-		if ((!cal.isEvent(aItem)) && (aCalendar.type == "exchangecalendar")) {
-			// Save extra exchange fields to item.
-			if (!aItem.className) {
-				var newItem = Cc["@1st-setup.nl/exchange/calendartodo;1"]
+			else if (!cal.isEvent(aItem)) {
+				// Save extra exchange fields to item.
+				if (!aItem.className) {
+					var newItem = Cc["@1st-setup.nl/exchange/calendartodo;1"]
 						.createInstance(Ci.mivExchangeTodo);
-				newItem.cloneToCalEvent(aItem);
-				aItem = newItem;
+					newItem.cloneToCalEvent(aItem);
+					aItem = newItem;
+				}
+
+				aItem.totalWork = this._document.getElementById("exchWebService-totalWork-count").value;
+				aItem.actualWork = this._document.getElementById("exchWebService-actualWork-count").value;
+				aItem.mileage = this._document.getElementById("exchWebService-mileage-count").value;
+				aItem.billingInformation = this._document.getElementById("exchWebService-billingInformation-count").value;
+				aItem.companies = this._document.getElementById("exchWebService-companies-count").value;
 			}
-
-			aItem.totalWork = this._document.getElementById("exchWebService-totalWork-count").value;
-			aItem.actualWork = this._document.getElementById("exchWebService-actualWork-count").value;
-			aItem.mileage = this._document.getElementById("exchWebService-mileage-count").value;
-			aItem.billingInformation = this._document.getElementById("exchWebService-billingInformation-count").value;
-			aItem.companies = this._document.getElementById("exchWebService-companies-count").value;
 		}
 
-try{
-		if (this.newItem) {
-			aItem.bodyType = "HTML";
-			aItem.body = this._document.getElementById("exchWebService-body-editor").content;
-		}
-		else {
-			if (aItem.bodyType == "HTML") {
+		try{
+			if (this.newItem) {
+				aItem.bodyType = "HTML";
 				aItem.body = this._document.getElementById("exchWebService-body-editor").content;
 			}
+			else if (aItem.bodyType === "HTML") {
+				aItem.body = this._document.getElementById("exchWebService-body-editor").content;
+			}
+		} catch(err) {
+			dump("Error saving content\n");
 		}
-}catch(err){dump("Error saving content\n");}
 
 		if (this._oldCallback) {
 			this._oldCallback(aItem, aCalendar, aOriginalItem, aIsClosing);
 		}
 	},
 
-	onLoad: function _onLoad()
+	// This will remove the time value from the repeat part and tooltip.
+	updateRepeat: function _updateRepeat()
 	{
-		//onLoad();
-		 this._document.getElementById("exchWebService-body-editor").setAttribute("scrollbars","yes");
- 		if (this._window.arguments[0].calendarEvent.calendar.type != "exchangecalendar") {
-			if (this._document.getElementById("item-description")) {
-				this._document.getElementById("item-description").hidden = false;
-			}
-			if (this._document.getElementById("exchWebService-body-editor")) {
-				this._document.getElementById("exchWebService-body-editor").hidden = true;
-			}
-			return;
-		}
-
-		if (this._initialized) return;
-		this._oldCallback = this._window.onAcceptCallback;
-		var self = this;
-		this._window.onAcceptCallback = function(aItem, aCalendar, aOriginalItem, aIsClosing) { self.onAcceptCallback(aItem, aCalendar, aOriginalItem, aIsClosing); };
-
-		if (this._document.getElementById("todo-entrydate")) {
-			this._initialized = true;
-
-			var args = this._window.arguments[0];
-			var item = args.calendarEvent;
-			this.updateScreen(item, item.calendar);
-			//Cc["@mozilla.org/consoleservice;1"]
-	                //     .getService(Ci.nsIConsoleService).logStringMessage(item.exchangeXML);
-
-//dump("event.dialog: item.exchangeXML:"+item.exchangeXML+"\n");
-
-			if ((item.bodyType === undefined) || (item.bodyType == "HTML")) {
-				if (this._document.getElementById("item-description")) {
-					this._document.getElementById("item-description").hidden = true;
-				}
-				if (this._document.getElementById("exchWebService-body-editor")) {
-					this._document.getElementById("exchWebService-body-editor").hidden = false;
-					if (item.bodyType !== undefined) {
-						this._document.getElementById("exchWebService-body-editor").content = item.body;
-					}
-					else {
-						this.newItem = true;
-						if (item.body) {
-							if ((item.body.indexOf("<BODY>") > -1) || (item.body.indexOf("<body>") > -1)) {
-								this._document.getElementById("exchWebService-body-editor").content = item.body;
-							}
-							else {
-								this._document.getElementById("exchWebService-body-editor").content = this.globalFunctions.fromText2HTML(item.getProperty("DESCRIPTION"));
-							}
-						}
-						else {
-							this._document.getElementById("exchWebService-body-editor").content = this.globalFunctions.fromText2HTML(item.getProperty("DESCRIPTION"));
-						}
-					}
-				}
-			}
-			else {
-				if (this._document.getElementById("item-description")) {
-					this._document.getElementById("item-description").hidden = false;
-				}
-				if (this._document.getElementById("exchWebService-body-editor")) {
-					this._document.getElementById("exchWebService-body-editor").hidden = true;
-				}
-			}
+		var repeatDetails = this._document.getElementById("repeat-details").childNodes;
+		if (repeatDetails.length === 3) {
+			this._document.getElementById("repeat-details").removeChild(repeatDetails[2]);
+			var toolTip = repeatDetails[0].getAttribute("tooltiptext");
+			var tmpArray = toolTip.split("\n");
+			tmpArray.splice(2,1);
+			repeatDetails[0].setAttribute("tooltiptext", tmpArray.join("\n"));
+			repeatDetails[1].setAttribute("tooltiptext", tmpArray.join("\n"));
 		}
 	},
 
@@ -162,7 +113,9 @@ try{
 	{
 		var item = aItem;
 
-		if ((!cal.isEvent(item)) && (aCalendar.type == "exchangecalendar")) {
+		// If not an event and calendar type is exchangeCalendar, update Attendees dialog
+		if (!cal.isEvent(item)
+			&& aCalendar.type === "exchangecalendar") {
 
 			var ownerLabel = this._document.getElementById("exchWebService-owner-label");
 			if (ownerLabel) {
@@ -174,7 +127,8 @@ try{
 				this._document.getElementById("exchWebService-details-row2").removeAttribute("collapsed");
 				this._document.getElementById("exchWebService-details-row3").removeAttribute("collapsed");
 			}
-			catch (ex) {}
+			catch (ex) {
+			}
 
 			this._document.getElementById("exchWebService-owner-row").setAttribute("collapsed", "false");
 			this._document.getElementById("exchWebService-details-separator").hidden = false;
@@ -203,16 +157,17 @@ try{
 			this._document.getElementById("reminder-1day-menuitem").hidden = true;
 			this._document.getElementById("reminder-2days-menuitem").hidden = true;
 			this._document.getElementById("reminder-1week-menuitem").hidden = true;
-			
+
+			// Clear timezone start/end time
 			this._document.getElementById("timezone-starttime").hidden = true;
 			this._document.getElementById("timezone-endtime").hidden = true;
 
 			if (this._document.getElementById("item-repeat")) {
 				this._document.getElementById("item-repeat").addEventListener("command", function() { self.updateRepeat(); }, false);
 			}
-			//this.updateTime();
 			this.updateRepeat();
 		}
+		// For other item type and other calendar type, reset Atttendees dialog
 		else {
 			try {
 				this._document.getElementById("exchWebService-details-row1").setAttribute("collapsed", "true");
@@ -227,7 +182,7 @@ try{
 			this._document.getElementById("event-grid-location-row").hidden = false;
 			this._document.getElementById("event-grid-recurrence-row").hidden=false;
 
-			// Clear reminder select list for todo
+			// Reset reminder select list for todo
 			this._document.getElementById("reminder-none-separator").hidden = false;
 			this._document.getElementById("reminder-0minutes-menuitem").hidden = false;
 			this._document.getElementById("reminder-5minutes-menuitem").hidden = false;
@@ -242,26 +197,110 @@ try{
 			this._document.getElementById("reminder-2days-menuitem").hidden = false;
 			this._document.getElementById("reminder-1week-menuitem").hidden = false;
 
+			// Reset timezone start/end time
 			this._document.getElementById("timezone-starttime").hidden = false;
 			this._document.getElementById("timezone-endtime").hidden = false;
-
 		}
 	},
 
-	// This will remove the time value from the repeat part and tooltip.
-	updateRepeat: function _updateRepeat()
+	/*
+	 * onLoad: setup event dialog window
+	 * - Add callback
+	 **/
+	onLoad: function _onLoad()
 	{
-		var repeatDetails = this._document.getElementById("repeat-details").childNodes;
-		if (repeatDetails.length == 3) {
-			this._document.getElementById("repeat-details").removeChild(repeatDetails[2]);
-			var toolTip = repeatDetails[0].getAttribute("tooltiptext");
-			var tmpArray = toolTip.split("\n");
-			tmpArray.splice(2,1);
-			repeatDetails[0].setAttribute("tooltiptext", tmpArray.join("\n"));
-			repeatDetails[1].setAttribute("tooltiptext", tmpArray.join("\n"));
+		if (this._document.getElementById("exchWebService-body-editor")) {
+			this._document.getElementById("exchWebService-body-editor").setAttribute("scrollbars","yes");
+		}
+
+ 		if (this._window.arguments[0].calendarEvent.calendar.type != "exchangecalendar") {
+			if (this._document.getElementById("item-description")) {
+				this._document.getElementById("item-description").hidden = false;
+			}
+
+			if (this._document.getElementById("exchWebService-body-editor")) {
+				this._document.getElementById("exchWebService-body-editor").hidden = true;
+			}
+
+			return;
+		}
+
+		if (this._initialized) {
+			return;
+		}
+
+		// Set window.calendarItem to be able to call getCalendar()
+		var args = this._window.arguments[0];
+		var item = args.calendarEvent;
+		this._window.calendarItem = item.clone();
+
+		// Override dialog callback to add extra exchangecalendar information processing
+		this._oldCallback = this._window.onAcceptCallback;
+		var self = this;
+		this._window.onAcceptCallback = function(aItem, aCalendar, aOriginalItem, aIsClosing) {
+			self.onAcceptCallback(aItem, aCalendar, aOriginalItem, aIsClosing);
+		};
+
+		// If DOM contain a "todo-entrydate", we check if we need to display our HTML body editor
+		if (this._document.getElementById("todo-entrydate")) {
+			this._initialized = true;
+
+			this.updateScreen(item, item.calendar);
+
+			// Display (or not) our body HTML editor
+
+			if (item.bodyType === undefined // item is not already defined
+					|| item.bodyType.toLowerCase() === "html" // current item contains HTML
+				) {
+				// Hidde original item description
+				if (this._document.getElementById("item-description")) {
+					this._document.getElementById("item-description").hidden = true;
+				}
+
+				// Display our own body editor
+				if (this._document.getElementById("exchWebService-body-editor")) {
+					this._document.getElementById("exchWebService-body-editor").hidden = false;
+				}
+			}
+
+			// Set content to our body HTML editor
+
+			// If item contains already HTML content, just use it
+			if (item.bodyType.toLowerCase() === "html") {
+				this._document.getElementById("exchWebService-body-editor").content = item.body;
+			}
+			else {
+				this.newItem = true;
+			}
+
+			// If the body is already filled and it contains HTML, save it to our body editor
+			if (item.body
+				&& item.body.toLowerCase().indexOf("<body>") > -1) {
+				this._document.getElementById("exchWebService-body-editor").content = item.body;
+			}
+			else {
+				// Otherwise, translate the DESCRIPTION property to HTML and give it to editor
+				this._document.getElementById("exchWebService-body-editor").content = this.globalFunctions.fromText2HTML(item.getProperty("DESCRIPTION"));
+			}
+		}
+		else {
+			// DOM doesn't contain "todo-entrydate"
+
+			// Display original editor and hidde our own HTML body editor
+
+			if (this._document.getElementById("item-description")) {
+				this._document.getElementById("item-description").hidden = false;
+			}
+
+			if (this._document.getElementById("exchWebService-body-editor")) {
+				this._document.getElementById("exchWebService-body-editor").hidden = true;
+			}
 		}
 	},
 
+	/*
+	 * selectedCalendarChanged: modify event-dialog to add extra exchangecalendar info when an exchange calendar is selected
+	 */
 	selectedCalendarChanged: function _selectedCalendarChanged(aMenuList)
 	{
 		updateCalendar();
@@ -269,108 +308,111 @@ try{
 		this.updateScreen(this._window.calendarItem, getCurrentCalendar());
 	},
 
+	/*
+	 * editAttendees: call editAttendees with some already known informations
+	 */
+	editAttendees: function _editAttendees() {
+		var eventDialog = this._window;
+		var calendar = eventDialog.getCurrentCalendar();
+
+		var callback = function (attendees, organizer, startTime, endTime) {
+			eventDialog.attendees = attendees;
+
+			if (organizer) {
+				// In case we didn't have an organizer object before we
+				// added attendees to our event we take the one created
+				// by the 'invite attendee'-dialog.
+				if (eventDialog.organizer) {
+					// The other case is that we already had an organizer object
+					// before we went throught the 'invite attendee'-dialog. In that
+					// case make sure we don't carry over attributes that have been
+					// set to their default values by the dialog but don't actually
+					// exist in the original organizer object.
+					if (!eventDialog.organizer.id) {
+						organizer.id = null;
+					}
+					if (!eventDialog.organizer.role) {
+						organizer.role = null;
+					}
+					if (!eventDialog.organizer.participationStatus) {
+						organizer.participationStatus = null;
+					}
+					if (!eventDialog.organizer.commonName) {
+						organizer.commonName = null;
+					}
+				}
+				eventDialog.organizer = organizer;
+  		}
+
+			var duration = endTime.subtractDate(startTime);
+			var startTime = startTime.clone();
+			var endTime = endTime.clone();
+
+			var kDefaultTimezone = calendarDefaultTimezone();
+			var gStartTimezone = startTime.timezone;
+			var gEndTimezone = endTime.timezone;
+			var gStartTime = startTime.getInTimezone(kDefaultTimezone);
+			var gEndTime = endTime.getInTimezone(kDefaultTimezone);
+			var gItemDuration = duration;
+
+			updateDateTime();
+			updateAllDay();
+			if (isAllDay != gStartTime.isDate) {
+				setShowTimeAs(gStartTime.isDate)
+			}
+		};
+
+		var startTime = {};
+		var endTime = {};
+
+		if (eventDialog.gStartTime) {
+			startTime = eventDialog.gStartTime.getInTimezone(eventDialog.gStartTimezone);
+		}
+		if (eventDialog.gEndTime) {
+			endTime = eventDialog.gEndTime.getInTimezone(eventDialog.gEndTimezone);
+		}
+
+		var isAllDay = null;
+		var isAllDayBox = this._document.getElementById("event-all-day");
+		if (isAllDayBox) {
+			isAllDay = isAllDayBox.getAttribute('checked');
+		}
+		if (isAllDay) {
+			startTime.isDate = true;
+			endTime.isDate = true;
+			endTime.day += 1;
+		} else {
+			startTime.isDate = false;
+			endTime.isDate = false;
+		}
+
+		var menuItem = this._document.getElementById('options-timezone-menuitem');
+		var displayTimezone = true;
+		if( menuItem ){
+			displayTimezone = menuItem.getAttribute('checked');
+		}
+
+		var ewsDialogAttendees = {};
+		ewsDialogAttendees.endTime = endTime;
+		ewsDialogAttendees.startTime = startTime;
+		ewsDialogAttendees.displayTimezone = displayTimezone;
+		ewsDialogAttendees.attendees = eventDialog.attendees;
+		ewsDialogAttendees.organizer = eventDialog.organizer && eventDialog.organizer.clone();
+		ewsDialogAttendees.calendar = calendar;
+		ewsDialogAttendees.item = eventDialog.calendarItem;
+		ewsDialogAttendees.onOk = callback;
+		ewsDialogAttendees.fbWrapper = eventDialog.fbWrapper;
+
+		// open the dialog modally
+		openDialog(
+				"chrome://calendar/content/calendar-event-dialog-attendees.xul",
+				"_blank",
+				"chrome,titlebar,modal,resizable",
+				ewsDialogAttendees);
+	}
 }
 
-if (!exchWebService) var exchWebService = {};
 
-exchWebService.eventDialog = {
-
-    _initialized: false,
-    onLoad: function _onLoad() {
-        if (this._initialized) return;
-
-      //  exchWebService.eventDialog.updateAttendees();
-	}, 
-
-    editAttendees: function _editAttendees() {
-        let savedWindow = window;
-        let calendar = getCurrentCalendar();
-
-        var callback = function (attendees, organizer, startTime, endTime) {
-            savedWindow.attendees = attendees;
-            if (organizer) {
-                // In case we didn't have an organizer object before we
-                // added attendees to our event we take the one created
-                // by the 'invite attendee'-dialog.
-                if (savedWindow.organizer) {
-                    // The other case is that we already had an organizer object
-                    // before we went throught the 'invite attendee'-dialog. In that
-                    // case make sure we don't carry over attributes that have been
-                    // set to their default values by the dialog but don't actually
-                    // exist in the original organizer object.
-                    if (!savedWindow.organizer.id) {
-                        organizer.id = null;
-                    }
-                    if (!savedWindow.organizer.role) {
-                        organizer.role = null;
-                    }
-                    if (!savedWindow.organizer.participationStatus) {
-                        organizer.participationStatus = null;
-                    }
-                    if (!savedWindow.organizer.commonName) {
-                        organizer.commonName = null;
-                    }
-                }
-                savedWindow.organizer = organizer;
-            }
-            var duration = endTime.subtractDate(startTime);
-            startTime = startTime.clone();
-            endTime = endTime.clone();
-            var kDefaultTimezone = calendarDefaultTimezone();
-            gStartTimezone = startTime.timezone;
-            gEndTimezone = endTime.timezone;
-            gStartTime = startTime.getInTimezone(kDefaultTimezone);
-            gEndTime = endTime.getInTimezone(kDefaultTimezone);
-            gItemDuration = duration;
-          //  exchWebService.eventDialog.updateAttendees();
-            updateDateTime();
-            updateAllDay();
-            if (isAllDay != gStartTime.isDate) {
-                setShowTimeAs(gStartTime.isDate)
-            }
-        };
-
-        var startTime = gStartTime.getInTimezone(gStartTimezone);
-        var endTime = gEndTime.getInTimezone(gEndTimezone);
-
-        var isAllDay = getElementValue("event-all-day", "checked");
-        if (isAllDay) {
-            startTime.isDate = true;
-            endTime.isDate = true;
-            endTime.day += 1;
-        } else {
-            startTime.isDate = false;
-            endTime.isDate = false;
-        }
-
-        var menuItem = document.getElementById('options-timezone-menuitem');
-        var displayTimezone = true;
-        if( menuItem != null)
-            displayTimezone = menuItem.getAttribute('checked') == 'true';
-
-        var args = new Object();
-        args.startTime = startTime;
-        args.endTime = endTime;
-        args.displayTimezone = displayTimezone;
-        args.attendees = window.attendees;
-        args.organizer = window.organizer && window.organizer.clone();
-        args.calendar = calendar;
-        args.item = window.calendarItem;
-        args.onOk = callback;
-        args.fbWrapper = window.fbWrapper;
-
-        // open the dialog modally
-        openDialog(
-            "chrome://calendar/content/calendar-event-dialog-attendees.xul",
-            "_blank",
-            "chrome,titlebar,modal,resizable",
-            args);
-    }
-}
-
-window.addEventListener("load", exchWebService.eventDialog.onLoad, false);
-
-
-var tmpEventDialog = new exchEventDialog(document, window);
-window.addEventListener("load", function () { window.removeEventListener("load",arguments.callee,false); tmpEventDialog.onLoad(); }, true);
+var exchToolsEventDialog = new exchangeEventDialog(document, window);
+window.addEventListener("load", function () { window.removeEventListener("load",arguments.callee,false); exchToolsEventDialog.onLoad(); }, true);
 

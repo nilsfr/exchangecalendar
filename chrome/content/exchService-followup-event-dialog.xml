@@ -445,7 +445,7 @@
                   accesskey="&event.menu.options.accesskey;">
                 <menupopup id="options-menupopup"
                            onpopupshowing="onPopupShowing(this)">
-                  <menuitem id="options-attendess-menuitem"
+                  <menuitem id="options-attendees-menuitem"
                             label="&event.menu.options.attendees.label;"
                             accesskey="&event.menu.options.attendees.accesskey;"
                             command="cmd_attendees"
