@@ -95,7 +95,9 @@ exchangeEventDialog.prototype = {
 		}
 	},
 
-	// This will remove the time value from the repeat part and tooltip.
+	/*
+	 * Update repeat informations on Exchange tasks
+	 */
 	updateRepeat: function _updateRepeat()
 	{
 		var repeatDetails = this._document.getElementById("repeat-details").childNodes;
@@ -109,29 +111,33 @@ exchangeEventDialog.prototype = {
 		}
 	},
 
+	/*
+	 * This function is used to add extra informations for Exchange tasks
+	 * As the same dialog is used for non-Exchange tasks and for events, this function
+	 * remove too these details when necessary.
+	 */
 	updateScreen: function _updateScreen(aItem, aCalendar)
 	{
 		var item = aItem;
 
-		// If not an event and calendar type is exchangeCalendar, update Attendees dialog
+		// If not an event and calendar type is exchangeCalendar, add Exchange task extra informations
 		if (!cal.isEvent(item)
 			&& aCalendar.type === "exchangecalendar") {
 
+			// Set and display task owner
+
+			this._document.getElementById("exchWebService-owner-row").setAttribute("collapsed", "false");
 			var ownerLabel = this._document.getElementById("exchWebService-owner-label");
 			if (ownerLabel) {
 				ownerLabel.value = item.owner;
 			}
 
-			try {
-				this._document.getElementById("exchWebService-details-row1").removeAttribute("collapsed");
-				this._document.getElementById("exchWebService-details-row2").removeAttribute("collapsed");
-				this._document.getElementById("exchWebService-details-row3").removeAttribute("collapsed");
-			}
-			catch (ex) {
-			}
+			// Set and display Exchange task details
 
-			this._document.getElementById("exchWebService-owner-row").setAttribute("collapsed", "false");
 			this._document.getElementById("exchWebService-details-separator").hidden = false;
+			this._document.getElementById("exchWebService-details-row1").collapsed = false;
+			this._document.getElementById("exchWebService-details-row2").collapsed = false;
+			this._document.getElementById("exchWebService-details-row3").collapsed = false;
 
 			if (item.className) {
 				this._document.getElementById("exchWebService-totalWork-count").value = item.totalWork;
@@ -141,9 +147,42 @@ exchangeEventDialog.prototype = {
 				this._document.getElementById("exchWebService-companies-count").value = item.companies;
 			}
 
+			// Set HTML content editor
+
+			// If item contains already HTML content, just use it
+			if (item.bodyType
+				&& item.bodyType.toLowerCase() === "html") {
+				this._document.getElementById("exchWebService-body-editor").content = item.body;
+			}
+			else {
+				this.newItem = true;
+			}
+
+			// If the body is already filled and it contains HTML, save it to our body editor
+			if (item.body
+				&& item.body.toLowerCase().indexOf("<body>") > -1) {
+				this._document.getElementById("exchWebService-body-editor").content = item.body;
+			}
+			else {
+				// Otherwise, translate the DESCRIPTION property to HTML and give it to editor
+				this._document.getElementById("exchWebService-body-editor").content = this.globalFunctions.fromText2HTML(item.getProperty("DESCRIPTION"));
+			}
+
+			// Display HTML content editor
+			if (item.bodyType === undefined // item is not already defined
+					|| item.bodyType.toLowerCase() === "html" // current item contains HTML
+				) {
+				// Hidde original item description editor
+				this._document.getElementById("item-description").hidden = true;
+
+				// Display our own HTML content editor
+				this._document.getElementById("exchWebService-body-editor").hidden = false;
+			}
+
+			// Remove some standard inputs
+
 			this._document.getElementById("event-grid-location-row").hidden = true;
 
-			// Clear reminder select list for todo
 			this._document.getElementById("reminder-none-separator").hidden = true;
 			this._document.getElementById("reminder-0minutes-menuitem").hidden = true;
 			this._document.getElementById("reminder-5minutes-menuitem").hidden = true;
@@ -158,27 +197,36 @@ exchangeEventDialog.prototype = {
 			this._document.getElementById("reminder-2days-menuitem").hidden = true;
 			this._document.getElementById("reminder-1week-menuitem").hidden = true;
 
-			// Clear timezone start/end time
 			this._document.getElementById("timezone-starttime").hidden = true;
 			this._document.getElementById("timezone-endtime").hidden = true;
+
+			// Manage repeat for Exchange tasks
 
 			if (this._document.getElementById("item-repeat")) {
 				this._document.getElementById("item-repeat").addEventListener("command", function() { self.updateRepeat(); }, false);
 			}
+
 			this.updateRepeat();
 		}
-		// For other item type and other calendar type, reset Atttendees dialog
+		// For events and other calendar type, hidde back all Exchange task details, display back standard items
 		else {
-			try {
-				this._document.getElementById("exchWebService-details-row1").setAttribute("collapsed", "true");
-				this._document.getElementById("exchWebService-details-row2").setAttribute("collapsed", "true");
-				this._document.getElementById("exchWebService-details-row3").setAttribute("collapsed", "true");
-			}
-			catch (ex) {}
 
+			// Hide Exchange task details
+
+			// Task owner
 			this._document.getElementById("exchWebService-owner-row").setAttribute("collapsed", "true");
-			this._document.getElementById("exchWebService-details-separator").hidden = true;
 
+			// Task details
+			this._document.getElementById("exchWebService-details-separator").hidden = true;
+			this._document.getElementById("exchWebService-details-row1").collapsed = true;
+			this._document.getElementById("exchWebService-details-row2").collapsed = true;
+			this._document.getElementById("exchWebService-details-row3").collapsed = true;
+
+			// HTML Task content editor
+			this._document.getElementById("item-description").hidden = false;
+			this._document.getElementById("exchWebService-body-editor").hidden = true;
+
+			// Reset standard form
 			this._document.getElementById("event-grid-location-row").hidden = false;
 			this._document.getElementById("event-grid-recurrence-row").hidden=false;
 
@@ -241,61 +289,10 @@ exchangeEventDialog.prototype = {
 			self.onAcceptCallback(aItem, aCalendar, aOriginalItem, aIsClosing);
 		};
 
-		// If DOM contain a "todo-entrydate", we check if we need to display our HTML body editor
-		if (this._document.getElementById("todo-entrydate")) {
-			this._initialized = true;
+		// Update screen according to task / event
+		this.updateScreen(item, item.calendar);
 
-			this.updateScreen(item, item.calendar);
-
-			// Display (or not) our body HTML editor
-
-			if (item.bodyType === undefined // item is not already defined
-					|| item.bodyType.toLowerCase() === "html" // current item contains HTML
-				) {
-				// Hidde original item description
-				if (this._document.getElementById("item-description")) {
-					this._document.getElementById("item-description").hidden = true;
-				}
-
-				// Display our own body editor
-				if (this._document.getElementById("exchWebService-body-editor")) {
-					this._document.getElementById("exchWebService-body-editor").hidden = false;
-				}
-			}
-
-			// Set content to our body HTML editor
-
-			// If item contains already HTML content, just use it
-			if (item.bodyType.toLowerCase() === "html") {
-				this._document.getElementById("exchWebService-body-editor").content = item.body;
-			}
-			else {
-				this.newItem = true;
-			}
-
-			// If the body is already filled and it contains HTML, save it to our body editor
-			if (item.body
-				&& item.body.toLowerCase().indexOf("<body>") > -1) {
-				this._document.getElementById("exchWebService-body-editor").content = item.body;
-			}
-			else {
-				// Otherwise, translate the DESCRIPTION property to HTML and give it to editor
-				this._document.getElementById("exchWebService-body-editor").content = this.globalFunctions.fromText2HTML(item.getProperty("DESCRIPTION"));
-			}
-		}
-		else {
-			// DOM doesn't contain "todo-entrydate"
-
-			// Display original editor and hidde our own HTML body editor
-
-			if (this._document.getElementById("item-description")) {
-				this._document.getElementById("item-description").hidden = false;
-			}
-
-			if (this._document.getElementById("exchWebService-body-editor")) {
-				this._document.getElementById("exchWebService-body-editor").hidden = true;
-			}
-		}
+		this._initialized = true;
 	},
 
 	/*
