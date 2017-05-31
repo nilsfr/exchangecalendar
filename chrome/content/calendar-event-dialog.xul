@@ -31,9 +31,21 @@
  * ***** BEGIN LICENSE BLOCK *****/
 -->
 
+<!DOCTYPE dialog [
+
+<!ENTITY % eventDialogDTD SYSTEM "chrome://calendar/locale/calendar-event-dialog.dtd">
+    %eventDialogDTD;
+
+<!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/calendar-event-dialog.dtd" >
+    %dtd1;
+]>
+
 <?xul-overlay href="chrome://exchangecalendar/content/attachments-view.xul"?>
+
 <overlay id="exchWebService-calendar-event-dialog.xul"
     xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+    <!-- Manage special Exchange items and provide attendee speicific dialog -->
     <script type="application/javascript" src="chrome://exchangecalendar/content/calendar-event-dialog.js"/>
 
     <!-- Override default attendees command for Options menu and tools in toolbar -->
