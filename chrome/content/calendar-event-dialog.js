@@ -253,7 +253,8 @@ exchangeEventDialog.prototype = {
 
 	/*
 	 * onLoad: setup event dialog window
-	 * - Add callback
+	 * - Update screen according to type of item (task / event)
+	 * - Add callback (once)
 	 **/
 	onLoad: function _onLoad()
 	{
@@ -272,15 +273,12 @@ exchangeEventDialog.prototype = {
 
 			return;
 		}
+		// Update screen according to task / event
+		this.updateScreen(item, item.calendar);
 
 		if (this._initialized) {
 			return;
 		}
-
-		// Set window.calendarItem to be able to call getCalendar()
-		var args = this._window.arguments[0];
-		var item = args.calendarEvent;
-		this._window.calendarItem = item.clone();
 
 		// Override dialog callback to add extra exchangecalendar information processing
 		this._oldCallback = this._window.onAcceptCallback;
@@ -288,9 +286,6 @@ exchangeEventDialog.prototype = {
 		this._window.onAcceptCallback = function(aItem, aCalendar, aOriginalItem, aIsClosing) {
 			self.onAcceptCallback(aItem, aCalendar, aOriginalItem, aIsClosing);
 		};
-
-		// Update screen according to task / event
-		this.updateScreen(item, item.calendar);
 
 		this._initialized = true;
 	},
