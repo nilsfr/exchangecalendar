@@ -126,9 +126,9 @@ exchangeEventDialog.prototype = {
 
 			// Set and display task owner
 
-			this._document.getElementById("exchWebService-owner-row").setAttribute("collapsed", "false");
 			var ownerLabel = this._document.getElementById("exchWebService-owner-label");
 			if (ownerLabel) {
+				ownerLabel.setAttribute("collapsed", "false");
 				ownerLabel.value = item.owner;
 			}
 
