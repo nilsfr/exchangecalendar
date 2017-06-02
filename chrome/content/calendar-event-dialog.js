@@ -150,22 +150,25 @@ exchangeEventDialog.prototype = {
 			// Set HTML content editor
 
 			// If item contains already HTML content, just use it
+			let itemBodyEditor = this._document.getElementById("exchWebService-body-editor");
 			if (item.bodyType
 				&& item.bodyType.toLowerCase() === "html") {
-				this._document.getElementById("exchWebService-body-editor").content = item.body;
+				itemBodyEditor.content = item.body;
 			}
 			else {
+				// If bodyType is not defined or not HTML, the item is interpreted as a new one,
+				// because our accept call back explecitly set the bodyType and define it as HTML
 				this.newItem = true;
-			}
 
-			// If the body is already filled and it contains HTML, save it to our body editor
-			if (item.body
-				&& item.body.toLowerCase().indexOf("<body>") > -1) {
-				this._document.getElementById("exchWebService-body-editor").content = item.body;
-			}
-			else {
-				// Otherwise, translate the DESCRIPTION property to HTML and give it to editor
-				this._document.getElementById("exchWebService-body-editor").content = this.globalFunctions.fromText2HTML(item.getProperty("DESCRIPTION"));
+				// If the body is already filled and it contains HTML, save it to our body editor directly
+				if (item.body
+					&& item.body.toLowerCase().indexOf("<body>") > -1) {
+					itemBodyEditor.content = item.body;
+				}
+				// Otherwise try to convert it
+				else {
+					itemBodyEditor.content = this.globalFunctions.fromText2HTML(item.getProperty("DESCRIPTION"));
+				}
 			}
 
 			// Display HTML content editor
@@ -176,7 +179,9 @@ exchangeEventDialog.prototype = {
 				this._document.getElementById("item-description").hidden = true;
 
 				// Display our own HTML content editor
-				this._document.getElementById("exchWebService-body-editor").hidden = false;
+				itemBodyEditor.hidden = false;
+
+				itemBodyEditor.setAttribute("scrollbars","yes");
 			}
 
 			// Remove some standard inputs
