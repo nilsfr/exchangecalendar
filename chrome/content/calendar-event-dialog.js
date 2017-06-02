@@ -81,10 +81,11 @@ exchangeEventDialog.prototype = {
 		try{
 			if (this.newItem) {
 				aItem.bodyType = "HTML";
-				aItem.body = this._document.getElementById("exchWebService-body-editor").content;
+				aItem.body = this._document.getElementById("exchWebService-body-editor").innerHTML;
+				this.newItem = false;
 			}
 			else if (aItem.bodyType === "HTML") {
-				aItem.body = this._document.getElementById("exchWebService-body-editor").content;
+				aItem.body = this._document.getElementById("exchWebService-body-editor").innerHTML;
 			}
 		} catch(err) {
 			dump("Error saving content\n");
@@ -153,7 +154,7 @@ exchangeEventDialog.prototype = {
 			let itemBodyEditor = this._document.getElementById("exchWebService-body-editor");
 			if (item.bodyType
 				&& item.bodyType.toLowerCase() === "html") {
-				itemBodyEditor.content = item.body;
+				itemBodyEditor.innerHTML = item.body;
 			}
 			else {
 				// If bodyType is not defined or not HTML, the item is interpreted as a new one,
@@ -163,11 +164,11 @@ exchangeEventDialog.prototype = {
 				// If the body is already filled and it contains HTML, save it to our body editor directly
 				if (item.body
 					&& item.body.toLowerCase().indexOf("<body>") > -1) {
-					itemBodyEditor.content = item.body;
+					itemBodyEditor.innerHTML = item.body;
 				}
 				// Otherwise try to convert it
 				else {
-					itemBodyEditor.content = this.globalFunctions.fromText2HTML(item.getProperty("DESCRIPTION"));
+					itemBodyEditor.innerHTML = this.globalFunctions.fromText2HTML(item.getProperty("DESCRIPTION"));
 				}
 			}
 
