@@ -271,6 +271,21 @@
 			document.getAnonymousElementByAttribute(this, "anonid", "cmd_remove_link").removeEventListener("click", this.removeLinkFunction, true);
 			document.getAnonymousElementByAttribute(this, "anonid", "cmd_edit_link").removeEventListener("click", this.editLinkFunction, true);
 		]]></destructor>
+			
+		<property name="content">
+			<getter>
+			  <![CDATA[
+			    return this.editorElement.contentDocument.documentElement.innerHTML;
+			  ]]>
+			</getter>
+			<setter>
+			  <![CDATA[
+				if (this.editorElement) {
+					this.editorElement.contentDocument.documentElement.innerHTML = val;
+				}
+			  ]]>
+			</setter>
+		</property>
 
 		<method name="fillFontFace">
 			<body><![CDATA[
