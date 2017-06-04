@@ -280,6 +280,7 @@ exchangeEventDialog.prototype = {
 			return;
 		}
 		// Update screen according to task / event
+		let item = this._window.calendarItem;
 		this.updateScreen(item, item.calendar);
 
 		if (this._initialized) {
@@ -309,5 +310,5 @@ exchangeEventDialog.prototype = {
 
 
 var exchToolsEventDialog = new exchangeEventDialog(document, window);
-window.addEventListener("load", function () { window.removeEventListener("load",arguments.callee,false); exchToolsEventDialog.onLoad(); }, true);
+window.addEventListener("load", function () { exchToolsEventDialog.onLoad(); }, true);
 
