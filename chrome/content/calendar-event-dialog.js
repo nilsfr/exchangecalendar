@@ -61,7 +61,7 @@ exchangeEventDialog.prototype = {
 					aItem = newItem;
 				}
 			}
-			else if (!cal.isEvent(aItem)) {
+			else {
 				// Save extra exchange fields to item.
 				if (!aItem.className) {
 					var newItem = Cc["@1st-setup.nl/exchange/calendartodo;1"]
@@ -75,19 +75,21 @@ exchangeEventDialog.prototype = {
 				aItem.mileage = this._document.getElementById("exchWebService-mileage-count").value;
 				aItem.billingInformation = this._document.getElementById("exchWebService-billingInformation-count").value;
 				aItem.companies = this._document.getElementById("exchWebService-companies-count").value;
-			}
-		}
 
-		try{
-			if (this.newItem) {
-				aItem.bodyType = "HTML";
-				aItem.body = this._document.getElementById("exchWebService-body-editor").content;
+				// Copy content from HTML editor
+				try{
+					if (this.newItem) {
+						aItem.bodyType = "HTML";
+						aItem.body = this._document.getElementById("exchWebService-body-editor").content;
+						this.newItem = false;
+					}
+					else if (aItem.bodyType === "HTML") {
+						aItem.body = this._document.getElementById("exchWebService-body-editor").content;
+					}
+				} catch(err) {
+					dump("Error saving content\n");
+				}
 			}
-			else if (aItem.bodyType === "HTML") {
-				aItem.body = this._document.getElementById("exchWebService-body-editor").content;
-			}
-		} catch(err) {
-			dump("Error saving content\n");
 		}
 
 		if (this._oldCallback) {
