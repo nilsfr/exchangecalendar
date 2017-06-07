@@ -879,7 +879,14 @@ mivFunctions.prototype = {
 
 	fromText2HTML: function _fromText2HTML(aString)
 	{
-		let parsedHtml = this.domParser.parseFromString(aString, 'text/html');
+		let parsedHtml = null;
+
+		if (!aString) {
+			aString = "";
+		}
+
+		parsedHtml = this.domParser.parseFromString(aString, 'text/html');
+
 		return this.xmlSerializer.serializeToString(parsedHtml);
 	},
 
