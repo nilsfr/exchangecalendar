@@ -311,5 +311,7 @@ exchangeEventDialog.prototype = {
 
 
 var exchToolsEventDialog = new exchangeEventDialog(document, window);
-window.addEventListener("load", function () { exchToolsEventDialog.onLoad(); }, true);
+
+// Add our loader to update dialog window with Exchange extra widgets if needed
+window.addEventListener("load", function () { exchToolsEventDialog.onLoad(); }, false);
 
