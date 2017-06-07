@@ -265,21 +265,6 @@ exchangeEventDialog.prototype = {
 	 **/
 	onLoad: function _onLoad()
 	{
-		if (this._document.getElementById("exchWebService-body-editor")) {
-			this._document.getElementById("exchWebService-body-editor").setAttribute("scrollbars","yes");
-		}
-
- 		if (this._window.arguments[0].calendarEvent.calendar.type != "exchangecalendar") {
-			if (this._document.getElementById("item-description")) {
-				this._document.getElementById("item-description").hidden = false;
-			}
-
-			if (this._document.getElementById("exchWebService-body-editor")) {
-				this._document.getElementById("exchWebService-body-editor").hidden = true;
-			}
-
-			return;
-		}
 		// Update screen according to task / event
 		let item = this._window.calendarItem;
 		this.updateScreen(item, item.calendar);
