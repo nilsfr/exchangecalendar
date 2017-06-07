@@ -250,14 +250,14 @@ exchAttachments.prototype = {
 			this._document.getElementById("button-url").hidden = true;
 
 			let currentSet = eventToolbar.getAttribute("currentset");
-			if ( currentSet.indexOf("button-url") === 1
-					&& currentSet.indexOf("exchWebService-add-attachment-button") === -1 ) {
+			if (currentSet.indexOf("button-url") === 1
+					&& currentSet.indexOf("exchWebService-add-attachment-button") === -1) {
 				currentSet = currentSet + "exchWebService-add-attachment-button";
 			}
 
 			this._document.getElementById("exchWebService-add-attachment-button").hidden = false;
 
-			if(this._document.getElementById("options-attachments-menuitem")){
+			if (this._document.getElementById("options-attachments-menuitem")) {
 				this._document.getElementById("options-attachments-menuitem").setAttribute("label", this._document.getElementById("exchWebService-add-attachment-button").getAttribute("label"));
 				this._document.getElementById("options-attachments-menuitem").setAttribute("command", "exchWebService_addAttachmentDialog");
 			}
@@ -266,14 +266,12 @@ exchAttachments.prototype = {
 			this._document.getElementById("event-grid-attachment-row").collapsed = true;
 
 			this.addAttachmentsFromItem(item);
-		}
-		else {
+		} else {
 			this._document.getElementById("button-url").hidden = false;
 			this._document.getElementById("exchWebService-add-attachment-button").hidden = true;
 
 			this._document.getElementById("event-grid-attachment-row").collapsed = false ;
 		}
-
 	},
 
 	addAttachmentsFromItem: function _addAttachmentsFromItem(aItem)
