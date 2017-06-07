@@ -151,26 +151,18 @@ exchangeEventDialog.prototype = {
 
 			// Set HTML content editor
 
-			// If item contains already HTML content, just use it
 			let itemBodyEditor = this._document.getElementById("exchWebService-body-editor");
-			if (item.bodyType
-				&& item.bodyType.toLowerCase() === "html") {
+
+			// Try to read directly item body, otherwise fallback to item description property
+			if (item.body) {
 				itemBodyEditor.content = item.body;
+
+				// As this dialog set the bodyType, we check it to know if it's a new Item or not
+				this.newItem = item.bodyType.toLowerCase() !== "html";
 			}
 			else {
-				// If bodyType is not defined or not HTML, the item is interpreted as a new one,
-				// because our accept call back explecitly set the bodyType and define it as HTML
-				this.newItem = true;
-
-				// If the body is already filled and it contains HTML, save it to our body editor directly
-				if (item.body
-					&& item.body.toLowerCase().indexOf("<body>") > -1) {
-					itemBodyEditor.content = item.body;
-				}
-				// Otherwise try to convert it
-				else {
-					itemBodyEditor.content = this.globalFunctions.fromText2HTML(item.getProperty("DESCRIPTION"));
-				}
+				this._newItem = true;
+				itemBodyEditor.content = item.getProperty("DESCRIPTION");
 			}
 
 			// Display HTML content editor
