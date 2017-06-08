@@ -1,22 +1,20 @@
-#exchWebService-add-attachment-button {
-	-moz-image-region: rect(0px 96px 24px 72px);
-}
-#exchWebService-add-attachment-button[disabled="true"],
-#exchWebService-add-attachment-button[disabled="true"]:hover {
-	-moz-image-region: rect(48px 96px 72px 72px);
-}
-#exchWebService-add-attachment-button:hover {
-	-moz-image-region: rect(24px 96px 48px 72px);
+/*
+ * Should be synced with chrome://calendar/skin/calendar-event-dialog.css
+ * especially the #button-url rules (as it displays the attachment icon)
+ */
+
+@media not all and (-moz-mac-yosemite-theme) {
+  #exchWebService-add-attachment-button  {
+    list-style-image: url(chrome://calendar-common/skin/calendar-toolbar-osxlion.svg#attach);
+  }
 }
 
-toolbar[iconsize="small"] #exchWebService-add-attachment-button {
-	-moz-image-region: rect(0px 64px 16px 48px);
-}
-toolbar[iconsize="small"] #exchWebService-add-attachment-button[disabled="true"],
-toolbar[iconsize="small"] #exchWebService-add-attachment-button[disabled="true"]:hover {
-	-moz-image-region: rect(32px 64px 48px 48px);
-}
-toolbar[iconsize="small"] #exchWebService-add-attachment-button:hover {
-	-moz-image-region: rect(16px 64px 32px 48px);
+@media (-moz-mac-yosemite-theme) {
+  #exchWebService-add-attachment-button  {
+    list-style-image: url(chrome://calendar-common/skin/calendar-toolbar.svg#attach);
+  }
+
+toolbar[brighttext] #exchWebService-add-attachment-button {
+  list-style-image: url(chrome://calendar-common/skin/calendar-toolbar.svg#attach-inverted);
 }
 
