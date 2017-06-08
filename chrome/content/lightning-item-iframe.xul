@@ -31,9 +31,7 @@
  * ***** BEGIN LICENSE BLOCK *****/
 -->
 
-<?xml-stylesheet type="text/css" href="chrome://global/skin/"?>
-<?xml-stylesheet type="text/css" href="chrome://global/skin/xul.css"?>
-<?xml-stylesheet type="text/css" href="chrome://messenger/skin/messengercompose/messengercompose.css"?>
+<!-- CSS for the HTML content editor -->
 <?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/itemBodyEditor.css"?>
 <?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/exchWebServiceEditor.css"?>
 
