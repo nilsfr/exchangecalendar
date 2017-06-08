@@ -47,20 +47,56 @@
 <overlay id="exchWebService-attachment-view"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-    <script type="application/javascript" src="chrome://exchangecalendar/content/attachments-view.js"/> 
+    <script type="application/javascript" src="chrome://exchangecalendar/content/attachments-view.js"/>
 
     <!-- Commands -->
     <commandset id="itemCommands">
         <command id="exchWebService_openAttachment"
-                 oncommand="tmpAttachment.openAttachment();"/> 
+                 oncommand="tmpAttachment.openAttachment();"/>
         <command id="exchWebService_saveAttachment"
-                 oncommand="tmpAttachment.saveAttachment();"/> 
+                 oncommand="tmpAttachment.saveAttachment();"/>
         <command id="exchWebService_deleteAttachment"
-                 oncommand="tmpAttachment.deleteAttachment();"/> 
-	<command id="exchWebService_addAttachmentDialog"
-		 oncommand="tmpAttachment.addAttachmentDialog();"/>
+                 oncommand="tmpAttachment.deleteAttachment();"/>
+        <command id="exchWebService_addAttachmentDialog"
+                 oncommand="tmpAttachment.addAttachmentDialog();"/>
     </commandset>
 
+    <!-- Update windows menu -->
+    <toolbox id="event-toolbox">
+        <menubar id="event-menubar">
+            <menu id="options-menu">
+                <menupopup id="options-menupopup">
+                    <menu removeelement="true" id="options-attachments-menu" />
+
+                    <menuitem id="exchWebService-options-attachments"
+                              insertafter="options-attendees-menuitem"
+                              label="&exchWebServie.add.attachment.button.label;"
+                              command="exchWebService_addAttachmentDialog" />
+                </menupopup>
+            </menu>
+        </menubar>
+    </toolbox>
+
+    <!-- Update toolbar -->
+    <toolbarpalette id="event-toolbarpalette">
+        <toolbarbutton id="exchWebService-add-attachment-button"
+            mode="dialog"
+            class="cal-event-toolbarbutton toolbarbutton-1"
+            label="&exchWebServie.add.attachment.button.label;"
+            disable-on-readonly="true"
+            removable="true"
+            command="exchWebService_addAttachmentDialog"
+            hidden="true"/>
+    </toolbarpalette>
+
+    // Add exchangecalendar attachment button
+    // Note: defaultset needs to be synced with common-central/calendar/base/content/dialogs/calendar-event-dialog.xul
+     <toolbar id="event-toolbar"
+        defaultset="button-saveandclose,button-attendees,button-privacy,button-url,exchWebService-add-attachment-button,button-delete" >
+     </toolbar>
+
+
+    <!-- Update context popup-->
     <popupset id="event-dialog-popupset">
       <menupopup id="exchWebService-attachment-popup">
             <menuitem id="exchWebService-attachment-popup-open"
@@ -74,29 +110,13 @@
             <menuitem id="exchWebService-attachment-popup-delete"
                       label="&event.menu.item.delete.label;"
                       accesskey="&event.menu.item.delete.accesskey;"
-			disable-on-readonly="true"
+                      disable-on-readonly="true"
                       command="exchWebService_deleteAttachment"/>
       </menupopup>
     </popupset>
- 
-        <toolbarpalette id="event-toolbarpalette">
-		<toolbarbutton id="exchWebService-add-attachment-button" 
-			mode="dialog"
-			class="cal-event-toolbarbutton toolbarbutton-1"
-			label="&exchWebServie.add.attachment.button.label;"
-			disable-on-readonly="true"
-			removable="true"
-			command="exchWebService_addAttachmentDialog"
-			hidden="true"/>
-	</toolbarpalette>
 
-	// Add exchangecalendar attachment button
-	// Note: defaultset needs to be synced with common-central/calendar/base/content/dialogs/calendar-event-dialog.xul
-     <toolbar id="event-toolbar"
-		defaultset="button-saveandclose,button-attendees,button-privacy,button-url,exchWebService-add-attachment-button,button-delete" >
-     </toolbar> 
- 
+    <!-- Modify context menu for the attachment list inside the "Attachment" panel -->
+    <listbox id="attachment-link"
+             context="exchWebService-attachment-popup"/>
 
 </overlay>
-
-
