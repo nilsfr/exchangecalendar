@@ -13,7 +13,6 @@ overlay chrome://messenger/content/messenger.xul chrome://exchangecalendar/conte
 overlay chrome://calendar/content/calendar-task-view.xul chrome://exchangecalendar/content/messenger_task_delegation.xul
 overlay chrome://lightning/content/lightning-standalone.xul chrome://exchangecalendar/content/progress_panel.xul
 
-overlay chrome://calendar/content/calendar-event-dialog.xul chrome://exchangecalendar/content/calendar-event-dialog.xul
 overlay chrome://lightning/content/lightning-item-iframe.xul chrome://exchangecalendar/content/lightning-item-iframe.xul
 
 overlay chrome://calendar/content/calendar-event-dialog-reminder.xul chrome://exchangecalendar/content/calendar-event-dialog-reminder.xul

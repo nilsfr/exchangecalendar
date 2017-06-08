@@ -35,12 +35,15 @@
 <?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/itemBodyEditor.css"?>
 <?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/exchWebServiceEditor.css"?>
 
+<!-- Attachment overlay -->
+<?xul-overlay href="chrome://exchangecalendar/content/attachments-view.xul"?>
+
 <!DOCTYPE dialog [
 
 <!ENTITY % eventDialogDTD SYSTEM "chrome://calendar/locale/calendar-event-dialog.dtd">
     %eventDialogDTD;
 
-<!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/calendar-event-dialog.dtd" >
+<!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/lightning-item-iframe.dtd" >
     %dtd1;
 ]>
 
@@ -48,7 +51,7 @@
     xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
     <!-- Manage special Exchange items and provide attendee speicific dialog -->
-    <script type="application/javascript" src="chrome://exchangecalendar/content/calendar-event-dialog.js"/>
+    <script type="application/javascript" src="chrome://exchangecalendar/content/lightning-item-iframe.js"/>
 
     <!-- These rows correspond to the full form under the toolbar -->
     <rows id="event-grid-rows">
@@ -66,7 +69,7 @@
         <row id="event-grid-category-color-row">
             <hbox id="event-grid-category-box">
                 <menulist id="item-calendar"
-                    oncommand="exchToolsEventDialog.selectedCalendarChanged(this);" />
+                    oncommand="exchToolsEventDialog.selectedCalendarChanged(this); tmpAttachment.selectedCalendarChanged(this);" />
             </hbox>
         </row>
 
@@ -141,6 +144,8 @@
                     disable-on-readonly="true"
                     hidden="true"/>
             </tabpanel>
+
         </tabpanels>
     </tabbox>
+
 </overlay>
