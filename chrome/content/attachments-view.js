@@ -266,16 +266,31 @@ exchAttachments.prototype = {
 		if ((item.calendar) && (item.calendar.type == "exchangecalendar")) {
 			this.globalFunctions.LOG("  -- It is an Exchange Calendar event:"+item.title);
 
+			if (this._document.getElementById("event-grid-attachment-row")) {
+				this._document.getElementById("event-grid-attachment-row").collapsed = true;
 			}
 
+			// Modify context menu for the attachment list inside the "Attachment" panel
+			let attachmentListbox = this._document.getElementById("attachment-link");
 
-			// calendar-event-dialog (hide existing attachment view)
-			this._document.getElementById("event-grid-attachment-row").collapsed = true;
+			attachmentListbox.context = "exchWebService-attachment-popup" ;
+			attachmentListbox.onkeypress = function (aEvent) { self.onKeyPress(aEvent);  };
+			attachmentListbox.onclick = function (aEvent) { self.onSelect(aEvent);  };
+			attachmentListbox.ondblclick = function (aEvent) { self.onDblClick(aEvent); };
 
 			this.addAttachmentsFromItem(item);
 		} else {
+			if (this._document.getElementById("event-grid-attachment-row")) {
+				this._document.getElementById("event-grid-attachment-row").collapsed = false;
+			}
 
-			this._document.getElementById("event-grid-attachment-row").collapsed = false ;
+			// Modify context menu for the attachment list inside the "Attachment" panel
+			let attachmentListbox = this._document.getElementById("attachment-link");
+
+			attachmentListbox.context = "attachment-popup" ;
+			attachmentListbox.onkeypress="attachmentLinkKeyPress(event)" ;
+			attachmentListbox.onclick="attachmentClick(event);" ;
+			attachmentListbox.ondblclick="attachmentDblClick(event)" ;
 		}
 
 		// Add message listener to be able to receive message from parent window or tab

@@ -50,7 +50,7 @@
     <script type="application/javascript" src="chrome://exchangecalendar/content/attachments-view.js"/>
 
     <!-- Commands -->
-    <commandset id="itemCommands">
+    <commandset>
         <command id="exchWebService_openAttachment"
                  oncommand="tmpAttachment.openAttachment();"/>
         <command id="exchWebService_saveAttachment"
