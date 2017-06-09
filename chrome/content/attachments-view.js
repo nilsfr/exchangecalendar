@@ -262,34 +262,18 @@ exchAttachments.prototype = {
 
 		this.attachmentListboxVisible = false;
 
+		// We can't update toolbar from iframe
 		if ((item.calendar) && (item.calendar.type == "exchangecalendar")) {
 			this.globalFunctions.LOG("  -- It is an Exchange Calendar event:"+item.title);
 
-			let eventToolbar = this._document.getElementById("event-toolbar");
-
-			// If add url button was enabled, hidde it and show exchangecalendar attachment
-			this._document.getElementById("button-url").hidden = true;
-
-			let currentSet = eventToolbar.getAttribute("currentset");
-			if (currentSet.indexOf("button-url") === 1
-					&& currentSet.indexOf("exchWebService-add-attachment-button") === -1) {
-				currentSet = currentSet + "exchWebService-add-attachment-button";
 			}
 
-			this._document.getElementById("exchWebService-add-attachment-button").hidden = false;
-
-			if (this._document.getElementById("options-attachments-menuitem")) {
-				this._document.getElementById("options-attachments-menuitem").setAttribute("label", this._document.getElementById("exchWebService-add-attachment-button").getAttribute("label"));
-				this._document.getElementById("options-attachments-menuitem").setAttribute("command", "exchWebService_addAttachmentDialog");
-			}
 
 			// calendar-event-dialog (hide existing attachment view)
 			this._document.getElementById("event-grid-attachment-row").collapsed = true;
 
 			this.addAttachmentsFromItem(item);
 		} else {
-			this._document.getElementById("button-url").hidden = false;
-			this._document.getElementById("exchWebService-add-attachment-button").hidden = true;
 
 			this._document.getElementById("event-grid-attachment-row").collapsed = false ;
 		}
