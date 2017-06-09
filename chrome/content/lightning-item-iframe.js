@@ -250,6 +250,22 @@ exchangeEventDialog.prototype = {
 		}
 	},
 
+
+	/**
+	 * Receives asynchronous messages from the parent context that contains the iframe.
+	 *
+	 * @param {MessageEvent} aEvent  Contains the message being received
+	 */
+	receiveMessage: function _receiveMessage(aEvent) {
+		let validOrigin = gTabmail ? "chrome://messenger" : "chrome://calendar";
+		if (aEvent.origin !== validOrigin) {
+			return;
+		}
+		switch (aEvent.data.command) {
+			//case "exchWebService_addAttachmentDialog": this.addAttachmentDialog(); break;
+		}
+	},
+
 	/*
 	 * onLoad: setup event dialog window
 	 * - Update screen according to type of item (task / event)
@@ -265,12 +281,16 @@ exchangeEventDialog.prototype = {
 			return;
 		}
 
+		var self = this;
+
 		// Override dialog callback to add extra exchangecalendar information processing
 		this._oldCallback = this._window.onAcceptCallback;
-		var self = this;
 		this._window.onAcceptCallback = function(aItem, aCalendar, aOriginalItem, aIsClosing) {
 			self.onAcceptCallback(aItem, aCalendar, aOriginalItem, aIsClosing);
 		};
+
+		// Add message listener to be able to receive message from parent window or tab
+		window.addEventListener("message", function(aEvent) { self.receiveMessage(aEvent); }, false);
 
 		this._initialized = true;
 	},

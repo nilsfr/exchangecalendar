@@ -44,6 +44,7 @@ function exchAttachments(aDocument, aWindow)
 }
 
 exchAttachments.prototype = {
+	_initialized: false,
 
 	addAttachmentDialog: function _addAttachmentDialog()
 	{
@@ -227,14 +228,34 @@ exchAttachments.prototype = {
 		}
 	},
 
+	/**
+	 * Receives asynchronous messages from the parent context that contains the iframe.
+	 *
+	 * @param {MessageEvent} aEvent  Contains the message being received
+	 */
+	receiveMessage: function _receiveMessage(aEvent) {
+		let validOrigin = gTabmail ? "chrome://messenger" : "chrome://calendar";
+		if (aEvent.origin !== validOrigin) {
+			return;
+		}
+		switch (aEvent.data.command) {
+			case "exchWebService_addAttachmentDialog": this.addAttachmentDialog(); break;
+		}
+	},
+
 	onLoad: function _onLoad()
 	{
+		if(this._initialized){
+			return;
+		}
+
+		var self = this;
+
 		if (this._document.getElementById("calendar-task-tree")) {
 			this.globalFunctions.LOG("  -- calendar-task-tree --");
-			var self = this;
 			this._document.getElementById("calendar-task-tree").addEventListener("select", function(){ self.onSelectTask();}, true);
 			return;
-		} 
+		}
 
 		var args = this._window.arguments[0];
 		var item = args.calendarEvent;
@@ -272,6 +293,11 @@ exchAttachments.prototype = {
 
 			this._document.getElementById("event-grid-attachment-row").collapsed = false ;
 		}
+
+		// Add message listener to be able to receive message from parent window or tab
+		window.addEventListener("message", function(aEvent) { self.receiveMessage(aEvent); }, false);
+
+		this._initialized = true;
 	},
 
 	addAttachmentsFromItem: function _addAttachmentsFromItem(aItem)
