@@ -44,6 +44,7 @@ function exchAttachments(aDocument, aWindow)
 }
 
 exchAttachments.prototype = {
+	_initialized: false,
 
 	addAttachmentDialog: function _addAttachmentDialog()
 	{
@@ -227,45 +228,75 @@ exchAttachments.prototype = {
 		}
 	},
 
+	/**
+	 * Receives asynchronous messages from the parent context that contains the iframe.
+	 *
+	 * @param {MessageEvent} aEvent  Contains the message being received
+	 */
+	receiveMessage: function _receiveMessage(aEvent) {
+		let validOrigin = gTabmail ? "chrome://messenger" : "chrome://calendar";
+		if (aEvent.origin !== validOrigin) {
+			return;
+		}
+		switch (aEvent.data.command) {
+			case "exchWebService_addAttachmentDialog": this.addAttachmentDialog(); break;
+		}
+	},
+
 	onLoad: function _onLoad()
 	{
+		if(this._initialized){
+			return;
+		}
+
+		var self = this;
+
 		if (this._document.getElementById("calendar-task-tree")) {
 			this.globalFunctions.LOG("  -- calendar-task-tree --");
-			var self = this;
 			this._document.getElementById("calendar-task-tree").addEventListener("select", function(){ self.onSelectTask();}, true);
 			return;
-		} 
+		}
 
 		var args = this._window.arguments[0];
 		var item = args.calendarEvent;
 
-		//this.globalFunctions.LOG("  -- onLoad 2 ("+this.globalFunctions.STACKshort()+")");
 		this.attachmentListboxVisible = false;
 
+		// We can't update toolbar from iframe
 		if ((item.calendar) && (item.calendar.type == "exchangecalendar")) {
 			this.globalFunctions.LOG("  -- It is an Exchange Calendar event:"+item.title);
 
-			
-			try {
-				// Hide Lightning URL button 
-				this._document.getElementById("button-url").hidden = true;
-				this._document.getElementById("event-toolbar").setAttribute("currentset", "button-save,button-attendees,button-privacy,button-url,exchWebService-add-attachment-button,button-delete");
-				this._document.getElementById("exchWebService-add-attachment-button").hidden = false;
-				if(this._document.getElementById("options-attachments-menuitem")){
-				this._document.getElementById("options-attachments-menuitem").setAttribute("label", this._document.getElementById("exchWebService-add-attachment-button").getAttribute("label"));
-				this._document.getElementById("options-attachments-menuitem").setAttribute("command", "exchWebService_addAttachmentDialog");
-				}
+			if (this._document.getElementById("event-grid-attachment-row")) {
+				this._document.getElementById("event-grid-attachment-row").collapsed = true;
 			}
-			catch (ex) {this.globalFunctions.LOG("  -- Could not add exchange attachment buttons:"+ex.toString());}
 
-			// calendar-event-dialog (hide existing attachment view)
-			try {
-				this._document.getElementById("event-grid-attachment-row").setAttribute("collapsed", "true");
-			}
-			catch (ex) {}
+			// Modify context menu for the attachment list inside the "Attachment" panel
+			let attachmentListbox = this._document.getElementById("attachment-link");
+
+			attachmentListbox.context = "exchWebService-attachment-popup" ;
+			attachmentListbox.onkeypress = function (aEvent) { self.onKeyPress(aEvent);  };
+			attachmentListbox.onclick = function (aEvent) { self.onSelect(aEvent);  };
+			attachmentListbox.ondblclick = function (aEvent) { self.onDblClick(aEvent); };
 
 			this.addAttachmentsFromItem(item);
+		} else {
+			if (this._document.getElementById("event-grid-attachment-row")) {
+				this._document.getElementById("event-grid-attachment-row").collapsed = false;
+			}
+
+			// Modify context menu for the attachment list inside the "Attachment" panel
+			let attachmentListbox = this._document.getElementById("attachment-link");
+
+			attachmentListbox.context = "attachment-popup" ;
+			attachmentListbox.onkeypress="attachmentLinkKeyPress(event)" ;
+			attachmentListbox.onclick="attachmentClick(event);" ;
+			attachmentListbox.ondblclick="attachmentDblClick(event)" ;
 		}
+
+		// Add message listener to be able to receive message from parent window or tab
+		window.addEventListener("message", function(aEvent) { self.receiveMessage(aEvent); }, false);
+
+		this._initialized = true;
 	},
 
 	addAttachmentsFromItem: function _addAttachmentsFromItem(aItem)
@@ -584,6 +615,6 @@ exchAttachments.prototype = {
 }
 
 var tmpAttachment = new exchAttachments(document, window);
-window.addEventListener("load", function _onLoad() { window.removeEventListener("load",arguments.callee,false); tmpAttachment.onLoad(); }, true);
+window.addEventListener("load", function _onLoad() { tmpAttachment.onLoad(); }, false);
 
 
