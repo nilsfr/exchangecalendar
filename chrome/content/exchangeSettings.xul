@@ -307,7 +307,7 @@
 						<vbox>
 							<hbox>
 								<checkbox label="Cache" id="exchWebService-offlineCacheproperties-cacheState"
-									command="exchWebService_cmd_offlineCache" disabled="true"/>
+									command="exchWebService_cmd_offlineCache"/>
 							</hbox>
 						</vbox>
 						<vbox id="exchWebService-offlineCacheproperties-detaisvbox" collapsed="true">					
