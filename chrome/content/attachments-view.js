@@ -267,30 +267,30 @@ exchAttachments.prototype = {
 			this.globalFunctions.LOG("  -- It is an Exchange Calendar event:"+item.title);
 
 			if (this._document.getElementById("event-grid-attachment-row")) {
-				this._document.getElementById("event-grid-attachment-row").collapsed = true;
+				this._document.getElementById("event-grid-attachment-row").setAttribute("collapsed", true);
 			}
 
 			// Modify context menu for the attachment list inside the "Attachment" panel
 			let attachmentListbox = this._document.getElementById("attachment-link");
 
-			attachmentListbox.context = "exchWebService-attachment-popup" ;
-			attachmentListbox.onkeypress = function (aEvent) { self.onKeyPress(aEvent);  };
-			attachmentListbox.onclick = function (aEvent) { self.onSelect(aEvent);  };
-			attachmentListbox.ondblclick = function (aEvent) { self.onDblClick(aEvent); };
+			attachmentListbox.setAttribute("context", "exchWebService-attachment-popup") ;
+			attachmentListbox.setAttribute("onkeypress", function (aEvent) { self.onKeyPress(aEvent);  }) ;
+			attachmentListbox.setAttribute("onclick", function (aEvent) { self.onSelect(aEvent);  }) ;
+			attachmentListbox.setAttribute("ondblclick", function (aEvent) { self.onDblClick(aEvent); }) ;
 
 			this.addAttachmentsFromItem(item);
 		} else {
 			if (this._document.getElementById("event-grid-attachment-row")) {
-				this._document.getElementById("event-grid-attachment-row").collapsed = false;
+				this._document.getElementById("event-grid-attachment-row").setAttribute("collapsed", false);
 			}
 
 			// Modify context menu for the attachment list inside the "Attachment" panel
 			let attachmentListbox = this._document.getElementById("attachment-link");
 
-			attachmentListbox.context = "attachment-popup" ;
-			attachmentListbox.onkeypress="attachmentLinkKeyPress(event)" ;
-			attachmentListbox.onclick="attachmentClick(event);" ;
-			attachmentListbox.ondblclick="attachmentDblClick(event)" ;
+			attachmentListbox.setAttribute("context", "attachment-popup") ;
+			attachmentListbox.setAttribute("onkeypress", "attachmentLinkKeyPress(event)") ;
+			attachmentListbox.setAttribute("onclick", "attachmentClick(event);") ;
+			attachmentListbox.setAttribute("ondblclick", "attachmentDblClick(event)") ;
 		}
 
 		// Add message listener to be able to receive message from parent window or tab
