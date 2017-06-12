@@ -161,7 +161,7 @@ exchangeEventDialog.prototype = {
 				this.newItem = item.bodyType.toLowerCase() !== "html";
 			}
 			else {
-				this._newItem = true;
+				this.newItem = true;
 				itemBodyEditor.content = item.getProperty("DESCRIPTION");
 			}
 
