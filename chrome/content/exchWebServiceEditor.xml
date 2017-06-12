@@ -195,8 +195,13 @@
     </content>
 	<implementation>
 		<constructor><![CDATA[
-			this.editorElement = document.getAnonymousElementByAttribute(this, "anonid", "editor");
 			var self=this;
+
+			// To be able to set correct HTML content
+			this.globalFunctions = Components.classes["@1st-setup.nl/global/functions;1"]
+				.getService(Components.interfaces.mivFunctions);
+
+			this.editorElement = document.getAnonymousElementByAttribute(this, "anonid", "editor");
 			if (this.editorElement) {
 				this.commandManager = this.editorElement.commandManager;
 				this.editorClickFunction = function(aEvent) { self.onClickEditor(aEvent);};
@@ -214,15 +219,12 @@
 				this.editorElement.addEventListener("mouseover", this.editorMouseOver , false);
 				this.editorElement.addEventListener("mouseout", this.editorMouseOut, false);
 
+				// Set default document to empty HTML content
+				this.editorElement.contentDocument.documentElement.innerHTML = this.globalFunctions.fromText2HTML(null);
 			}
 
 			this.atomService = Components.classes["@mozilla.org/atom-service;1"]
 				.getService(Components.interfaces.nsIAtomService);
-
-			// Set initial content to empty HTML body
-			this.globalFunctions = Components.classes["@1st-setup.nl/global/functions;1"]
-				.getService(Components.interfaces.mivFunctions);
-			this.editorElement.contentDocument.documentElement.innerHTML = this.globalFunctions.fromText2HTML(null);
 
 			this.connectButtons("FormatToolbar");
 			// Connect color button
