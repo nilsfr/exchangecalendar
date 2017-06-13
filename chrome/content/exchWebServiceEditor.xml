@@ -105,7 +105,7 @@
 					state="state_all"/>
 				<xul:toolbarseparator class="toolbarseparator-standard"/>
 				<xul:toolbaritem class="formatting-button">
-					<xul:stack align="enter" state="rgb(102,102,102)">
+					<xul:stack align="center" state="rgb(102,102,102)">
 						<xul:box style="background-color:#FFFFFF"
 							anonid="cmd_backgroundColor"
 							class="color-button"
