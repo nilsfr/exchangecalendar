@@ -36,7 +36,12 @@
           xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	<binding id="exchWebServiceEditor">
 
-    <content>
+	<!-- CSS needed to correctly display color buttons (font and background) -->
+	<resources>
+		<stylesheet src="chrome://messenger/skin/messengercompose/messengercompose.css" />
+	</resources>
+
+	<content>
 
 	<xul:vbox flex="1">
 		<xul:toolbox anonid="FormatToolbox" mode="icons">
@@ -192,7 +197,7 @@
 			flex="1"/>
 	</xul:vbox>
 
-    </content>
+	</content>
 	<implementation>
 		<constructor><![CDATA[
 			var self=this;
