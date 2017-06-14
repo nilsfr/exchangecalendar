@@ -374,7 +374,7 @@
 				this.functions[aStore] = {};
 			}
 			this.functions[aStore][aAnonId] = function() { self.toggleButton(aAnonId);};
-			document.getAnonymousElementByAttribute(this, "anonid", aAnonId).addEventListener("command", this.functions[aStore][aAnonId], true);
+			document.getAnonymousElementByAttribute(this, "anonid", aAnonId).addEventListener("command", this.functions[aStore][aAnonId], false);
 		]]></body>
 		</method>
 
