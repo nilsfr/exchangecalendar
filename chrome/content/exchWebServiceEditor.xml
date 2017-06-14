@@ -210,13 +210,13 @@
 			if (this.editorElement) {
 				this.commandManager = this.editorElement.commandManager;
 				this.editorClickFunction = function(aEvent) { self.onClickEditor(aEvent);};
-				this.editorElement.addEventListener("click", this.editorClickFunction, true);
+				this.editorElement.addEventListener("click", this.editorClickFunction, false);
 
 				this.editorDblClickFunction = function(aEvent) { self.onDblClickEditor(aEvent);};
-				this.editorElement.addEventListener("dblclick", this.editorDblClickFunction, true);
+				this.editorElement.addEventListener("dblclick", this.editorDblClickFunction, false);
 
 				this.editorKeyPressFunction = function(aEvent) { self.onKeyPressEditor(aEvent);};
-				this.editorElement.addEventListener("keyup", this.editorKeyPressFunction, true);
+				this.editorElement.addEventListener("keyup", this.editorKeyPressFunction, false);
 
 				this.editorMouseOver = function(aEvent) { self.onMouseOver(aEvent);};
 				this.editorElement.addEventListener("mouseover", this.editorMouseOver , false);
@@ -236,11 +236,11 @@
 			// Connect color button
 			this.bgColorFunction = function(){ self.selectColor("cmd_backgroundColor");};
 			var bgColorElement = document.getAnonymousElementByAttribute(this, "anonid", "cmd_backgroundColor")
-			bgColorElement.addEventListener("click", this.bgColorFunction, true);
+			bgColorElement.addEventListener("click", this.bgColorFunction, false);
 
 			this.fontColorFunction = function(){ self.selectColor("cmd_fontColor");};
 			var fontColorElement = document.getAnonymousElementByAttribute(this, "anonid", "cmd_fontColor")
-			fontColorElement.addEventListener("click", this.fontColorFunction, true);
+			fontColorElement.addEventListener("click", this.fontColorFunction, false);
 
 			this.highlightColor = "#FFFFFF";
 			this.fontColor = "#000000";
@@ -248,21 +248,21 @@
 			// Connect FontFace popup menu
 			this.menuPopupFunction = function(event){ self.selectFont("cmd_fontFace", event.target.value);};
 			this.menuPopup = document.getAnonymousElementByAttribute(this, "anonid", "fontFaceSelect");
-			this.menuPopup.addEventListener("command", this.menuPopupFunction, true);
+			this.menuPopup.addEventListener("command", this.menuPopupFunction, false);
 			this.fillFontFace();
 
 			// Connect HyperLink buttons
 			this.addLinkFunction = function(){ self.addLink();};
 			var addLinkElement = document.getAnonymousElementByAttribute(this, "anonid", "cmd_add_link")
-			addLinkElement.addEventListener("click", this.addLinkFunction, true);
+			addLinkElement.addEventListener("click", this.addLinkFunction, false);
 
 			this.removeLinkFunction = function(){ self.removeLink();};
 			var removeLinkElement = document.getAnonymousElementByAttribute(this, "anonid", "cmd_remove_link")
-			removeLinkElement.addEventListener("click", this.removeLinkFunction, true);
+			removeLinkElement.addEventListener("click", this.removeLinkFunction, false);
 
 			this.editLinkFunction = function(){ self.editLink();};
 			var editLinkElement = document.getAnonymousElementByAttribute(this, "anonid", "cmd_edit_link")
-			editLinkElement.addEventListener("click", this.editLinkFunction, true);
+			editLinkElement.addEventListener("click", this.editLinkFunction, false);
 		]]></constructor>
 
 		<destructor><![CDATA[
@@ -270,7 +270,7 @@
 				this.editorElement.removeEventListener("click", this.editorClickFunction, false);
 				this.editorElement.removeEventListener("keyup", this.editorKeyPressFunction, false);
 
-				this.editorElement.removeEventListener("dblclick", this.editorDblClickFunction, true);
+				this.editorElement.removeEventListener("dblclick", this.editorDblClickFunction, false);
 
 				this.editorElement.removeEventListener("mouseover", this.editorMouseOver , false);
 				this.editorElement.removeEventListener("mouseout", this.editorMouseOut, false);
@@ -279,8 +279,10 @@
 			this.removeAllCommandListenerToolbar("FormatToolbar");
 
 			// Disconnect color button
-			document.getAnonymousElementByAttribute(this, "anonid", "cmd_backgroundColor").removeEventListener("click", this.bgColorFunction, false);
-			document.getAnonymousElementByAttribute(this, "anonid", "cmd_fontColor").removeEventListener("click", this.fontColorFunction, false);
+			document.getAnonymousElementByAttribute(this, "anonid", "cmd_backgroundColor")
+				.removeEventListener("click", this.bgColorFunction, false);
+			document.getAnonymousElementByAttribute(this, "anonid", "cmd_fontColor")
+				.removeEventListener("click", this.fontColorFunction, false);
 
 			// Disconnect Font face button
 			if (this.menuPopupFunction) {
@@ -288,9 +290,12 @@
 			}
 
 			// Disconnect HyperLink buttons
-			document.getAnonymousElementByAttribute(this, "anonid", "cmd_add_link").removeEventListener("click", this.addLinkFunction, true);
-			document.getAnonymousElementByAttribute(this, "anonid", "cmd_remove_link").removeEventListener("click", this.removeLinkFunction, true);
-			document.getAnonymousElementByAttribute(this, "anonid", "cmd_edit_link").removeEventListener("click", this.editLinkFunction, true);
+			document.getAnonymousElementByAttribute(this, "anonid", "cmd_add_link")
+				.removeEventListener("click", this.addLinkFunction, false);
+			document.getAnonymousElementByAttribute(this, "anonid", "cmd_remove_link")
+				.removeEventListener("click", this.removeLinkFunction, false);
+			document.getAnonymousElementByAttribute(this, "anonid", "cmd_edit_link")
+				.removeEventListener("click", this.editLinkFunction, false);
 		]]></destructor>
 			
 		<property name="content">
