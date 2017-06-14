@@ -219,9 +219,9 @@
 				this.editorElement.addEventListener("keyup", this.editorKeyPressFunction, true);
 
 				this.editorMouseOver = function(aEvent) { self.onMouseOver(aEvent);};
-				this.editorMouseOut = function(aEvent) { self.onMouseOut(aEvent);};
-
 				this.editorElement.addEventListener("mouseover", this.editorMouseOver , false);
+
+				this.editorMouseOut = function(aEvent) { self.onMouseOut(aEvent);};
 				this.editorElement.addEventListener("mouseout", this.editorMouseOut, false);
 
 				// Set default document to empty HTML content
