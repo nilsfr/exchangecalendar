@@ -231,7 +231,8 @@
 			this.atomService = Components.classes["@mozilla.org/atom-service;1"]
 				.getService(Components.interfaces.nsIAtomService);
 
-			this.connectButtons("FormatToolbar");
+			this.connectAllCommandListenerToolbar("FormatToolbar");
+
 			// Connect color button
 			this.bgColorFunction = function(){ self.selectColor("cmd_backgroundColor");};
 			var bgColorElement = document.getAnonymousElementByAttribute(this, "anonid", "cmd_backgroundColor")
@@ -244,12 +245,13 @@
 			this.highlightColor = "#FFFFFF";
 			this.fontColor = "#000000";
 
-			// Fill fontfac popup menu
+			// Connect FontFace popup menu
 			this.menuPopupFunction = function(event){ self.selectFont("cmd_fontFace", event.target.value);};
 			this.menuPopup = document.getAnonymousElementByAttribute(this, "anonid", "fontFaceSelect");
 			this.menuPopup.addEventListener("command", this.menuPopupFunction, true);
 			this.fillFontFace();
 
+			// Connect HyperLink buttons
 			this.addLinkFunction = function(){ self.addLink();};
 			var addLinkElement = document.getAnonymousElementByAttribute(this, "anonid", "cmd_add_link")
 			addLinkElement.addEventListener("click", this.addLinkFunction, true);
@@ -273,12 +275,19 @@
 				this.editorElement.removeEventListener("mouseover", this.editorMouseOver , false);
 				this.editorElement.removeEventListener("mouseout", this.editorMouseOut, false);
 			}
-			this.disconnectButtons("FormatToolbar");
+
+			this.removeAllCommandListenerToolbar("FormatToolbar");
+
+			// Disconnect color button
 			document.getAnonymousElementByAttribute(this, "anonid", "cmd_backgroundColor").removeEventListener("click", this.bgColorFunction, false);
 			document.getAnonymousElementByAttribute(this, "anonid", "cmd_fontColor").removeEventListener("click", this.fontColorFunction, false);
+
+			// Disconnect Font face button
 			if (this.menuPopupFunction) {
 				this.menuPopup.removeEventListener("command", this.menuPopupFunction, false);
 			}
+
+			// Disconnect HyperLink buttons
 			document.getAnonymousElementByAttribute(this, "anonid", "cmd_add_link").removeEventListener("click", this.addLinkFunction, true);
 			document.getAnonymousElementByAttribute(this, "anonid", "cmd_remove_link").removeEventListener("click", this.removeLinkFunction, true);
 			document.getAnonymousElementByAttribute(this, "anonid", "cmd_edit_link").removeEventListener("click", this.editLinkFunction, true);
@@ -335,7 +344,7 @@
 		]]></body>
 		</method>
 
-		<method name="connectButtons">
+		<method name="connectAllCommandListenerToolbar">
 			<parameter name="aAnonId" />
 			<body><![CDATA[
 			var toolbar = document.getAnonymousElementByAttribute(this, "anonid", aAnonId);
@@ -348,14 +357,14 @@
 				var toolbarButtons = toolbar.getElementsByTagName("xul:toolbarbutton");
 				for (var i=0; i<toolbarButtons.length;i++) {
 					if ((toolbarButtons[i].hasAttribute("connect")) && (toolbarButtons[i].getAttribute("connect") === "true")) {
-						this.connectButton(toolbarButtons[i].getAttribute("anonid"), aAnonId);
+						this.addCommandListener(toolbarButtons[i].getAttribute("anonid"), aAnonId);
 					}
 				}
 			}
 		]]></body>
 		</method>
 
-		<method name="connectButton">
+		<method name="addCommandListener">
 			<parameter name="aAnonId" />
 			<parameter name="aStore" />
 			<body><![CDATA[
@@ -369,18 +378,18 @@
 		]]></body>
 		</method>
 
-		<method name="disconnectButtons">
+		<method name="removeAllCommandListenerToolbar">
 			<parameter name="aAnonId" />
 			<body><![CDATA[
 			if ((this.functions) && (this.functions[aAnonId])) {
 				for (var name in this.functions[aAnonId]) {
-					this.disconnectButton(name, aAnonId);
+					this.removeCommandListener(name, aAnonId);
 				}
 			}
 		]]></body>
 		</method>
 
-		<method name="disconnectButton">
+		<method name="removeCommandListener">
 			<parameter name="aAnonId" />
 			<parameter name="aStore" />
 			<body><![CDATA[
