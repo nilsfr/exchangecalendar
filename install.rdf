@@ -42,6 +42,7 @@ Some of the icons and images used are from the Fugue Icons Collection made by Yu
     <em:translator>Björn Töpper (de)</em:translator>
     <em:translator>Hiroshi Miura (ja-JP)</em:translator>
     <em:translator>Alexey Sinitsyn (ru)</em:translator>
+    <em:translator>Alessandro Menti (it-IT)</em:translator>
     <em:homepageURL>http://www.1st-setup.nl/wordpress/?page_id=133</em:homepageURL>
     <em:iconURL>chrome://exchangecalendar-common/skin/images/lightningexchangecalendar.png</em:iconURL>
     <em:type>2</em:type> <!-- type: extension -->
@@ -56,7 +57,7 @@ Some of the icons and images used are from the Fugue Icons Collection made by Yu
 You can view, delete, create and update calendar and task/todo items. And manage "Out of Office" settings.
 You can read and use contacts and global addres list contacts for address autcompletion.
 
-Dutch, French, English, German, Swedish and Japanese localizations.
+Dutch, French, English, German, Swedish, Japanese and Italian localizations.
 
 Some of the icons and images used are from the Fugue Icons Collection made by Yusuke Kamiyamane (http://p.yusukekamiyamane.com/)</em:description>
 		</Description>
@@ -123,5 +124,19 @@ Sommige van de iconen en plaatjes komen uit de Fugue Icons collectie gemaakt doo
 		</Description>
 	</em:localized>
 
+	<em:localized>
+		<Description>
+			<em:locale>it-IT</em:locale>
+			<em:name>Provider Exchange EWS</em:name>
+			<em:description>Consente di sincronizzare i propri Calendario, Attività e Contatti con un server Microsoft Exchange 2007/2010/2013 EWS da Lightning.
+
+È possibile visualizzare, eliminare, creare e aggiornare elementi del Calendario e Attività/Da fare e gestire le opzioni Fuori sede.
+È possibile leggere e utilizzare i propri contatti e i contatti della Global Address List per l'autocompletamento degli indirizzi.
+
+Localizzato in olandese, francese, inglese, tedesco, svedese, giapponese e italiano.
+
+Alcune delle icone e immagini utilizzate sono state tratte dalla Fugue Icons Collection di Yusuke Kamiyamane (http://p.yusukekamiyamane.com/)</em:description>
+		</Description>
+	</em:localized>
 	</Description>
 </RDF>
