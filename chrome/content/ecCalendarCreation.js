@@ -182,7 +182,7 @@ exchCalendarCreation.prototype = {
 
 		calPrefs.setCharPref("name", this._document.getElementById("calendar-name").value);
 
-		newCal.setProperty("color", this._document.getElementById('calendar-color').color);
+		newCal.setProperty("color", this._document.getElementById('calendar-color').value);
 		if (!this._document.getElementById("fire-alarms").checked) {
 			newCal.setProperty("suppressAlarms", true);
 		}
