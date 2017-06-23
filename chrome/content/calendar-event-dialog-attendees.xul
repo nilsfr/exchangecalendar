@@ -40,6 +40,5 @@
 
 <overlay id="forwardOnRightClick"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	<script type="application/javascript" src="chrome://exchangecalendar/content/calendar-event-dialog-attendees.js"/>
-   
+
 </overlay>
