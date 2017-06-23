@@ -147,50 +147,65 @@ exchCalendarCreation.prototype = {
 	
 	},
 
+	/*
+	 * saveSettings: save calendar settings after calendar wizard completed
+	 *
+	 * Lightning original code to save calendar can be found in:
+	 * comm-central/calendar/resources/content/calendarCreation.js
+	 */
 	saveSettings: function _saveSettings()
 	{
 		this.globalFunctions.LOG("saveSettings Going to create the calendar in prefs.js");
 
-		// Calculate the new calendar.id
-		var newCalId = this.globalFunctions.getUUID();
+		// Calculate the new calendar.id and properties
+		let newCalId = this.globalFunctions.getUUID();
+		let newCalName = this._document.getElementById("calendar-name").value;
+		let newCalColor = this._document.getElementById("calendar-color").value;
 
 		// Save settings in dialog to new cal id.
 		tmpSettingsOverlay.exchWebServicesSaveExchangeSettingsByCalId(newCalId);
 
 		// Need to save the useOfflineCache preference separetly because it is not part of the main.
 		this.prefs = Cc["@mozilla.org/preferences-service;1"]
-	                    .getService(Ci.nsIPrefService)
-			    .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl."+newCalId+".");
+			.getService(Ci.nsIPrefService)
+			.getBranch("extensions.exchangecalendar@extensions.1st-setup.nl."+newCalId+".");
 		this.prefs.setBoolPref("useOfflineCache", this._document.getElementById("exchange-cache").checked);
 		this.prefs.setIntPref("exchangePrefVersion", 1);
 
 		// We create a new URI for this calendar which will contain the calendar.id
-		var ioService = Cc["@mozilla.org/network/io-service;1"]  
-				.getService(Ci.nsIIOService);  
-		var tmpURI = ioService.newURI("https://auto/"+newCalId, null, null);  
+		var ioService = Cc["@mozilla.org/network/io-service;1"]
+				.getService(Ci.nsIIOService);
+		var tmpURI = ioService.newURI("https://auto/"+newCalId, null, null);
 
+		// Register calendar to global settings
+		var calPrefs = Cc["@mozilla.org/preferences-service;1"]
+			.getService(Ci.nsIPrefService)
+			.getBranch("calendar.registry."+newCalId+".");
+		calPrefs.setCharPref("name", newCalName);
+
+		// Create the new calendar object
+		// Should be synced with Lightning doCreateCalendar() code
 		var calManager = Cc["@mozilla.org/calendar/manager;1"]
 			.getService(Ci.calICalendarManager);
+
 		var newCal = calManager.createCalendar("exchangecalendar", tmpURI);
 
 		newCal.id = newCalId;
-		newCal.name = this._document.getElementById("calendar-name").value;
+		newCal.name = newCalName;
 
-		var calPrefs = Cc["@mozilla.org/preferences-service;1"]
-		            .getService(Ci.nsIPrefService)
-			    .getBranch("calendar.registry."+newCalId+".");
+		newCal.setProperty("color", newCalColor);
 
-		calPrefs.setCharPref("name", this._document.getElementById("calendar-name").value);
+		newCal.setProperty("cache.enabled", false);
 
-		newCal.setProperty("color", this._document.getElementById('calendar-color').value);
 		if (!this._document.getElementById("fire-alarms").checked) {
 			newCal.setProperty("suppressAlarms", true);
 		}
+		// End of sync
 
+		var emailCalendarIdentity = this._document.getElementById("email-identity-menulist").selectedItem;
 
-		var selItem = this._document.getElementById("email-identity-menulist").selectedItem;
-		if (selItem) {
-			var identity = selItem.getAttribute("value");
+		if (emailCalendarIdentity) {
+			var identity = emailCalendarIdentity.getAttribute("value");
 		}
 		else {
 			var identity = "";
@@ -199,13 +214,11 @@ exchCalendarCreation.prototype = {
 		newCal.setProperty("imip.identity.key", identity); 
 
 
-		newCal.setProperty("cache.enabled", false);
-
 		Cc["@mozilla.org/preferences-service;1"]
-	                    .getService(Ci.nsIPrefService).savePrefFile(null);
+			.getService(Ci.nsIPrefService).savePrefFile(null);
 
+		// Finally register completly the new calendar
 		calManager.registerCalendar(newCal);
-
 	},
 }
 
