@@ -1,6 +1,17 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.0.0-beta3] - 2017-06-25
+### Added
+- Added Italian translation #22
+
+### Changed
+- Updated README.md #26, master
+
+### Fixed
+- Colorpick on calender creation doesn't work #19 
+- Can't update tasks/events descriptions #5
+
 ## [4.0.0-beta2] - 2017-06-10
 ### Fixed
 - Opening and working with Attachment dialog #12
