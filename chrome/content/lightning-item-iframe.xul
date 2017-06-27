@@ -142,7 +142,7 @@
                     flex="1"
                     insertafter="item-description"
                     disable-on-readonly="true"
-                    hidden="true"/>
+                    collapsed="true"/>
             </tabpanel>
 
         </tabpanels>

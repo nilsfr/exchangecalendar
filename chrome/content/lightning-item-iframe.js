@@ -151,7 +151,7 @@ exchangeEventDialog.prototype = {
 				this._document.getElementById("item-description").hidden = true;
 
 				// Display our own HTML content editor
-				itemBodyEditor.hidden = false;
+				itemBodyEditor.setAttribute("collapsed", "false");;
 
 				itemBodyEditor.setAttribute("scrollbars","yes");
 			}
@@ -256,7 +256,7 @@ exchangeEventDialog.prototype = {
 		if (aCalendar.type !== "exchangecalendar") {
 			// Hidde HTML content editor
 			this._document.getElementById("item-description").hidden = false;
-			this._document.getElementById("exchWebService-body-editor").hidden = true;
+			this._document.getElementById("exchWebService-body-editor").setAttribute("collapsed", "true");
 		}
 	},
 
