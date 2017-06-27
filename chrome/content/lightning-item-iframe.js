@@ -75,20 +75,20 @@ exchangeEventDialog.prototype = {
 				aItem.mileage = this._document.getElementById("exchWebService-mileage-count").value;
 				aItem.billingInformation = this._document.getElementById("exchWebService-billingInformation-count").value;
 				aItem.companies = this._document.getElementById("exchWebService-companies-count").value;
+			}
 
-				// Copy content from HTML editor
-				try{
-					if (this.newItem) {
-						aItem.bodyType = "HTML";
-						aItem.body = this._document.getElementById("exchWebService-body-editor").content;
-						this.newItem = false;
-					}
-					else if (aItem.bodyType === "HTML") {
-						aItem.body = this._document.getElementById("exchWebService-body-editor").content;
-					}
-				} catch(err) {
-					dump("Error saving content\n");
+			// Copy content from HTML editor
+			try{
+				if (this.newItem) {
+					aItem.bodyType = "HTML";
+					aItem.body = this._document.getElementById("exchWebService-body-editor").content;
+					this.newItem = false;
 				}
+				else if (aItem.bodyType === "HTML") {
+					aItem.body = this._document.getElementById("exchWebService-body-editor").content;
+				}
+			} catch(err) {
+				dump("Error saving content\n");
 			}
 		}
 
