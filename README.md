@@ -1,4 +1,4 @@
-Exchange Calendar is an **add-on for
+Exchange EWS Provider is an **add-on for
 [Thunderbird](https://mozilla.org/thunderbird) and
 [Lightning](https://mozilla.org/calendar)** that provides
 **[Microsoft Exchange](http://microsoft.com/exchange) calendar
