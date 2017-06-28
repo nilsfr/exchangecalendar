@@ -25,10 +25,10 @@
     </em:targetApplication>
 
     <em:name>Exchange EWS Provider</em:name>
-    <em:description>Allows you to sync Calendar and Tasks with your Microsoft Exchange 2007/2010/2013 EWS server from within lightning.
-You can also search your contacts folder and the Exchange Global Address List (Read-Only).
+    <em:description>Allows you to sync calendars, tasks, and contacts with your Microsoft Exchange 2007/2010/2013 EWS server from within Lightning.
 
-You can view, delete, create and update calendar and task/todo items. And manage "Out of Office" settings.
+You can view, delete, create, and update calendar and task/todo items, and manage "out of office" settings.
+You can read and use contacts and global address list contacts for address autcompletion.
 
 Dutch, French, English, German, Swedish and Japanese localizations.
 
@@ -51,10 +51,10 @@ Some of the icons and images used are from the Fugue Icons Collection made by Yu
 		<Description>
 			<em:locale>en-US</em:locale>
 			<em:name>Exchange EWS Provider</em:name>
-			<em:description>Allows you to sync Calendar, Tasks and Contacts with your Microsoft Exchange 2007/2010/2013 EWS server from within lightning.
+			<em:description>Allows you to sync calendars, tasks, and contacts with your Microsoft Exchange 2007/2010/2013 EWS server from within Lightning.
 
-You can view, delete, create and update calendar and task/todo items. And manage "Out of Office" settings.
-You can read and use contacts and global addres list contacts for address autcompletion.
+You can view, delete, create, and update calendar and task/todo items, and manage "out of office" settings.
+You can read and use contacts and global address list contacts for address autcompletion.
 
 Dutch, French, English, German, Swedish and Japanese localizations.
 
