@@ -1,6 +1,6 @@
  <!ENTITY rtews.selectaccountdesc "Select Microsoft Exchange mail account for which to configure.">
  <!ENTITY rtews.accconfigured "Account already configured">
- <!ENTITY rtews.dicoverdesc "You may choose to autodiscover the Microsoft Exchange Server (EWS) URL or configure it manually">
+ <!ENTITY rtews.dicoverdesc "You may choose to autodiscover the Exchange Web Server (EWS) URL or configure it manually">
  <!ENTITY rtews.dicoverdesc2 "To configure it manually enter the URL in the field below.">
  <!ENTITY rtews.autodiscover "Autodiscover">
  <!ENTITY rtews.doautodicover "Do autodiscovery">
