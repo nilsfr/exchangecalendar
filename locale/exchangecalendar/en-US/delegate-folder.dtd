@@ -2,7 +2,7 @@
 <!ENTITY  label.delegatefolder.cancelbutton "Cancel">
 <!ENTITY  label.delegatefolder.userEmail "Email">
  
-<!ENTITY  label.delegatefolder.permissionLevel "Permission Level">
+<!ENTITY  label.delegatefolder.permissionLevel "Permission level">
 <!ENTITY  label.delegatefolder.userboxcolumn1 "User"> 
 <!ENTITY  label.delegatefolder.userboxcolumn2 "Permissions"> 
 
@@ -24,22 +24,22 @@
 
  <!ENTITY  delegatefolder.permission.details.caption "Permission "> 
 
-<!ENTITY  delegatefolder.tab.msg.label  "No Calendar or Task found for this mail account.">
-<!ENTITY  delegatefolder.tab.name  "Exchange Folder Sharing">
+<!ENTITY  delegatefolder.tab.msg.label  "No calendar or task found for this mail account.">
+<!ENTITY  delegatefolder.tab.name  "Exchange folder sharing">
 
 <!ENTITY  delegatefolder.permissions.none  "None">
 <!ENTITY  delegatefolder.permissions.own  "Own items">
 <!ENTITY  delegatefolder.permissions.all  "All items">
 <!ENTITY  delegatefolder.permissions.full  "Full details">
 
-<!ENTITY  delegatefolder.permissions.cancreateitems  "Create Items">
-<!ENTITY  delegatefolder.permissions.cancreatesubfolders  "Create SubFolders">
-<!ENTITY  delegatefolder.permissions.isfolderowner  "Folder Owner">
-<!ENTITY  delegatefolder.permissions.isfoldervisible  "Folder Visible">
-<!ENTITY  delegatefolder.permissions.isfoldercontact  "Folder Contact">
-<!ENTITY  delegatefolder.permissions.edititems  "Edit Items">
-<!ENTITY  delegatefolder.permissions.deleteitems  "Delete Items">
-<!ENTITY  delegatefolder.permissions.readitems  "Read Items">  
+<!ENTITY  delegatefolder.permissions.cancreateitems  "Create items">
+<!ENTITY  delegatefolder.permissions.cancreatesubfolders  "Create subfolders">
+<!ENTITY  delegatefolder.permissions.isfolderowner  "Folder owner">
+<!ENTITY  delegatefolder.permissions.isfoldervisible  "Folder visible">
+<!ENTITY  delegatefolder.permissions.isfoldercontact  "Folder contact">
+<!ENTITY  delegatefolder.permissions.edititems  "Edit items">
+<!ENTITY  delegatefolder.permissions.deleteitems  "Delete items">
+<!ENTITY  delegatefolder.permissions.readitems  "Read items">  
  
 <!ENTITY  delegatefolder.permissions.true  "True">
 <!ENTITY  delegatefolder.permissions.false  "False">
