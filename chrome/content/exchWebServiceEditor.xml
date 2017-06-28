@@ -36,7 +36,12 @@
           xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	<binding id="exchWebServiceEditor">
 
-    <content>
+	<!-- CSS needed to correctly display color buttons (font and background) -->
+	<resources>
+		<stylesheet src="chrome://messenger/skin/messengercompose/messengercompose.css" />
+	</resources>
+
+	<content>
 
 	<xul:vbox flex="1">
 		<xul:toolbox anonid="FormatToolbox" mode="icons">
@@ -105,7 +110,7 @@
 					state="state_all"/>
 				<xul:toolbarseparator class="toolbarseparator-standard"/>
 				<xul:toolbaritem class="formatting-button">
-					<xul:stack align="enter" state="rgb(102,102,102)">
+					<xul:stack align="center" state="rgb(102,102,102)">
 						<xul:box style="background-color:#FFFFFF"
 							anonid="cmd_backgroundColor"
 							class="color-button"
@@ -192,68 +197,72 @@
 			flex="1"/>
 	</xul:vbox>
 
-    </content>
+	</content>
 	<implementation>
 		<constructor><![CDATA[
-			this.editorElement = document.getAnonymousElementByAttribute(this, "anonid", "editor");
 			var self=this;
+
+			// To be able to set correct HTML content
+			this.globalFunctions = Components.classes["@1st-setup.nl/global/functions;1"]
+				.getService(Components.interfaces.mivFunctions);
+
+			this.editorElement = document.getAnonymousElementByAttribute(this, "anonid", "editor");
 			if (this.editorElement) {
 				this.commandManager = this.editorElement.commandManager;
 				this.editorClickFunction = function(aEvent) { self.onClickEditor(aEvent);};
-				this.editorElement.addEventListener("click", this.editorClickFunction, true);
+				this.editorElement.addEventListener("click", this.editorClickFunction, false);
 
 				this.editorDblClickFunction = function(aEvent) { self.onDblClickEditor(aEvent);};
-				this.editorElement.addEventListener("dblclick", this.editorDblClickFunction, true);
+				this.editorElement.addEventListener("dblclick", this.editorDblClickFunction, false);
 
 				this.editorKeyPressFunction = function(aEvent) { self.onKeyPressEditor(aEvent);};
-				this.editorElement.addEventListener("keyup", this.editorKeyPressFunction, true);
+				this.editorElement.addEventListener("keyup", this.editorKeyPressFunction, false);
 
 				this.editorMouseOver = function(aEvent) { self.onMouseOver(aEvent);};
-				this.editorMouseOut = function(aEvent) { self.onMouseOut(aEvent);};
-
 				this.editorElement.addEventListener("mouseover", this.editorMouseOver , false);
+
+				this.editorMouseOut = function(aEvent) { self.onMouseOut(aEvent);};
 				this.editorElement.addEventListener("mouseout", this.editorMouseOut, false);
 
+				// Set default document to empty HTML content
+				this.editorElement.contentDocument.documentElement.innerHTML = this.globalFunctions.fromText2HTML(null);
 			}
 
 			this.atomService = Components.classes["@mozilla.org/atom-service;1"]
 				.getService(Components.interfaces.nsIAtomService);
 
-			// Set initial content to empty HTML body
-			this.globalFunctions = Components.classes["@1st-setup.nl/global/functions;1"]
-				.getService(Components.interfaces.mivFunctions);
-			this.editorElement.contentDocument.documentElement.innerHTML = this.globalFunctions.fromText2HTML(null);
+			this.connectAllCommandListenerToolbar("FormatToolbar");
 
-			this.connectButtons("FormatToolbar");
 			// Connect color button
 			this.bgColorFunction = function(){ self.selectColor("cmd_backgroundColor");};
 			var bgColorElement = document.getAnonymousElementByAttribute(this, "anonid", "cmd_backgroundColor")
-			bgColorElement.addEventListener("click", this.bgColorFunction, true);
+			bgColorElement.addEventListener("click", this.bgColorFunction, false);
 
 			this.fontColorFunction = function(){ self.selectColor("cmd_fontColor");};
 			var fontColorElement = document.getAnonymousElementByAttribute(this, "anonid", "cmd_fontColor")
-			fontColorElement.addEventListener("click", this.fontColorFunction, true);
+			fontColorElement.addEventListener("click", this.fontColorFunction, false);
 
 			this.highlightColor = "#FFFFFF";
 			this.fontColor = "#000000";
 
-			// Fill fontfac popup menu
+			// Connect FontFace popup menu
 			this.menuPopupFunction = function(event){ self.selectFont("cmd_fontFace", event.target.value);};
 			this.menuPopup = document.getAnonymousElementByAttribute(this, "anonid", "fontFaceSelect");
-			this.menuPopup.addEventListener("command", this.menuPopupFunction, true);
+			this.menuPopup.addEventListener("command", this.menuPopupFunction, false);
 			this.fillFontFace();
 
+			// Connect HyperLink buttons
 			this.addLinkFunction = function(){ self.addLink();};
 			var addLinkElement = document.getAnonymousElementByAttribute(this, "anonid", "cmd_add_link")
-			addLinkElement.addEventListener("click", this.addLinkFunction, true);
+			addLinkElement.addEventListener("click", this.addLinkFunction, false);
 
 			this.removeLinkFunction = function(){ self.removeLink();};
 			var removeLinkElement = document.getAnonymousElementByAttribute(this, "anonid", "cmd_remove_link")
-			removeLinkElement.addEventListener("click", this.removeLinkFunction, true);
+			removeLinkElement.addEventListener("click", this.removeLinkFunction, false);
 
 			this.editLinkFunction = function(){ self.editLink();};
 			var editLinkElement = document.getAnonymousElementByAttribute(this, "anonid", "cmd_edit_link")
-			editLinkElement.addEventListener("click", this.editLinkFunction, true);
+			editLinkElement.addEventListener("click", this.editLinkFunction, false);
 		]]></constructor>
 
 		<destructor><![CDATA[
@@ -261,20 +270,32 @@
 				this.editorElement.removeEventListener("click", this.editorClickFunction, false);
 				this.editorElement.removeEventListener("keyup", this.editorKeyPressFunction, false);
 
-				this.editorElement.removeEventListener("dblclick", this.editorDblClickFunction, true);
+				this.editorElement.removeEventListener("dblclick", this.editorDblClickFunction, false);
 
 				this.editorElement.removeEventListener("mouseover", this.editorMouseOver , false);
 				this.editorElement.removeEventListener("mouseout", this.editorMouseOut, false);
 			}
-			this.disconnectButtons("FormatToolbar");
-			document.getAnonymousElementByAttribute(this, "anonid", "cmd_backgroundColor").removeEventListener("click", this.bgColorFunction, false);
-			document.getAnonymousElementByAttribute(this, "anonid", "cmd_fontColor").removeEventListener("click", this.fontColorFunction, false);
+
+			this.removeAllCommandListenerToolbar("FormatToolbar");
+
+			// Disconnect color button
+			document.getAnonymousElementByAttribute(this, "anonid", "cmd_backgroundColor")
+				.removeEventListener("click", this.bgColorFunction, false);
+			document.getAnonymousElementByAttribute(this, "anonid", "cmd_fontColor")
+				.removeEventListener("click", this.fontColorFunction, false);
+
+			// Disconnect Font face button
 			if (this.menuPopupFunction) {
 				this.menuPopup.removeEventListener("command", this.menuPopupFunction, false);
 			}
-			document.getAnonymousElementByAttribute(this, "anonid", "cmd_add_link").removeEventListener("click", this.addLinkFunction, true);
-			document.getAnonymousElementByAttribute(this, "anonid", "cmd_remove_link").removeEventListener("click", this.removeLinkFunction, true);
-			document.getAnonymousElementByAttribute(this, "anonid", "cmd_edit_link").removeEventListener("click", this.editLinkFunction, true);
+
+			// Disconnect HyperLink buttons
+			document.getAnonymousElementByAttribute(this, "anonid", "cmd_add_link")
+				.removeEventListener("click", this.addLinkFunction, false);
+			document.getAnonymousElementByAttribute(this, "anonid", "cmd_remove_link")
+				.removeEventListener("click", this.removeLinkFunction, false);
+			document.getAnonymousElementByAttribute(this, "anonid", "cmd_edit_link")
+				.removeEventListener("click", this.editLinkFunction, false);
 		]]></destructor>
 			
 		<property name="content">
@@ -328,7 +349,7 @@
 		]]></body>
 		</method>
 
-		<method name="connectButtons">
+		<method name="connectAllCommandListenerToolbar">
 			<parameter name="aAnonId" />
 			<body><![CDATA[
 			var toolbar = document.getAnonymousElementByAttribute(this, "anonid", aAnonId);
@@ -341,14 +362,14 @@
 				var toolbarButtons = toolbar.getElementsByTagName("xul:toolbarbutton");
 				for (var i=0; i<toolbarButtons.length;i++) {
 					if ((toolbarButtons[i].hasAttribute("connect")) && (toolbarButtons[i].getAttribute("connect") === "true")) {
-						this.connectButton(toolbarButtons[i].getAttribute("anonid"), aAnonId);
+						this.addCommandListener(toolbarButtons[i].getAttribute("anonid"), aAnonId);
 					}
 				}
 			}
 		]]></body>
 		</method>
 
-		<method name="connectButton">
+		<method name="addCommandListener">
 			<parameter name="aAnonId" />
 			<parameter name="aStore" />
 			<body><![CDATA[
@@ -358,22 +379,22 @@
 				this.functions[aStore] = {};
 			}
 			this.functions[aStore][aAnonId] = function() { self.toggleButton(aAnonId);};
-			document.getAnonymousElementByAttribute(this, "anonid", aAnonId).addEventListener("command", this.functions[aStore][aAnonId], true);
+			document.getAnonymousElementByAttribute(this, "anonid", aAnonId).addEventListener("command", this.functions[aStore][aAnonId], false);
 		]]></body>
 		</method>
 
-		<method name="disconnectButtons">
+		<method name="removeAllCommandListenerToolbar">
 			<parameter name="aAnonId" />
 			<body><![CDATA[
 			if ((this.functions) && (this.functions[aAnonId])) {
 				for (var name in this.functions[aAnonId]) {
-					this.disconnectButton(name, aAnonId);
+					this.removeCommandListener(name, aAnonId);
 				}
 			}
 		]]></body>
 		</method>
 
-		<method name="disconnectButton">
+		<method name="removeCommandListener">
 			<parameter name="aAnonId" />
 			<parameter name="aStore" />
 			<body><![CDATA[
