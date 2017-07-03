@@ -1,6 +1,20 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.0.0-beta4] - 2017-07-03
+### Added
+- Turkish localization #43, #44, #46
+- Missing release notes of 3.9 and 3.8 releases #35
+- Support for shared task list #41
+
+### Changed
+- Clean up and improve compatibility of build scripts #38, #40
+
+### Fixed
+- File permissions #36
+- HTML content editor #28, #29
+- Activate Italian localization #46
+
 ## [4.0.0-beta3] - 2017-06-25
 ### Added
 - Added Italian translation #22
@@ -15,6 +29,33 @@ All notable changes to this project will be documented in this file.
 ## [4.0.0-beta2] - 2017-06-10
 ### Fixed
 - Opening and working with Attachment dialog #12
+
+## [3.9.0] - unknown release date
+- Stable Release
+- Support enabled for TB 50.*
+- Tested on TB 45.5.1 Lightning 4.7.4
+- We don't support TB/Lightning beta.
+- bug: add new calendar or no password prompt
+
+## [3.8.0] - unknown release date
+- Support of Thunderbird 45.0
+- Support to Office365 calendar new calendar. Note: New users has to Create calendar using office365 type.
+- fix auto discovery for new hosted calendar
+- fix cancelled not removed
+- fix forward event
+- d9f170f fix #459 #426 #466 #464 #462 remove extra info
+- 1d4b8b4 fix #459 #426 #466 #464 #462
+- 0d1a78a fix: #459
+- 5e02727 (origin/master, origin/HEAD, master) rename folowup mail window
+- ab836f9 task-fixed
+- eaa1c2d (HEAD -> ec-3.8, tag: v3.8-beta3) bump-version
+- a641199 (master) bump-version-tb-support
+- 98c047c (origin/master, origin/HEAD) status-undefined-for-ipmnote
+- c8af0bd strict-error
+- 78377ee Merge branch 'master' into ec-3.8
+- 8edfea3 js strict error
+- 65f46a5 strict error
+- 4f92738 js strict error
 
 ## [3.7.0] - unknown release date
 - d1b2860 (origin/master, origin/HEAD, master) revert calendar-event-dialog
