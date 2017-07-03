@@ -1,45 +1,45 @@
  
-<!ENTITY  label.delegatefolder.cancelbutton "Cancel">
-<!ENTITY  label.delegatefolder.userEmail "Email">
+<!ENTITY  label.delegatefolder.cancelbutton "İptal Et">
+<!ENTITY  label.delegatefolder.userEmail "E-posta">
  
-<!ENTITY  label.delegatefolder.permissionLevel "Permission Level">
-<!ENTITY  label.delegatefolder.userboxcolumn1 "User"> 
-<!ENTITY  label.delegatefolder.userboxcolumn2 "Permissions"> 
+<!ENTITY  label.delegatefolder.permissionLevel "İzin Seviyesi">
+<!ENTITY  label.delegatefolder.userboxcolumn1 "Kullanıcı"> 
+<!ENTITY  label.delegatefolder.userboxcolumn2 "İzinler"> 
 
-<!ENTITY  menuitem.delegatefolder.permission.author "Author">
-<!ENTITY  menuitem.delegatefolder.permission.editor "Editor">
-<!ENTITY  menuitem.delegatefolder.permission.reviewer "Reviewer">
-<!ENTITY  menuitem.delegatefolder.permission.none "None">
-<!ENTITY  menuitem.delegatefolder.permission.owner "Owner" > 
-<!ENTITY  menuitem.delegatefolder.permission.publishingEditor "PublishingEditor" >
-<!ENTITY  menuitem.delegatefolder.permission.publishingAuthor "PublishingAuthor" >
-<!ENTITY  menuitem.delegatefolder.permission.noneditingAuthor "NoneditingAuthor" >
-<!ENTITY  menuitem.delegatefolder.permission.contributor "Contributor" >
-<!ENTITY  menuitem.delegatefolder.permission.custom "Custom" >
+<!ENTITY  menuitem.delegatefolder.permission.author "Yazıcı">
+<!ENTITY  menuitem.delegatefolder.permission.editor "Düzenleyici">
+<!ENTITY  menuitem.delegatefolder.permission.reviewer "Okuyucu">
+<!ENTITY  menuitem.delegatefolder.permission.none "Yok">
+<!ENTITY  menuitem.delegatefolder.permission.owner "Sahip" > 
+<!ENTITY  menuitem.delegatefolder.permission.publishingEditor "YayınlayanDüzenleyici" >
+<!ENTITY  menuitem.delegatefolder.permission.publishingAuthor "YayınlayanYazıcı" >
+<!ENTITY  menuitem.delegatefolder.permission.noneditingAuthor "DüzenleyemeyenYazıcı" >
+<!ENTITY  menuitem.delegatefolder.permission.contributor "Yardımcı" >
+<!ENTITY  menuitem.delegatefolder.permission.custom "Özel" >
                             
-<!ENTITY  delegatefolder.permission.description.author "Read and create items in the folder." >
-<!ENTITY  delegatefolder.permission.description.editor "Read, create, and modify items in the folder." >
-<!ENTITY  delegatefolder.permission.description.reviewer "Read items in the folder." >
-<!ENTITY  delegatefolder.permission.description.none "No access permissions to the folder." >
+<!ENTITY  delegatefolder.permission.description.author "Dizindeki maddeleri okuyabilir ve yaratabilir." >
+<!ENTITY  delegatefolder.permission.description.editor "Dizindeki maddeleri okuyabilir, yaratabilir ve değiştirebilir." >
+<!ENTITY  delegatefolder.permission.description.reviewer "Dizindeki maddeleri okuyabilir." >
+<!ENTITY  delegatefolder.permission.description.none "Bu dizine erişim izni yok." >
 
- <!ENTITY  delegatefolder.permission.details.caption "Permission "> 
+ <!ENTITY  delegatefolder.permission.details.caption "İzin "> 
 
-<!ENTITY  delegatefolder.tab.msg.label  "No Calendar or Task found for this mail account.">
-<!ENTITY  delegatefolder.tab.name  "Exchange Folder Sharing">
+<!ENTITY  delegatefolder.tab.msg.label  "Bu posta hesabı için bir Takvim ya da Görev Listesi bulunamadı.">
+<!ENTITY  delegatefolder.tab.name  "Exchange Dizin Paylaşımı">
 
-<!ENTITY  delegatefolder.permissions.none  "None">
-<!ENTITY  delegatefolder.permissions.own  "Own items">
-<!ENTITY  delegatefolder.permissions.all  "All items">
-<!ENTITY  delegatefolder.permissions.full  "Full details">
+<!ENTITY  delegatefolder.permissions.none  "Yok">
+<!ENTITY  delegatefolder.permissions.own  "Kendi maddeleri">
+<!ENTITY  delegatefolder.permissions.all  "Bütün maddeler">
+<!ENTITY  delegatefolder.permissions.full  "Tüm detaylar">
 
-<!ENTITY  delegatefolder.permissions.cancreateitems  "Create Items">
-<!ENTITY  delegatefolder.permissions.cancreatesubfolders  "Create SubFolders">
-<!ENTITY  delegatefolder.permissions.isfolderowner  "Folder Owner">
-<!ENTITY  delegatefolder.permissions.isfoldervisible  "Folder Visible">
-<!ENTITY  delegatefolder.permissions.isfoldercontact  "Folder Contact">
-<!ENTITY  delegatefolder.permissions.edititems  "Edit Items">
-<!ENTITY  delegatefolder.permissions.deleteitems  "Delete Items">
-<!ENTITY  delegatefolder.permissions.readitems  "Read Items">  
+<!ENTITY  delegatefolder.permissions.cancreateitems  "Madde Yarat">
+<!ENTITY  delegatefolder.permissions.cancreatesubfolders  "Altdizinler Yarat">
+<!ENTITY  delegatefolder.permissions.isfolderowner  "Dizin Sahibi">
+<!ENTITY  delegatefolder.permissions.isfoldervisible  "Dizin Görülebiliyor">
+<!ENTITY  delegatefolder.permissions.isfoldercontact  "Dizinle İlişkili Kişi">
+<!ENTITY  delegatefolder.permissions.edititems  "Maddeleri Düzenleyebilir">
+<!ENTITY  delegatefolder.permissions.deleteitems  "Maddeleri Silebilir">
+<!ENTITY  delegatefolder.permissions.readitems  "Maddeleri Okuyabilir">  
  
-<!ENTITY  delegatefolder.permissions.true  "True">
-<!ENTITY  delegatefolder.permissions.false  "False">
+<!ENTITY  delegatefolder.permissions.true  "Doğru">
+<!ENTITY  delegatefolder.permissions.false  "Yanlış">
