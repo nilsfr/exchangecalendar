@@ -3,9 +3,9 @@
 <!ENTITY  label.delegateCalendar.userEmail "Email">
 <!ENTITY  label.delegateCalendar.deliveryMeetingRerquestControl "Deliver meeting requests">
 
-<!ENTITY  menuitem.delegateCalendar.deliverMeetingRequestslist.delegateOnly "Delegates only">
-<!ENTITY  menuitem.delegateCalendar.deliverMeetingRequestslist.delegateAndMe "Delegates and me">
-<!ENTITY  menuitem.delegateCalendar.deliverMeetingRequestslist.delegateAndInfo "Delegates and send notifications to me">
+<!ENTITY  menuitem.delegateCalendar.deliverMeetingRequestslist.delegateOnly "Delegates Only">
+<!ENTITY  menuitem.delegateCalendar.deliverMeetingRequestslist.delegateAndMe "Delegates and Me">
+<!ENTITY  menuitem.delegateCalendar.deliverMeetingRequestslist.delegateAndInfo "Delegates and Send Notifications to Me">
 
 <!ENTITY  label.delegateCalendar.permission "Permission">
 <!ENTITY  menuitem.delegateCalendar.permission.author "Author">
