@@ -9,14 +9,8 @@ support**.
 This add-on is open source and based on the work of many
 [contributors](https://github.com/ExchangeCalendar/exchangecalendar/graphs/contributors).
 
-### Installing the developement tools
+### Building
 
-You will need to install the
-[DOM Inspector](https://addons.mozilla.org/en-US/thunderbird/addon/dom-inspector-6622/),
-the
-[JavaScript Debugger](https://addons.mozilla.org/thunderbird/addon/javascript-debugger/),
-and some other development tools.
-  
 To compile the add-on, run the `build.sh` script.
 
 ## License
