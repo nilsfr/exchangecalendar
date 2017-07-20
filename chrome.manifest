@@ -52,6 +52,7 @@ locale exchangecalendar sv locale/exchangecalendar/sv/
 locale exchangecalendar ru locale/exchangecalendar/ru/
 locale exchangecalendar it-IT locale/exchangecalendar/it-IT/
 locale exchangecalendar tr locale/exchangecalendar/tr/
+locale exchangecalendar cs-CZ locale/exchangecalendar/cs-CZ/
 
 manifest interfaces/exchangeCalendar/mivExchangeCalendar.manifest
 
