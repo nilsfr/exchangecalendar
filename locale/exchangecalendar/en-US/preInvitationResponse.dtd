@@ -1,5 +1,5 @@
 <!ENTITY dialog.exchWebService.preInvitationResponse.title "How do you want to react?">
-<!ENTITY label.acceptbutton "Ok">
+<!ENTITY label.acceptbutton "OK">
 <!ENTITY label.cancelbutton "Cancel">
 
 <!ENTITY label.calendarName "Calendar:">

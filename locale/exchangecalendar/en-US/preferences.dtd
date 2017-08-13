@@ -10,7 +10,7 @@
 <!ENTITY exchangeWebService.preference.network.debug.label "Log communication with Exchange server">
 <!ENTITY exchangeWebService.preference.network.debuglevel.label1 "Log level">
 <!ENTITY exchangeWebService.preference.network.debuglevel.label2 "1 = Basic information, 2 = Complete communication">
-<!ENTITY exchangeWebService.preference.authentication.debug.label "Log communication progress information (e.g.,  Authentication)">
+<!ENTITY exchangeWebService.preference.authentication.debug.label "Log communication progress information (e.g., Authentication)">
 <!ENTITY exchangeWebService.preference.authentication.showpassword.label "Show password in clear text in log file.">
 
 <!ENTITY exchangeWebService.preference.contacts.debug.caption "Addressbook/Contacts:">
@@ -29,20 +29,20 @@
 <!ENTITY exchangeWebService.preference.cache.memory.startupAfter.label "Number of days to download after start date of program:">
 
 <!ENTITY exchangeWebService.preferences.tab.others "Others">
-<!ENTITY exchangeWebService.preference.others.prefs.label "Communication Preferences:">
+<!ENTITY exchangeWebService.preference.others.prefs.label "Communication preferences:">
 <!ENTITY exchangeWebService.preference.others.prefs.retryCount.label "Maximum number of retries for exchange communication:">
 
-<!ENTITY exchangeWebService.preference.updateFunction.label "Addon update function:">
-<!ENTITY exchangeWebService.preference.checkForUpdates.label "Automatically check for a new addon version online when starting Thunderbird.">
-<!ENTITY exchangeWebService.preference.warnForUpdates.label "Show warning when a new version is available. So you can easily install it.">
+<!ENTITY exchangeWebService.preference.updateFunction.label "Add-on update function:">
+<!ENTITY exchangeWebService.preference.checkForUpdates.label "Automatically check for a new add-on version online when starting Thunderbird.">
+<!ENTITY exchangeWebService.preference.warnForUpdates.label "Show warning when a new version is available so you can easily install it.">
 <!ENTITY exchangeWebService.preference.warnForPrereleaseUpdates.label "Show warning when a new pre-release (beta, RC, etc.) is available.">
 
 <!ENTITY exchangeWebService.preference.loadbalancer.debug.caption "Loadbalancer:">
 <!ENTITY exchangeWebService.preference.loadbalancer.prefs.label "Loadbalancer:">
 <!ENTITY exchangeWebService.preference.loadbalancer.prefs.maxJobs.label "Maximum number of simultaneous request to exchange server:">
-<!ENTITY exchangeWebService.preference.loadbalancer.prefs.sleepBetweenJobs.label "Minimum time to wait between requests to exchange server:">
+<!ENTITY exchangeWebService.preference.loadbalancer.prefs.sleepBetweenJobs.label "Minimum time to wait between requests to Exchange server:">
 <!ENTITY exchangeWebService.preference.userAgent.label "HTTP user agent:">
 
-<!ENTITY exchangeWebService.preference.ntlmv1.label "Ntlm-v1 Preferences:">
+<!ENTITY exchangeWebService.preference.ntlmv1.label "NTLM-v1 Preferences:">
 <!ENTITY exchangeWebService.preference.ntlmv1.true.label "Enable">
 <!ENTITY exchangeWebService.preference.ntlmv1.false.label "Disable">

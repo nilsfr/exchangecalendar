@@ -1,13 +1,13 @@
-<!ENTITY title.oofsettings "Out of Office settings">
+<!ENTITY title.oofsettings "Out of office settings">
 <!ENTITY label.acceptbutton "Save">
 <!ENTITY label.cancelbutton "Close">
-<!ENTITY label.oofsettings.title "Out of Office settings for:">
+<!ENTITY label.oofsettings.title "Out of office settings for:">
 
-<!ENTITY label.oofstatus "Out of Office status:">
+<!ENTITY label.oofstatus "Out of office status:">
 
-<!ENTITY label.externalaudience "To which external persons do you want to send Out Of Office messages: ">
+<!ENTITY label.externalaudience "To which external persons do you want to send out of office messages: ">
 <!ENTITY menuitem.label.exchWebService-oof-externalaudience.none "To nobody">
-<!ENTITY menuitem.label.exchWebService-oof-externalaudience.known "Only persons in my contact list">
+<!ENTITY menuitem.label.exchWebService-oof-externalaudience.known "Only to persons in my contact list">
 <!ENTITY menuitem.label.exchWebService-oof-externalaudience.all "To everybody">
 
 <!ENTITY button.label.internal "Internal message">

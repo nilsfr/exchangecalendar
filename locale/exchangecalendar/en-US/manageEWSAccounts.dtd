@@ -12,5 +12,5 @@
 <!ENTITY exchWebService.manageEWSAccounts.servercheck.button "Check server and account">
 <!ENTITY exchWebService.manageEWSAccounts.name.label "Name:">
 
-<!ENTITY exchWebService.manageEWSAccounts.menuitem "Exchange Web Services Accounts">
+<!ENTITY exchWebService.manageEWSAccounts.menuitem "Exchange Web Services accounts">
 
