@@ -427,7 +427,7 @@ mivExchangeTimeZones.prototype = {
 	{
 		var somefile = this.globalFunctions.chromeToPath("chrome://exchangeTimeZones/content/ewsTimesZoneDefinitions_2007.xml");
 		var file = Components.classes["@mozilla.org/file/local;1"]
-				.createInstance(Components.interfaces.nsILocalFile);
+				.createInstance(Components.interfaces.nsIFile);
 
 		file.initWithPath(somefile);
 
