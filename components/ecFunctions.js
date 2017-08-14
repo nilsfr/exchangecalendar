@@ -28,7 +28,6 @@ var Cr = Components.results;
 var components = Components;
 
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource:///modules/Services.jsm");
 
 var EXPORTED_SYMBOLS = ["exchWebService" ];
 

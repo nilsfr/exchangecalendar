@@ -2954,7 +2954,7 @@ dump(" ++ Exception:"+xml2json.toString(aItem.exchangeData)+"\n");
 			for each(var fileAttachment in fileAttachments) {
 				var newAttachment = cal.createAttachment();
 				newAttachment.setParameter("X-AttachmentId",xml2json.getAttributeByTag(fileAttachment, "t:AttachmentId","Id")); 
-				newAttachment.uri = cal.makeURL("http://somewhere/?id="+encodeURIComponent(xml2json.getAttributeByTag(fileAttachment, "t:AttachmentId","Id"))+"&name="+encodeURIComponent(xml2json.getTagValue(fileAttachment, "t:Name"))+"&size="+encodeURIComponent(xml2json.getTagValue(fileAttachment, "t:Size", ""))+"&calendarid="+encodeURIComponent(this.calendar.id)+"&isinline="+encodeURIComponent(xml2json.getTagValue(fileAttachment, "t:IsInline", "false"))+"&contentid="+encodeURIComponent(xml2json.getTagValue(fileAttachment, "t:ContentId", "<NOPE>")));
+				newAttachment.uri = Services.newURI("http://somewhere/?id="+encodeURIComponent(xml2json.getAttributeByTag(fileAttachment, "t:AttachmentId","Id"))+"&name="+encodeURIComponent(xml2json.getTagValue(fileAttachment, "t:Name"))+"&size="+encodeURIComponent(xml2json.getTagValue(fileAttachment, "t:Size", ""))+"&calendarid="+encodeURIComponent(this.calendar.id)+"&isinline="+encodeURIComponent(xml2json.getTagValue(fileAttachment, "t:IsInline", "false"))+"&contentid="+encodeURIComponent(xml2json.getTagValue(fileAttachment, "t:ContentId", "<NOPE>")));
 
 				this._attachments.push(newAttachment.clone());
 				this._calEvent.addAttachment(newAttachment);
