@@ -76,11 +76,8 @@ Cu.import("resource://exchangecalendar/erDeleteAttachment.js");
 
 Cu.import("resource://interfaces/xml2json/xml2json.js");
 
-//Cu.import("resource://interfaces/xml.js");
-
 Cu.import("resource://interfaces/exchangeTodo/mivExchangeTodo.js");
 Cu.import("resource://interfaces/exchangeEvent/mivExchangeEvent.js");
-//Cu.import("resource://interfaces/exchangeBaseItem/mivExchangeBaseItem.js");
 
 var globalStart = new Date().getTime();
 
@@ -295,8 +292,6 @@ const MAPI_PidLidReminderSet = "34051";
 //
 // calExchangeCalendar
 //
-
-//var EXPORTED_SYMBOLS = ["calExchangeCalendar"];
 
 function calExchangeCalendar() {
 
@@ -2362,34 +2357,34 @@ calExchangeCalendar.prototype = {
 	//                 in calIOperationListener aListener);
 	getItems: function _getItems(aItemFilter, aCount,
 		aRangeStart, aRangeEnd, aListener) {
-		if (this.debug) {
-			this.logInfo("getItems 0: " + "  aItemFilter, " + aItemFilter
-				+ "  aCount, " + aCount
-				+ " aRangeStart,  " + aRangeStart
-				+ " aRangeEnd, " + aRangeEnd
-				+ " aListener , " + aListener);
-		
-			if (aRangeStart) {
-				this.logInfo("getItems 2: aRangeStart:" + aRangeStart.toString());
-			}
-			else {
-				this.logInfo("getItems 2: aRangeStart:null");
-			}
-			if (aRangeEnd) {
-				this.logInfo("getItems 3: aRangeEnd:" + aRangeEnd.toString());
-			}
-			else {
-				this.logInfo("getItems 3: aRangeEnd:null");
-			}
+
+		this.logInfo("getItems: aItemFilter, " + aItemFilter
+			+ " aCount, " + aCount
+			+ " aListener , " + aListener);
+
+		if (aRangeStart) {
+			this.logInfo("getItems: aRangeStart:" + aRangeStart.toString());
+		}
+		else {
+			this.logInfo("getItems: aRangeStart: null");
 		}
 
-		//Start poller if not already runnning  this may resolve suspend issue
+		if (aRangeEnd) {
+			this.logInfo("getItems: aRangeEnd:" + aRangeEnd.toString());
+		}
+		else {
+			this.logInfo("getItems: aRangeEnd: null");
+		}
+
+		// Start poller if not already runnning  this may resolve suspend issue
 		this.startCalendarPoller();
 
 		if (this.typeString(aListener) === "object") {
-			if (this.debug) {
-				this.logInfo("getItems: We received a getItems from repeatingInvitationsTimer function. Because this request if always for a full year it will consume a lot of memory when we have a lot of recurring events with no end date. So for now we only request the period we have in memory cache. startDate:" + this.startDate + ", endDate:" + this.endDate);
-			}
+			this.logInfo("getItems: We received a getItems from repeatingInvitationsTimer function.\
+			Because this request if always for a full year it will consume a lot of\
+			memory when we have a lot of recurring events with no end date.\
+			So for now we only request the period we have in memory cache.\
+			startDate:" + this.startDate + ", endDate:" + this.endDate);
 
 			if (this.startDate) {
 				aRangeStart = this.startDate.clone();
@@ -2397,6 +2392,7 @@ calExchangeCalendar.prototype = {
 			else {
 				aRangeStart = undefined;
 			}
+
 			if (this.endDate) {
 				aRangeEnd = this.endDate.clone();
 			}
@@ -2405,25 +2401,37 @@ calExchangeCalendar.prototype = {
 			}
 		}
 
-		let wantEvents = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_TYPE_EVENT) != 0);
-		let wantTodos = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_TYPE_TODO) != 0);
+		/*
+		 * Check minimal assestements before looking for items:
+		 *  - calendar is not in creation
+		 *  - calendar is initialized
+		 *  - calendar support requested items
+		 *  - first synchronization is done
+		 */
 
-		if (this.debug) {
-			if (wantEvents) {
-				this.logInfo("getItems: Events are requested by calendar.");
-			}
-			if (wantTodos) {
-				this.logInfo("getItems: Tasks are requested by calendar.");
-			}
+		// Unfold request filters to booleans
+		let wantEvents = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_TYPE_EVENT) !== 0);
+		let wantTodos = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_TYPE_TODO) !== 0);
+		let asOccurrences = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_CLASS_OCCURRENCES) !== 0);
+		let wantInvitations = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_REQUEST_NEEDS_ACTION) !== 0);
+
+		if (wantEvents) {
+			this.logInfo("getItems: Events are requested by calendar.");
 		}
 
-		// Calendar is in creation, we just update calendar range selection and stop
-		if (this.newCalendar) {
-			if (this.debug) {
-				this.logInfo("getItems: We are still creating this calendar. Ignore getItems for now.");
-			}
+		if (wantTodos) {
+			this.logInfo("getItems: Tasks are requested by calendar.");
+		}
 
-			// Adjust start/end range for events
+		if (wantInvitations) {
+			this.logInfo("getItems: Invitations are requested by calendar.");
+		}
+
+		// Calendar creation is not finished, we just update calendar range selection and stop
+		if (this.newCalendar) {
+			this.logInfo("getItems: We are still creating this calendar. Ignore getItems for now.");
+
+			// Update start/end range for events
 			if (wantEvents) {
 				if (aRangeStart) {
 					if (this.newCalRangeStartEvents) {
@@ -2449,7 +2457,7 @@ calExchangeCalendar.prototype = {
 				}
 			}
 
-			// Adjust start/end range for tasks
+			// Update start/end range for tasks
 			if (wantTodos) {
 				if (aRangeStart) {
 					if (this.newCalRangeStartTodos) {
@@ -2493,6 +2501,7 @@ calExchangeCalendar.prototype = {
 				rangeEnd: aRangeEnd,
 				listener: aListener
 			});
+
 			return;
 		}
 
@@ -2504,63 +2513,89 @@ calExchangeCalendar.prototype = {
 					null,
 					null);
 			}
+
 			return;
 		}
 
 		let validPeriod = false;
-		if ((aRangeStart) && (aRangeEnd) && (aRangeStart.isDate) && (aRangeEnd.isDate)) {
+		if (aRangeStart
+			&& aRangeStart.isDate
+			&& aRangeEnd
+			&& aRangeEnd.isDate) {
 			validPeriod = true;
 			this.lastValidRangeStart = aRangeStart.clone();
 			this.lastValidRangeEnd = aRangeEnd.clone();
 		}
 
 		this.exporting = false;
-		if ((aItemFilter == Ci.calICalendar.ITEM_FILTER_ALL_ITEMS)
-			&& (aCount == 0)
-			&& (aRangeStart === null)
-			&& (aRangeEnd === null)) {
-			if (this.debug) this.logInfo("getItems: Request to get all Items in Calendar. Probably an export");
+		if (aItemFilter === Ci.calICalendar.ITEM_FILTER_ALL_ITEMS
+			&& aCount == 0
+			&& aRangeStart === null
+			&& aRangeEnd === null) {
+
+			this.logInfo("getItems: Request to get all Items in Calendar. Probably an export");
+
 			this.exporting = true;
 		}
 
-		let asOccurrences = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_CLASS_OCCURRENCES) != 0);
-		let wantInvitations = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_REQUEST_NEEDS_ACTION) != 0);
+		if (!wantEvents
+			&& !wantInvitations
+			&& !wantTodos) {
 
-		if (!wantEvents && !wantInvitations && !wantTodos) {
 			this.notifyOperationComplete(aListener,
 				Cr.NS_OK,
 				Ci.calIOperationListener.GET,
 				null, null);
+
 			return;
 		}
 
-		if (wantInvitations)
-			if (this.debug) this.logInfo("Invitations are requested by calendar.");
+		// Calendar is not able to complete request (item type is not supported)
+		if (!this.supportsEvents
+			&& !this.supportsTasks
+			&& !this.OnlyShowAvailability) {
 
-		if ((!this.supportsEvents) && (!this.supportsTasks) && (!this.OnlyShowAvailability)) {
-			// Something requested we cannot fullfill.
-			if (this.debug) this.logInfo("This folder currently is not able yet to support events or tasks.");
+			this.logInfo("getItems: This folder currently is not able yet to support events or tasks.");
+
 			this.notifyOperationComplete(aListener,
 				Cr.NS_OK,
 				Ci.calIOperationListener.GET,
 				null, null);
+
 			return;
 		}
 
-		var eventsRequestedAndPossible = (((wantEvents) && (this.supportsEvents)) || (this.OnlyShowAvailability));
-		var tasksRequestedAndPossible = ((wantTodos) && (this.supportsTasks));
+		let eventsRequestedAndPossible = (wantEvents && this.supportsEvents);
+		let tasksRequestedAndPossible = (wantTodos && this.supportsTasks);
+
+		// When only availability is readable, we can also request events:
+		if (this.OnlyShowAvailability) {
+			eventsRequestedAndPossible = true;
+		}
+
+		if (eventsRequestedAndPossible) {
+			this.logInfo("getItems: Events are requested and this is possible for this folder");
+		}
+
+		if (tasksRequestedAndPossible) {
+			this.logInfo("getItems: Tasks are requested and this is possible for this folder");
+		}
+
 		if ((!eventsRequestedAndPossible) && (!tasksRequestedAndPossible)) {
-			if (this.debug) this.logInfo("This folder is not able to support requested items. this.OnlyShowAvailability:" + this.OnlyShowAvailability);
+			this.logInfo("getItems: This folder is not able to support requested items.");
+
 			this.notifyOperationComplete(aListener,
 				Cr.NS_OK,
 				Ci.calIOperationListener.GET,
 				null, null);
+
 			return;
 		}
-		if (eventsRequestedAndPossible)
-			if (this.debug) this.logInfo("Events are requested and this is possible for this folder");
-		if (tasksRequestedAndPossible)
-			if (this.debug) this.logInfo("Tasks are requested and this is possible for this folder");
+
+		/*
+		 * All checks passed, look for items to send
+		 *
+		 */
 
 		if (!aRangeStart) {
 			/*if (this.startDate) {
