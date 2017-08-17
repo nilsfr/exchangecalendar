@@ -2615,20 +2615,9 @@ calExchangeCalendar.prototype = {
 
 		}
 
-		var dateChanged = false;
-		var startChanged = false;
-		var endChanged = false;
-
-		if (!this.periods) {
-			this.periods = [];
-		}
-		// Check if this requested period touches a previous seen period.
-		var periodMatch = false;
-		var i = 0;
-		while ((!periodMatch) && (i < this.periods.length)) {
-			if (this.periods[i].startDate.compare(aRangeStart) > 0) {}
-			i++;
-		}
+		let dateChanged = false;
+		let startChanged = false;
+		let endChanged = false;
 
 		if (!this.startDate) {
 			if (this.debug) this.logInfo("no startdate");
