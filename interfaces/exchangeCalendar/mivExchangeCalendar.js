@@ -2584,42 +2584,31 @@ calExchangeCalendar.prototype = {
 		 *
 		 */
 
+		// When range start is not defined,
+		// set it to five 5 before now.
 		if (!aRangeStart) {
-			/*if (this.startDate) {
-				aRangeStart = this.startDate.clone();
-			}
-			else {
-				aRangeStart = cal.fromRFC3339("1900-01-01T00:00:00Z");
-			}*/
-
-			// We are going to request a rangestart of 5 weeks before now.
-			aRangeStart = cal.now()
-			var offset = cal.createDuration();
+			let offset = cal.createDuration();
 			offset.weeks = -5;
-			aRangeStart.addDuration(offset);
-			//dump("aRangeStart == null. Setting to:"+aRangeStart+"\n");
 
-			if ((this.startDate) && (this.startDate.compare(aRangeStart) < 0)) {
+			aRangeStart = cal.now().addDuration(offset);
+
+			// If cache already contains a bigger range, use it
+			if (this.startDate
+				&& this.startDate.compare(aRangeStart) < 0) {
 				aRangeStart = this.startDate.clone();
 			}
 
 		}
 
+		// When range end is not defined,
+		// set it to five 5 after now.
 		if (!aRangeEnd) {
-			/*if (this.endDate) {
-				aRangeEnd = this.endDate.clone();
-			}
-			else {
-				aRangeEnd = cal.fromRFC3339("3500-01-01T00:00:00Z");
-			}*/
-
-			// We are going to request a rangeend of 5 weeks after now.
-			aRangeEnd = cal.now()
-			var offset = cal.createDuration();
+			let offset = cal.createDuration();
 			offset.weeks = 5;
-			aRangeEnd.addDuration(offset);
-			//dump("aRangeEnd == null. Setting to:"+aRangeEnd+"\n");
 
+			aRangeEnd = cal.now().addDuration(offset);
+
+			// If cache already contains a bigger range, use it
 			if ((this.endDate) && (this.endDate.compare(aRangeEnd) > 0)) {
 				aRangeEnd = this.endDate.clone();
 			}
