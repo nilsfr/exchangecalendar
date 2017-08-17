@@ -2362,35 +2362,35 @@ calExchangeCalendar.prototype = {
 	//                 in calIOperationListener aListener);
 	getItems: function _getItems(aItemFilter, aCount,
 		aRangeStart, aRangeEnd, aListener) {
-		if (this.debug) this.logInfo("getItems 0: " + "  aItemFilter, " + aItemFilter + "  aCount, " + aCount
-			+ " aRangeStart,  " + aRangeStart + " aRangeEnd, " + aRangeEnd
-			+ " aListener , " + aListener);
+		if (this.debug) {
+			this.logInfo("getItems 0: " + "  aItemFilter, " + aItemFilter
+				+ "  aCount, " + aCount
+				+ " aRangeStart,  " + aRangeStart
+				+ " aRangeEnd, " + aRangeEnd
+				+ " aListener , " + aListener);
+		
+			if (aRangeStart) {
+				this.logInfo("getItems 2: aRangeStart:" + aRangeStart.toString());
+			}
+			else {
+				this.logInfo("getItems 2: aRangeStart:null");
+			}
+			if (aRangeEnd) {
+				this.logInfo("getItems 3: aRangeEnd:" + aRangeEnd.toString());
+			}
+			else {
+				this.logInfo("getItems 3: aRangeEnd:null");
+			}
+		}
 
 		//Start poller if not already runnning  this may resolve suspend issue
 		this.startCalendarPoller();
 
-		if (aRangeStart) {
-			if (this.debug) this.logInfo("getItems 2: aRangeStart:" + aRangeStart.toString());
-			//dump(", aRangeStart:"+aRangeStart.toString());
-		}
-		else {
-			if (this.debug) this.logInfo("getItems 2: aRangeStart:null");
-			//dump(", aRangeStart:null");
-		}
-		if (aRangeEnd) {
-			if (this.debug) this.logInfo("getItems 3: aRangeEnd:" + aRangeEnd.toString());
-			//dump(", aRangeEnd:"+aRangeEnd.toString()); 
-		}
-		else {
-			if (this.debug) this.logInfo("getItems 3: aRangeEnd:null");
-			//dump(", aRangeEnd:null");
-		}
-		//dump("\n");
+		if (this.typeString(aListener) === "object") {
+			if (this.debug) {
+				this.logInfo("getItems: We received a getItems from repeatingInvitationsTimer function. Because this request if always for a full year it will consume a lot of memory when we have a lot of recurring events with no end date. So for now we only request the period we have in memory cache. startDate:" + this.startDate + ", endDate:" + this.endDate);
+			}
 
-		//dump(" typeString(aListener):"+this.typeString(aListener)+"\n");
-		if (this.typeString(aListener) == "object") {
-			if (this.debug) this.logInfo("We received a getItems from repeatingInvitationsTimer function. Because this request if always for a full year it will consume a lot of memory when we have a lot of recurring events with no end date. So for now we only request the period we have in memory cache. startDate:" + this.startDate + ", endDate:" + this.endDate);
-			//dump(this.globalFunctions.STACK(10)+"\n");
 			if (this.startDate) {
 				aRangeStart = this.startDate.clone();
 			}
@@ -2405,24 +2405,27 @@ calExchangeCalendar.prototype = {
 			}
 		}
 
-		var wantEvents = ((aItemFilter & Ci.calICalendar
-			.ITEM_FILTER_TYPE_EVENT) != 0);
+		let wantEvents = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_TYPE_EVENT) != 0);
+		let wantTodos = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_TYPE_TODO) != 0);
 
-		var wantTodos = ((aItemFilter & Ci.calICalendar
-			.ITEM_FILTER_TYPE_TODO) != 0);
+		if (this.debug) {
+			if (wantEvents) {
+				this.logInfo("getItems: Events are requested by calendar.");
+			}
+			if (wantTodos) {
+				this.logInfo("getItems: Tasks are requested by calendar.");
+			}
+		}
 
-		//if (wantEvents) dump("Events are requested by calendar.\n");
-		//if (wantTodos) dump("Tasks are requested by calendar.\n");
-
-		if (wantEvents)
-			if (this.debug) this.logInfo("Events are requested by calendar.");
-		if (wantTodos)
-			if (this.debug) this.logInfo("Tasks are requested by calendar.");
-
+		// Calendar is in creation, we just update calendar range selection and stop
 		if (this.newCalendar) {
-			if (this.debug) this.logInfo("We are still creating this calendar. Ignore getItems for now.");
-			if (aRangeStart) {
-				if (wantEvents) {
+			if (this.debug) {
+				this.logInfo("getItems: We are still creating this calendar. Ignore getItems for now.");
+			}
+
+			// Adjust start/end range for events
+			if (wantEvents) {
+				if (aRangeStart) {
 					if (this.newCalRangeStartEvents) {
 						if (aRangeStart.compare(this.newCalRangeStartEvents) < 0) {
 							this.newCalRangeStartEvents = aRangeStart.clone();
@@ -2431,21 +2434,10 @@ calExchangeCalendar.prototype = {
 					else {
 						this.newCalRangeStartEvents = aRangeStart.clone();
 					}
+					
 				}
-				if (wantTodos) {
-					if (this.newCalRangeStartTodos) {
-						if (aRangeStart.compare(this.newCalRangeStartTodos) < 0) {
-							this.newCalRangeStartTodos = aRangeStart.clone();
-						}
-					}
-					else {
-						this.newCalRangeStartTodos = aRangeStart.clone();
-					}
-				}
-			}
 
-			if (aRangeEnd) {
-				if (wantEvents) {
+				if (aRangeEnd) {
 					if (this.newCalRangeEndEvents) {
 						if (aRangeEnd.compare(this.newCalRangeEndEvents) > 0) {
 							this.newCalRangeEndEvents = aRangeEnd.clone();
@@ -2455,7 +2447,22 @@ calExchangeCalendar.prototype = {
 						this.newCalRangeEndEvents = aRangeEnd.clone();
 					}
 				}
-				if (wantTodos) {
+			}
+
+			// Adjust start/end range for tasks
+			if (wantTodos) {
+				if (aRangeStart) {
+					if (this.newCalRangeStartTodos) {
+						if (aRangeStart.compare(this.newCalRangeStartTodos) < 0) {
+							this.newCalRangeStartTodos = aRangeStart.clone();
+						}
+					}
+					else {
+						this.newCalRangeStartTodos = aRangeStart.clone();
+					}
+				}
+
+				if (aRangeEnd) {
 					if (this.newCalRangeEndTodos) {
 						if (aRangeEnd.compare(this.newCalRangeEndTodos) > 0) {
 							this.newCalRangeEndTodos = aRangeEnd.clone();
@@ -2474,11 +2481,11 @@ calExchangeCalendar.prototype = {
 					null,
 					null);
 			}
+
 			return;
 		}
 
 		if (!this.firstSyncDone) {
-			//dump("!this.firstSyncDone\n");
 			this.getItemsSyncQueue.push({
 				itemFilter: aItemFilter,
 				count: aCount,
@@ -2490,7 +2497,6 @@ calExchangeCalendar.prototype = {
 		}
 
 		if (!this.isInitialized) {
-			//dump("!this.isInitialized\n");
 			if (aListener) {
 				this.notifyOperationComplete(aListener,
 					Cr.NS_OK,
@@ -2501,7 +2507,7 @@ calExchangeCalendar.prototype = {
 			return;
 		}
 
-		var validPeriod = false;
+		let validPeriod = false;
 		if ((aRangeStart) && (aRangeEnd) && (aRangeStart.isDate) && (aRangeEnd.isDate)) {
 			validPeriod = true;
 			this.lastValidRangeStart = aRangeStart.clone();
@@ -2517,11 +2523,8 @@ calExchangeCalendar.prototype = {
 			this.exporting = true;
 		}
 
-		var asOccurrences = ((aItemFilter & Ci.calICalendar
-			.ITEM_FILTER_CLASS_OCCURRENCES) != 0);
-
-		var wantInvitations = ((aItemFilter & Ci.calICalendar
-			.ITEM_FILTER_REQUEST_NEEDS_ACTION) != 0);
+		let asOccurrences = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_CLASS_OCCURRENCES) != 0);
+		let wantInvitations = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_REQUEST_NEEDS_ACTION) != 0);
 
 		if (!wantEvents && !wantInvitations && !wantTodos) {
 			this.notifyOperationComplete(aListener,
