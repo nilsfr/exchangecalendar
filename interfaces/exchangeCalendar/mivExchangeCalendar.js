@@ -2550,21 +2550,6 @@ calExchangeCalendar.prototype = {
 			return;
 		}
 
-		// Calendar is not able to complete request (item type is not supported)
-		if (!this.supportsEvents
-			&& !this.supportsTasks
-			&& !this.OnlyShowAvailability) {
-
-			this.logInfo("getItems: This folder currently is not able yet to support events or tasks.");
-
-			this.notifyOperationComplete(aListener,
-				Cr.NS_OK,
-				Ci.calIOperationListener.GET,
-				null, null);
-
-			return;
-		}
-
 		let eventsRequestedAndPossible = (wantEvents && this.supportsEvents);
 		let tasksRequestedAndPossible = (wantTodos && this.supportsTasks);
 
@@ -2581,7 +2566,9 @@ calExchangeCalendar.prototype = {
 			this.logInfo("getItems: Tasks are requested and this is possible for this folder");
 		}
 
-		if ((!eventsRequestedAndPossible) && (!tasksRequestedAndPossible)) {
+		// Calendar is not able to complete request (item type is not supported)
+		if (!eventsRequestedAndPossible
+			&& !tasksRequestedAndPossible) {
 			this.logInfo("getItems: This folder is not able to support requested items.");
 
 			this.notifyOperationComplete(aListener,
