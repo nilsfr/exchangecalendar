@@ -2832,15 +2832,13 @@ calExchangeCalendar.prototype = {
 	},
 
 	getItemsFromMemoryCache: function _getItemsFromMemoryCache(aRangeStart, aRangeEnd, aItemFilter, aListener, aExporting) {
-		if (this.debug) this.logInfo("getItemsFromMemoryCache startDate:" + aRangeStart + ", endDate:" + aRangeEnd + ", aListener:" + aListener + ", aExporting:" + aExporting);
-		var events = [];
-		var tasks = [];
+		this.logInfo("getItemsFromMemoryCache: startDate:" + aRangeStart + ", endDate:" + aRangeEnd + ", aListener:" + aListener + ", aExporting:" + aExporting);
 
-		var wantEvents = ((aItemFilter & Ci.calICalendar
-			.ITEM_FILTER_TYPE_EVENT) != 0);
+		let events = [];
+		let tasks = [];
 
-		var wantTodos = ((aItemFilter & Ci.calICalendar
-			.ITEM_FILTER_TYPE_TODO) != 0);
+		let wantEvents = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_TYPE_EVENT) != 0);
+		let wantTodos = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_TYPE_TODO) != 0);
 
 		// This is by using the this.itemCacheByStartDate and this.itemCacheByEndDate index.
 		if (wantEvents) {
@@ -2870,47 +2868,47 @@ calExchangeCalendar.prototype = {
 				}
 			}
 
-			for (var itemid in ids) {
-				if (this.itemCacheById[itemid]) {
-					if (isEvent(this.itemCacheById[itemid])) {
-						if (this.deleteCancelledInvitation && this.itemCacheById[itemid].isCancelled) {
-							events.push(this.itemCacheById[itemid]);
-							this.deleteItemCancelled(this.itemCacheById[itemid]);
+			// For all found ids, if item cache has it, push it to events answer
+			// Check also if invitation should be cancelled
+			for (let itemid in ids) {
+				if (this.itemCacheById[itemid]
+					&& cal.isEvent(this.itemCacheById[itemid])) {
+					events.push(this.itemCacheById[itemid]);
 
-						}
-						else {
-							events.push(this.itemCacheById[itemid]);
-						}
+					if (this.deleteCancelledInvitation
+						&& this.itemCacheById[itemid].isCancelled) {
+						this.deleteItemCancelled(this.itemCacheById[itemid]);
 					}
 				}
 			}
 		}
-		else {
-			if (wantTodos) {
-				for (var index in this.itemCacheById) {
-					if (isToDo(this.itemCacheById[index])) {
-						if ((this.deactivateTaskFollowup) && (this.itemCacheById[index].itemClass == "IPM.Note")) {
-							//Do not change order or removing from local or it will throw db error
-							//remove from offlinecache 
-							this.removeFromOfflineCache(this.itemCacheById[index]);
-							//remove from lighting GUI  
-							this.removeItemFromCache(this.itemCacheById[index]);
-						}
-						else {
-							if (((this.itemCacheById[index].isCompleted) && (aItemFilter & Ci.calICalendar.ITEM_FILTER_COMPLETED_YES))
-								|| ((!this.itemCacheById[index].isCompleted) && (aItemFilter & Ci.calICalendar.ITEM_FILTER_COMPLETED_NO))) {
-								tasks.push(this.itemCacheById[index]);
-							}
-						}
+		else if (wantTodos) {
+			let wantCompletedTodo = aItemFilter & Ci.calICalendar.ITEM_FILTER_COMPLETED_YES;
+			let wantNotCompletedTodo = aItemFilter & Ci.calICalendar.ITEM_FILTER_COMPLETED_NO;
+
+			for (let index in this.itemCacheById) {
+				if (cal.isToDo(this.itemCacheById[index])) {
+					if (this.deactivateTaskFollowup
+						&& this.itemCacheById[index].itemClass == "IPM.Note") {
+						//Do not change order or removing from local or it will throw db error
+						//remove from offlinecache
+						this.removeFromOfflineCache(this.itemCacheById[index]);
+						//remove from lighting GUI
+						this.removeItemFromCache(this.itemCacheById[index]);
+					}
+					else if ((this.itemCacheById[index].isCompleted && wantCompletedTodo)
+						|| (!this.itemCacheById[index].isCompleted && wantNotCompletedTodo)) {
+						tasks.push(this.itemCacheById[index]);
 					}
 				}
 			}
 		}
 
-		if (this.debug) this.logInfo("We got '" + events.length + "' events and  '" + tasks.length + "'  tasks from memory cache.");
+		this.logInfo("getItemsFromMemoryCache: We got '" + events.length + "' events and  '" + tasks.length + "'  tasks from memory cache.");
 		if (aListener) {
-			if (this.debug) this.logInfo("We have a listener so going to inform it.(2)");
-			if ((events.length > 0) && (wantEvents)) {
+			this.logInfo("getItemsFromMemoryCache: We have a listener so going to inform it.");
+			if (events.length > 0
+				&& wantEvents) {
 				aListener.onGetResult(this,
 					Cr.NS_OK,
 					Ci.calIEvent,
@@ -2919,7 +2917,8 @@ calExchangeCalendar.prototype = {
 					events);
 			}
 
-			if ((tasks.length > 0) && (wantTodos)) {
+			if (tasks.length > 0
+				&& wantTodos) {
 				aListener.onGetResult(this,
 					Cr.NS_OK,
 					Ci.calITodo,
