@@ -10338,14 +10338,14 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
 	},
 
 	getItemsFromOfflineCache: function _getItemsFromOfflineCache(aStartDate, aEndDate) {
-		if (this.debug) this.logInfo("getItemsFromOfflineCache startDate:" + aStartDate + ", endDate:" + aEndDate);
-		//dump("getItemsFromOfflineCache: name:"+this.name+", startDate:"+aStartDate+", endDate:"+aEndDate+"\n");
+		this.logInfo("getItemsFromOfflineCache: startDate:" + aStartDate + ", endDate:" + aEndDate);
 
 		if ((!this.useOfflineCache) || (!this.offlineCacheDB)) {
 			return;
 		}
 
-		var result = [];
+		let result = [];
+
 
 		if (aStartDate) {
 			var startDate = cal.toRFC3339(aStartDate.getInTimezone(this.globalFunctions.ecUTC()));
@@ -10361,104 +10361,81 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
 			var endDate = "3500-01-01";
 		}
 
-		var sqlStr = "SELECT item FROM items";
-		var whereStr = "";
-		if ((this.supportsEvents) && (!this.supportsTasks)) {
-			whereStr = " WHERE event = 'y' AND startDate <= '" + endDate + "' AND endDate >= '" + startDate + "'";
-			sqlStr += whereStr + " ORDER BY type ASC";
+		let sqlStr = "SELECT item FROM items";
+		let whereStr = "";
+
+		if (this.supportsEvents
+			&& !this.supportsTasks) {
+			whereStr = " WHERE event = 'y' AND "
+				+ "startDate <= '" + endDate + "' AND endDate >= '" + startDate + "'";
 		}
-		else {
-			if ((!this.supportsEvents) && (this.supportsTasks)) {
-				whereStr = " WHERE event = 'n' AND ((startDate = '' AND endDate >= '" + startDate + "' AND endDate <= '" + endDate + "') OR (endDate = '' AND startDate >= '" + startDate + "' AND startDate <= '" + endDate + "') OR (startDate <= '" + endDate + "' AND endDate >= '" + startDate + "') OR (startDate = '' AND endDate = ''))";
-				sqlStr += whereStr + " ORDER BY type ASC";
-			}
+		else if (!this.supportsEvents
+			&& this.supportsTasks) {
+			whereStr = " WHERE event = 'n' AND ("
+				+ "(startDate = '' AND endDate >= '" + startDate + "' AND endDate <= '" + endDate + "')"
+				+ "OR (endDate = '' AND startDate >= '" + startDate + "' AND startDate <= '" + endDate + "')"
+				+ "OR (startDate <= '" + endDate + "' AND endDate >= '" + startDate + "')"
+				+ "OR (startDate = '' AND endDate = '')"
+				+ ")";
 		}
 
-		if (this.debug) this.logInfo("sql-query:" + sqlStr, 2);
+		sqlStr += whereStr + " ORDER BY type ASC";
+
+		this.logInfo("getItemsFromOfflineCache: sql-query:" + sqlStr, 2);
+
+		let sqlStatement;
+
 		try {
-			var sqlStatement = this.offlineCacheDB.createStatement(sqlStr);
+			sqlStatement = this.offlineCacheDB.createStatement(sqlStr);
 		}
 		catch (exc) {
-			if (this.debug) this.logInfo("Error on createStatement. Error:" + this.offlineCacheDB.lastError + ", Msg:" + this.offlineCacheDB.lastErrorString + ", Exception:" + exc + ". (" + sqlStr + ")");
+			this.logInfo("getItemsFromOfflineCache: Error on SQL statement creation: " + this.offlineCacheDB.lastError
+				+ ", Msg:" + this.offlineCacheDB.lastErrorString
+				+ ", Exception:" + exc + ". (SQL source: " + sqlStr + ")");
+
 			return false;
 		}
 
-		var doContinue = true;
+		let doContinue = true;
+
 		try {
-			while (doContinue) {
-				doContinue = sqlStatement.executeStep();
+			while (sqlStatement.executeStep()) {
+				this.logInfo("getItemsFromOfflineCache: Found item in offline Cache.");
 
-				if (doContinue) {
-					if (this.debug) this.logInfo("Found item in offline Cache.");
-					var root = xml2json.newJSON();
-					xml2json.parseXML(root, sqlStatement.row.item);
-					var cachedItem = root[telements][0];
+				let root = xml2json.newJSON();
+				xml2json.parseXML(root, sqlStatement.row.item);
 
-					//cachedItem.content = ;
-					//if (this.debug) this.logInfo(" --:"+cachedItem.toString());
-					result.push(cachedItem);
-					cachedItem = null;
-				}
+				let cachedItem = root[telements][0];
+
+				result.push(cachedItem);
 			}
 		}
 		finally {
 			sqlStatement.reset();
 		}
 
-		/*		var self = this;
-				sqlStatement.executeAsync({
-					handleResult: function(aResultSet) {
-						if (self.debug) self.logInfo("Found item in offline Cache.");
-						var row;
-						while (row = aResultSet.getNextRow()) {
+		this.logInfo("getItemsFromOfflineCache: retrieved '" + result.length
+			+ "' records from offline cache. "
+			+ "startDate:" + startDate + ", endDate:" + endDate);
 
-							if (row) {
-								var cachedItem = this.globalFunctions.xmlToJxon(row.getResultByName('item'));
+		let sqliteSuccessCode = [0, 100, 101];
 
-								//cachedItem.content = ;
-								//if (self.debug) self.logInfo(" --:"+cachedItem.toString());
-								//var result = [];
-								result.push(cachedItem);
-								//self.updateCalendar(null, result, false);
-							}
-						}
-					},
-
-					handleError: function(aError) {
-						self.logInfo("Error reading from offline cache:" + aError.message);
-					},
-
-					handleCompletion: function(aReason) {
-						sqlStatement.finalize();
-						if (self.debug) self.logInfo("Retreived 1 '"+result.length+"' records from offline cache. startDate:"+startDate+", endDate:"+endDate);
-						if (aReason == Ci.mozIStorageStatementCallback.REASON_FINISHED) {
-							if (self.debug) self.logInfo("Retreived 2 '"+result.length+"' records from offline cache. startDate:"+startDate+", endDate:"+endDate);
-							if (result.length > 0) {
-								if (self.noDB) return;
-								self.executeQuery("UPDATE items set event=(event || '_')"+whereStr);
-
-								self.updateCalendar(null, result, false);
-							}
-						} else {
-							if (self.debug) self.logInfo("Error executing Query. Error:"+aReason);
-						}
-					}
-				});*/
-
-		if (this.debug) this.logInfo("Retreived '" + result.length + "' records from offline cache. startDate:" + startDate + ", endDate:" + endDate);
-		if ((this.offlineCacheDB.lastError == 0) || (this.offlineCacheDB.lastError == 100) || (this.offlineCacheDB.lastError == 101)) {
-
+		if (sqliteSuccessCode.indexOf(this.offlineCacheDB.lastError) > -1) {
 			if (result.length > 0) {
-				//this.executeQuery("UPDATE items set event=(event || '_')"+whereStr); // Turned this of so items are always requested from offline cache. Even if they have been requested already.
+				// Turned off so items are always requested from offline cache. Even if they have been requested already.
+				//this.executeQuery("UPDATE items set event=(event || '_')"+whereStr);
 
 				let updateResult = this.updateCalendar(null, result, false, true, false);
 
-				if (this.debug) this.logInfo("Updated calendar with '" + result.length + "' records from offline cache. startDate:" + startDate + ", endDate:" + endDate);
+				this.logInfo("getItemsFromOfflineCache: Updated calendar with '" + result.length
+					+ "' records from offline cache. startDate:" + startDate + ", endDate:" + endDate);
+
 				return updateResult;
 			}
 		}
 		else {
-			if (this.debug) this.logInfo("Error executing Query. Error:" + this.offlineCacheDB.lastError + ", Msg:" + this.offlineCacheDB.lastErrorString);
+			this.logInfo("getItemsFromOfflineCache: Error executing Query. Error:" + this.offlineCacheDB.lastError + ", Msg:" + this.offlineCacheDB.lastErrorString);
+
 			return null;
 		}
 		return null;
