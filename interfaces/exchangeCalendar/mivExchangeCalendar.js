@@ -2842,30 +2842,31 @@ calExchangeCalendar.prototype = {
 
 		// This is by using the this.itemCacheByStartDate and this.itemCacheByEndDate index.
 		if (wantEvents) {
+			let ids = {};
 
-			var startYear = aRangeStart.year;
-			var startYearday = aRangeStart.yearday;
+			let dayOffset = cal.createDuration();
+			dayOffset.days = 1;
 
-			var endYear = aRangeEnd.year;
-			var endYearday = aRangeEnd.yearday;
-			var doStop = false;
-			var ids = {};
-			while (!doStop) {
-				if ((startYear == endYear) && (startYearday == endYearday)) {
-					doStop = true;
-				}
+			let dayPos = cal.createDateTime();
+			dayPos = aRangeStart.clone();
 
-				if ((this.itemCacheByStartDate) && (this.itemCacheByStartDate[startYear]) && (this.itemCacheByStartDate[startYear][startYearday])) {
-					for (var itemid in this.itemCacheByStartDate[startYear][startYearday]) {
+			// Convert date from local timezone to UTC
+			// Given range is in local timezone and cache save in UTC
+			dayPos.isDate = false;
+			dayPos = dayPos.getInTimezone(cal.UTC());
+			dayPos.isDate = true;
+
+			// Go through all days bewteen the range start day and the range end day
+			while (dayPos.compare(aRangeEnd) < 0 ) {
+				if (this.itemCacheByStartDate
+					&& this.itemCacheByStartDate[dayPos.year]
+					&& this.itemCacheByStartDate[dayPos.year][dayPos.yearday]) {
+					for (let itemid in this.itemCacheByStartDate[dayPos.year][dayPos.yearday]) {
 						ids[itemid] = true;
 					}
 				}
 
-				startYearday++;
-				if (startYearday > 366) {
-					startYear++;
-					startYearday = 1;
-				}
+				dayPos.addDuration(dayOffset);
 			}
 
 			// For all found ids, if item cache has it, push it to events answer
