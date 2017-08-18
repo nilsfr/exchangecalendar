@@ -2670,59 +2670,61 @@ calExchangeCalendar.prototype = {
 			dateChanged = true;
 		}
 
-		if ((this.useOfflineCache) && (dateChanged)) {
-			if (((wantEvents) && (this.supportsEvents)) || ((wantTodos) && (this.supportsTasks))) {
-				if (this.debug) this.logInfo("Requesting events/tasks from offline cache.");
-
-				if ((startChanged) || (endChanged)) {
-
-					if (startChanged) {
-						if (this.debug) this.logInfo("Startdate has changed to an earlier date. Requesting difference.");
-						this.getItemsFromOfflineCache(aRangeStart, oldStartDate);
-					}
-					if (endChanged) {
-						if (this.debug) this.logInfo("Enddate has changed to a later date. Requesting difference.");
-						this.getItemsFromOfflineCache(oldEndDate, aRangeEnd, aListener);
-					}
-
-					// We need to get the period which did not change from memorycache.
+		// If offline cache is enabled and requested range is bigger than the
+		// memory cache one, try to get items from offline cache.
+		if (this.useOfflineCache
+			&& dateChanged) {
+			if ((eventsRequestedAndPossible && !this.OnlyShowAvailability)
+				|| tasksRequestedAndPossible) {
+				if (startChanged) {
+					this.logInfo("getItems: Startdate has changed to an earlier date. Requesting difference from offline cache.");
+					this.getItemsFromOfflineCache(aRangeStart, oldStartDate, aListener);
 				}
-				else {
-					if (this.debug) this.logInfo("New time period. Requesting items in period.");
+
+				if (endChanged) {
+					this.logInfo("getItems: Enddate has changed to a later date. Requesting difference from offline cache.");
+					this.getItemsFromOfflineCache(oldEndDate, aRangeEnd, aListener);
+				}
+
+				// We didn't had any memory cache (startDate and endDate has just been defined)
+				if (!startChanged
+					&& !endChanged) {
+					this.logInfo("getItems: New time period to cache. Requesting full period from offline cache.");
 					this.getItemsFromOfflineCache(aRangeStart, aRangeEnd, aListener);
 				}
 			}
 
-			if ((this.offlineStartDate) && (aRangeStart.compare(this.offlineStartDate) < 0)) {
-				if (this.debug) this.logInfo("Rangestart is before offlineCache start.");
-				oldStartDate = this.offlineStartDate.clone();
-				startChanged = true;
-			}
-			else {
-				if (this.offlineStartDate) {
-					if (this.debug) this.logInfo("Rangestart is after offlineCache start.");
-					startChanged = false;
-				}
-				else {
+			// Update startChanged and endChanged according to offline cache range
+			// It allows us to know if we have to ask Exchange server new items
+			if (this.offlineStartDate) {
+				if (aRangeStart.compare(this.offlineStartDate) < 0) {
+					this.logInfo("getItems: aRangestart is before offlineCache start.");
+					oldStartDate = this.offlineStartDate.clone();
 					startChanged = true;
 				}
-			}
-
-			if ((this.offlineEndDate) && (aRangeEnd.compare(this.offlineEndDate) > 0)) {
-				if (this.debug) this.logInfo("RangeEnd is after offlineCache end.");
-				oldEndDate = this.offlineEndDate.clone();
-				endChanged = true;
+				else {
+					this.logInfo("getItems: aRangestart is after offlineCache start.");
+					startChanged = false;
+				}
 			}
 			else {
-				if (this.offlineEndDate) {
-					if (this.debug) this.logInfo("RangeEnd is before offlineCache end.");
-					endChanged = false;
-				}
-				else {
-					endChanged = true;
-				}
+				startChanged = true;
 			}
 
+			if (this.offlineEndDate) {
+				if (aRangeEnd.compare(this.offlineEndDate) > 0) {
+					this.logInfo("RangeEnd is after offlineCache end.");
+					oldEndDate = this.offlineEndDate.clone();
+					endChanged = true;
+				}
+				else {
+					this.logInfo("RangeEnd is before offlineCache end.");
+					endChanged = false;
+				}
+			}
+			else {
+				endChanged = true;
+			}
 		}
 
 		//Update calendar/task view 
