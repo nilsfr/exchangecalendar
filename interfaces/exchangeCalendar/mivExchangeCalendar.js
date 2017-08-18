@@ -2747,41 +2747,30 @@ calExchangeCalendar.prototype = {
 			return;
 		}
 
-		/* We started the inbox poller again in the normal place
-				if ((this.syncInboxState) && (!this.weAreInboxSyncing)) {
-					if ((this.folderBase == "calendar") && (!this.folderID)) {
-
-						// Start the inbox poller to check for meetinginvitations or cancelations.
-						this.checkInbox();
-					}
-				}
-		*/
-		// 2013-11-19 Going to request getitems period from exchange.
+		// Check if we should add items from Exchange server
 		if (!dateChanged) {
-			if (this.debug) this.logInfo("No dateChanged. Not going to request items from server.");
+			this.logInfo("getItems: No dateChanged. Not going to request items from server.");
+
 			return;
 		}
 
 		if (this.isOffline) {
-			if (this.debug) this.logInfo("We are offline. Not going to request items from server.");
+			this.logInfo("getItems: We are offline. Not going to request items from server.");
+
 			return;
 		}
 
-		// 2013-11-19 Going to request getitems period from exchange.
-		/*		if ((wantEvents) && (this.supportsEvents)) {
-					this.requestPeriod(aRangeStart, aRangeEnd, aItemFilter, aCount, false);
-				}*/
+		if (eventsRequestedAndPossible) {
 
-		if ((wantEvents) && (this.supportsEvents)) {
-			if (this.debug) this.logInfo("Requesting events from exchange server.");
-			if (((startChanged) && (oldStartDate)) || ((endChanged) && (oldEndDate))) {
-
-				//this.getItemsFromMemoryCache(aRangeStart, aRangeEnd, aItemFilter, aListener, this.exporting);
+			this.logInfo("getItems: Requesting events from exchange server.");
+			if ((startChanged && oldStartDate)
+				|| (endChanged && oldEndDate)) {
 
 				if (startChanged) {
 					if (this.debug) this.logInfo("Startdate has changed to an earlier date. Requesting difference.");
 					this.requestPeriod(aRangeStart, oldStartDate, aItemFilter, aCount, false);
 				}
+
 				if (endChanged) {
 					if (this.debug) this.logInfo("Enddate has changed to a later date. Requesting difference.");
 					this.requestPeriod(oldEndDate, aRangeEnd, aItemFilter, aCount, true);
@@ -2790,14 +2779,16 @@ calExchangeCalendar.prototype = {
 				// We need to get the period which did not change from memorycache.
 			}
 			else {
-				if (this.debug) this.logInfo("New time period. Requesting items in period.");
+				this.logInfo("New time period. Requesting items in period.");
 				this.requestPeriod(aRangeStart, aRangeEnd, aItemFilter, aCount, false);
 			}
 		}
 
-		//Request server when calendar date changed  .
-		if ((wantTodos) && (this.supportsTasks) && (startChanged || endChanged)) {
-			if (this.debug) this.logInfo("Requesting tasks from exchange server.");
+		// Request server when calendar date changed  .
+		if (tasksRequestedAndPossible
+			&& (startChanged || endChanged)) {
+			this.logInfo("getItems: Requesting tasks from exchange server.");
+
 			var self = this;
 			this.addToQueue(erFindTaskItemsRequest, {
 					user: this.user,
@@ -2818,7 +2809,7 @@ calExchangeCalendar.prototype = {
 				null);
 
 			if (!this.deactivateTaskFollowup) {
-				if (this.debug) this.logInfo("Requesting followup tasks from exchange server.");
+				this.logInfo("getItems: Requesting followup tasks from exchange server.");
 				this.addToQueue(erFindFollowupItemsRequest, {
 						user: this.user,
 						mailbox: this.mailbox,
