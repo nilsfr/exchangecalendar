@@ -10346,20 +10346,25 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
 
 		let result = [];
 
+		let utcStartDate = cal.createDateTime("1900-01-01");
+		let utcEndDate = cal.createDateTime("3500-01-01");
 
 		if (aStartDate) {
-			var startDate = cal.toRFC3339(aStartDate.getInTimezone(this.globalFunctions.ecUTC()));
-		}
-		else {
-			var startDate = "1900-01-01";
+			utcStartDate = aStartDate.clone();
+			utcStartDate.isDate = false;
+			utcStartDate = utcStartDate.getInTimezone(cal.UTC());
+			utcStartDate.isDate = true;
 		}
 
 		if (aEndDate) {
-			var endDate = cal.toRFC3339(aEndDate.getInTimezone(this.globalFunctions.ecUTC()));
+			utcEndDate = aEndDate.clone();
+			utcEndDate.isDate = false;
+			utcEndDate = utcEndDate.getInTimezone(cal.UTC());
+			utcEndDate.isDate = true;
 		}
-		else {
-			var endDate = "3500-01-01";
-		}
+
+		let startDate = cal.toRFC3339(utcStartDate);
+		let endDate = cal.toRFC3339(utcEndDate);
 
 		let sqlStr = "SELECT item FROM items";
 		let whereStr = "";
