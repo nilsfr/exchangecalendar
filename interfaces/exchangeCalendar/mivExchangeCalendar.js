@@ -2727,19 +2727,20 @@ calExchangeCalendar.prototype = {
 			}
 		}
 
-		//Update calendar/task view 
+		// Update calendar/task view with items in memory
 		this.getItemsFromMemoryCache(aRangeStart, aRangeEnd, aItemFilter, aListener, this.exporting);
 
 		if (this.OnlyShowAvailability) {
-			if ((startChanged) || (endChanged)) {
-				if (startChanged) {
-					this.getOnlyFreeBusyInformation(aRangeStart, oldStartDate);
-				}
-				if (endChanged) {
-					this.getOnlyFreeBusyInformation(oldEndDate, aRangeEnd);
-				}
+			if (startChanged) {
+				this.getOnlyFreeBusyInformation(aRangeStart, oldStartDate);
 			}
-			else {
+
+			if (endChanged) {
+				this.getOnlyFreeBusyInformation(oldEndDate, aRangeEnd);
+			}
+
+			if (!startChanged
+				&& !endChanged) {
 				this.getOnlyFreeBusyInformation(aRangeStart, aRangeEnd);
 			}
 
