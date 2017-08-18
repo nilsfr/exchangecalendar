@@ -2529,7 +2529,7 @@ calExchangeCalendar.prototype = {
 
 		this.exporting = false;
 		if (aItemFilter === Ci.calICalendar.ITEM_FILTER_ALL_ITEMS
-			&& aCount == 0
+			&& aCount === 0
 			&& aRangeStart === null
 			&& aRangeEnd === null) {
 
@@ -2598,6 +2598,7 @@ calExchangeCalendar.prototype = {
 				aRangeStart = this.startDate.clone();
 			}
 
+			this.logInfo("getItems: aRangeStart has been updated:" + aRangeStart.toString());
 		}
 
 		// When range end is not defined,
@@ -2613,53 +2614,61 @@ calExchangeCalendar.prototype = {
 				aRangeEnd = this.endDate.clone();
 			}
 
+			this.logInfo("getItems: aRangeEnd has been updated:" + aRangeEnd.toString());
 		}
+
+		if (!this.lastValidRangeStart) {
+			this.lastValidRangeStart = aRangeStart.clone();
+		}
+
+		if (!this.lastValidRangeEnd) {
+			this.lastValidRangeEnd = aRangeEnd.clone();
+		}
+
+		// Check if requested range is bigger than memory cache.
 
 		let dateChanged = false;
 		let startChanged = false;
 		let endChanged = false;
 
-		if (!this.startDate) {
-			if (this.debug) this.logInfo("no startdate");
-			this.startDate = aRangeStart.clone();
-			dateChanged = true;
-		}
-		else {
+		if (this.startDate) {
+			// New start date is before the memory cache one.
+			// memory cache is growing.
 			if (this.startDate.compare(aRangeStart) > 0) {
-				if (this.debug) this.logInfo("aRangeStart (" + aRangeStart.toString() + ") is before current startDate (" + this.startDate.toString() + ")");
-				// New start date is before old startdate. Period has grown.
+				this.logInfo("getItems: calendar has start date and aRangeStart (" + aRangeStart.toString() + ") is before current startDate (" + this.startDate.toString() + ")");
+
 				var oldStartDate = this.startDate.clone();
 				this.startDate = aRangeStart.clone();
+
 				dateChanged = true;
 				startChanged = true;
 			}
 		}
+		else {
+			this.logInfo("getItems: calendar hasn't start date, use the range start");
 
-		if (!this.endDate) {
-			if (this.debug) this.logInfo("no enddate");
-			this.endDate = aRangeEnd.clone();
+			this.startDate = aRangeStart.clone();
 			dateChanged = true;
 		}
-		else {
+
+		if (this.endDate) {
+			// New end date is after the memory cache one.
+			// Memory cache is growing.
 			if (this.endDate.compare(aRangeEnd) < 0) {
-				if (this.debug) this.logInfo("aRangeEnd (" + aRangeEnd.toString() + ") is after current endDate (" + this.endDate.toString() + ")");
-				// New end date is after old enddate. Period has grown.
+				this.logInfo("getItems: calendar has endDate and aRangeEnd (" + aRangeEnd.toString() + ") is after current endDate (" + this.endDate.toString() + ")");
+
 				var oldEndDate = this.endDate.clone();
 				this.endDate = aRangeEnd.clone();
 				dateChanged = true;
 				endChanged = true;
 			}
 		}
+		else {
+			this.logInfo("getItems: calendar hasn't end date, use the range end");
 
-		if (aRangeStart) {
-			if (this.debug) this.logInfo("getItems 5a: aRangeStart:" + aRangeStart.toString());
+			this.endDate = aRangeEnd.clone();
+			dateChanged = true;
 		}
-		if (aRangeEnd) {
-			if (this.debug) this.logInfo("getItems 5b: aRangeEnd:" + aRangeEnd.toString());
-		}
-
-		if (!this.lastValidRangeStart) this.lastValidRangeStart = aRangeStart.clone();
-		if (!this.lastValidRangeEnd) this.lastValidRangeEnd = aRangeEnd.clone();
 
 		if ((this.useOfflineCache) && (dateChanged)) {
 			if (((wantEvents) && (this.supportsEvents)) || ((wantTodos) && (this.supportsTasks))) {
