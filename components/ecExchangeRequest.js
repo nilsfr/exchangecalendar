@@ -374,7 +374,7 @@ ExchangeRequest.prototype = {
 
 		// Update HTTP Headers
 		this.xmlReq.overrideMimeType('text/xml');
-		this.xmlReq.setRequestHeader("Content-Type", "text/xml");
+		this.xmlReq.setRequestHeader("Content-Type", "text/xml; charset=utf-8");
 		this.xmlReq.setRequestHeader("User-Agent", this.globalFunctions.safeGetCharPref(this.prefB, "extensions.1st-setup.others.userAgent", "exchangecalendar@extensions.1st-setup.nl", true));
 
 		// This is required for NTLM authenticated sessions. Which is default for a default EWS install.
