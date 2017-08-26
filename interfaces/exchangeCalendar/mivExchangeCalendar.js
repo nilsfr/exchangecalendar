@@ -76,11 +76,8 @@ Cu.import("resource://exchangecalendar/erDeleteAttachment.js");
 
 Cu.import("resource://interfaces/xml2json/xml2json.js");
 
-//Cu.import("resource://interfaces/xml.js");
-
 Cu.import("resource://interfaces/exchangeTodo/mivExchangeTodo.js");
 Cu.import("resource://interfaces/exchangeEvent/mivExchangeEvent.js");
-//Cu.import("resource://interfaces/exchangeBaseItem/mivExchangeBaseItem.js");
 
 var globalStart = new Date().getTime();
 
@@ -295,8 +292,6 @@ const MAPI_PidLidReminderSet = "34051";
 //
 // calExchangeCalendar
 //
-
-//var EXPORTED_SYMBOLS = ["calExchangeCalendar"];
 
 function calExchangeCalendar() {
 
@@ -2362,41 +2357,42 @@ calExchangeCalendar.prototype = {
 	//                 in calIOperationListener aListener);
 	getItems: function _getItems(aItemFilter, aCount,
 		aRangeStart, aRangeEnd, aListener) {
-		if (this.debug) this.logInfo("getItems 0: " + "  aItemFilter, " + aItemFilter + "  aCount, " + aCount
-			+ " aRangeStart,  " + aRangeStart + " aRangeEnd, " + aRangeEnd
+
+		this.logInfo("getItems: aItemFilter, " + aItemFilter
+			+ " aCount, " + aCount
 			+ " aListener , " + aListener);
 
-		//Start poller if not already runnning  this may resolve suspend issue
+		if (aRangeStart) {
+			this.logInfo("getItems: aRangeStart:" + aRangeStart.toString());
+		}
+		else {
+			this.logInfo("getItems: aRangeStart: null");
+		}
+
+		if (aRangeEnd) {
+			this.logInfo("getItems: aRangeEnd:" + aRangeEnd.toString());
+		}
+		else {
+			this.logInfo("getItems: aRangeEnd: null");
+		}
+
+		// Start poller if not already runnning  this may resolve suspend issue
 		this.startCalendarPoller();
 
-		if (aRangeStart) {
-			if (this.debug) this.logInfo("getItems 2: aRangeStart:" + aRangeStart.toString());
-			//dump(", aRangeStart:"+aRangeStart.toString());
-		}
-		else {
-			if (this.debug) this.logInfo("getItems 2: aRangeStart:null");
-			//dump(", aRangeStart:null");
-		}
-		if (aRangeEnd) {
-			if (this.debug) this.logInfo("getItems 3: aRangeEnd:" + aRangeEnd.toString());
-			//dump(", aRangeEnd:"+aRangeEnd.toString()); 
-		}
-		else {
-			if (this.debug) this.logInfo("getItems 3: aRangeEnd:null");
-			//dump(", aRangeEnd:null");
-		}
-		//dump("\n");
+		if (this.typeString(aListener) === "object") {
+			this.logInfo("getItems: We received a getItems from repeatingInvitationsTimer function.\
+			Because this request if always for a full year it will consume a lot of\
+			memory when we have a lot of recurring events with no end date.\
+			So for now we only request the period we have in memory cache.\
+			startDate:" + this.startDate + ", endDate:" + this.endDate);
 
-		//dump(" typeString(aListener):"+this.typeString(aListener)+"\n");
-		if (this.typeString(aListener) == "object") {
-			if (this.debug) this.logInfo("We received a getItems from repeatingInvitationsTimer function. Because this request if always for a full year it will consume a lot of memory when we have a lot of recurring events with no end date. So for now we only request the period we have in memory cache. startDate:" + this.startDate + ", endDate:" + this.endDate);
-			//dump(this.globalFunctions.STACK(10)+"\n");
 			if (this.startDate) {
 				aRangeStart = this.startDate.clone();
 			}
 			else {
 				aRangeStart = undefined;
 			}
+
 			if (this.endDate) {
 				aRangeEnd = this.endDate.clone();
 			}
@@ -2405,24 +2401,39 @@ calExchangeCalendar.prototype = {
 			}
 		}
 
-		var wantEvents = ((aItemFilter & Ci.calICalendar
-			.ITEM_FILTER_TYPE_EVENT) != 0);
+		/*
+		 * Check minimal assestements before looking for items:
+		 *  - calendar is not in creation
+		 *  - calendar is initialized
+		 *  - calendar support requested items
+		 *  - first synchronization is done
+		 */
 
-		var wantTodos = ((aItemFilter & Ci.calICalendar
-			.ITEM_FILTER_TYPE_TODO) != 0);
+		// Unfold request filters to booleans
+		let wantEvents = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_TYPE_EVENT) !== 0);
+		let wantTodos = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_TYPE_TODO) !== 0);
+		let asOccurrences = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_CLASS_OCCURRENCES) !== 0);
+		let wantInvitations = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_REQUEST_NEEDS_ACTION) !== 0);
 
-		//if (wantEvents) dump("Events are requested by calendar.\n");
-		//if (wantTodos) dump("Tasks are requested by calendar.\n");
+		if (wantEvents) {
+			this.logInfo("getItems: Events are requested by calendar.");
+		}
 
-		if (wantEvents)
-			if (this.debug) this.logInfo("Events are requested by calendar.");
-		if (wantTodos)
-			if (this.debug) this.logInfo("Tasks are requested by calendar.");
+		if (wantTodos) {
+			this.logInfo("getItems: Tasks are requested by calendar.");
+		}
 
+		if (wantInvitations) {
+			this.logInfo("getItems: Invitations are requested by calendar.");
+		}
+
+		// Calendar creation is not finished, we just update calendar range selection and stop
 		if (this.newCalendar) {
-			if (this.debug) this.logInfo("We are still creating this calendar. Ignore getItems for now.");
-			if (aRangeStart) {
-				if (wantEvents) {
+			this.logInfo("getItems: We are still creating this calendar. Ignore getItems for now.");
+
+			// Update start/end range for events
+			if (wantEvents) {
+				if (aRangeStart) {
 					if (this.newCalRangeStartEvents) {
 						if (aRangeStart.compare(this.newCalRangeStartEvents) < 0) {
 							this.newCalRangeStartEvents = aRangeStart.clone();
@@ -2431,21 +2442,10 @@ calExchangeCalendar.prototype = {
 					else {
 						this.newCalRangeStartEvents = aRangeStart.clone();
 					}
+					
 				}
-				if (wantTodos) {
-					if (this.newCalRangeStartTodos) {
-						if (aRangeStart.compare(this.newCalRangeStartTodos) < 0) {
-							this.newCalRangeStartTodos = aRangeStart.clone();
-						}
-					}
-					else {
-						this.newCalRangeStartTodos = aRangeStart.clone();
-					}
-				}
-			}
 
-			if (aRangeEnd) {
-				if (wantEvents) {
+				if (aRangeEnd) {
 					if (this.newCalRangeEndEvents) {
 						if (aRangeEnd.compare(this.newCalRangeEndEvents) > 0) {
 							this.newCalRangeEndEvents = aRangeEnd.clone();
@@ -2455,7 +2455,22 @@ calExchangeCalendar.prototype = {
 						this.newCalRangeEndEvents = aRangeEnd.clone();
 					}
 				}
-				if (wantTodos) {
+			}
+
+			// Update start/end range for tasks
+			if (wantTodos) {
+				if (aRangeStart) {
+					if (this.newCalRangeStartTodos) {
+						if (aRangeStart.compare(this.newCalRangeStartTodos) < 0) {
+							this.newCalRangeStartTodos = aRangeStart.clone();
+						}
+					}
+					else {
+						this.newCalRangeStartTodos = aRangeStart.clone();
+					}
+				}
+
+				if (aRangeEnd) {
 					if (this.newCalRangeEndTodos) {
 						if (aRangeEnd.compare(this.newCalRangeEndTodos) > 0) {
 							this.newCalRangeEndTodos = aRangeEnd.clone();
@@ -2474,11 +2489,11 @@ calExchangeCalendar.prototype = {
 					null,
 					null);
 			}
+
 			return;
 		}
 
 		if (!this.firstSyncDone) {
-			//dump("!this.firstSyncDone\n");
 			this.getItemsSyncQueue.push({
 				itemFilter: aItemFilter,
 				count: aCount,
@@ -2486,11 +2501,11 @@ calExchangeCalendar.prototype = {
 				rangeEnd: aRangeEnd,
 				listener: aListener
 			});
+
 			return;
 		}
 
 		if (!this.isInitialized) {
-			//dump("!this.isInitialized\n");
 			if (aListener) {
 				this.notifyOperationComplete(aListener,
 					Cr.NS_OK,
@@ -2498,275 +2513,264 @@ calExchangeCalendar.prototype = {
 					null,
 					null);
 			}
+
 			return;
 		}
 
-		var validPeriod = false;
-		if ((aRangeStart) && (aRangeEnd) && (aRangeStart.isDate) && (aRangeEnd.isDate)) {
+		let validPeriod = false;
+		if (aRangeStart
+			&& aRangeStart.isDate
+			&& aRangeEnd
+			&& aRangeEnd.isDate) {
 			validPeriod = true;
 			this.lastValidRangeStart = aRangeStart.clone();
 			this.lastValidRangeEnd = aRangeEnd.clone();
 		}
 
 		this.exporting = false;
-		if ((aItemFilter == Ci.calICalendar.ITEM_FILTER_ALL_ITEMS)
-			&& (aCount == 0)
-			&& (aRangeStart === null)
-			&& (aRangeEnd === null)) {
-			if (this.debug) this.logInfo("getItems: Request to get all Items in Calendar. Probably an export");
+		if (aItemFilter === Ci.calICalendar.ITEM_FILTER_ALL_ITEMS
+			&& aCount === 0
+			&& aRangeStart === null
+			&& aRangeEnd === null) {
+
+			this.logInfo("getItems: Request to get all Items in Calendar. Probably an export");
+
 			this.exporting = true;
 		}
 
-		var asOccurrences = ((aItemFilter & Ci.calICalendar
-			.ITEM_FILTER_CLASS_OCCURRENCES) != 0);
+		if (!wantEvents
+			&& !wantInvitations
+			&& !wantTodos) {
 
-		var wantInvitations = ((aItemFilter & Ci.calICalendar
-			.ITEM_FILTER_REQUEST_NEEDS_ACTION) != 0);
-
-		if (!wantEvents && !wantInvitations && !wantTodos) {
 			this.notifyOperationComplete(aListener,
 				Cr.NS_OK,
 				Ci.calIOperationListener.GET,
 				null, null);
+
 			return;
 		}
 
-		if (wantInvitations)
-			if (this.debug) this.logInfo("Invitations are requested by calendar.");
+		let eventsRequestedAndPossible = (wantEvents && this.supportsEvents);
+		let tasksRequestedAndPossible = (wantTodos && this.supportsTasks);
 
-		if ((!this.supportsEvents) && (!this.supportsTasks) && (!this.OnlyShowAvailability)) {
-			// Something requested we cannot fullfill.
-			if (this.debug) this.logInfo("This folder currently is not able yet to support events or tasks.");
+		// When only availability is readable, we can also request events:
+		if (this.OnlyShowAvailability) {
+			eventsRequestedAndPossible = true;
+		}
+
+		if (eventsRequestedAndPossible) {
+			this.logInfo("getItems: Events are requested and this is possible for this folder");
+		}
+
+		if (tasksRequestedAndPossible) {
+			this.logInfo("getItems: Tasks are requested and this is possible for this folder");
+		}
+
+		// Calendar is not able to complete request (item type is not supported)
+		if (!eventsRequestedAndPossible
+			&& !tasksRequestedAndPossible) {
+			this.logInfo("getItems: This folder is not able to support requested items.");
+
 			this.notifyOperationComplete(aListener,
 				Cr.NS_OK,
 				Ci.calIOperationListener.GET,
 				null, null);
+
 			return;
 		}
 
-		var eventsRequestedAndPossible = (((wantEvents) && (this.supportsEvents)) || (this.OnlyShowAvailability));
-		var tasksRequestedAndPossible = ((wantTodos) && (this.supportsTasks));
-		if ((!eventsRequestedAndPossible) && (!tasksRequestedAndPossible)) {
-			if (this.debug) this.logInfo("This folder is not able to support requested items. this.OnlyShowAvailability:" + this.OnlyShowAvailability);
-			this.notifyOperationComplete(aListener,
-				Cr.NS_OK,
-				Ci.calIOperationListener.GET,
-				null, null);
-			return;
-		}
-		if (eventsRequestedAndPossible)
-			if (this.debug) this.logInfo("Events are requested and this is possible for this folder");
-		if (tasksRequestedAndPossible)
-			if (this.debug) this.logInfo("Tasks are requested and this is possible for this folder");
+		/*
+		 * All checks passed, look for items to send
+		 *
+		 */
 
+		// When range start is not defined,
+		// set it to five 5 before now.
 		if (!aRangeStart) {
-			/*if (this.startDate) {
-				aRangeStart = this.startDate.clone();
-			}
-			else {
-				aRangeStart = cal.fromRFC3339("1900-01-01T00:00:00Z");
-			}*/
-
-			// We are going to request a rangestart of 5 weeks before now.
-			aRangeStart = cal.now()
-			var offset = cal.createDuration();
+			let offset = cal.createDuration();
 			offset.weeks = -5;
-			aRangeStart.addDuration(offset);
-			//dump("aRangeStart == null. Setting to:"+aRangeStart+"\n");
 
-			if ((this.startDate) && (this.startDate.compare(aRangeStart) < 0)) {
+			aRangeStart = cal.now().addDuration(offset);
+
+			// If cache already contains a bigger range, use it
+			if (this.startDate
+				&& this.startDate.compare(aRangeStart) < 0) {
 				aRangeStart = this.startDate.clone();
 			}
 
+			this.logInfo("getItems: aRangeStart has been updated:" + aRangeStart.toString());
 		}
 
+		// When range end is not defined,
+		// set it to five 5 after now.
 		if (!aRangeEnd) {
-			/*if (this.endDate) {
-				aRangeEnd = this.endDate.clone();
-			}
-			else {
-				aRangeEnd = cal.fromRFC3339("3500-01-01T00:00:00Z");
-			}*/
-
-			// We are going to request a rangeend of 5 weeks after now.
-			aRangeEnd = cal.now()
-			var offset = cal.createDuration();
+			let offset = cal.createDuration();
 			offset.weeks = 5;
-			aRangeEnd.addDuration(offset);
-			//dump("aRangeEnd == null. Setting to:"+aRangeEnd+"\n");
 
+			aRangeEnd = cal.now().addDuration(offset);
+
+			// If cache already contains a bigger range, use it
 			if ((this.endDate) && (this.endDate.compare(aRangeEnd) > 0)) {
 				aRangeEnd = this.endDate.clone();
 			}
 
+			this.logInfo("getItems: aRangeEnd has been updated:" + aRangeEnd.toString());
 		}
 
-		var dateChanged = false;
-		var startChanged = false;
-		var endChanged = false;
-
-		if (!this.periods) {
-			this.periods = [];
-		}
-		// Check if this requested period touches a previous seen period.
-		var periodMatch = false;
-		var i = 0;
-		while ((!periodMatch) && (i < this.periods.length)) {
-			if (this.periods[i].startDate.compare(aRangeStart) > 0) {}
-			i++;
+		if (!this.lastValidRangeStart) {
+			this.lastValidRangeStart = aRangeStart.clone();
 		}
 
-		if (!this.startDate) {
-			if (this.debug) this.logInfo("no startdate");
-			this.startDate = aRangeStart.clone();
-			dateChanged = true;
+		if (!this.lastValidRangeEnd) {
+			this.lastValidRangeEnd = aRangeEnd.clone();
 		}
-		else {
+
+		// Check if requested range is bigger than memory cache.
+
+		let dateChanged = false;
+		let startChanged = false;
+		let endChanged = false;
+
+		if (this.startDate) {
+			// New start date is before the memory cache one.
+			// memory cache is growing.
 			if (this.startDate.compare(aRangeStart) > 0) {
-				if (this.debug) this.logInfo("aRangeStart (" + aRangeStart.toString() + ") is before current startDate (" + this.startDate.toString() + ")");
-				// New start date is before old startdate. Period has grown.
+				this.logInfo("getItems: calendar has start date and aRangeStart (" + aRangeStart.toString() + ") is before current startDate (" + this.startDate.toString() + ")");
+
 				var oldStartDate = this.startDate.clone();
 				this.startDate = aRangeStart.clone();
+
 				dateChanged = true;
 				startChanged = true;
 			}
 		}
+		else {
+			this.logInfo("getItems: calendar hasn't start date, use the range start");
 
-		if (!this.endDate) {
-			if (this.debug) this.logInfo("no enddate");
-			this.endDate = aRangeEnd.clone();
+			this.startDate = aRangeStart.clone();
 			dateChanged = true;
 		}
-		else {
+
+		if (this.endDate) {
+			// New end date is after the memory cache one.
+			// Memory cache is growing.
 			if (this.endDate.compare(aRangeEnd) < 0) {
-				if (this.debug) this.logInfo("aRangeEnd (" + aRangeEnd.toString() + ") is after current endDate (" + this.endDate.toString() + ")");
-				// New end date is after old enddate. Period has grown.
+				this.logInfo("getItems: calendar has endDate and aRangeEnd (" + aRangeEnd.toString() + ") is after current endDate (" + this.endDate.toString() + ")");
+
 				var oldEndDate = this.endDate.clone();
 				this.endDate = aRangeEnd.clone();
 				dateChanged = true;
 				endChanged = true;
 			}
 		}
+		else {
+			this.logInfo("getItems: calendar hasn't end date, use the range end");
 
-		if (aRangeStart) {
-			if (this.debug) this.logInfo("getItems 5a: aRangeStart:" + aRangeStart.toString());
+			this.endDate = aRangeEnd.clone();
+			dateChanged = true;
 		}
-		if (aRangeEnd) {
-			if (this.debug) this.logInfo("getItems 5b: aRangeEnd:" + aRangeEnd.toString());
-		}
 
-		if (!this.lastValidRangeStart) this.lastValidRangeStart = aRangeStart.clone();
-		if (!this.lastValidRangeEnd) this.lastValidRangeEnd = aRangeEnd.clone();
-
-		if ((this.useOfflineCache) && (dateChanged)) {
-			if (((wantEvents) && (this.supportsEvents)) || ((wantTodos) && (this.supportsTasks))) {
-				if (this.debug) this.logInfo("Requesting events/tasks from offline cache.");
-
-				if ((startChanged) || (endChanged)) {
-
-					if (startChanged) {
-						if (this.debug) this.logInfo("Startdate has changed to an earlier date. Requesting difference.");
-						this.getItemsFromOfflineCache(aRangeStart, oldStartDate);
-					}
-					if (endChanged) {
-						if (this.debug) this.logInfo("Enddate has changed to a later date. Requesting difference.");
-						this.getItemsFromOfflineCache(oldEndDate, aRangeEnd, aListener);
-					}
-
-					// We need to get the period which did not change from memorycache.
+		// If offline cache is enabled and requested range is bigger than the
+		// memory cache one, try to get items from offline cache.
+		if (this.useOfflineCache
+			&& dateChanged) {
+			if ((eventsRequestedAndPossible && !this.OnlyShowAvailability)
+				|| tasksRequestedAndPossible) {
+				if (startChanged) {
+					this.logInfo("getItems: Startdate has changed to an earlier date. Requesting difference from offline cache.");
+					this.getItemsFromOfflineCache(aRangeStart, oldStartDate, aListener);
 				}
-				else {
-					if (this.debug) this.logInfo("New time period. Requesting items in period.");
+
+				if (endChanged) {
+					this.logInfo("getItems: Enddate has changed to a later date. Requesting difference from offline cache.");
+					this.getItemsFromOfflineCache(oldEndDate, aRangeEnd, aListener);
+				}
+
+				// We didn't had any memory cache (startDate and endDate has just been defined)
+				if (!startChanged
+					&& !endChanged) {
+					this.logInfo("getItems: New time period to cache. Requesting full period from offline cache.");
 					this.getItemsFromOfflineCache(aRangeStart, aRangeEnd, aListener);
 				}
 			}
 
-			if ((this.offlineStartDate) && (aRangeStart.compare(this.offlineStartDate) < 0)) {
-				if (this.debug) this.logInfo("Rangestart is before offlineCache start.");
-				oldStartDate = this.offlineStartDate.clone();
-				startChanged = true;
-			}
-			else {
-				if (this.offlineStartDate) {
-					if (this.debug) this.logInfo("Rangestart is after offlineCache start.");
-					startChanged = false;
-				}
-				else {
+			// Update startChanged and endChanged according to offline cache range
+			// It allows us to know if we have to ask Exchange server new items
+			if (this.offlineStartDate) {
+				if (aRangeStart.compare(this.offlineStartDate) < 0) {
+					this.logInfo("getItems: aRangestart is before offlineCache start.");
+					oldStartDate = this.offlineStartDate.clone();
 					startChanged = true;
 				}
-			}
-
-			if ((this.offlineEndDate) && (aRangeEnd.compare(this.offlineEndDate) > 0)) {
-				if (this.debug) this.logInfo("RangeEnd is after offlineCache end.");
-				oldEndDate = this.offlineEndDate.clone();
-				endChanged = true;
+				else {
+					this.logInfo("getItems: aRangestart is after offlineCache start.");
+					startChanged = false;
+				}
 			}
 			else {
-				if (this.offlineEndDate) {
-					if (this.debug) this.logInfo("RangeEnd is before offlineCache end.");
-					endChanged = false;
-				}
-				else {
-					endChanged = true;
-				}
+				startChanged = true;
 			}
 
+			if (this.offlineEndDate) {
+				if (aRangeEnd.compare(this.offlineEndDate) > 0) {
+					this.logInfo("RangeEnd is after offlineCache end.");
+					oldEndDate = this.offlineEndDate.clone();
+					endChanged = true;
+				}
+				else {
+					this.logInfo("RangeEnd is before offlineCache end.");
+					endChanged = false;
+				}
+			}
+			else {
+				endChanged = true;
+			}
 		}
 
-		//Update calendar/task view 
+		// Update calendar/task view with items in memory
 		this.getItemsFromMemoryCache(aRangeStart, aRangeEnd, aItemFilter, aListener, this.exporting);
 
 		if (this.OnlyShowAvailability) {
-			if ((startChanged) || (endChanged)) {
-				if (startChanged) {
-					this.getOnlyFreeBusyInformation(aRangeStart, oldStartDate);
-				}
-				if (endChanged) {
-					this.getOnlyFreeBusyInformation(oldEndDate, aRangeEnd);
-				}
+			if (startChanged) {
+				this.getOnlyFreeBusyInformation(aRangeStart, oldStartDate);
 			}
-			else {
+
+			if (endChanged) {
+				this.getOnlyFreeBusyInformation(oldEndDate, aRangeEnd);
+			}
+
+			if (!startChanged
+				&& !endChanged) {
 				this.getOnlyFreeBusyInformation(aRangeStart, aRangeEnd);
 			}
 
 			return;
 		}
 
-		/* We started the inbox poller again in the normal place
-				if ((this.syncInboxState) && (!this.weAreInboxSyncing)) {
-					if ((this.folderBase == "calendar") && (!this.folderID)) {
-
-						// Start the inbox poller to check for meetinginvitations or cancelations.
-						this.checkInbox();
-					}
-				}
-		*/
-		// 2013-11-19 Going to request getitems period from exchange.
+		// Check if we should add items from Exchange server
 		if (!dateChanged) {
-			if (this.debug) this.logInfo("No dateChanged. Not going to request items from server.");
+			this.logInfo("getItems: No dateChanged. Not going to request items from server.");
+
 			return;
 		}
 
 		if (this.isOffline) {
-			if (this.debug) this.logInfo("We are offline. Not going to request items from server.");
+			this.logInfo("getItems: We are offline. Not going to request items from server.");
+
 			return;
 		}
 
-		// 2013-11-19 Going to request getitems period from exchange.
-		/*		if ((wantEvents) && (this.supportsEvents)) {
-					this.requestPeriod(aRangeStart, aRangeEnd, aItemFilter, aCount, false);
-				}*/
+		if (eventsRequestedAndPossible) {
 
-		if ((wantEvents) && (this.supportsEvents)) {
-			if (this.debug) this.logInfo("Requesting events from exchange server.");
-			if (((startChanged) && (oldStartDate)) || ((endChanged) && (oldEndDate))) {
-
-				//this.getItemsFromMemoryCache(aRangeStart, aRangeEnd, aItemFilter, aListener, this.exporting);
+			this.logInfo("getItems: Requesting events from exchange server.");
+			if ((startChanged && oldStartDate)
+				|| (endChanged && oldEndDate)) {
 
 				if (startChanged) {
 					if (this.debug) this.logInfo("Startdate has changed to an earlier date. Requesting difference.");
 					this.requestPeriod(aRangeStart, oldStartDate, aItemFilter, aCount, false);
 				}
+
 				if (endChanged) {
 					if (this.debug) this.logInfo("Enddate has changed to a later date. Requesting difference.");
 					this.requestPeriod(oldEndDate, aRangeEnd, aItemFilter, aCount, true);
@@ -2775,14 +2779,16 @@ calExchangeCalendar.prototype = {
 				// We need to get the period which did not change from memorycache.
 			}
 			else {
-				if (this.debug) this.logInfo("New time period. Requesting items in period.");
+				this.logInfo("New time period. Requesting items in period.");
 				this.requestPeriod(aRangeStart, aRangeEnd, aItemFilter, aCount, false);
 			}
 		}
 
-		//Request server when calendar date changed  .
-		if ((wantTodos) && (this.supportsTasks) && (startChanged || endChanged)) {
-			if (this.debug) this.logInfo("Requesting tasks from exchange server.");
+		// Request server when calendar date changed  .
+		if (tasksRequestedAndPossible
+			&& (startChanged || endChanged)) {
+			this.logInfo("getItems: Requesting tasks from exchange server.");
+
 			var self = this;
 			this.addToQueue(erFindTaskItemsRequest, {
 					user: this.user,
@@ -2803,7 +2809,7 @@ calExchangeCalendar.prototype = {
 				null);
 
 			if (!this.deactivateTaskFollowup) {
-				if (this.debug) this.logInfo("Requesting followup tasks from exchange server.");
+				this.logInfo("getItems: Requesting followup tasks from exchange server.");
 				this.addToQueue(erFindFollowupItemsRequest, {
 						user: this.user,
 						mailbox: this.mailbox,
@@ -2826,15 +2832,13 @@ calExchangeCalendar.prototype = {
 	},
 
 	getItemsFromMemoryCache: function _getItemsFromMemoryCache(aRangeStart, aRangeEnd, aItemFilter, aListener, aExporting) {
-		if (this.debug) this.logInfo("getItemsFromMemoryCache startDate:" + aRangeStart + ", endDate:" + aRangeEnd + ", aListener:" + aListener + ", aExporting:" + aExporting);
-		var events = [];
-		var tasks = [];
+		this.logInfo("getItemsFromMemoryCache: startDate:" + aRangeStart + ", endDate:" + aRangeEnd + ", aListener:" + aListener + ", aExporting:" + aExporting);
 
-		var wantEvents = ((aItemFilter & Ci.calICalendar
-			.ITEM_FILTER_TYPE_EVENT) != 0);
+		let events = [];
+		let tasks = [];
 
-		var wantTodos = ((aItemFilter & Ci.calICalendar
-			.ITEM_FILTER_TYPE_TODO) != 0);
+		let wantEvents = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_TYPE_EVENT) != 0);
+		let wantTodos = ((aItemFilter & Ci.calICalendar.ITEM_FILTER_TYPE_TODO) != 0);
 
 		// This is by using the this.itemCacheByStartDate and this.itemCacheByEndDate index.
 		if (wantEvents) {
@@ -2864,47 +2868,47 @@ calExchangeCalendar.prototype = {
 				}
 			}
 
-			for (var itemid in ids) {
-				if (this.itemCacheById[itemid]) {
-					if (isEvent(this.itemCacheById[itemid])) {
-						if (this.deleteCancelledInvitation && this.itemCacheById[itemid].isCancelled) {
-							events.push(this.itemCacheById[itemid]);
-							this.deleteItemCancelled(this.itemCacheById[itemid]);
+			// For all found ids, if item cache has it, push it to events answer
+			// Check also if invitation should be cancelled
+			for (let itemid in ids) {
+				if (this.itemCacheById[itemid]
+					&& cal.isEvent(this.itemCacheById[itemid])) {
+					events.push(this.itemCacheById[itemid]);
 
-						}
-						else {
-							events.push(this.itemCacheById[itemid]);
-						}
+					if (this.deleteCancelledInvitation
+						&& this.itemCacheById[itemid].isCancelled) {
+						this.deleteItemCancelled(this.itemCacheById[itemid]);
 					}
 				}
 			}
 		}
-		else {
-			if (wantTodos) {
-				for (var index in this.itemCacheById) {
-					if (isToDo(this.itemCacheById[index])) {
-						if ((this.deactivateTaskFollowup) && (this.itemCacheById[index].itemClass == "IPM.Note")) {
-							//Do not change order or removing from local or it will throw db error
-							//remove from offlinecache 
-							this.removeFromOfflineCache(this.itemCacheById[index]);
-							//remove from lighting GUI  
-							this.removeItemFromCache(this.itemCacheById[index]);
-						}
-						else {
-							if (((this.itemCacheById[index].isCompleted) && (aItemFilter & Ci.calICalendar.ITEM_FILTER_COMPLETED_YES))
-								|| ((!this.itemCacheById[index].isCompleted) && (aItemFilter & Ci.calICalendar.ITEM_FILTER_COMPLETED_NO))) {
-								tasks.push(this.itemCacheById[index]);
-							}
-						}
+		else if (wantTodos) {
+			let wantCompletedTodo = aItemFilter & Ci.calICalendar.ITEM_FILTER_COMPLETED_YES;
+			let wantNotCompletedTodo = aItemFilter & Ci.calICalendar.ITEM_FILTER_COMPLETED_NO;
+
+			for (let index in this.itemCacheById) {
+				if (cal.isToDo(this.itemCacheById[index])) {
+					if (this.deactivateTaskFollowup
+						&& this.itemCacheById[index].itemClass == "IPM.Note") {
+						//Do not change order or removing from local or it will throw db error
+						//remove from offlinecache
+						this.removeFromOfflineCache(this.itemCacheById[index]);
+						//remove from lighting GUI
+						this.removeItemFromCache(this.itemCacheById[index]);
+					}
+					else if ((this.itemCacheById[index].isCompleted && wantCompletedTodo)
+						|| (!this.itemCacheById[index].isCompleted && wantNotCompletedTodo)) {
+						tasks.push(this.itemCacheById[index]);
 					}
 				}
 			}
 		}
 
-		if (this.debug) this.logInfo("We got '" + events.length + "' events and  '" + tasks.length + "'  tasks from memory cache.");
+		this.logInfo("getItemsFromMemoryCache: We got '" + events.length + "' events and  '" + tasks.length + "'  tasks from memory cache.");
 		if (aListener) {
-			if (this.debug) this.logInfo("We have a listener so going to inform it.(2)");
-			if ((events.length > 0) && (wantEvents)) {
+			this.logInfo("getItemsFromMemoryCache: We have a listener so going to inform it.");
+			if (events.length > 0
+				&& wantEvents) {
 				aListener.onGetResult(this,
 					Cr.NS_OK,
 					Ci.calIEvent,
@@ -2913,7 +2917,8 @@ calExchangeCalendar.prototype = {
 					events);
 			}
 
-			if ((tasks.length > 0) && (wantTodos)) {
+			if (tasks.length > 0
+				&& wantTodos) {
 				aListener.onGetResult(this,
 					Cr.NS_OK,
 					Ci.calITodo,
