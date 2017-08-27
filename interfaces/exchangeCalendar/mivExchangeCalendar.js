@@ -10401,8 +10401,6 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
 			return false;
 		}
 
-		let doContinue = true;
-
 		try {
 			while (sqlStatement.executeStep()) {
 				this.logInfo("getItemsFromOfflineCache: Found item in offline Cache.");
