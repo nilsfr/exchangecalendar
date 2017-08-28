@@ -13,3 +13,15 @@ source_file = interfaces/exchangeAddressBook/locale/exchangecontacts/en/exchange
 source_lang = en
 type = DTD
 
+[exchangecalendar.addressbook-ExchangeContacts]
+file_filter = interfaces/exchangeAddressBook/locale/exchangecontacts/<lang>/ExchangeContacts.properties
+source_file = interfaces/exchangeAddressBook/locale/exchangecontacts/en/ExchangeContacts.properties
+source_lang = en
+type = MOZILLAPROPERTIES
+
+[exchangecalendar.addressbook-ExchangeDistLists]
+file_filter = interfaces/exchangeAddressBook/locale/exchangecontacts/<lang>/ExchangeDistLists.properties
+source_file = interfaces/exchangeAddressBook/locale/exchangecontacts/en/ExchangeDistLists.properties
+source_lang = en
+type = MOZILLAPROPERTIES
+
