@@ -1,3 +1,15 @@
 [main]
 host = https://www.transifex.com
 
+[exchangecalendar.addressbook-addressbookOverlay]
+file_filter = interfaces/exchangeAddressBook/locale/exchangecontacts/<lang>/addressbookOverlay.dtd
+source_file = interfaces/exchangeAddressBook/locale/exchangecontacts/en/addressbookOverlay.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.addressbook-exchangeContactSettings]
+file_filter = interfaces/exchangeAddressBook/locale/exchangecontacts/<lang>/exchangeContactSettings.dtd
+source_file = interfaces/exchangeAddressBook/locale/exchangecontacts/en/exchangeContactSettings.dtd
+source_lang = en
+type = DTD
+
