@@ -151,6 +151,12 @@ source_file = locale/exchangecalendar/en/rtews.dtd
 source_lang = en
 type = DTD
 
+[exchangecalendar.rtews-properties]
+file_filter = locale/exchangecalendar/<lang>/rtews.properties
+source_file = locale/exchangecalendar/en/rtews.properties
+source_lang = en
+type = MOZILLAPROPERTIES
+
 [exchangecalendar.selectEWSUrl]
 file_filter = locale/exchangecalendar/<lang>/selectEWSUrl.dtd
 source_file = locale/exchangecalendar/en/selectEWSUrl.dtd
@@ -174,4 +180,10 @@ file_filter = locale/exchangecalendar/<lang>/exchangeSettingsOverlay.dtd
 source_file = locale/exchangecalendar/en/exchangeSettingsOverlay.dtd
 source_lang = en
 type = DTD
+
+[exchangecalendar.calExchangeCalendar]
+file_filter = locale/exchangecalendar/<lang>/calExchangeCalendar.properties
+source_file = locale/exchangecalendar/en/calExchangeCalendar.properties
+source_lang = en
+type = MOZILLAPROPERTIES
 
