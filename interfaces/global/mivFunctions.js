@@ -35,7 +35,11 @@ Cu.import("resource://interfaces/xml2json/xml2json.js");
 
 function mivFunctions()
 {
-	//dump("\n ++ mivFunctions.init\n");
+	// Mozilla helpers
+	this.domParser = Cc["@mozilla.org/xmlextras/domparser;1"]
+		.getService(Ci.nsIDOMParser);
+	this.xmlSerializer = Cc["@mozilla.org/xmlextras/xmlserializer;1"]
+		.createInstance(Ci.nsIDOMSerializer);
 }
 
 mivFunctions.prototype = {
@@ -875,16 +879,16 @@ mivFunctions.prototype = {
 
 	fromText2HTML: function _fromText2HTML(aString)
 	{
-		var html = convertSpecialCharatersToXML(aString);
-		if (html) {
-			html = html.replace(/\n/g, '<br>');
-		}
-		else {
-			html = "";
-		}
-		return '<HTML><HEAD><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></HEAD><BODY>'+html+'</BODY></HTML>';
-	},
+		let parsedHtml = null;
 
+		if (!aString) {
+			aString = "";
+		}
+
+		parsedHtml = this.domParser.parseFromString(aString, 'text/html');
+
+		return this.xmlSerializer.serializeToString(parsedHtml);
+	},
 
 }
 

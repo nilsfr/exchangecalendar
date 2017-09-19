@@ -1,0 +1,189 @@
+[main]
+host = https://www.transifex.com
+
+[exchangecalendar.addressbook-addressbookOverlay]
+file_filter = interfaces/exchangeAddressBook/locale/exchangecontacts/<lang>/addressbookOverlay.dtd
+source_file = interfaces/exchangeAddressBook/locale/exchangecontacts/en/addressbookOverlay.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.addressbook-exchangeContactSettings]
+file_filter = interfaces/exchangeAddressBook/locale/exchangecontacts/<lang>/exchangeContactSettings.dtd
+source_file = interfaces/exchangeAddressBook/locale/exchangecontacts/en/exchangeContactSettings.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.addressbook-ExchangeContacts]
+file_filter = interfaces/exchangeAddressBook/locale/exchangecontacts/<lang>/ExchangeContacts.properties
+source_file = interfaces/exchangeAddressBook/locale/exchangecontacts/en/ExchangeContacts.properties
+source_lang = en
+type = MOZILLAPROPERTIES
+
+[exchangecalendar.addressbook-ExchangeDistLists]
+file_filter = interfaces/exchangeAddressBook/locale/exchangecontacts/<lang>/ExchangeDistLists.properties
+source_file = interfaces/exchangeAddressBook/locale/exchangecontacts/en/ExchangeDistLists.properties
+source_lang = en
+type = MOZILLAPROPERTIES
+
+[exchangecalendar.attachments-view]
+file_filter = locale/exchangecalendar/<lang>/attachments-view.dtd
+source_file = locale/exchangecalendar/en/attachments-view.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.browseFolder]
+file_filter = locale/exchangecalendar/<lang>/browseFolder.dtd
+source_file = locale/exchangecalendar/en/browseFolder.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.exchangeCloneSettings]
+file_filter = locale/exchangecalendar/<lang>/exchangeCloneSettings.dtd
+source_file = locale/exchangecalendar/en/exchangeCloneSettings.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.exchangeReminderDialog]
+file_filter = locale/exchangecalendar/<lang>/exchangeReminderDialog.dtd
+source_file = locale/exchangecalendar/en/exchangeReminderDialog.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.messenger_task_delegation]
+file_filter = locale/exchangecalendar/<lang>/messenger_task_delegation.dtd
+source_file = locale/exchangecalendar/en/messenger_task_delegation.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.sendUpdateTo]
+file_filter = locale/exchangecalendar/<lang>/sendUpdateTo.dtd
+source_file = locale/exchangecalendar/en/sendUpdateTo.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.timezonePreference]
+file_filter = locale/exchangecalendar/<lang>/timezonePreference.dtd
+source_file = locale/exchangecalendar/en/timezonePreference.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.invitationResponse]
+file_filter = locale/exchangecalendar/<lang>/invitationResponse.dtd
+source_file = locale/exchangecalendar/en/invitationResponse.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.lightning-item-iframe]
+file_filter = locale/exchangecalendar/<lang>/lightning-item-iframe.dtd
+source_file = locale/exchangecalendar/en/lightning-item-iframe.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.calendar-calendars-list]
+file_filter = locale/exchangecalendar/<lang>/calendar-calendars-list.dtd
+source_file = locale/exchangecalendar/en/calendar-calendars-list.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.calendar-summary-dialog]
+file_filter = locale/exchangecalendar/<lang>/calendar-summary-dialog.dtd
+source_file = locale/exchangecalendar/en/calendar-summary-dialog.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.delegate-calendar-dialog]
+file_filter = locale/exchangecalendar/<lang>/delegate-calendar-dialog.dtd
+source_file = locale/exchangecalendar/en/delegate-calendar-dialog.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.delegate-folder]
+file_filter = locale/exchangecalendar/<lang>/delegate-folder.dtd
+source_file = locale/exchangecalendar/en/delegate-folder.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.exchangeSettings]
+file_filter = locale/exchangecalendar/<lang>/exchangeSettings.dtd
+source_file = locale/exchangecalendar/en/exchangeSettings.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.extra-priority]
+file_filter = locale/exchangecalendar/<lang>/extra-priority.dtd
+source_file = locale/exchangecalendar/en/extra-priority.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.inviteStyle]
+file_filter = locale/exchangecalendar/<lang>/inviteStyle.dtd
+source_file = locale/exchangecalendar/en/inviteStyle.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.manageEWSAccounts]
+file_filter = locale/exchangecalendar/<lang>/manageEWSAccounts.dtd
+source_file = locale/exchangecalendar/en/manageEWSAccounts.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.oofSettings]
+file_filter = locale/exchangecalendar/<lang>/oofSettings.dtd
+source_file = locale/exchangecalendar/en/oofSettings.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.preInvitationResponse]
+file_filter = locale/exchangecalendar/<lang>/preInvitationResponse.dtd
+source_file = locale/exchangecalendar/en/preInvitationResponse.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.preferences]
+file_filter = locale/exchangecalendar/<lang>/preferences.dtd
+source_file = locale/exchangecalendar/en/preferences.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.rtews]
+file_filter = locale/exchangecalendar/<lang>/rtews.dtd
+source_file = locale/exchangecalendar/en/rtews.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.rtews-properties]
+file_filter = locale/exchangecalendar/<lang>/rtews.properties
+source_file = locale/exchangecalendar/en/rtews.properties
+source_lang = en
+type = MOZILLAPROPERTIES
+
+[exchangecalendar.selectEWSUrl]
+file_filter = locale/exchangecalendar/<lang>/selectEWSUrl.dtd
+source_file = locale/exchangecalendar/en/selectEWSUrl.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.sharedCalendarParser]
+file_filter = locale/exchangecalendar/<lang>/sharedCalendarParser.dtd
+source_file = locale/exchangecalendar/en/sharedCalendarParser.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.ecCalendarCreation]
+file_filter = locale/exchangecalendar/<lang>/ecCalendarCreation.dtd
+source_file = locale/exchangecalendar/en/ecCalendarCreation.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.exchangeSettingsOverlay]
+file_filter = locale/exchangecalendar/<lang>/exchangeSettingsOverlay.dtd
+source_file = locale/exchangecalendar/en/exchangeSettingsOverlay.dtd
+source_lang = en
+type = DTD
+
+[exchangecalendar.calExchangeCalendar]
+file_filter = locale/exchangecalendar/<lang>/calExchangeCalendar.properties
+source_file = locale/exchangecalendar/en/calExchangeCalendar.properties
+source_lang = en
+type = MOZILLAPROPERTIES
+

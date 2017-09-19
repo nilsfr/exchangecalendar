@@ -47,20 +47,19 @@
 <overlay id="exchWebService-attachment-view"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-    <script type="application/javascript" src="chrome://exchangecalendar/content/attachments-view.js"/> 
+    <script type="application/javascript" src="chrome://exchangecalendar/content/attachments-view.js"/>
 
     <!-- Commands -->
-    <commandset id="itemCommands">
+    <commandset>
         <command id="exchWebService_openAttachment"
-                 oncommand="tmpAttachment.openAttachment();"/> 
+                 oncommand="tmpAttachment.openAttachment();"/>
         <command id="exchWebService_saveAttachment"
-                 oncommand="tmpAttachment.saveAttachment();"/> 
+                 oncommand="tmpAttachment.saveAttachment();"/>
         <command id="exchWebService_deleteAttachment"
-                 oncommand="tmpAttachment.deleteAttachment();"/> 
-	<command id="exchWebService_addAttachmentDialog"
-		 oncommand="tmpAttachment.addAttachmentDialog();"/>
+                 oncommand="tmpAttachment.deleteAttachment();"/>
     </commandset>
 
+    <!-- Update context popup-->
     <popupset id="event-dialog-popupset">
       <menupopup id="exchWebService-attachment-popup">
             <menuitem id="exchWebService-attachment-popup-open"
@@ -74,26 +73,9 @@
             <menuitem id="exchWebService-attachment-popup-delete"
                       label="&event.menu.item.delete.label;"
                       accesskey="&event.menu.item.delete.accesskey;"
-			disable-on-readonly="true"
+                      disable-on-readonly="true"
                       command="exchWebService_deleteAttachment"/>
       </menupopup>
     </popupset>
- 
-        <toolbarpalette id="event-toolbarpalette">
-		<toolbarbutton id="exchWebService-add-attachment-button" 
-			mode="dialog"
-			class="cal-event-toolbarbutton toolbarbutton-1"
-			label="&exchWebServie.add.attachment.button.label;"
-			disable-on-readonly="true"
-			removable="true"
-			command="exchWebService_addAttachmentDialog"
-			oncommand="tmpAttachment.addAttachmentDialog();" 
-			hidden="true"/>
-	</toolbarpalette>
-     <toolbar id="event-toolbar" defaultset="button-save,button-attendees,button-privacy,button-url,exchWebService-add-attachment-button,button-delete"> 
-     </toolbar> 
- 
 
 </overlay>
-
-
