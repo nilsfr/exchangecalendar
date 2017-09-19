@@ -240,7 +240,7 @@ mivUpdater.prototype = {
 	addonByIDCallback: function _addonByIDCallback(aAddon)
 	{
 		if (aAddon) {
-			var url="https://api.github.com/repos/Ericsson/exchangecalendar/releases";
+			var url="https://api.github.com/repos/ExchangeCalendar/exchangecalendar/releases";
 			this._addon = aAddon;
 			this._updateURL = this.safeGetCharPref(null, EXTENSION_MAINPART+this._extensionID, url, true);
 			this._updateURL = url;
@@ -292,7 +292,7 @@ mivUpdater.prototype = {
 		var actualJson=JSON.parse(xmlReq.responseText);
 		var latest = 0;
 		var updateDetails = [];
- 		updateDetails[3]='https://github.com/Ericsson/exchangecalendar/wiki'; 
+ 		updateDetails[3]='https://github.com/ExchangeCalendar/exchangecalendar/wiki'; 
 		if( actualJson.length > 0 ){
 			updateDetails[0]=actualJson[latest].prerelease; 
 			updateDetails[1]=actualJson[latest].tag_name;
