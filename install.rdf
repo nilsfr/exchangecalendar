@@ -19,6 +19,7 @@
         <em:maxVersion>2.49.*</em:maxVersion>
       </Description>
     </em:targetApplication>
+    <em:unpack>true</em:unpack>
     <em:name>Exchange Calendar</em:name>
     <em:homepageURL>https://github.com/ExchangeCalendar/exchangecalendar</em:homepageURL>
     <em:iconURL>chrome://exchangecalendar-common/skin/images/lightningexchangecalendar.png</em:iconURL>
