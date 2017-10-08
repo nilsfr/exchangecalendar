@@ -1,5 +1,5 @@
 version = $(shell cat VERSION)
-excludefromxpi = \*.git \*.xpi \*.sh update\*.txt Makefile VERSION
+excludefromxpi = .git/\* .tx/\* \*.xpi \*.sh update\*.txt Makefile VERSION
 
 # Target to beautify and build your code while developing it
 dev: beautify build
