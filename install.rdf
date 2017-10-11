@@ -38,14 +38,14 @@
         <Description>
             <em:locale>en</em:locale>
             <em:name>Exchange Calendar</em:name>
-            <em:description>Exchange Calendar provides some Microsoft Exchange interfaces for the Lightning calendar.</em:description>
+            <em:description>Allows you to sync calendars, tasks, and contacts with Microsoft Exchange.</em:description>
         </Description>
     </em:localized>
     <em:localized>
         <Description>
             <em:locale>fr</em:locale>
             <em:name>Exchange Calendar</em:name>
-            <em:description>Exchange Calendar fournit quelques interfaces Microsoft Exchange pour le calendrier Lightning.</em:description>
+            <em:description>Vous permet de synchroniser les calendriers, tâches et contactes avec Microsoft Exchange.</em:description>
         </Description>
     </em:localized>
   </Description>
