@@ -1,5 +1,6 @@
 version = $(shell cat VERSION)
 excludefromxpi = .git/\* .tx/\* \*.xpi \*.sh update\*.txt Makefile VERSION
+releasebranch = ec-4.0
 
 # Default target is build package
 build:
@@ -9,6 +10,32 @@ build:
 	cat defaults/preferences/update_disable.txt > defaults/preferences/update.js
 	# Finally, create the xpi file
 	zip -r exchangecalendar-v"$(version)".xpi -x $(excludefromxpi) -- . 
+
+# Target to publish a new release:
+release: l10n-auto-commit build
+	git add -- install.rdf
+	git commit -m "releases v$(version)"
+	git tag "v$(version)"
+	@echo 'Translations updated, build done, tag added.'
+	@echo 'Now, if the release is well done, please run one "git push" to publish code and one "git push v$(version)" to publish the new tag.'
+
+# Targets to update translations
+# Requires an already configured Transifex client: https://docs.transifex.com/client/introduction
+# This project has a .tx/ directory which references currently known localisation files
+
+# Get translations updates from Transifex
+l10n-get:
+	git checkout $(releasebranch)
+	tx pull -a
+
+l10n-auto-commit: l10n-get
+	git add -- locale interfaces/exchangeAddressBook/locale/
+	-git commit -m 'l10n: automatic translations updates'
+
+# Send new texts to translate to Transifex
+l10n-push:
+	git checkout $(releasebranch)
+	tx push
 
 # Target to beautify and build your code while developing it
 dev: beautify build
