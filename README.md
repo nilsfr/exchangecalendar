@@ -10,12 +10,12 @@ Exchange Calendar extension can:
   * Synchronize calendars, tasks, and contacts with a Microsoft Exchange server.
   * Create, edit and update events and tasks.
   * Display contacts from your address books and the global address list
-    (they are only readable, they are usable with address autocompletion)
-  * Manage the Exchange « out of office » feature
+    (they are only readable, they are usable with address autocompletion).
+  * Manage the Exchange « out of office » feature.
 
 This extension requires:
-  * Lightning extension corresponding to the Thunderbird release
-  * The Exchange server has to provide an Exchange Web Service
+  * Lightning extension corresponding to the Thunderbird release.
+  * The Exchange server has to provide an Exchange Web Service.
 
 This extension was developed by its original author (Michel Verbraak) for
 Exchange 2007, 2010 and 2013.
@@ -28,11 +28,8 @@ best effort and cannot be guaranteed. Contributions are welcome.
 This add-on is open source and based on the work of many
 [contributors](https://github.com/ExchangeCalendar/exchangecalendar/graphs/contributors).
 
-This project is a community driven effort to keep maintained and uptodate
-the "Exchange EWS Provider" extension created by Michel Verbraak.
-
-Currently, the community is really small and have too few developers to
-give any warranty on the future. Please help us to continue this project.
+This project is a community driven effort to develop and maintain the
+"Exchange EWS Provider" extension originally created by Michel Verbraak.
 
 ### Provide feedback, report issue
 
@@ -42,12 +39,12 @@ https://github.com/ExchangeCalendar/exchangecalendar
 Please note that the project is built only for latest stable Thunderbird release
 and latest stable Lightning release.
 
-If you use any different release, please write it in your report.
-
-As this add-on extends Thunderbird and Lightning directly, it could be in
-conflict with other add-ons.
-
-If you can give us a list of installed and enabled add-ons, it will help us.
+The more information you can provide about an issue, the easier it becomes to
+reproduce and fix. Examples of helpful informations are:
+  * Thunderbird version
+  * Lightning version
+  * Active Thunderbird add-ons
+  * Log output
 
 ### Get project and build it
 
@@ -95,8 +92,9 @@ https://www.transifex.com/ExchangeCalendar/exchangecalendar
 
 ## License
 
-This software is licensed under the
-[GNU General Public License, Version 3](http://www.gnu.org/licenses/gpl.html).
+This software is provided on a best-effort basis without any warranty.
+Please see the [license](http://www.gnu.org/licenses/gpl.html)
+for details.
 
 Some of the icons and images used are from the Fugue Icons Collection made
 by [Yusuke Kamiyamane](http://p.yusukekamiyamane.com/).
