@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: GPL 3.0
@@ -24,32 +23,26 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
-
-<!DOCTYPE dialog [
+<!DOCTYPE dialog
+[
     <!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/exchangeCloneSettings.dtd" > %dtd1;
 ]>
 <?xul-overlay href="chrome://exchangecalendar/content/exchangeSettingsOverlay.xul"?>
-
-<dialog 
-  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" 
-  id="exchWebService_CloneSettings_dialog" 
-  title="Exchange Clone Settings" 
-  buttons="accept,cancel"
-  buttonlabelaccept="&label.acceptbutton;"
-  buttonlabelcancel="&label.cancelbutton;"
-  ondialogaccept="return tmpExchangeCloneSettings.onSave();"
-  onload="tmpExchangeCloneSettings.onLoad();">
-
-	<script type="application/javascript" src="chrome://exchangecalendar/content/exchangeCloneSettings.js"/>
-
-	<hbox>
-		<label value="&label.ecExchangeSettings.title;"/>
-		<textbox id="exchWebService_clone_description"/>
-	</hbox>
-
-	<vbox id="exchWebService-exchange-settings" flex="1">
-	</vbox>
-
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        id="exchWebService_CloneSettings_dialog"
+        title="Exchange Clone Settings"
+        buttons="accept,cancel"
+        buttonlabelaccept="&label.acceptbutton;"
+        buttonlabelcancel="&label.cancelbutton;"
+        ondialogaccept="return tmpExchangeCloneSettings.onSave();"
+        onload="tmpExchangeCloneSettings.onLoad();">
+    <script type="application/javascript"
+            src="chrome://exchangecalendar/content/exchangeCloneSettings.js" />
+    <hbox>
+        <label value="&label.ecExchangeSettings.title;" />
+        <textbox id="exchWebService_clone_description" />
+    </hbox>
+    <vbox id="exchWebService-exchange-settings"
+          flex="1"></vbox>
 </dialog>

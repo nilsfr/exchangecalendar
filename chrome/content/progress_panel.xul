@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: GPL 3.0
@@ -30,34 +29,30 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-
-
 <?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/progress_panel.css"?>
-
 <overlay id="exchWebService-calendar-list-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-    <script type="application/javascript" src="chrome://exchangecalendar/content/progress_panel.js"/>
-
-	<popupset>
-		<tooltip id="exchWebServicesprogresstip" orient="vertical">
-			<vbox id="exchWebServiceProgressvbox">
-			</vbox>
-		</tooltip>  
-	</popupset>
-
-  <statusbar id="status-bar">
-	<statusbarpanel id="exchWebService-progress-panel"
-			insertbefore="unreadMessageCount,totalMessageCount"
-			oncommand="myExchProgressPanel.openProgressDialog()"
-			hidden="true"
-			tooltip="exchWebServicesprogresstip">
-		<hbox id="exchWebService-progress-hbox">
-			<label id="exchWebService-progress-label"
-				onclick="myExchProgressPanel.openProgressDialog()" value="Test"/>
-			<image id="exchWebService-progress-image"/>
-		</hbox>
-	</statusbarpanel>
-  </statusbar>
-
+    <script type="application/javascript"
+            src="chrome://exchangecalendar/content/progress_panel.js" />
+    <popupset>
+        <tooltip id="exchWebServicesprogresstip"
+                 orient="vertical">
+            <vbox id="exchWebServiceProgressvbox"></vbox>
+        </tooltip>
+    </popupset>
+    <statusbar id="status-bar">
+        <statusbarpanel id="exchWebService-progress-panel"
+                        insertbefore="unreadMessageCount,totalMessageCount"
+                        oncommand="myExchProgressPanel.openProgressDialog()"
+                        hidden="true"
+                        tooltip="exchWebServicesprogresstip">
+            <hbox id="exchWebService-progress-hbox">
+                <label id="exchWebService-progress-label"
+                       onclick="myExchProgressPanel.openProgressDialog()"
+                       value="Test" />
+                <image id="exchWebService-progress-image" />
+            </hbox>
+        </statusbarpanel>
+    </statusbar>
 </overlay>

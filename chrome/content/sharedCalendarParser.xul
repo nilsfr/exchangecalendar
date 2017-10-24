@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: GPL 3.0
@@ -37,35 +36,35 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-
-<!DOCTYPE dialog [
+<!DOCTYPE dialog
+[
     <!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/sharedCalendarParser.dtd" > %dtd1;
 ]>
-
 <?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/sharedCalendarParser.css"?>
-
 <overlay id="exchWebServiceMessengerOverlay"
-    xmlns:html="http://www.w3.org/1999/xhtml"
-    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+         xmlns:html="http://www.w3.org/1999/xhtml"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-  <script type="application/x-javascript"  src="chrome://exchangecalendar/content/sharedCalendarParser.js"/>
-
-  <vbox id="messagepanebox">
-    <vbox position="1">
-      <vbox id="exchWebServiceSharedCalendarBox" collapsed="true" align="center" class="exchWebServiceSharedCalendarBox">
-	<hbox>
-		<image src="chrome://exchangecalendar/content/lightningexchangecalendar.png"/>
-		<vbox>
-			<label value="&exchWebService_vbox_label;"/>
-			<label id="exchWebServiceSharedCalendarLabel" value="test"/>
-		</vbox>
-	        <button id="exchWebServiceSharedCalendarAddButton"  label="&exchWebService_button_label_add_calendar;" oncommand="exchWebService.hdrView.doAddSharedCalendar();"/>
-	</hbox>
-
-      </vbox>
+    <script type="application/x-javascript"
+            src="chrome://exchangecalendar/content/sharedCalendarParser.js" />
+    <vbox id="messagepanebox">
+        <vbox position="1">
+            <vbox id="exchWebServiceSharedCalendarBox"
+                  collapsed="true"
+                  align="center"
+                  class="exchWebServiceSharedCalendarBox">
+                <hbox>
+                    <image src="chrome://exchangecalendar/content/lightningexchangecalendar.png" />
+                    <vbox>
+                        <label value="&exchWebService_vbox_label;" />
+                        <label id="exchWebServiceSharedCalendarLabel"
+                               value="test" />
+                    </vbox>
+                    <button id="exchWebServiceSharedCalendarAddButton"
+                            label="&exchWebService_button_label_add_calendar;"
+                            oncommand="exchWebService.hdrView.doAddSharedCalendar();" />
+                </hbox>
+            </vbox>
+        </vbox>
     </vbox>
-  </vbox>
-
 </overlay>
-
-

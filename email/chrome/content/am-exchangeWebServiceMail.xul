@@ -2,9 +2,7 @@
 <!-- This Source Code Form is subject to the terms of the Mozilla Public
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
-
 <?xml-stylesheet href="chrome://messenger/skin/accountManage.css" type="text/css"?>
-
 <!--
 <!DOCTYPE page [
 <!ENTITY % newsblogDTD SYSTEM "chrome://messenger-newsblog/locale/am-newsblog.dtd" >
@@ -14,15 +12,12 @@
 <!ENTITY % accountServerTopDTD SYSTEM "chrome://messenger/locale/am-server-top.dtd">%accountServerTopDTD;
 ]>
 -->
-
 <page xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
       class="color-dialog"
       title="&accountTitle.label;"
       onload="">
-
-<!--      onload="parent.onPanelLoaded('am-newsblog.xul');"> -->
-
-<!--  <script type="application/javascript"
+    <!--      onload="parent.onPanelLoaded('am-newsblog.xul');"> -->
+    <!--  <script type="application/javascript"
           src="chrome://messenger/content/AccountManager.js"/>
   <script type="application/javascript"
           src="chrome://messenger-newsblog/content/am-newsblog.js"/>
@@ -33,12 +28,11 @@
   <script type="application/javascript"
           src="chrome://messenger/content/am-prefs.js"/>
 -->
-
-  <dialogheader id="am-exchangeWebServiceMail-title" defaultTitle="exchangeWebServiceMail defaulttitle"/>
-
-  <description class="secDesc">exchangeWebServiceMail description</description>
-
-<!--    <hbox align="center">
+    <dialogheader id="am-exchangeWebServiceMail-title"
+                  defaultTitle="exchangeWebServiceMail defaulttitle" />
+    <description class="secDesc">exchangeWebServiceMail
+    description</description>
+    <!--    <hbox align="center">
       <label value="&accountName.label;"
              accesskey="&accountName.accesskey;"
              control="server.prettyName"/>

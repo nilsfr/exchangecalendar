@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: GPL 3.0
@@ -24,11 +23,10 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-
-<!DOCTYPE overlay >
-
+<!DOCTYPE overlay>
 <overlay id="exchangeContactsInit"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-    <script type="application/javascript" src="chrome://exchangecontacts/content/exchangeContactsInit.js"/>
+    <script type="application/javascript"
+            src="chrome://exchangecontacts/content/exchangeContactsInit.js" />
 </overlay>

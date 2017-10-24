@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: GPL 3.0
@@ -37,50 +36,60 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
-
-<!DOCTYPE dialog [
+<!DOCTYPE dialog
+[
     <!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/preInvitationResponse.dtd" > %dtd1;
 ]>
-
-<dialog 
-  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" 
-  id="exchWebService_preInvitationResponse_dialog" 
-  title="&dialog.exchWebService.preInvitationResponse.title;" 
-  buttons="accept,cancel"
-  buttonlabelaccept="&label.acceptbutton;"
-  buttonlabelcancel="&label.cancelbutton;"
-  ondialogaccept="return exchWebService.preInvitationResponse.onAccept();"
-  onload="exchWebService.preInvitationResponse.onLoad();">
-
-	<script type="application/javascript" src="chrome://exchangecalendar/content/preInvitationResponse.js"/>
-
-	<vbox id="exchWebService_preInvitationResponse_vbox">
-		<grid>
-			<columns>
-				<column />
-				<column flex="1"/>
-			</columns>
-			<rows>
-			
-				<row>	<label value="&label.calendarName;"/> <label id="exchWebService_calendarName"/>	</row>
-				<row>	<label value="&label.itemTitle;"/> <label id="exchWebService_itemTitle"/>	</row>
-				<row>	<label value="&label.itemStart;"/> <label id="exchWebService_itemStart"/>	</row>
-				<row>	<label value="&label.itemResponse;"/> <label id="exchWebService_itemResponse"/>	</row> 				
-				<row>	<label value="&label.meetingOrganiser;"/> <label id="exchWebService_meetingOrganiser"/>	</row>
-
-			</rows>
-		</grid>
-
-		<seperator/>
-
-		<radiogroup id="exchWebService_preInvitationResponse_radio" value="sendnow">
-			<radio label="&radio.label.exchWebService.preInvitationResponse.edit;" value="edit"/>
-			<radio label="&radio.label.exchWebService.preInvitationResponse.sendnow;" value="sendnow" checked="true"/>
-			<radio label="&radio.label.exchWebService.preInvitationResponse.donotsend;" value="donotsend"/>
-		</radiogroup>
-	</vbox>
-
-
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        id="exchWebService_preInvitationResponse_dialog"
+        title="&dialog.exchWebService.preInvitationResponse.title;"
+        buttons="accept,cancel"
+        buttonlabelaccept="&label.acceptbutton;"
+        buttonlabelcancel="&label.cancelbutton;"
+        ondialogaccept="return exchWebService.preInvitationResponse.onAccept();"
+        onload="exchWebService.preInvitationResponse.onLoad();">
+    <script type="application/javascript"
+            src="chrome://exchangecalendar/content/preInvitationResponse.js" />
+    <vbox id="exchWebService_preInvitationResponse_vbox">
+        <grid>
+            <columns>
+                <column />
+                <column flex="1" />
+            </columns>
+            <rows>
+                <row>
+                    <label value="&label.calendarName;" />
+                    <label id="exchWebService_calendarName" />
+                </row>
+                <row>
+                    <label value="&label.itemTitle;" />
+                    <label id="exchWebService_itemTitle" />
+                </row>
+                <row>
+                    <label value="&label.itemStart;" />
+                    <label id="exchWebService_itemStart" />
+                </row>
+                <row>
+                    <label value="&label.itemResponse;" />
+                    <label id="exchWebService_itemResponse" />
+                </row>
+                <row>
+                    <label value="&label.meetingOrganiser;" />
+                    <label id="exchWebService_meetingOrganiser" />
+                </row>
+            </rows>
+        </grid>
+        <seperator />
+        <radiogroup id="exchWebService_preInvitationResponse_radio"
+                    value="sendnow">
+            <radio label="&radio.label.exchWebService.preInvitationResponse.edit;"
+                   value="edit" />
+            <radio label="&radio.label.exchWebService.preInvitationResponse.sendnow;"
+                   value="sendnow"
+                   checked="true" />
+            <radio label="&radio.label.exchWebService.preInvitationResponse.donotsend;"
+                   value="donotsend" />
+        </radiogroup>
+    </vbox>
 </dialog>

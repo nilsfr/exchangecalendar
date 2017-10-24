@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: GPL 3.0
@@ -31,68 +30,65 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-
-<!DOCTYPE dialog [
+<!DOCTYPE dialog
+[
     <!ENTITY % eventDialogDTD SYSTEM "chrome://calendar/locale/calendar-event-dialog.dtd">
     %eventDialogDTD;
 ]>
 <?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/calendar-task-view.css"?>
-
 <?xul-overlay href="chrome://exchangecalendar/content/attachments-view.xul"?>
-
-<overlay id="calendar-task-view.xul" xmlns:html="http://www.w3.org/1999/xhtml"
+<overlay id="calendar-task-view.xul"
+         xmlns:html="http://www.w3.org/1999/xhtml"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <script type="application/javascript" src="chrome://exchangecalendar/content/calendar-task-view.js"/>
 
+    <script type="application/javascript"
+            src="chrome://exchangecalendar/content/calendar-task-view.js" />
     <!-- Commands -->
     <commandset id="mailCommands">
         <command id="exchWebService_openAttachment"
-                 oncommand="tmpAttachment.openAttachment();"/> 
+                 oncommand="tmpAttachment.openAttachment();" />
         <command id="exchWebService_saveAttachment"
-                 oncommand="tmpAttachment.saveAttachment();"/> 
+                 oncommand="tmpAttachment.saveAttachment();" />
         <command id="exchWebService_deleteAttachment"
-                 oncommand="tmpAttachment.deleteAttachment();"/> 
-	<command id="exchWebService_addAttachmentDialog"
-		 oncommand="tmpAttachment.addAttachmentDialog();"/>
+                 oncommand="tmpAttachment.deleteAttachment();" />
+        <command id="exchWebService_addAttachmentDialog"
+                 oncommand="tmpAttachment.addAttachmentDialog();" />
     </commandset>
- 
-    <vbox id="calendar-task-box" onselect="taskHtmlDetailsView(event);"/>
-     <vbox id="calendar-task-details-container">
+    <vbox id="calendar-task-box"
+          onselect="taskHtmlDetailsView(event);" />
+    <vbox id="calendar-task-details-container">
         <browser id="exchService-task-details-description"
-             name="messagepane02"
-             height="0"
-             flex="1"
-             minwidth="1"
-             minheight="1"
-             context="mailContext"
-             tooltip="aHTMLTooltip"
-             disablesecurity="true"
-             disablehistory="true"
-             autofind="false"
-             type="content-primary"
-             onresize="return true;"
-             src="about:blank"  insertbefore="calendar-task-details-description" />
-       </vbox>
-   
+                 name="messagepane02"
+                 height="0"
+                 flex="1"
+                 minwidth="1"
+                 minheight="1"
+                 context="mailContext"
+                 tooltip="aHTMLTooltip"
+                 disablesecurity="true"
+                 disablehistory="true"
+                 autofind="false"
+                 type="content-primary"
+                 onresize="return true;"
+                 src="about:blank"
+                 insertbefore="calendar-task-details-description" />
+    </vbox>
     <popupset id="mainPopupSet">
-      <menupopup id="exchWebService-attachment-popup">
+        <menupopup id="exchWebService-attachment-popup">
             <menuitem id="exchWebService-attachment-popup-open"
                       label="&event.attachments.popup.open.label;"
                       accesskey="&event.attachments.popup.open.accesskey;"
-                      command="exchWebService_openAttachment"/>
+                      command="exchWebService_openAttachment" />
             <menuitem id="exchWebService-attachment-popup-save"
                       label="&event.menu.item.save.label;"
                       accesskey="&event.menu.item.save.accesskey;"
-                      command="exchWebService_saveAttachment"/>
+                      command="exchWebService_saveAttachment" />
             <menuitem id="exchWebService-attachment-popup-delete"
                       label="&event.menu.item.delete.label;"
                       accesskey="&event.menu.item.delete.accesskey;"
-			disable-on-readonly="true"
-			hidden="true"
-                      command="exchWebService_deleteAttachment"/>
-      </menupopup>
+                      disable-on-readonly="true"
+                      hidden="true"
+                      command="exchWebService_deleteAttachment" />
+        </menupopup>
     </popupset>
-
 </overlay>
-
-

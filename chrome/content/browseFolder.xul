@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: GPL 3.0
@@ -37,37 +36,44 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-
 <?xml-stylesheet type="text/css" href="chrome://global/skin/"?>
 <?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/browseFolder.css"?>
-
-<!DOCTYPE dialog [
+<!DOCTYPE dialog
+[
     <!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/browseFolder.dtd" > %dtd1;
 ]>
-
-<dialog 
-  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" 
-  id="exchWebService_BrowseFolders" 
-  title="&browsefolder.title;" 
-  buttons="accept,cancel"
-  buttonlabelaccept="&label.acceptbutton;"
-  buttonlabelcancel="&label.cancelbutton;"
-  ondialogaccept="return tmpBrowseFolder.onAccept();"
-  width="640" height="380">
-
-	<script type="application/javascript" src="chrome://exchangecalendar/content/browseFolder.js"/>
-
-	<vbox flex="1">
-		<label id="exchWebService_currentSelectedPath"/>
-		<tree id="exchWebService_foldertree" flex="1" seltype="single" onselect="tmpBrowseFolder.doOnSelect();" sortResource="foldername"  sortDirection="natural">
-			<treecols>
-				<treecol id="exchWebService_foldername" label="&treecol.label.foldername;" primary="true" flex="2" fixed="false"/>
-				<treecol id="exchWebService_folderclass" label="&treecol.label.folderclass;" primary="false" flex="1" fixed="false"/>
-			</treecols>
-
-			<treechildren/>
-		</tree>
-	</vbox>
-
-
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        id="exchWebService_BrowseFolders"
+        title="&browsefolder.title;"
+        buttons="accept,cancel"
+        buttonlabelaccept="&label.acceptbutton;"
+        buttonlabelcancel="&label.cancelbutton;"
+        ondialogaccept="return tmpBrowseFolder.onAccept();"
+        width="640"
+        height="380">
+    <script type="application/javascript"
+            src="chrome://exchangecalendar/content/browseFolder.js" />
+    <vbox flex="1">
+        <label id="exchWebService_currentSelectedPath" />
+        <tree id="exchWebService_foldertree"
+              flex="1"
+              seltype="single"
+              onselect="tmpBrowseFolder.doOnSelect();"
+              sortResource="foldername"
+              sortDirection="natural">
+            <treecols>
+                <treecol id="exchWebService_foldername"
+                         label="&treecol.label.foldername;"
+                         primary="true"
+                         flex="2"
+                         fixed="false" />
+                <treecol id="exchWebService_folderclass"
+                         label="&treecol.label.folderclass;"
+                         primary="false"
+                         flex="1"
+                         fixed="false" />
+            </treecols>
+            <treechildren />
+        </tree>
+    </vbox>
 </dialog>

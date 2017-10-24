@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: GPL 3.0
@@ -37,42 +36,48 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-
-<!DOCTYPE dialog [
+<!DOCTYPE dialog
+[
     <!ENTITY % dtd1 SYSTEM "chrome://calendar/locale/calendarCreation.dtd" > %dtd1;
     <!ENTITY % dtd2 SYSTEM "chrome://calendar/locale/calendar.dtd" > %dtd2;
     <!ENTITY % dtd3 SYSTEM "chrome://exchangecalendar/locale/ecCalendarCreation.dtd" > %dtd3;
 ]>
 <?xul-overlay href="chrome://exchangecalendar/content/exchangeSettingsOverlay.xul"?>
-
 <overlay id="calendarCreation"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	
-    <script type="application/javascript" src="chrome://exchangecalendar/content/ecCalendarCreation.js"/>
-    <script type="application/javascript" src="chrome://gdata-provider/content/gdata-calendar-creation.js"/>  
 
-    <radiogroup id="calendar-format" onselect="tmpCalendarCreation.doRadioExchangeCalendar(this.value);">
-	<vbox>
-	        <radio value="exchangecalendar" label="Microsoft Exchange 2007/2010/2013" id="exchWebService-radioexchangecalendar" />
-		<hbox id="exchange-cache-row" hidden="true">
-			<checkbox hidden="true" checked="true" id="exchange-cache" control="calendar-uri" label="&exchange.cache.label;"/>
-		</hbox>
-	</vbox>
+    <script type="application/javascript"
+            src="chrome://exchangecalendar/content/ecCalendarCreation.js" />
+    <script type="application/javascript"
+            src="chrome://gdata-provider/content/gdata-calendar-creation.js" />
+    <radiogroup id="calendar-format"
+                onselect="tmpCalendarCreation.doRadioExchangeCalendar(this.value);">
+
+        <vbox>
+            <radio value="exchangecalendar"
+                   label="Microsoft Exchange 2007/2010/2013"
+                   id="exchWebService-radioexchangecalendar" />
+            <hbox id="exchange-cache-row"
+                  hidden="true">
+                <checkbox hidden="true"
+                          checked="true"
+                          id="exchange-cache"
+                          control="calendar-uri"
+                          label="&exchange.cache.label;" />
+            </hbox>
+        </vbox>
     </radiogroup>
+    <wizard id="calendar-wizard"
+            xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-
-<wizard id="calendar-wizard" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-   <wizardpage pageid="exchWebService_exchange1"
-               next="finishPage"
-               label="&wizard.label;"
-               description="&exchange1.description;"
-               onpageshow="checkRequired();tmpCalendarCreation.initExchange1();"
-               onpageadvanced="tmpCalendarCreation.saveSettings();">
-
-	<vbox id="exchWebService-exchange-settings"/>
-   </wizardpage>
-</wizard>
-
+        <wizardpage pageid="exchWebService_exchange1"
+                    next="finishPage"
+                    label="&wizard.label;"
+                    description="&exchange1.description;"
+                    onpageshow="checkRequired();tmpCalendarCreation.initExchange1();"
+                    onpageadvanced="tmpCalendarCreation.saveSettings();">
+                    
+            <vbox id="exchWebService-exchange-settings" />
+        </wizardpage>
+    </wizard>
 </overlay>
-
-

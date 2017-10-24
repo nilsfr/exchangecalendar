@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: GPL 3.0
@@ -18,14 +18,11 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-
-<!DOCTYPE overlay >
-
+<!DOCTYPE overlay>
 <?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/addressingWidgetOverlay.css"?>
-
 <overlay id="exchangeAddressingWidgetOverlay"
-	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	<script type="application/javascript" src="chrome://exchangecalendar/content/addressingWidgetOverlay.js" /> 
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-
+    <script type="application/javascript"
+            src="chrome://exchangecalendar/content/addressingWidgetOverlay.js" />
 </overlay>

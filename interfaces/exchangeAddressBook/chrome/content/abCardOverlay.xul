@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: GPL 3.0
@@ -24,14 +23,13 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-
-<!DOCTYPE window [
+<!DOCTYPE window
+[
     <!ENTITY % dtd1 SYSTEM "chrome://exchangecontacts/locale/addressbookOverlay.dtd" > %dtd1;
 ]>
-
 <overlay id="exchange-adcard-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-    <script type="application/javascript" src="chrome://exchangecontacts/content/abCardOverlay.js"/>
-
+    <script type="application/javascript"
+            src="chrome://exchangecontacts/content/abCardOverlay.js" />
 </overlay>

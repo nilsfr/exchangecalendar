@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-
 <!--
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: GPL 3.0
@@ -37,8 +36,8 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-
-<!DOCTYPE overlay [
+<!DOCTYPE overlay
+[
     <!ENTITY % lightningDTD SYSTEM "chrome://lightning/locale/lightning.dtd">
     <!ENTITY % preferencesDTD SYSTEM "chrome://calendar/locale/preferences/preferences.dtd">
     <!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/preferences.dtd" >
@@ -46,50 +45,47 @@
     %preferencesDTD;
     %dtd1;
 ]>
-
 <?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/preferences.css"?>
-
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
     <prefwindow id="MailPreferences">
-        <prefpane id="exchangeWebService_paneAccounts" 
+        <prefpane id="exchangeWebService_paneAccounts"
                   label="&exchangeWebService.paneAccounts.title;"
                   onpaneload="exchWebService.manageEWSAccounts.onLoad(); exchWebService.debugPreferences.onLoad();">
+
             <preferences>
                 <preference id="extensions.1st-setup.preferences.selectedTabIndex"
                             name="extensions.1st-setup.preferences.selectedTabIndex"
-                            type="int"/>
+                            type="int" />
             </preferences>
-            <tabbox id="exchangeWebService_preferences_tabbox" 
-                    flex="1" 
+            <tabbox id="exchangeWebService_preferences_tabbox"
+                    flex="1"
                     onselect="">
                 <tabs>
-<!--                    <tab id="exchangeWebService_preferences_tab_accounts"
+                    <!--                    <tab id="exchangeWebService_preferences_tab_accounts"
                          label="&exchangeWebService.preferences.tab.accounts;" hidden="true"/> -->
                     <tab id="exchangeWebService_preferences_tab_debug"
-                         label="&exchangeWebService.preferences.tab.debug;"/>
+                         label="&exchangeWebService.preferences.tab.debug;" />
                     <tab id="exchangeWebService_preferences_tab_cache"
-                         label="&exchangeWebService.preferences.tab.cache;"/>
-		    <tab id="exchangeWebService_preferences_tab_others"
-                         label="&exchangeWebService.preferences.tab.others;"/>
+                         label="&exchangeWebService.preferences.tab.cache;" />
+                    <tab id="exchangeWebService_preferences_tab_others"
+                         label="&exchangeWebService.preferences.tab.others;" />
                 </tabs>
                 <tabpanels flex="1">
-<!--                    <tabpanel orient="vertical">
-        			<hbox id="manage-EWS-Accounts-dialog-hbox"/>
+                    <!--                    <tabpanel orient="vertical">
+                                <hbox id="manage-EWS-Accounts-dialog-hbox"/>
                     </tabpanel> -->
                     <tabpanel orient="vertical">
-        			<vbox id="exchangeWebService_debug_preferences_vbox"/>
+                        <vbox id="exchangeWebService_debug_preferences_vbox" />
                     </tabpanel>
                     <tabpanel orient="vertical">
-        			<vbox id="exchangeWebService_cache_preferences_vbox"/>
+                        <vbox id="exchangeWebService_cache_preferences_vbox" />
                     </tabpanel>
-		    <tabpanel orient="vertical">
-        			<vbox id="exchangeWebService_others_preferences_vbox"/>
+                    <tabpanel orient="vertical">
+                        <vbox id="exchangeWebService_others_preferences_vbox" />
                     </tabpanel>
                 </tabpanels>
             </tabbox>
         </prefpane>
-
     </prefwindow>
-
 </overlay>
