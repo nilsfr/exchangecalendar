@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: GPL 3.0
@@ -35,30 +35,35 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-
-<!DOCTYPE overlay [
+<!DOCTYPE overlay
+[
   <!ENTITY % calendarDTD SYSTEM "chrome://calendar/locale/calendar.dtd" > %calendarDTD;
   <!ENTITY % eventDialogDTD SYSTEM "chrome://calendar/locale/calendar-event-dialog.dtd"> %eventDialogDTD;
   <!ENTITY % menuOverlayDTD SYSTEM "chrome://calendar/locale/menuOverlay.dtd" > %menuOverlayDTD;
 ]>
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	<script type="application/javascript" src="chrome://exchangecalendar/content/calendar-common-sets.js" />
 
-	<commandset id="calendar_commands" commandupdater="true"
-		events="calendar_commands" oncommandupdate="calendarController.updateCommands()">
-		<command id="calendar_forward_event_command" oncommand="tmpForewardEvent.onForEve()" />
-	</commandset>
-
-	<menupopup id="calendar-item-context-menu" onpopupshowing="tmpForewardEvent.checkAllowForwardItem(); return setupContextItemType(event, currentView().getSelectedItems({}));">
-		
-			<menuitem id="calendar-item-forward" acceltext="Fwd"
-					label="Forward Event" observes="calendar_forward_event_command" accesskey="f" hidden="true"/>
-		
-	</menupopup>	
-	
-	<!--<keyset>
- 		 <key id="forward-key" modifiers="control" key="f" oncommand="tmpForewardEvent.onForEve();"/>
-	</keyset>-->	
-  
+    <script type="application/javascript"
+            src="chrome://exchangecalendar/content/calendar-common-sets.js" />
+    <commandset id="calendar_commands"
+                commandupdater="true"
+                events="calendar_commands"
+                oncommandupdate="calendarController.updateCommands()">
                 
+        <command id="calendar_forward_event_command"
+                 oncommand="tmpForewardEvent.onForEve()" />
+    </commandset>
+    <menupopup id="calendar-item-context-menu"
+               onpopupshowing="tmpForewardEvent.checkAllowForwardItem(); return setupContextItemType(event, currentView().getSelectedItems({}));">
+
+        <menuitem id="calendar-item-forward"
+                  acceltext="Fwd"
+                  label="Forward Event"
+                  observes="calendar_forward_event_command"
+                  accesskey="f"
+                  hidden="true" />
+    </menupopup>
+    <!--<keyset>
+                 <key id="forward-key" modifiers="control" key="f" oncommand="tmpForewardEvent.onForEve();"/>
+        </keyset>-->
 </overlay>

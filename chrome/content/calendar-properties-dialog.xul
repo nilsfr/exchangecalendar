@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: GPL 3.0
@@ -37,23 +36,19 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-
 <overlay id="ecCalendarProperties"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-	<script type="application/javascript" src="chrome://exchangecalendar/content/calendar-properties-dialog.js"/>
-
-	   
-		<rows id="calendar-properties-rows">
-			<row id="exchange-cache-row"
-				align="center">
-				<spacer/>
-				<checkbox id="exchange-cache"
-					hidden="true"
-					label="exchange-cache" 
-					oncommand="return tmpChangeCalendarProperties.changeCachePref();"/>
-			</row>
-		     
-		</rows>
-	
+    <script type="application/javascript"
+            src="chrome://exchangecalendar/content/calendar-properties-dialog.js" />
+    <rows id="calendar-properties-rows">
+        <row id="exchange-cache-row"
+             align="center">
+            <spacer />
+            <checkbox id="exchange-cache"
+                      hidden="true"
+                      label="exchange-cache"
+                      oncommand="return tmpChangeCalendarProperties.changeCachePref();" />
+        </row>
+    </rows>
 </overlay>

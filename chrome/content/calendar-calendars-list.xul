@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: GPL 3.0
@@ -37,50 +36,49 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-
 <?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/calendar-calendars-list.css"?>
-
-<!DOCTYPE overlay SYSTEM "chrome://exchangecalendar/locale/calendar-calendars-list.dtd">
-
+<!DOCTYPE 
+overlay SYSTEM "chrome://exchangecalendar/locale/calendar-calendars-list.dtd">
 <overlay id="calendar-list-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-    <script type="application/javascript" src="chrome://exchangecalendar/content/calendar-calendars-list.js"/>
-
-  <commandset id="calendar_commands">
-    <command id="exchWebService_convert_calendar_command" oncommand="tmpCalPopUpMenu.convertSettings()"/>
-    <command id="exchWebService_edit_calendar_command" oncommand="tmpCalPopUpMenu.editExchangeSettings()"/>
-    <command id="exchWebService_oof_settings_command" oncommand="tmpCalPopUpMenu.editOofSettings()"/>
-    <command id="exchWebService_clone_settings_command" oncommand="tmpCalPopUpMenu.cloneSettings()"/>
-    <command id="exchWebService_delegate_calendar_settings_command" oncommand="tmpCalPopUpMenu.delegateCalendarSettings()"/>
-  </commandset>
-
-  <popupset id="calendar-popupset">
-    <menupopup id="list-calendars-context-menu"
-		onpopupshown="tmpCalPopUpMenu.checkForExchangeCalendar()">
-      <menuitem id="exchWebService-list-calendars-context-convertFromOldAddOn"
-                label="&calendar.context.exchange.convert.label;"
-                observes="exchWebService_convert_calendar_command"/>
-      <menuitem id="exchWebService-list-calendars-context-exchange-edit"
-                label="&calendar.context.exchange.properties.label;"
-                observes="exchWebService_edit_calendar_command"/>
-      <menuitem id="exchWebService-list-calendars-context-exchange-oof-settings"
-                label="&calendar.context.exchange.oof.settings.label;"
-                observes="exchWebService_oof_settings_command"/>
-      <menuitem id="exchWebService-list-calendars-context-exchange-clone-settings"
-                label="&calendar.context.exchange.clone.settings.label;"
-                observes="exchWebService_clone_settings_command"/>
-      <menuitem id="exchWebService-list-calendars-context-delegate-calendar-settings" 
-                label="&calendar.context.exchange.delegate.calendar.settings.label;" 
-                observes="exchWebService_delegate_calendar_settings_command" />     
-    </menupopup>
-    <tooltip id="calendar-list-tooltip"
-             onpopupshowing="return tmpCalPopUpMenu.tooltipShowing(event)"/>
-  </popupset>
-
-  <calendar-list-tree id="calendar-list-tree-widget"
-                      type="exchange"/>
-
+    <script type="application/javascript"
+            src="chrome://exchangecalendar/content/calendar-calendars-list.js" />
+    <commandset id="calendar_commands">
+        <command id="exchWebService_convert_calendar_command"
+                 oncommand="tmpCalPopUpMenu.convertSettings()" />
+        <command id="exchWebService_edit_calendar_command"
+                 oncommand="tmpCalPopUpMenu.editExchangeSettings()" />
+        <command id="exchWebService_oof_settings_command"
+                 oncommand="tmpCalPopUpMenu.editOofSettings()" />
+        <command id="exchWebService_clone_settings_command"
+                 oncommand="tmpCalPopUpMenu.cloneSettings()" />
+        <command id="exchWebService_delegate_calendar_settings_command"
+                 oncommand="tmpCalPopUpMenu.delegateCalendarSettings()" />
+    </commandset>
+    <popupset id="calendar-popupset">
+        <menupopup id="list-calendars-context-menu"
+                   onpopupshown="tmpCalPopUpMenu.checkForExchangeCalendar()">
+                   
+            <menuitem id="exchWebService-list-calendars-context-convertFromOldAddOn"
+                      label="&calendar.context.exchange.convert.label;"
+                      observes="exchWebService_convert_calendar_command" />
+            <menuitem id="exchWebService-list-calendars-context-exchange-edit"
+                      label="&calendar.context.exchange.properties.label;"
+                      observes="exchWebService_edit_calendar_command" />
+            <menuitem id="exchWebService-list-calendars-context-exchange-oof-settings"
+                      label="&calendar.context.exchange.oof.settings.label;"
+                      observes="exchWebService_oof_settings_command" />
+            <menuitem id="exchWebService-list-calendars-context-exchange-clone-settings"
+                      label="&calendar.context.exchange.clone.settings.label;"
+                      observes="exchWebService_clone_settings_command" />
+            <menuitem id="exchWebService-list-calendars-context-delegate-calendar-settings"
+                      label="&calendar.context.exchange.delegate.calendar.settings.label;"
+                      observes="exchWebService_delegate_calendar_settings_command" />
+        </menupopup>
+        <tooltip id="calendar-list-tooltip"
+                 onpopupshowing="return tmpCalPopUpMenu.tooltipShowing(event)" />
+    </popupset>
+    <calendar-list-tree id="calendar-list-tree-widget"
+                        type="exchange" />
 </overlay>
- 
- 

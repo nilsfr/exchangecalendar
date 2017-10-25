@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: GPL 3.0
@@ -39,8 +39,8 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-
-<!DOCTYPE overlay [
+<!DOCTYPE overlay
+[
     <!ENTITY % lightningDTD SYSTEM "chrome://lightning/locale/lightning.dtd">
     <!ENTITY % preferencesDTD SYSTEM "chrome://calendar/locale/preferences/preferences.dtd">
     <!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/preferences.dtd" >
@@ -48,130 +48,132 @@
     %preferencesDTD;
     %dtd1;
 ]>
-
 <?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/preferences.css"?>
-
 <overlay id="exchangeWebService_cache_preferences_overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-	<script type="application/javascript" src="chrome://exchangecalendar/content/otherPreferences.js"/>
-
+    <script type="application/javascript"
+            src="chrome://exchangecalendar/content/otherPreferences.js" />
     <vbox id="exchangeWebService_others_preferences_vbox">
-
         <preferences>
             <preference id="extensions.1st-setup.others.retryCount"
                         name="extensions.1st-setup.others.retryCount"
-                        type="int"/>
-
+                        type="int" />
             <preference id="extensions.1st-setup.others.checkForNewAddOnVersion"
                         name="extensions.1st-setup.others.checkForNewAddOnVersion"
-                        type="bool"/>
-
+                        type="bool" />
             <preference id="extensions.1st-setup.others.warnAboutNewAddOnVersion"
                         name="extensions.1st-setup.others.warnAboutNewAddOnVersion"
-                        type="bool"/>
-                        
+                        type="bool" />
             <preference id="extensions.1st-setup.others.warnAboutPrereleaseVersion"
                         name="extensions.1st-setup.others.warnAboutPrereleaseVersion"
-                        type="bool"/>
-                        
+                        type="bool" />
             <preference id="extensions.1st-setup.exchangecalendar.loadbalancer.maxJobs"
                         name="extensions.1st-setup.exchangecalendar.loadbalancer.maxJobs"
-                        type="int"/>
-
+                        type="int" />
             <preference id="extensions.1st-setup.exchangecalendar.loadbalancer.sleepBetweenJobs"
                         name="extensions.1st-setup.exchangecalendar.loadbalancer.sleepBetweenJobs"
-                        type="int"/>
-
+                        type="int" />
             <preference id="extensions.1st-setup.others.userAgent"
                         name="extensions.1st-setup.others.userAgent"
-                        type="unichar"/>
-			<preference id="extensions.1st-setup.others.ntlmv1"
+                        type="unichar" />
+            <preference id="extensions.1st-setup.others.ntlmv1"
                         name="network.auth.force-generic-ntlm-v1"
-                        type="bool"/>
+                        type="bool" />
         </preferences>
-
         <groupbox id="exchangeWebService_others_prefs_groupbox">
-            <caption label="&exchangeWebService.preference.others.prefs.label;"/>
+            <caption label="&exchangeWebService.preference.others.prefs.label;" />
             <vbox>
-		    <hbox>
-			<label value="&exchangeWebService.preference.others.prefs.retryCount.label;"/>
-			<textbox id="exchangeWebService_preference_others_retryCount_textbox" 
-				preference="extensions.1st-setup.others.retryCount"
-				increment="1" min="0" max="9999" type="number"/>
-		    </hbox>
+                <hbox>
+                    <label value="&exchangeWebService.preference.others.prefs.retryCount.label;" />
+                    <textbox id="exchangeWebService_preference_others_retryCount_textbox"
+                             preference="extensions.1st-setup.others.retryCount"
+                             increment="1"
+                             min="0"
+                             max="9999"
+                             type="number" />
+                </hbox>
             </vbox>
-	</groupbox>
-
-        <groupbox id="exchangeWebService_others_prefs_groupbox1" hidden="true">
-            <caption label="&exchangeWebService.preference.loadbalancer.prefs.label;"/>
+        </groupbox>
+        <groupbox id="exchangeWebService_others_prefs_groupbox1"
+                  hidden="true">
+            <caption label="&exchangeWebService.preference.loadbalancer.prefs.label;" />
             <vbox>
-		    <hbox>
-			<label value="&exchangeWebService.preference.loadbalancer.prefs.maxJobs.label;"/>
-			<textbox id="exchangeWebService_preference_loadbalancer_prefs_maxJobs_textbox" 
-				preference="extensions.1st-setup.exchangecalendar.loadbalancer.maxJobs"
-				increment="1" min="0" max="9999" type="number"/>
-		    </hbox>
-		    <hbox>
-			<label value="&exchangeWebService.preference.loadbalancer.prefs.sleepBetweenJobs.label;"/>
-			<textbox id="exchangeWebService_preference_loadbalancer_prefs_sleepBetweenJobs_textbox" 
-				preference="extensions.1st-setup.exchangecalendar.loadbalancer.sleepBetweenJobs"
-				increment="1" min="0" max="9999" type="number"/>
-			<label value="(ms)"/>
-		    </hbox>
+                <hbox>
+                    <label value="&exchangeWebService.preference.loadbalancer.prefs.maxJobs.label;" />
+                    <textbox id="exchangeWebService_preference_loadbalancer_prefs_maxJobs_textbox"
+                             preference="extensions.1st-setup.exchangecalendar.loadbalancer.maxJobs"
+                             increment="1"
+                             min="0"
+                             max="9999"
+                             type="number" />
+                </hbox>
+                <hbox>
+                    <label value="&exchangeWebService.preference.loadbalancer.prefs.sleepBetweenJobs.label;" />
+                    <textbox id="exchangeWebService_preference_loadbalancer_prefs_sleepBetweenJobs_textbox"
+                             preference="extensions.1st-setup.exchangecalendar.loadbalancer.sleepBetweenJobs"
+                             increment="1"
+                             min="0"
+                             max="9999"
+                             type="number" />
+                    <label value="(ms)" />
+                </hbox>
             </vbox>
-	</groupbox>
-
+        </groupbox>
         <groupbox id="exchangeWebService_others_prefs_groupbox2">
-            <caption label="&exchangeWebService.preference.updateFunction.label;"/>
+            <caption label="&exchangeWebService.preference.updateFunction.label;" />
             <vbox>
-			<checkbox id="exchangeWebService_preference_others_checkForNewAddOnVersion"
-					preference="extensions.1st-setup.others.checkForNewAddOnVersion"
-					label="&exchangeWebService.preference.checkForUpdates.label;"/>
-
-			<checkbox id="exchangeWebService_preference_others_warnAboutNewAddOnVersion"
-					preference="extensions.1st-setup.others.warnAboutNewAddOnVersion"
-					label="&exchangeWebService.preference.warnForUpdates.label;"/>
-					
-			<checkbox id="exchangeWebService_preference_others_warnAboutPrereleaseVersion"
-                    preference="extensions.1st-setup.others.warnAboutPrereleaseVersion"
-                    label="&exchangeWebService.preference.warnForPrereleaseUpdates.label;"/> 
-					
+                <checkbox id="exchangeWebService_preference_others_checkForNewAddOnVersion"
+                          preference="extensions.1st-setup.others.checkForNewAddOnVersion"
+                          label="&exchangeWebService.preference.checkForUpdates.label;" />
+                <checkbox id="exchangeWebService_preference_others_warnAboutNewAddOnVersion"
+                          preference="extensions.1st-setup.others.warnAboutNewAddOnVersion"
+                          label="&exchangeWebService.preference.warnForUpdates.label;" />
+                <checkbox id="exchangeWebService_preference_others_warnAboutPrereleaseVersion"
+                          preference="extensions.1st-setup.others.warnAboutPrereleaseVersion"
+                          label="&exchangeWebService.preference.warnForPrereleaseUpdates.label;" />
             </vbox>
-	</groupbox>
-
+        </groupbox>
         <groupbox id="exchangeWebService_others_prefs_groupbox3">
-            <caption label="&exchangeWebService.preference.userAgent.label;"/>
-		<vbox>
-		    <hbox valign="center">
-				<label value="&exchangeWebService.preference.userAgent.label;"/>
-				<textbox id="exchangeWebService_preference_userAgent" 
-					preference="extensions.1st-setup.others.userAgent"
-					flex="1"/>
-		    </hbox>
-			<hbox>
-				<button id="exchangeWebService_preference_userAgent_addonDefault_button" label="Add-on Default" 
-					oncommand="tmpOtherPreferences.addOnDefault();"
-					flex="1"/>
-				<button id="exchangeWebService_preference_userAgent_mozillaDefault_button" label="Mozilla Default" 
-					oncommand="tmpOtherPreferences.mozillaDefault();"
-					flex="1"/>
-				<button id="exchangeWebService_preference_userAgent_ieDefault_button" label="IE Default" 
-					oncommand="tmpOtherPreferences.ieDefault();"
-					flex="1"/>
-			</hbox>
-		</vbox>
-	</groupbox>
-	<groupbox id="exchangeWebService_others_prefs_groupbox4">
-            <caption label="&exchangeWebService.preference.ntlmv1.label;"/>
-			<vbox>
-				<radiogroup id="exchangeWebService_preference_others_ntlmv1"
-						preference="extensions.1st-setup.others.ntlmv1"
-						label="&exchangeWebService.preference.ntlmv1.label;"> 
-					  <radio id="ntlm-true" value="true" label="&exchangeWebService.preference.ntlmv1.true.label;"/>
-					  <radio id="ntlm-false"  value="false" label="&exchangeWebService.preference.ntlmv1.false.label;" />
- 				</radiogroup>			
+            <caption label="&exchangeWebService.preference.userAgent.label;" />
+            <vbox>
+                <hbox valign="center">
+                    <label value="&exchangeWebService.preference.userAgent.label;" />
+                    <textbox id="exchangeWebService_preference_userAgent"
+                             preference="extensions.1st-setup.others.userAgent"
+                             flex="1" />
+                </hbox>
+                <hbox>
+                    <button id="exchangeWebService_preference_userAgent_addonDefault_button"
+                            label="Add-on Default"
+                            oncommand="tmpOtherPreferences.addOnDefault();"
+                            flex="1" />
+                    <button id="exchangeWebService_preference_userAgent_mozillaDefault_button"
+                            label="Mozilla Default"
+                            oncommand="tmpOtherPreferences.mozillaDefault();"
+                            flex="1" />
+                    <button id="exchangeWebService_preference_userAgent_ieDefault_button"
+                            label="IE Default"
+                            oncommand="tmpOtherPreferences.ieDefault();"
+                            flex="1" />
+                </hbox>
             </vbox>
-	</groupbox>
+        </groupbox>
+        <groupbox id="exchangeWebService_others_prefs_groupbox4">
+            <caption label="&exchangeWebService.preference.ntlmv1.label;" />
+            <vbox>
+                <radiogroup id="exchangeWebService_preference_others_ntlmv1"
+                            preference="extensions.1st-setup.others.ntlmv1"
+                            label="&exchangeWebService.preference.ntlmv1.label;">
+
+                    <radio id="ntlm-true"
+                           value="true"
+                           label="&exchangeWebService.preference.ntlmv1.true.label;" />
+                    <radio id="ntlm-false"
+                           value="false"
+                           label="&exchangeWebService.preference.ntlmv1.false.label;" />
+                </radiogroup>
+            </vbox>
+        </groupbox>
     </vbox>
 </overlay>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: GPL 3.0
@@ -36,8 +36,8 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-
-<!DOCTYPE overlay [
+<!DOCTYPE overlay
+[
     <!ENTITY % lightningDTD SYSTEM "chrome://lightning/locale/lightning.dtd">
     <!ENTITY % preferencesDTD SYSTEM "chrome://calendar/locale/preferences/preferences.dtd">
     <!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/preferences.dtd" >
@@ -45,42 +45,41 @@
     %preferencesDTD;
     %dtd1;
 ]>
-
 <?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/preferences.css"?>
-
 <overlay id="exchangeWebService_cache_preferences_overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
     <vbox id="exchangeWebService_cache_preferences_vbox">
-
         <preferences>
             <preference id="extensions.1st-setup.cache.startupBefore"
                         name="extensions.1st-setup.cache.startupBefore"
-                        type="int"/>
-
+                        type="int" />
             <preference id="extensions.1st-setup.cache.startupAfter"
                         name="extensions.1st-setup.cache.startupAfter"
-                        type="int"/>
-
+                        type="int" />
         </preferences>
-
         <groupbox id="exchangeWebService_cache_memory_groupbox1">
-            <caption label="&exchangeWebService.preference.cache.memory.label;"/>
+            <caption label="&exchangeWebService.preference.cache.memory.label;" />
             <vbox>
-		    <hbox>
-			<label value="&exchangeWebService.preference.cache.memory.startupBefore.label;"/>
-			<textbox id="exchangeWebService_preference_cache_startupBefore_textbox" 
-				preference="extensions.1st-setup.cache.startupBefore"
-				increment="1" min="0" max="9999" type="number"/>
-		    </hbox>
-		    <hbox>
-			<label value="&exchangeWebService.preference.cache.memory.startupAfter.label;"/>
-			<textbox id="exchangeWebService_preference_cache_startupAfter_textbox" 
-				preference="extensions.1st-setup.cache.startupAfter"
-				increment="1" min="0" max="9999" type="number"/>
-		    </hbox>
+                <hbox>
+                    <label value="&exchangeWebService.preference.cache.memory.startupBefore.label;" />
+                    <textbox id="exchangeWebService_preference_cache_startupBefore_textbox"
+                             preference="extensions.1st-setup.cache.startupBefore"
+                             increment="1"
+                             min="0"
+                             max="9999"
+                             type="number" />
+                </hbox>
+                <hbox>
+                    <label value="&exchangeWebService.preference.cache.memory.startupAfter.label;" />
+                    <textbox id="exchangeWebService_preference_cache_startupAfter_textbox"
+                             preference="extensions.1st-setup.cache.startupAfter"
+                             increment="1"
+                             min="0"
+                             max="9999"
+                             type="number" />
+                </hbox>
             </vbox>
-	</groupbox>
-
+        </groupbox>
     </vbox>
 </overlay>

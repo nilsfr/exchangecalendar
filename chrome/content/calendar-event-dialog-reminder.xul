@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: GPL 3.0
@@ -37,23 +36,25 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-
-<!DOCTYPE dialog [
+<!DOCTYPE dialog
+[
     <!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/exchangeReminderDialog.dtd" > 
     %dtd1;
 ]>
-
 <overlay id="ecCalendarProperties.Reminder"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-	<script type="application/javascript" src="chrome://exchangecalendar/content/calendar-event-dialog-reminder.js"/> 
-
-	<button id="reminder-new-button" oncommand="tmpChangeCalendarPropertiesReminder.onNewReminder();"/>
-
-	<vbox id="reminder-relation-radiogroup"> 
-		<hbox flex="1" pack="center" insertafter="reminder-relative-box">
-			<label id="exchWebService-reminder-relation-origin" hidden="true" value="&exchWebService.reminder.relation.origin.label;"/>
-		</hbox>
-	</vbox> 
-	
+    <script type="application/javascript"
+            src="chrome://exchangecalendar/content/calendar-event-dialog-reminder.js" />
+    <button id="reminder-new-button"
+            oncommand="tmpChangeCalendarPropertiesReminder.onNewReminder();" />
+    <vbox id="reminder-relation-radiogroup">
+        <hbox flex="1"
+              pack="center"
+              insertafter="reminder-relative-box">
+            <label id="exchWebService-reminder-relation-origin"
+                   hidden="true"
+                   value="&exchWebService.reminder.relation.origin.label;" />
+        </hbox>
+    </vbox>
 </overlay>

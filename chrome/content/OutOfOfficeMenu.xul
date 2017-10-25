@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: GPL 3.0
@@ -36,20 +35,25 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-
-
 <overlay id="outOfOfficeMenu"
-	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	<script type="application/javascript" src="chrome://exchangecalendar/content/OutOfOfficeMenu.js" />
-	<menupopup id="menu_Event_Task_Popup">
-		<menuitem id="exchangecalendar-OutOfOfficeMenu" label="Out of Office..."
-			oncommand="tmpToolsMenu.openOutofOfficeDialog();" hidden="true"/>
-	</menupopup>
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-	<menupopup id="taskPopup">
-		<menuitem id="exchangecalendar-tools-OutOfOfficeMenu" label="Out of Office..."
-			oncommand="tmpToolsMenu.openOutofOfficeDialog();" hidden="true"/>
-		<menuitem id="exchangecalendar-tools-aboutMemory" label="about:memory"
-			oncommand="tmpToolsMenu.showAboutMemory(false);" hidden="false"/>
-	</menupopup>
+    <script type="application/javascript"
+            src="chrome://exchangecalendar/content/OutOfOfficeMenu.js" />
+    <menupopup id="menu_Event_Task_Popup">
+        <menuitem id="exchangecalendar-OutOfOfficeMenu"
+                  label="Out of Office..."
+                  oncommand="tmpToolsMenu.openOutofOfficeDialog();"
+                  hidden="true" />
+    </menupopup>
+    <menupopup id="taskPopup">
+        <menuitem id="exchangecalendar-tools-OutOfOfficeMenu"
+                  label="Out of Office..."
+                  oncommand="tmpToolsMenu.openOutofOfficeDialog();"
+                  hidden="true" />
+        <menuitem id="exchangecalendar-tools-aboutMemory"
+                  label="about:memory"
+                  oncommand="tmpToolsMenu.showAboutMemory(false);"
+                  hidden="false" />
+    </menupopup>
 </overlay>

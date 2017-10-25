@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: GPL 3.0
@@ -24,35 +23,27 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-
 <bindings id="exchWebService-bindings"
-  xmlns="http://www.mozilla.org/xbl"
-  xmlns:html="http://www.w3.org/1999/xhtml"
-  xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-  xmlns:xbl="http://www.mozilla.org/xbl">
-
-  <binding id="exchWebService-statusImage">
-    <content>
-        <xul:image anonid="theImage" class="exchWebService-statusImage-0"/>
-    </content>
-
-    <implementation>
-      <constructor>
-         this._status = 0;
-      </constructor>
-
-	<property name="status"> <!-- define image.exchWebService-statusImage-<status> classes in your css file -->
-		<getter>
-			return this._status;
-		</getter>
-		<setter>
-			this._status = val;
-			var theImage = document.getAnonymousElementByAttribute(this, "anonid", "theImage");
-			theImage.setAttribute("class", "exchWebService-statusImage-"+val);
-		</setter>
-	</property>
-    </implementation>
-
-  </binding>
-
+          xmlns="http://www.mozilla.org/xbl"
+          xmlns:html="http://www.w3.org/1999/xhtml"
+          xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+          xmlns:xbl="http://www.mozilla.org/xbl">
+    <binding id="exchWebService-statusImage">
+        <content>
+            <xul:image anonid="theImage"
+                       class="exchWebService-statusImage-0" />
+        </content>
+        <implementation>
+            <constructor>this._status = 0;</constructor>
+            <property name="status">
+                <!-- define image.exchWebService-statusImage-<status> classes in your css file -->
+                <getter>return this._status;</getter>
+                <setter>this._status = val; var theImage =
+                document.getAnonymousElementByAttribute(this,
+                "anonid", "theImage");
+                theImage.setAttribute("class",
+                "exchWebService-statusImage-"+val);</setter>
+            </property>
+        </implementation>
+    </binding>
 </bindings>
