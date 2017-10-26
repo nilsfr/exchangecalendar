@@ -12,10 +12,10 @@ manifest exchangeAbRootDirectory/exchangeAbRootDirectory.manifest
 
 locale exchangecontacts en    locale/exchangecontacts/en/
 
-locale exchangecontacts nl    locale/exchangecontacts/nl/
+locale exchangecontacts de    locale/exchangecontacts/de/
 locale exchangecontacts en-US locale/exchangecontacts/en_US/
 locale exchangecontacts fr-FR locale/exchangecontacts/fr_FR/
-locale exchangecontacts de    locale/exchangecontacts/de/
 locale exchangecontacts ja-JP locale/exchangecontacts/ja_JP/
-locale exchangecontacts sv    locale/exchangecontacts/sv/
+locale exchangecontacts nl    locale/exchangecontacts/nl/
 locale exchangecontacts ru    locale/exchangecontacts/ru/
+locale exchangecontacts sv    locale/exchangecontacts/sv/

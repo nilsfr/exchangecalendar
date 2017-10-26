@@ -46,16 +46,16 @@ overlay chrome://messenger/content/messenger.xul chrome://exchangecalendar/conte
 
 locale exchangecalendar en locale/exchangecalendar/en/
 
-locale exchangecalendar nl locale/exchangecalendar/nl/
+locale exchangecalendar cs-CZ locale/exchangecalendar/cs_CZ/
+locale exchangecalendar de locale/exchangecalendar/de/
 locale exchangecalendar en-US locale/exchangecalendar/en_US/
 locale exchangecalendar fr-FR locale/exchangecalendar/fr_FR/
-locale exchangecalendar de locale/exchangecalendar/de/
-locale exchangecalendar ja-JP locale/exchangecalendar/ja_JP/
-locale exchangecalendar sv locale/exchangecalendar/sv/
-locale exchangecalendar ru locale/exchangecalendar/ru/
 locale exchangecalendar it-IT locale/exchangecalendar/it_IT/
+locale exchangecalendar ja-JP locale/exchangecalendar/ja_JP/
+locale exchangecalendar nl locale/exchangecalendar/nl/
+locale exchangecalendar ru locale/exchangecalendar/ru/
+locale exchangecalendar sv locale/exchangecalendar/sv/
 locale exchangecalendar tr locale/exchangecalendar/tr/
-locale exchangecalendar cs-CZ locale/exchangecalendar/cs_CZ/
 
 manifest interfaces/exchangeCalendar/mivExchangeCalendar.manifest
 
