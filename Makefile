@@ -53,4 +53,5 @@ beautify-js:
 	find -name "*.js" -exec \
 		js-beautify --indent-size=4 --indent-char=' ' --jslint-happy \
 		--operator-position after-newline --brace-style end-expand --replace \
+		--end-with-newline \
 		{} \;
