@@ -7,8 +7,7 @@
         <em:targetApplication>
             <Description>
                 <!-- Thunderbird -->
-                <em:id>
-                {3550f703-e582-4d05-9a08-453d09bdfdc6}</em:id>
+                <em:id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</em:id>
                 <em:minVersion>52.0.0</em:minVersion>
                 <em:maxVersion>52.*.*</em:maxVersion>
             </Description>
@@ -16,18 +15,15 @@
         <em:targetApplication>
             <Description>
                 <!-- Seamonkey -->
-                <em:id>
-                {92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}</em:id>
+                <em:id>{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}</em:id>
                 <em:minVersion>2.49.*</em:minVersion>
                 <em:maxVersion>2.49.*</em:maxVersion>
             </Description>
         </em:targetApplication>
         <em:unpack>true</em:unpack>
         <em:name>Exchange Calendar</em:name>
-        <em:homepageURL>
-        https://github.com/ExchangeCalendar/exchangecalendar</em:homepageURL>
-        <em:iconURL>
-        chrome://exchangecalendar-common/skin/images/lightningexchangecalendar.png</em:iconURL>
+        <em:homepageURL>https://github.com/ExchangeCalendar/exchangecalendar</em:homepageURL>
+        <em:iconURL>chrome://exchangecalendar-common/skin/images/lightningexchangecalendar.png</em:iconURL>
         <em:creator>Michel Verbraak</em:creator>
         <em:developer>ExchangeCalendar community</em:developer>
         <em:translator>Michel Verbraak (nl)</em:translator>
@@ -43,18 +39,14 @@
             <Description>
                 <em:locale>en</em:locale>
                 <em:name>Exchange Calendar</em:name>
-                <em:description>Allows you to sync calendars,
-                tasks, and contacts with Microsoft
-                Exchange.</em:description>
+                <em:description>Allows you to sync calendars, tasks, and contacts with Microsoft Exchange.</em:description>
             </Description>
         </em:localized>
         <em:localized>
             <Description>
                 <em:locale>fr</em:locale>
                 <em:name>Exchange Calendar</em:name>
-                <em:description>Vous permet de synchroniser les
-                calendriers, tâches et contactes avec Microsoft
-                Exchange.</em:description>
+                <em:description>Vous permet de synchroniser les calendriers, tâches et contactes avec Microsoft Exchange.</em:description>
             </Description>
         </em:localized>
     </Description>

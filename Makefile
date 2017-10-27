@@ -44,13 +44,20 @@ dev: beautify build
 beautify: beautify-xml beautify-js
 
 beautify-xml:
-	find \( -name "*.xml" -o -name "*.rdf" -o -name "*.xul" \) -exec \
+	find \( -name "*.xml" -o -name "*.xul" \) -exec \
 		tidy --input-xml yes --indent auto --indent-spaces 4 --indent-attributes yes \
 		--preserve-entities yes --quote-ampersand no --quote-nbsp no --output-xml yes \
 		--strict-tags-attributes no --write-back yes \
-		 {} \;
+		{} \;
+	# For rdf files, we don't want to wrap lines to keep em:description on one line.
+	find -name "*.rdf" -exec \
+		tidy --input-xml yes --indent auto --indent-spaces 4 --indent-attributes yes \
+		--preserve-entities yes --quote-ampersand no --quote-nbsp no --output-xml yes \
+		--strict-tags-attributes no --write-back yes --wrap 0 \
+		{} \;
 beautify-js:
 	find -name "*.js" -exec \
 		js-beautify --indent-size=4 --indent-char=' ' --jslint-happy \
 		--operator-position after-newline --brace-style end-expand --replace \
+		--end-with-newline \
 		{} \;
