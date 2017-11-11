@@ -82,6 +82,3 @@ manifest addressbook/exchangeAddressBook.manifest
 manifest interfaces/exchangeRecurrenceInfo/mivExchangeRecurrenceInfo.manifest
 manifest interfaces/exchangeLightningNotifier/mivExchangeLightningNotifier.manifest
 
-manifest interfaces/exchangeAutoCompleteSearch/mivExchangeAutoCompleteSearch.manifest
-manifest interfaces/exchangeAutoCompleteResult/mivExchangeAutoCompleteResult.manifest
-
