@@ -2,26 +2,26 @@
 host = https://www.transifex.com
 
 [exchangecalendar.addressbook-addressbookOverlay]
-file_filter = interfaces/exchangeAddressBook/locale/exchangecontacts/<lang>/addressbookOverlay.dtd
-source_file = interfaces/exchangeAddressBook/locale/exchangecontacts/en/addressbookOverlay.dtd
+file_filter = addressbook/locale/<lang>/addressbookOverlay.dtd
+source_file = addressbook/locale/en/addressbookOverlay.dtd
 source_lang = en
 type = DTD
 
 [exchangecalendar.addressbook-exchangeContactSettings]
-file_filter = interfaces/exchangeAddressBook/locale/exchangecontacts/<lang>/exchangeContactSettings.dtd
-source_file = interfaces/exchangeAddressBook/locale/exchangecontacts/en/exchangeContactSettings.dtd
+file_filter = addressbook/locale/<lang>/exchangeContactSettings.dtd
+source_file = addressbook/locale/en/exchangeContactSettings.dtd
 source_lang = en
 type = DTD
 
 [exchangecalendar.addressbook-ExchangeContacts]
-file_filter = interfaces/exchangeAddressBook/locale/exchangecontacts/<lang>/ExchangeContacts.properties
-source_file = interfaces/exchangeAddressBook/locale/exchangecontacts/en/ExchangeContacts.properties
+file_filter = addressbook/locale/<lang>/ExchangeContacts.properties
+source_file = addressbook/locale/en/ExchangeContacts.properties
 source_lang = en
 type = MOZILLAPROPERTIES
 
 [exchangecalendar.addressbook-ExchangeDistLists]
-file_filter = interfaces/exchangeAddressBook/locale/exchangecontacts/<lang>/ExchangeDistLists.properties
-source_file = interfaces/exchangeAddressBook/locale/exchangecontacts/en/ExchangeDistLists.properties
+file_filter = addressbook/locale/<lang>/ExchangeDistLists.properties
+source_file = addressbook/locale/en/ExchangeDistLists.properties
 source_lang = en
 type = MOZILLAPROPERTIES
 
