@@ -108,6 +108,7 @@ function ExchangeRequest(aArgument, aCbOk, aCbError, aListener) {
     this.exchangeBadCertListener2 = Cc["@1st-setup.nl/exchange/badcertlistener2;1"]
         .getService(Ci.mivExchangeBadCertListener2);
 
+    this.showPassword = this.globalFunctions.safeGetBoolPref(null, "extensions.1st-setup.authentication.showpassword", false, true);
     this.observerService = Cc["@mozilla.org/observer-service;1"]
         .getService(Ci.nsIObserverService);
     this.observerService.addObserver(this, "http-on-modify-request", true);
@@ -170,24 +171,39 @@ ExchangeRequest.prototype = {
     */
     observe(aSubject, aTopic, aData) {
         let channel = aSubject.QueryInterface(Components.interfaces.nsIHttpChannel);
-        this.logInfo("ecExchangeRequest observing http-on-modify-request for URI " + channel.URI.spec
-            + " originalURI " + (channel.originalURI ? channel.originalURI.spec : "none"));
+
+        // Local variables to display URIs in logs according to showPassword preference
+        let chanURI = channel.URI.spec;
+        let chanOrigURI = (channel.originalURI ? channel.originalURI.spec : 'none');
+
+        if (!this.showPassword) {
+            if (channel.URI.password) {
+                chanURI = chanURI.replace(channel.URI.password, '***');
+            }
+
+            if (channel.originalURI.password) {
+                chanOrigURI = chanOrigURI.replace(channel.originalURI.password, '***');
+            }
+        }
+
+        this.logInfo("ecExchangeRequest observe: http-on-modify-request for URI " + chanURI + ", originalURI " + chanOrigURI);
 
         // Only respond to our host
         let myHost = this.xmlReq && this.xmlReq.channel && this.xmlReq.channel.URI.host;
         let theirHost = channel.URI.host;
         if (myHost && (myHost != theirHost)) {
-            this.logInfo("Host does not match, theirs: " + theirHost + " mine: " + myHost);
+            this.logInfo("ecExchangeRequest observe: Host does not match, theirs: " + theirHost + " mine: " + myHost);
             return;
         }
 
         let internalChannel = channel.QueryInterface(Ci.nsIHttpChannelInternal);
         if (internalChannel.blockAuthPrompt) {
-            this.logInfo("unblocking request");
+            this.logInfo("ecExchangeRequest observe: unblocking request");
             internalChannel.blockAuthPrompt = false;
         }
-        else
-            this.logInfo("Already unblocked");
+        else {
+            this.logInfo("ecExchangeRequest observe: already unblocked");
+        }
     },
 
     get debug() {
