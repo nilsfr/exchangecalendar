@@ -1,6 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE 
-overlay SYSTEM "chrome://exchangeemailtag/locale/emailtag.dtd">
+<!DOCTYPE overlay
+[
+    <!ENTITY % emailtag SYSTEM "chrome://exchangeemailtag/locale/emailtag.dtd">
+    %emailtag;
+]>
 <overlay id="emailtag-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
