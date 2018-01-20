@@ -146,14 +146,14 @@ source_lang = en
 type = DTD
 
 [exchangecalendar.rtews]
-file_filter = locale/exchangecalendar/<lang>/rtews.dtd
-source_file = locale/exchangecalendar/en/rtews.dtd
+file_filter = emailtag/locale/<lang>/emailtag.dtd
+source_file = emailtag/locale/en/emailtag.dtd
 source_lang = en
 type = DTD
 
 [exchangecalendar.rtews-properties]
-file_filter = locale/exchangecalendar/<lang>/rtews.properties
-source_file = locale/exchangecalendar/en/rtews.properties
+file_filter = emailtag/locale/<lang>/emailtag.properties
+source_file = emailtag/locale/en/emailtag.properties
 source_lang = en
 type = MOZILLAPROPERTIES
 
