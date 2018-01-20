@@ -1,4 +1,5 @@
 /* debugging prefs */
+/*
 pref("browser.dom.window.dump.enabled", true);
 pref("javascript.options.showInConsole", true);
 pref("javascript.options.strict", true);
@@ -16,3 +17,4 @@ pref("extensions.extras.ShadeLow", false);
 pref("calendar.timezone.local.auto", true);
 pref("extensions.1st-setup.others.warnAboutPrereleaseVersion", true);
 user_pref("mailnews.database.global.indexer.enabled", true);
+*/
