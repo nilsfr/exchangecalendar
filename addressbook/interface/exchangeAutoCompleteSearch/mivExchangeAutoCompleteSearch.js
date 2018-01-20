@@ -29,7 +29,7 @@ Cu.import("resource://gre/modules/Services.jsm");
 
 Cu.import("resource:///modules/mailServices.js");
 
-Cu.import("resource://exchangecalendar/exchangeAbFunctions.js");
+Cu.import("resource://exchangeaddress/exchangeAbFunctions.js");
 
 function mivExchangeAutoCompleteSearch() {
 

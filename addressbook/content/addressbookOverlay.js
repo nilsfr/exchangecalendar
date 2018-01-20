@@ -32,7 +32,7 @@ Cu.import("resource://gre/modules/Services.jsm");
 Cu.import("resource:///modules/mailServices.js");
 
 Cu.import("resource://exchangecalendar/ecFunctions.js");
-Cu.import("resource://exchangecalendar/exchangeAbFunctions.js");
+Cu.import("resource://exchangeaddress/exchangeAbFunctions.js");
 Cu.import("resource://exchangecalendar/erGetAttachments.js");
 
 function exchAddressbookOverlay(aDocument, aWindow) {

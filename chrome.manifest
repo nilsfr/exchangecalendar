@@ -77,12 +77,8 @@ manifest interfaces/exchangeBaseItem/mivExchangeBaseItem.manifest
 manifest interfaces/exchangeEvent/mivExchangeEvent.manifest
 manifest interfaces/exchangeTodo/mivExchangeTodo.manifest
 
-manifest interfaces/exchangeAddressBook/exchangeAddressBook.manifest
+manifest addressbook/exchangeAddressBook.manifest
 
 manifest interfaces/exchangeRecurrenceInfo/mivExchangeRecurrenceInfo.manifest
 manifest interfaces/exchangeLightningNotifier/mivExchangeLightningNotifier.manifest
 
-manifest interfaces/exchangeAutoCompleteSearch/mivExchangeAutoCompleteSearch.manifest
-manifest interfaces/exchangeAutoCompleteResult/mivExchangeAutoCompleteResult.manifest
-
-manifest emailtag/exchangeEmailTag.manifest

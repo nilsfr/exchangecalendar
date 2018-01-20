@@ -32,7 +32,7 @@ Cu.import("resource:///modules/mailServices.js");
 Cu.import("resource:///modules/iteratorUtils.jsm");
 
 Cu.import("resource://exchangecalendar/ecFunctions.js");
-Cu.import("resource://exchangecalendar/exchangeAbFunctions.js");
+Cu.import("resource://exchangeaddress/exchangeAbFunctions.js");
 
 
 function exchangeAbDirFactory() {}

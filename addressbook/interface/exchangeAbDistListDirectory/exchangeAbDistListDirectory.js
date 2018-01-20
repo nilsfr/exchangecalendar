@@ -35,13 +35,13 @@ Cu.import("resource://exchangecalendar/ecExchangeRequest.js");
 Cu.import("resource:///modules/mailServices.js");
 Cu.import("resource:///modules/iteratorUtils.jsm");
 
-Cu.import("resource://exchangecalendar/erFindContacts.js");
-Cu.import("resource://exchangecalendar/erGetContacts.js");
-Cu.import("resource://exchangecalendar/erSyncContactsFolder.js");
-Cu.import("resource://exchangecalendar/erExpandDL.js");
-Cu.import("resource://exchangecalendar/erResolveNames.js");
+Cu.import("resource://exchangeaddress/erFindContacts.js");
+Cu.import("resource://exchangeaddress/erGetContacts.js");
+Cu.import("resource://exchangeaddress/erSyncContactsFolder.js");
+Cu.import("resource://exchangeaddress/erExpandDL.js");
+Cu.import("resource://exchangeaddress/erResolveNames.js");
 
-Cu.import("resource://exchangecalendar/exchangeAbFunctions.js");
+Cu.import("resource://exchangeaddress/exchangeAbFunctions.js");
 
 const nsIAP = Ci.nsIActivityProcess;
 const nsIAE = Ci.nsIActivityEvent;
