@@ -1,9 +1,11 @@
 content exchangecalendar chrome/content/
-skin exchangecalendar fugue chrome/skins/unix/
-skin exchangecalendar fugue chrome/skins/win/ os=WINNT
-skin exchangecalendar fugue chrome/skins/winaero/ os=WINNT osversion>=6
-skin exchangecalendar fugue chrome/skins/mac/ os=Darwin
-skin exchangecalendar-common fugue chrome/skins/common/
+
+skin exchangecalendar fugue theme/unix/
+skin exchangecalendar fugue theme/win/ os=WINNT
+skin exchangecalendar fugue theme/winaero/ os=WINNT osversion>=6
+skin exchangecalendar fugue theme/mac/ os=Darwin
+skin exchangecalendar-common fugue theme/common/
+
 resource exchangecalendar components/
 resource interfaces interfaces/
 
