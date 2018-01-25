@@ -29,7 +29,7 @@ Cu.import("resource://gre/modules/Services.jsm");
 
 Cu.import("resource://calendar/modules/calProviderUtils.jsm");
 
-Cu.import("resource://exchangecalendar/erGetTimeZones.js");
+Cu.import("resource://exchangecalendartask/erGetTimeZones.js");
 
 //Cu.import("resource://interfaces/xml2jxon/mivIxml2jxon.js");
 
