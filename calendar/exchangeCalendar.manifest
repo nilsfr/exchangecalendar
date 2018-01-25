@@ -20,12 +20,12 @@ overlay chrome://calendar/content/calendar-summary-dialog.xul chrome://exchangec
 
 overlay chrome://lightning/content/lightning-item-iframe.xul chrome://exchangecalendartask/content/lightning-item-iframe.xul
 
-manifest exchangeapi/exchangeCalendar/mivExchangeCalendar.manifest
-manifest exchangeapi/exchangeTimeZones/mivExchangeTimeZones.manifest
-manifest exchangeapi/exchangeAttendee/mivExchangeAttendee.manifest
-manifest exchangeapi/exchangeEvent/mivExchangeEvent.manifest
-manifest exchangeapi/exchangeTodo/mivExchangeTodo.manifest
-manifest exchangeapi/exchangeRecurrenceInfo/mivExchangeRecurrenceInfo.manifest
+manifest interface/exchangeCalendar/mivExchangeCalendar.manifest
+manifest interface/exchangeTimeZones/mivExchangeTimeZones.manifest
+manifest interface/exchangeAttendee/mivExchangeAttendee.manifest
+manifest interface/exchangeEvent/mivExchangeEvent.manifest
+manifest interface/exchangeTodo/mivExchangeTodo.manifest
+manifest interface/exchangeRecurrenceInfo/mivExchangeRecurrenceInfo.manifest
 
 locale exchangecalendartask en locale/en/
 
