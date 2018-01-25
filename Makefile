@@ -45,7 +45,7 @@ beautify: beautify-xml beautify-js
 
 beautify-xml:
 	find \( -name "*.xml" -o -name "*.xul" \) \
-		-a \( \! -wholename "./interfaces/exchangeTimeZones/ewsTimesZoneDefinitions_2007.xml" \) \
+		-a \( \! -wholename "./calendar/interface/exchangeTimeZones/ewsTimesZoneDefinitions_2007.xml" \) \
 		-exec \
 		tidy --input-xml yes --indent auto --indent-spaces 4 --indent-attributes yes \
 		--preserve-entities yes --quote-ampersand no --quote-nbsp no --output-xml yes \
