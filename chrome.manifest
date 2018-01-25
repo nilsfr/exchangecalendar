@@ -1,10 +1,10 @@
 content exchangecalendar common/content/
 
-skin exchangecalendar fugue theme/unix/
-skin exchangecalendar fugue theme/win/ os=WINNT
-skin exchangecalendar fugue theme/winaero/ os=WINNT osversion>=6
-skin exchangecalendar fugue theme/mac/ os=Darwin
-skin exchangecalendar-common fugue theme/common/
+skin exchangecalendar fugue common/unix/
+skin exchangecalendar fugue common/win/ os=WINNT
+skin exchangecalendar fugue common/winaero/ os=WINNT osversion>=6
+skin exchangecalendar fugue common/mac/ os=Darwin
+skin exchangecalendar-common fugue common/common/
 
 resource exchangecalendar common/exchangeapi
 resource interfaces common/interface/
@@ -33,18 +33,18 @@ overlay chrome://messenger/content/messenger.xul  chrome://exchangecalendar/cont
 overlay chrome://messenger/content/messenger.xul  chrome://exchangecalendar/content/invite-style.xul
 overlay chrome://messenger/content/folderProps.xul  chrome://exchangecalendar/content/folderPropsOverlay.xul
 
-locale exchangecalendar en locale/exchangecalendar/en/
+locale exchangecalendar en common/locale/en/
 
-locale exchangecalendar cs-CZ locale/exchangecalendar/cs_CZ/
-locale exchangecalendar de locale/exchangecalendar/de/
-locale exchangecalendar en-US locale/exchangecalendar/en_US/
-locale exchangecalendar fr-FR locale/exchangecalendar/fr_FR/
-locale exchangecalendar it-IT locale/exchangecalendar/it_IT/
-locale exchangecalendar ja-JP locale/exchangecalendar/ja_JP/
-locale exchangecalendar nl locale/exchangecalendar/nl/
-locale exchangecalendar ru locale/exchangecalendar/ru/
-locale exchangecalendar sv locale/exchangecalendar/sv/
-locale exchangecalendar tr locale/exchangecalendar/tr/
+locale exchangecalendar cs-CZ common/locale/cs_CZ/
+locale exchangecalendar de common/locale/de/
+locale exchangecalendar en-US common/locale/en_US/
+locale exchangecalendar fr-FR common/locale/fr_FR/
+locale exchangecalendar it-IT common/locale/it_IT/
+locale exchangecalendar ja-JP common/locale/ja_JP/
+locale exchangecalendar nl common/locale/nl/
+locale exchangecalendar ru common/locale/ru/
+locale exchangecalendar sv common/locale/sv/
+locale exchangecalendar tr common/locale/tr/
 
 manifest common/interface/global/mivFunctions.manifest
 manifest common/interface/exchangeAccountManager/mivExchangeAccountManager.manifest
