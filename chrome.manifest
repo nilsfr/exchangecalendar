@@ -6,8 +6,8 @@ skin exchangecalendar fugue theme/winaero/ os=WINNT osversion>=6
 skin exchangecalendar fugue theme/mac/ os=Darwin
 skin exchangecalendar-common fugue theme/common/
 
-resource exchangecalendar components/
-resource interfaces interfaces/
+resource exchangecalendar common/exchangeapi
+resource interfaces common/interface/
 
 
 overlay chrome://messenger/content/messenger.xul chrome://exchangecalendar/content/progress_panel.xul
@@ -46,24 +46,24 @@ locale exchangecalendar ru locale/exchangecalendar/ru/
 locale exchangecalendar sv locale/exchangecalendar/sv/
 locale exchangecalendar tr locale/exchangecalendar/tr/
 
-manifest interfaces/global/mivFunctions.manifest
-manifest interfaces/exchangeAccountManager/mivExchangeAccountManager.manifest
-manifest interfaces/exchangeStatistics/mivExchangeStatistics.manifest
-manifest interfaces/exchangeBadCertListener2/mivExchangeBadCertListener2.manifest
-manifest interfaces/xml2jxon/mivIxml2jxon.manifest
-manifest interfaces/xml2jxon/mivNameSpaces.manifest
-manifest interfaces/xml2jxon/mivTagNames.manifest
-manifest interfaces/updater/mivUpdater.manifest
-manifest interfaces/exchangeLoadBalancer/mivExchangeLoadBalancer.manifest
-manifest interfaces/exchangeAuthPromptProvider/mivExchangeAuthPromptProvider.manifest
-manifest interfaces/exchangeAuthPrompt2/mivExchangeAuthPrompt2.manifest
+manifest common/interface/global/mivFunctions.manifest
+manifest common/interface/exchangeAccountManager/mivExchangeAccountManager.manifest
+manifest common/interface/exchangeStatistics/mivExchangeStatistics.manifest
+manifest common/interface/exchangeBadCertListener2/mivExchangeBadCertListener2.manifest
+manifest common/interface/xml2jxon/mivIxml2jxon.manifest
+manifest common/interface/xml2jxon/mivNameSpaces.manifest
+manifest common/interface/xml2jxon/mivTagNames.manifest
+manifest common/interface/updater/mivUpdater.manifest
+manifest common/interface/exchangeLoadBalancer/mivExchangeLoadBalancer.manifest
+manifest common/interface/exchangeAuthPromptProvider/mivExchangeAuthPromptProvider.manifest
+manifest common/interface/exchangeAuthPrompt2/mivExchangeAuthPrompt2.manifest
 
-manifest interfaces/exchangecalendarItem/mivexchangecalendarItem.manifest
+manifest common/interface/exchangecalendarItem/mivexchangecalendarItem.manifest
 
 manifest addressbook/exchangeAddressBook.manifest
 
 manifest calendar/exchangeCalendar.manifest
 
-manifest interfaces/exchangeRecurrenceInfo/mivExchangeRecurrenceInfo.manifest
-manifest interfaces/exchangeLightningNotifier/mivExchangeLightningNotifier.manifest
+manifest common/interface/exchangeRecurrenceInfo/mivExchangeRecurrenceInfo.manifest
+manifest common/interface/exchangeLightningNotifier/mivExchangeLightningNotifier.manifest
 
