@@ -36,7 +36,7 @@ overlay SYSTEM "chrome://exchangecalendar/locale/messenger_task_delegation.dtd">
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
     <script type="application/javascript"
-            src="chrome://exchangecalendar/content/messenger_task_delegation.js" />
+            src="chrome://exchangecalendartask/content/messenger_task_delegation.js" />
     <rows id="calendar-task-details-rows">
         <row id="exchWebService-task-delegation-owner"
              align="end">

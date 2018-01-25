@@ -40,7 +40,7 @@
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
     <script type="application/javascript"
-            src="chrome://exchangecalendar/content/calendar-properties-dialog.js" />
+            src="chrome://exchangecalendartask/content/calendar-properties-dialog.js" />
     <rows id="calendar-properties-rows">
         <row id="exchange-cache-row"
              align="center">

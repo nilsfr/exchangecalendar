@@ -42,7 +42,7 @@
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
     <script type="application/javascript"
-            src="chrome://exchangecalendar/content/calendar-task-view.js" />
+            src="chrome://exchangecalendartask/content/calendar-task-view.js" />
     <!-- Commands -->
     <commandset id="mailCommands">
         <command id="exchWebService_openAttachment"

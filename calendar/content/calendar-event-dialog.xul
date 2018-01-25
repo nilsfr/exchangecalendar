@@ -13,7 +13,7 @@
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
     <script type="application/javascript"
-            src="chrome://exchangecalendar/content/calendar-event-dialog.js" />
+            src="chrome://exchangecalendartask/content/calendar-event-dialog.js" />
     <!-- Commands -->
     <commandset id="itemCommands">
         <command id="exchWebService_addAttachmentDialog"
