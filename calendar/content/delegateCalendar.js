@@ -16,10 +16,10 @@ Cu.import("resource://exchangecalendar/ecFunctions.js");
 Cu.import("resource://exchangecalendar/ecExchangeRequest.js");
 Cu.import("resource://exchangecalendar/erFindFolder.js");
 
-Cu.import("resource://exchangecalendar/erGetDelegateRequest.js");
-Cu.import("resource://exchangecalendar/erAddDelegateRequest.js");
-Cu.import("resource://exchangecalendar/erRemoveDelegateRequest.js");
-Cu.import("resource://exchangecalendar/erUpdateDelegateRequest.js");
+Cu.import("resource://exchangecalendartask/erGetDelegateRequest.js");
+Cu.import("resource://exchangecalendartask/erAddDelegateRequest.js");
+Cu.import("resource://exchangecalendartask/erRemoveDelegateRequest.js");
+Cu.import("resource://exchangecalendartask/erUpdateDelegateRequest.js");
 
 Cu.import("resource://calendar/modules/calUtils.jsm");
 Cu.import("resource://interfaces/xml2json/xml2json.js");

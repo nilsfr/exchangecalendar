@@ -48,7 +48,7 @@ Cu.import("resource://exchangecalendar/ecFunctions.js");
 Cu.import("resource://exchangecalendar/ecExchangeRequest.js");
 Cu.import("resource://exchangecalendar/soapFunctions.js");
 
-Cu.import("resource://exchangecalendar/erGetMasterOccurrenceId.js");
+Cu.import("resource://exchangecalendartask/erGetMasterOccurrenceId.js");
 
 var EXPORTED_SYMBOLS = ["erGetOccurrenceIndexRequest"];
 
