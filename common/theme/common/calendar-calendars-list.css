@@ -9,5 +9,5 @@ calendar-list-tree > tree > treechildren::-moz-tree-image(exchange-status-treeco
 }
 
 calendar-list-tree[type="exchange"] {
-	-moz-binding: url(chrome://exchangecalendar/content/calendar-list-tree.xml#exchange-calendar-list-tree);
+	-moz-binding: url(chrome://exchangecalendartask/content/calendar-list-tree.xml#exchange-calendar-list-tree);
 }
