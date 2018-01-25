@@ -6,7 +6,7 @@ skin exchangecalendar fugue common/winaero/ os=WINNT osversion>=6
 skin exchangecalendar fugue common/mac/ os=Darwin
 skin exchangecalendar-common fugue common/common/
 
-resource exchangecalendar common/exchangeapi
+resource exchangecalendar common/exchangeapi/
 resource interfaces common/interface/
 
 
@@ -58,12 +58,11 @@ manifest common/interface/exchangeLoadBalancer/mivExchangeLoadBalancer.manifest
 manifest common/interface/exchangeAuthPromptProvider/mivExchangeAuthPromptProvider.manifest
 manifest common/interface/exchangeAuthPrompt2/mivExchangeAuthPrompt2.manifest
 
-manifest common/interface/exchangecalendarItem/mivexchangecalendarItem.manifest
+manifest common/interface/exchangeBaseItem/mivExchangeBaseItem.manifest
 
 manifest addressbook/exchangeAddressBook.manifest
 
 manifest calendar/exchangeCalendar.manifest
 
-manifest common/interface/exchangeRecurrenceInfo/mivExchangeRecurrenceInfo.manifest
 manifest common/interface/exchangeLightningNotifier/mivExchangeLightningNotifier.manifest
 
