@@ -1,4 +1,4 @@
-content exchangecalendar chrome/content/
+content exchangecalendar common/content/
 
 skin exchangecalendar fugue theme/unix/
 skin exchangecalendar fugue theme/win/ os=WINNT
