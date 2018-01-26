@@ -56,7 +56,7 @@ beautify-xml:
 		--strict-tags-attributes no --write-back yes \
 		{} \;
 	# For rdf files, we don't want to wrap lines to keep em:description on one line.
-	find -name "*.rdf" -exec \
+	find \( -name "*.rdf" -o -name "*.rdf.template" \) -exec \
 		tidy --input-xml yes --indent auto --indent-spaces 4 --indent-attributes yes \
 		--preserve-entities yes --quote-ampersand no --quote-nbsp no --output-xml yes \
 		--strict-tags-attributes no --write-back yes --wrap 0 \
