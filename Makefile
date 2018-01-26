@@ -4,11 +4,12 @@ releasebranch = ec-4.0
 update = disable
 xpi = exchangecalendar-v$(version).xpi
 
-.PHONY: build release l10n-get l10n-auto-commit l10n-push dev beautify beautify-xml beautify-js defaults/preferences/update.js
+.PHONY: build release l10n-get l10n-auto-commit l10n-push dev beautify beautify-xml beautify-js defaults/preferences/update.js $(xpi)
 
 # Default target is build package
-build: install.rdf defaults/preferences/update.js
-	# Finally, create the xpi file
+build: $(xpi)
+
+$(xpi): install.rdf defaults/preferences/update.js
 	zip -r $(xpi) -x $(excludefromxpi) -- . 
 
 install.rdf: install.rdf.template
