@@ -1,18 +1,20 @@
 version = $(shell cat VERSION)
-excludefromxpi = .git/\* .gitignore .tx/\* \*.xpi \*.sh update\*.txt Makefile VERSION install.rdf.template
+excludefromxpi = .git/\* .gitignore \*/.gitignore .tx/\* \*.xpi \*.sh update\*.txt Makefile VERSION install.rdf.template
 releasebranch = ec-4.0
+update = disable
 
-.PHONY: build release l10n-get l10n-auto-commit l10n-push dev beautify beautify-xml beautify-js
+.PHONY: build release l10n-get l10n-auto-commit l10n-push dev beautify beautify-xml beautify-js defaults/preferences/update.js
 
 # Default target is build package
-build: install.rdf
-	# Disable automatic updates of the extension
-	cat defaults/preferences/update_disable.txt > defaults/preferences/update.js
+build: install.rdf defaults/preferences/update.js
 	# Finally, create the xpi file
 	zip -r exchangecalendar-v"$(version)".xpi -x $(excludefromxpi) -- . 
 
 install.rdf: install.rdf.template
 	sed 's/@VERSION@/$(version)/g' install.rdf.template > install.rdf
+
+defaults/preferences/update.js:
+	cp defaults/preferences/update_$(update).txt defaults/preferences/update.js
 
 # Target to publish a new release:
 release: l10n-auto-commit build
