@@ -2,6 +2,8 @@ version = $(shell cat VERSION)
 excludefromxpi = .git/\* .gitignore .tx/\* \*.xpi \*.sh update\*.txt Makefile VERSION install.rdf.template
 releasebranch = ec-4.0
 
+.PHONY: build release l10n-get l10n-auto-commit l10n-push dev beautify beautify-xml beautify-js
+
 # Default target is build package
 build: install.rdf
 	# Disable automatic updates of the extension
