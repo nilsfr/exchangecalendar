@@ -10,13 +10,13 @@ xpi = exchangecalendar-v$(version).xpi
 build: $(xpi)
 
 $(xpi): install.rdf defaults/preferences/update.js
-	zip -r $(xpi) -x $(excludefromxpi) -- . 
+	zip -r $@ -x $(excludefromxpi) -- .
 
 install.rdf: install.rdf.template
-	sed 's/@VERSION@/$(version)/g' install.rdf.template > install.rdf
+	sed 's/@VERSION@/$(version)/g' $< > $@
 
 defaults/preferences/update.js:
-	cp defaults/preferences/update_$(update).txt defaults/preferences/update.js
+	cp defaults/preferences/update_$(update).txt $@
 
 # Target to publish a new release:
 release: l10n-auto-commit build
