@@ -21,8 +21,6 @@ defaults/preferences/update.js:
 
 # Target to publish a new release:
 release: l10n-auto-commit build
-	git add -- install.rdf
-	git commit -m "releases v$(version)"
 	git tag "v$(version)"
 	@echo 'Translations updated, build done, tag added.'
 	@echo 'Now, if the release is well done, please run one "git push" to publish code and one "git push v$(version)" to publish the new tag.'
