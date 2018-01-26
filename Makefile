@@ -10,6 +10,7 @@ xpi = exchangecalendar-v$(version).xpi
 build: $(xpi)
 
 $(xpi): install.rdf defaults/preferences/update.js
+	rm -f $@
 	zip -r $@ -x $(excludefromxpi) -- .
 
 install.rdf: install.rdf.template
