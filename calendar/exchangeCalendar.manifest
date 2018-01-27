@@ -1,6 +1,7 @@
 content exchangecalendartask content/
 
 resource exchangecalendartask exchangeapi/
+resource interfacescalendartask interface/
 
 overlay chrome://calendar/content/calendarCreation.xul chrome://exchangecalendartask/content/ecCalendarCreation.xul
 overlay chrome://calendar/content/calendar-properties-dialog.xul chrome://exchangecalendartask/content/calendar-properties-dialog.xul

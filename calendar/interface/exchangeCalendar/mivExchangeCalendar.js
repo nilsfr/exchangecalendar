@@ -83,8 +83,8 @@ Cu.import("resource://exchangecalendartask/erDeleteAttachment.js");
 
 Cu.import("resource://interfaces/xml2json/xml2json.js");
 
-Cu.import("resource://interfaces/exchangeTodo/mivExchangeTodo.js");
-Cu.import("resource://interfaces/exchangeEvent/mivExchangeEvent.js");
+Cu.import("resource://interfacescalendartask/exchangeTodo/mivExchangeTodo.js");
+Cu.import("resource://interfacescalendartask/exchangeEvent/mivExchangeEvent.js");
 
 var globalStart = new Date().getTime();
 

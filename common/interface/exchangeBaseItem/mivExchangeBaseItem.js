@@ -31,7 +31,7 @@ Cu.import("resource://exchangecalendar/ecExchangeRequest.js");
 
 Cu.import("resource://calendar/modules/calProviderUtils.jsm");
 
-Cu.import("resource://interfaces/exchangeAttendee/mivExchangeAttendee.js");
+Cu.import("resource://interfacescalendartask/exchangeAttendee/mivExchangeAttendee.js");
 
 Cu.import("resource://interfaces/xml2jxon/mivIxml2jxon.js");
 
