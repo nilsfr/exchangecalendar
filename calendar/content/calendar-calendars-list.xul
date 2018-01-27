@@ -43,7 +43,7 @@ overlay SYSTEM "chrome://exchangecommon/locale/calendar-calendars-list.dtd">
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
     <script type="application/javascript"
-            src="chrome://exchangecalendartask/content/calendar-calendars-list.js" />
+            src="chrome://exchangecalendar/content/calendar-calendars-list.js" />
     <commandset id="calendar_commands">
         <command id="exchWebService_convert_calendar_command"
                  oncommand="tmpCalPopUpMenu.convertSettings()" />

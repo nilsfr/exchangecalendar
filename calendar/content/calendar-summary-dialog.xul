@@ -51,7 +51,7 @@
             xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
         <script type="application/javascript"
-                src="chrome://exchangecalendartask/content/calendar-summary-dialog.js" />
+                src="chrome://exchangecalendar/content/calendar-summary-dialog.js" />
         <box id="item-general-box"
              orient="vertical">
             <box orient="horizontal">

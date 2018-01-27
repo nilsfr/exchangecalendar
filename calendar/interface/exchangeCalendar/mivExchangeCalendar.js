@@ -65,21 +65,21 @@ Cu.import("resource://exchangecommon/erDeleteItem.js");
 Cu.import("resource://exchangecommon/erSyncFolderItems.js");
 Cu.import("resource://exchangecommon/erGetUserAvailability.js");
 
-Cu.import("resource://exchangecalendartask/erFindCalendarItems.js");
-Cu.import("resource://exchangecalendartask/erFindTaskItems.js");
-Cu.import("resource://exchangecalendartask/erFindFollowupItems.js");
+Cu.import("resource://exchangecalendar/erFindCalendarItems.js");
+Cu.import("resource://exchangecalendar/erFindTaskItems.js");
+Cu.import("resource://exchangecalendar/erFindFollowupItems.js");
 
-Cu.import("resource://exchangecalendartask/erFindMasterOccurrences.js");
-Cu.import("resource://exchangecalendartask/erGetMasterOccurrenceId.js");
-Cu.import("resource://exchangecalendartask/erGetMeetingRequestByUID.js");
-Cu.import("resource://exchangecalendartask/erFindOccurrences.js");
-Cu.import("resource://exchangecalendartask/erGetOccurrenceIndex.js");
+Cu.import("resource://exchangecalendar/erFindMasterOccurrences.js");
+Cu.import("resource://exchangecalendar/erGetMasterOccurrenceId.js");
+Cu.import("resource://exchangecalendar/erGetMeetingRequestByUID.js");
+Cu.import("resource://exchangecalendar/erFindOccurrences.js");
+Cu.import("resource://exchangecalendar/erGetOccurrenceIndex.js");
 
-Cu.import("resource://exchangecalendartask/erSendMeetingRespons.js");
-Cu.import("resource://exchangecalendartask/erSyncInbox.js");
+Cu.import("resource://exchangecalendar/erSendMeetingRespons.js");
+Cu.import("resource://exchangecalendar/erSyncInbox.js");
 
-Cu.import("resource://exchangecalendartask/erCreateAttachment.js");
-Cu.import("resource://exchangecalendartask/erDeleteAttachment.js");
+Cu.import("resource://exchangecalendar/erCreateAttachment.js");
+Cu.import("resource://exchangecalendar/erDeleteAttachment.js");
 
 Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 

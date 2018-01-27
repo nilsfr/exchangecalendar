@@ -1,25 +1,25 @@
-content exchangecalendartask content/
+content exchangecalendar content/
 
-resource exchangecalendartask exchangeapi/
+resource exchangecalendar exchangeapi/
 resource interfacescalendartask interface/
 
-overlay chrome://calendar/content/calendarCreation.xul chrome://exchangecalendartask/content/ecCalendarCreation.xul
-overlay chrome://calendar/content/calendar-properties-dialog.xul chrome://exchangecalendartask/content/calendar-properties-dialog.xul
+overlay chrome://calendar/content/calendarCreation.xul chrome://exchangecalendar/content/ecCalendarCreation.xul
+overlay chrome://calendar/content/calendar-properties-dialog.xul chrome://exchangecalendar/content/calendar-properties-dialog.xul
 
-overlay chrome://calendar/content/calendar-calendars-list.xul chrome://exchangecalendartask/content/calendar-calendars-list.xul
+overlay chrome://calendar/content/calendar-calendars-list.xul chrome://exchangecalendar/content/calendar-calendars-list.xul
 
-overlay chrome://calendar/content/calendar-task-view.xul chrome://exchangecalendartask/content/messenger_task_delegation.xul
-overlay chrome://calendar/content/calendar-task-view.xul  chrome://exchangecalendartask/content/calendar-task-view.xul
+overlay chrome://calendar/content/calendar-task-view.xul chrome://exchangecalendar/content/messenger_task_delegation.xul
+overlay chrome://calendar/content/calendar-task-view.xul  chrome://exchangecalendar/content/calendar-task-view.xul
 
-overlay chrome://calendar/content/calendar-common-sets.xul chrome://exchangecalendartask/content/calendar-common-sets.xul
+overlay chrome://calendar/content/calendar-common-sets.xul chrome://exchangecalendar/content/calendar-common-sets.xul
 
-overlay chrome://calendar/content/calendar-event-dialog.xul chrome://exchangecalendartask/content/calendar-event-dialog.xul
-overlay chrome://calendar/content/calendar-event-dialog-reminder.xul chrome://exchangecalendartask/content/calendar-event-dialog-reminder.xul
-overlay chrome://calendar/content/calendar-event-dialog-attendees.xul chrome://exchangecalendartask/content/calendar-event-dialog-attendees.xul
+overlay chrome://calendar/content/calendar-event-dialog.xul chrome://exchangecalendar/content/calendar-event-dialog.xul
+overlay chrome://calendar/content/calendar-event-dialog-reminder.xul chrome://exchangecalendar/content/calendar-event-dialog-reminder.xul
+overlay chrome://calendar/content/calendar-event-dialog-attendees.xul chrome://exchangecalendar/content/calendar-event-dialog-attendees.xul
 
-overlay chrome://calendar/content/calendar-summary-dialog.xul chrome://exchangecalendartask/content/calendar-summary-dialog.xul
+overlay chrome://calendar/content/calendar-summary-dialog.xul chrome://exchangecalendar/content/calendar-summary-dialog.xul
 
-overlay chrome://lightning/content/lightning-item-iframe.xul chrome://exchangecalendartask/content/lightning-item-iframe.xul
+overlay chrome://lightning/content/lightning-item-iframe.xul chrome://exchangecalendar/content/lightning-item-iframe.xul
 
 manifest interface/exchangeCalendar/mivExchangeCalendar.manifest
 manifest interface/exchangeTimeZones/mivExchangeTimeZones.manifest
@@ -28,16 +28,16 @@ manifest interface/exchangeEvent/mivExchangeEvent.manifest
 manifest interface/exchangeTodo/mivExchangeTodo.manifest
 manifest interface/exchangeRecurrenceInfo/mivExchangeRecurrenceInfo.manifest
 
-locale exchangecalendartask en locale/en/
+locale exchangecalendar en locale/en/
 
-locale exchangecalendartask cs-CZ locale/cs_CZ/
-locale exchangecalendartask de locale/de/
-locale exchangecalendartask en-US locale/en_US/
-locale exchangecalendartask fr-FR locale/fr_FR/
-locale exchangecalendartask it-IT locale/it_IT/
-locale exchangecalendartask ja-JP locale/ja_JP/
-locale exchangecalendartask nl locale/nl/
-locale exchangecalendartask ru locale/ru/
-locale exchangecalendartask sv locale/sv/
-locale exchangecalendartask tr locale/tr/
+locale exchangecalendar cs-CZ locale/cs_CZ/
+locale exchangecalendar de locale/de/
+locale exchangecalendar en-US locale/en_US/
+locale exchangecalendar fr-FR locale/fr_FR/
+locale exchangecalendar it-IT locale/it_IT/
+locale exchangecalendar ja-JP locale/ja_JP/
+locale exchangecalendar nl locale/nl/
+locale exchangecalendar ru locale/ru/
+locale exchangecalendar sv locale/sv/
+locale exchangecalendar tr locale/tr/
 

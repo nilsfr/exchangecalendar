@@ -36,6 +36,6 @@
 @import url(chrome://global/skin/);
 
 attendees-list {
-	-moz-binding: url(chrome://exchangecalendartask/content/calendar-event-dialog-attendees.xml#attendees-list);
+	-moz-binding: url(chrome://exchangecalendar/content/calendar-event-dialog-attendees.xml#attendees-list);
 	-moz-user-focus: normal;
 }

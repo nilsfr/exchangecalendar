@@ -44,7 +44,7 @@
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
     <script type="application/javascript"
-            src="chrome://exchangecalendartask/content/calendar-common-sets.js" />
+            src="chrome://exchangecalendar/content/calendar-common-sets.js" />
     <commandset id="calendar_commands"
                 commandupdater="true"
                 events="calendar_commands"

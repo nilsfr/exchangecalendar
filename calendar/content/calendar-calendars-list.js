@@ -227,7 +227,7 @@ exchCalPopUpMenu.prototype = {
                 calendar: myCal,
                 answer: ""
             };
-            this._window.openDialog("chrome://exchangecalendartask/content/delegateCalendar.xul",
+            this._window.openDialog("chrome://exchangecalendar/content/delegateCalendar.xul",
                 "delegateCalendarSettings",
                 "chrome,titlebar,toolbar,centerscreen,dialog,modal=yes,resizable=no",
                 aResult);

@@ -45,7 +45,7 @@
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
     <script type="application/javascript"
-            src="chrome://exchangecalendartask/content/calendar-event-dialog-reminder.js" />
+            src="chrome://exchangecalendar/content/calendar-event-dialog-reminder.js" />
     <button id="reminder-new-button"
             oncommand="tmpChangeCalendarPropertiesReminder.onNewReminder();" />
     <vbox id="reminder-relation-radiogroup">

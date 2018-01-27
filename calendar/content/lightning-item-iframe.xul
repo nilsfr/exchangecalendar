@@ -49,7 +49,7 @@
 
     <!-- Manage special Exchange items and provide attendee speicific dialog -->
     <script type="application/javascript"
-            src="chrome://exchangecalendartask/content/lightning-item-iframe.js" />
+            src="chrome://exchangecalendar/content/lightning-item-iframe.js" />
     <!-- These rows correspond to the full form under the toolbar -->
     <rows id="event-grid-rows">
         <!-- If the current element is a Task and is an Exchange one, add a label to show the current owner of the task. -->
