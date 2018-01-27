@@ -51,7 +51,7 @@ Cu.import("resource://calendar/modules/calAuthUtils.jsm");
 Cu.import("resource://exchangecommon/ecFunctions.js");
 Cu.import("resource://exchangecommon/ecExchangeRequest.js");
 
-Cu.import("resource://interfaces/xml2json/xml2json.js");
+Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 var EXPORTED_SYMBOLS = ["erGetTimeZonesRequest"];
 

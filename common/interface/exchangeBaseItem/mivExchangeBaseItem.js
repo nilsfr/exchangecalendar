@@ -33,9 +33,9 @@ Cu.import("resource://calendar/modules/calProviderUtils.jsm");
 
 Cu.import("resource://interfacescalendartask/exchangeAttendee/mivExchangeAttendee.js");
 
-Cu.import("resource://interfaces/xml2jxon/mivIxml2jxon.js");
+Cu.import("resource://exchangecommoninterfaces/xml2jxon/mivIxml2jxon.js");
 
-Cu.import("resource://interfaces/xml2json/xml2json.js");
+Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 const participationMap = {
     "Unknown": "NEEDS-ACTION",

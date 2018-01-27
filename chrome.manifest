@@ -7,7 +7,7 @@ skin exchangecommon fugue common/theme/mac/ os=Darwin
 skin exchangecommon-common fugue common/theme/common/
 
 resource exchangecommon common/exchangeapi/
-resource interfaces common/interface/
+resource exchangecommoninterfaces common/interface/
 
 
 overlay chrome://messenger/content/messenger.xul chrome://exchangecommon/content/progress_panel.xul

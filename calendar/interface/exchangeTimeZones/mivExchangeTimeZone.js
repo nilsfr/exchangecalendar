@@ -29,7 +29,7 @@ Cu.import("resource://gre/modules/Services.jsm");
 
 Cu.import("resource://calendar/modules/calProviderUtils.jsm");
 
-Cu.import("resource://interfaces/xml2json/xml2json.js");
+Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 function mivExchangeTimeZone() {
     this._timeZone = null;

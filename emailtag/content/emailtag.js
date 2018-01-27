@@ -10,7 +10,7 @@ var Cc = Components.classes;
 var Ci = Components.interfaces;
 var Cu = Components.utils;
 
-Cu.import("resource://interfaces/xml2json/xml2json.js");
+Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 Cu.import("resource://gre/modules/Services.jsm");
 Cu.import("resource://exchangecommon/erGetItems.js");
 Cu.import("resource://exchangecommon/erFindInboxFolder.js");

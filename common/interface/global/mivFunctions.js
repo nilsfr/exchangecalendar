@@ -30,8 +30,8 @@ var components = Components;
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 Cu.import("resource:///modules/Services.jsm");
 
-Cu.import("resource://interfaces/xml2jxon/mivIxml2jxon.js");
-Cu.import("resource://interfaces/xml2json/xml2json.js");
+Cu.import("resource://exchangecommoninterfaces/xml2jxon/mivIxml2jxon.js");
+Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 function mivFunctions() {
     // Mozilla helpers

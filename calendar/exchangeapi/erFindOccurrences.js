@@ -50,7 +50,7 @@ Cu.import("resource://exchangecommon/soapFunctions.js");
 
 Cu.import("resource://exchangecalendartask/erGetMasterOccurrenceId.js");
 
-Cu.import("resource://interfaces/xml2json/xml2json.js");
+Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 var EXPORTED_SYMBOLS = ["erFindOccurrencesRequest"];
 

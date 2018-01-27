@@ -20,7 +20,7 @@ Cu.import("resource://exchangecommon/erFindInboxFolder.js");
 Cu.import("resource://exchangecommon/erGetFolderPermission.js");
 
 Cu.import("resource://calendar/modules/calUtils.jsm");
-Cu.import("resource://interfaces/xml2json/xml2json.js");
+Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 function exchDelegateCalendarSettings(aDocument, aWindow) {
     this._document = aDocument;

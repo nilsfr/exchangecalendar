@@ -81,7 +81,7 @@ Cu.import("resource://exchangecalendartask/erSyncInbox.js");
 Cu.import("resource://exchangecalendartask/erCreateAttachment.js");
 Cu.import("resource://exchangecalendartask/erDeleteAttachment.js");
 
-Cu.import("resource://interfaces/xml2json/xml2json.js");
+Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 Cu.import("resource://interfacescalendartask/exchangeTodo/mivExchangeTodo.js");
 Cu.import("resource://interfacescalendartask/exchangeEvent/mivExchangeEvent.js");

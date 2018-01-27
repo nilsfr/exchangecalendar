@@ -47,8 +47,8 @@ Cu.import("resource://calendar/modules/calUtils.jsm");
 
 Cu.import("resource://exchangecommon/ecFunctions.js");
 
-Cu.import("resource://interfaces/xml2jxon/mivIxml2jxon.js");
-Cu.import("resource://interfaces/xml2json/xml2json.js");
+Cu.import("resource://exchangecommoninterfaces/xml2jxon/mivIxml2jxon.js");
+Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 var EXPORTED_SYMBOLS = ["ExchangeRequest", "nsSoapStr", "nsTypesStr", "nsMessagesStr", "nsAutodiscoverResponseStr1", "nsAutodiscoverResponseStr2", "nsAutodiscover2010Str", "nsErrors", "nsWSAStr", "nsXSIStr", "xml_tag"];
 
