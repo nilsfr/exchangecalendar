@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE 
-prefwindow SYSTEM "chrome://exchangecalendar/locale/extra-priority.dtd">
-<?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/extras-preferences.css"?>
+prefwindow SYSTEM "chrome://exchangecommon/locale/extra-priority.dtd">
+<?xml-stylesheet type="text/css" href="chrome://exchangecommon/skin/extras-preferences.css"?>
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
     <prefwindow id="MailPreferences">

@@ -46,9 +46,9 @@ Cu.import("resource://calendar/modules/calAlarmUtils.jsm");
 Cu.import("resource://calendar/modules/calProviderUtils.jsm");
 Cu.import("resource://calendar/modules/calAuthUtils.jsm");
 
-Cu.import("resource://exchangecalendar/ecFunctions.js");
-Cu.import("resource://exchangecalendar/ecExchangeRequest.js");
-Cu.import("resource://exchangecalendar/soapFunctions.js");
+Cu.import("resource://exchangecommon/ecFunctions.js");
+Cu.import("resource://exchangecommon/ecExchangeRequest.js");
+Cu.import("resource://exchangecommon/soapFunctions.js");
 
 var EXPORTED_SYMBOLS = ["erDeleteAttachmentRequest"];
 

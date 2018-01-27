@@ -37,10 +37,10 @@
  * ***** BEGIN LICENSE BLOCK *****/
 -->
 <?xml-stylesheet type="text/css" href="chrome://global/skin/"?>
-<?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/browseFolder.css"?>
+<?xml-stylesheet type="text/css" href="chrome://exchangecommon/skin/browseFolder.css"?>
 <!DOCTYPE dialog
 [
-    <!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/browseFolder.dtd" > %dtd1;
+    <!ENTITY % dtd1 SYSTEM "chrome://exchangecommon/locale/browseFolder.dtd" > %dtd1;
 ]>
 <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         id="exchWebService_BrowseFolders"
@@ -52,7 +52,7 @@
         width="640"
         height="380">
     <script type="application/javascript"
-            src="chrome://exchangecalendar/content/browseFolder.js" />
+            src="chrome://exchangecommon/content/browseFolder.js" />
     <vbox flex="1">
         <label id="exchWebService_currentSelectedPath" />
         <tree id="exchWebService_foldertree"

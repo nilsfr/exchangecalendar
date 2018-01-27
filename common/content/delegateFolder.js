@@ -12,12 +12,12 @@ var Cu = Components.utils;
 Cu.import("resource://gre/modules/Services.jsm");
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
-Cu.import("resource://exchangecalendar/ecFunctions.js");
-Cu.import("resource://exchangecalendar/ecExchangeRequest.js");
+Cu.import("resource://exchangecommon/ecFunctions.js");
+Cu.import("resource://exchangecommon/ecExchangeRequest.js");
 
-Cu.import("resource://exchangecalendar/erUpdateFolderPermission.js");
-Cu.import("resource://exchangecalendar/erFindInboxFolder.js");
-Cu.import("resource://exchangecalendar/erGetFolderPermission.js");
+Cu.import("resource://exchangecommon/erUpdateFolderPermission.js");
+Cu.import("resource://exchangecommon/erFindInboxFolder.js");
+Cu.import("resource://exchangecommon/erGetFolderPermission.js");
 
 Cu.import("resource://calendar/modules/calUtils.jsm");
 Cu.import("resource://interfaces/xml2json/xml2json.js");
@@ -750,7 +750,7 @@ exchDelegateCalendarSettings.prototype = {
     },
 
     infoPopup: function _infoPopup(title, msg) {
-        var image = "chrome://exchangecalendar-common/skin/images/notify-icon.png";
+        var image = "chrome://exchangecommon-common/skin/images/notify-icon.png";
         var win = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].
         getService(Components.interfaces.nsIWindowWatcher).
         openWindow(null, 'chrome://global/content/alerts/alert.xul',

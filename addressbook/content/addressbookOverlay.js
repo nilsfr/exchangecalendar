@@ -31,9 +31,9 @@ Cu.import("resource://gre/modules/Services.jsm");
 
 Cu.import("resource:///modules/mailServices.js");
 
-Cu.import("resource://exchangecalendar/ecFunctions.js");
+Cu.import("resource://exchangecommon/ecFunctions.js");
 Cu.import("resource://exchangeaddress/exchangeAbFunctions.js");
-Cu.import("resource://exchangecalendar/erGetAttachments.js");
+Cu.import("resource://exchangecommon/erGetAttachments.js");
 
 function exchAddressbookOverlay(aDocument, aWindow) {
     this._document = aDocument;

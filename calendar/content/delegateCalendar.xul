@@ -7,10 +7,10 @@
 --><?xml-stylesheet type="text/css" href="chrome://global/skin/"?>
 <?xml-stylesheet type="text/css" href="chrome://global/skin/xul.css"?>
 <?xml-stylesheet type="text/css" href="chrome://global/skin/global.css" ?>
-<?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/delegateCalendar.css" ?>
+<?xml-stylesheet type="text/css" href="chrome://exchangecommon/skin/delegateCalendar.css" ?>
 <!DOCTYPE dialog
 [ 
-    <!ENTITY % delegateDialogDTD SYSTEM "chrome://exchangecalendar/locale/delegate-calendar-dialog.dtd" > 
+    <!ENTITY % delegateDialogDTD SYSTEM "chrome://exchangecommon/locale/delegate-calendar-dialog.dtd" > 
       %delegateDialogDTD;
 ]>
 <dialog id="DelegateUserPopup"
@@ -21,7 +21,7 @@
         ondialogcancel="window.close();"
         onload="tmpDelegateCalendarSettings.onLoad();">
     <script type="application/x-javascript"
-            src="chrome://exchangecalendar/content/adutils.js" />
+            src="chrome://exchangecommon/content/adutils.js" />
     <script type="application/javascript"
             src="chrome://exchangecalendartask/content/delegateCalendar.js" />
     <tabbox id="myTabList"
@@ -92,7 +92,7 @@
                                              ignoreblurwhilesearching="true"
                                              oninput="this.setAttribute('dirty', 'true');"
                                              ontextentered="" />
-                                    <!--          onselect='openDialog("chrome://exchangecalendar/content/contact-lookup.xul","_blank", "chrome,titlebar,modal,resizable",args);'
+                                    <!--          onselect='openDialog("chrome://exchangecommon/content/contact-lookup.xul","_blank", "chrome,titlebar,modal,resizable",args);'
                         -->
                                 </hbox>
                                 <html:div>

@@ -38,7 +38,7 @@
 -->
 <!DOCTYPE dialog
 [
-    <!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/exchangeReminderDialog.dtd" > 
+    <!ENTITY % dtd1 SYSTEM "chrome://exchangecommon/locale/exchangeReminderDialog.dtd" > 
     %dtd1;
 ]>
 <overlay id="ecCalendarProperties.Reminder"

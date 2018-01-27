@@ -7,5 +7,5 @@ treechildren::-moz-tree-image(exchange-abook) {
 	margin-bottom: 2px;
 	-moz-margin-start: 2px;
 	-moz-margin-end: -3px;
-	list-style-image: url("chrome://exchangecalendar-common/skin/images/exchange-addrbook.png");
+	list-style-image: url("chrome://exchangecommon-common/skin/images/exchange-addrbook.png");
 }

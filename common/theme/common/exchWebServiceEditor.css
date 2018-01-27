@@ -4,97 +4,97 @@ toolbar.embedded-toolbar {
 }
 
 toolbarbutton.bold-button {
-	list-style-image: url("chrome://exchangecalendar-common/skin/images/edit-bold.png");
+	list-style-image: url("chrome://exchangecommon-common/skin/images/edit-bold.png");
 	height: 32px;
 	width: 32px;
 }
 
 toolbarbutton.italic-button {
-	list-style-image: url("chrome://exchangecalendar-common/skin/images/edit-italic.png");
+	list-style-image: url("chrome://exchangecommon-common/skin/images/edit-italic.png");
 	height: 32px;
 	width: 32px;
 }
 
 toolbarbutton.underline-button {
-	list-style-image: url("chrome://exchangecalendar-common/skin/images/edit-underline.png");
+	list-style-image: url("chrome://exchangecommon-common/skin/images/edit-underline.png");
 	height: 32px;
 	width: 32px;
 }
 
 toolbarbutton.indent-button {
-	list-style-image: url("chrome://exchangecalendar-common/skin/images/edit-indent.png");
+	list-style-image: url("chrome://exchangecommon-common/skin/images/edit-indent.png");
 	height: 32px;
 	width: 32px;
 }
 
 toolbarbutton.outdent-button {
-	list-style-image: url("chrome://exchangecalendar-common/skin/images/edit-outdent.png");
+	list-style-image: url("chrome://exchangecommon-common/skin/images/edit-outdent.png");
 	height: 32px;
 	width: 32px;
 }
 
 toolbarbutton.orderedlist-button {
-	list-style-image: url("chrome://exchangecalendar-common/skin/images/edit-list-order.png");
+	list-style-image: url("chrome://exchangecommon-common/skin/images/edit-list-order.png");
 	height: 32px;
 	width: 32px;
 }
 
 toolbarbutton.unorderedlist-button {
-	list-style-image: url("chrome://exchangecalendar-common/skin/images/edit-list.png");
+	list-style-image: url("chrome://exchangecommon-common/skin/images/edit-list.png");
 	height: 32px;
 	width: 32px;
 }
 
 toolbarbutton.decreaseFont-button {
-	list-style-image: url("chrome://exchangecalendar-common/skin/images/edit-size-down.png");
+	list-style-image: url("chrome://exchangecommon-common/skin/images/edit-size-down.png");
 	height: 32px;
 	width: 32px;
 }
 
 toolbarbutton.increaseFont-button {
-	list-style-image: url("chrome://exchangecalendar-common/skin/images/edit-size-up.png");
+	list-style-image: url("chrome://exchangecommon-common/skin/images/edit-size-up.png");
 	height: 32px;
 	width: 32px;
 }
 
 toolbarbutton.align-left-button {
-	list-style-image: url("chrome://exchangecalendar-common/skin/images/edit-alignment.png");
+	list-style-image: url("chrome://exchangecommon-common/skin/images/edit-alignment.png");
 	height: 32px;
 	width: 32px;
 }
 
 toolbarbutton.align-center-button {
-	list-style-image: url("chrome://exchangecalendar-common/skin/images/edit-alignment-center.png");
+	list-style-image: url("chrome://exchangecommon-common/skin/images/edit-alignment-center.png");
 	height: 32px;
 	width: 32px;
 }
 
 toolbarbutton.align-right-button {
-	list-style-image: url("chrome://exchangecalendar-common/skin/images/edit-alignment-right.png");
+	list-style-image: url("chrome://exchangecommon-common/skin/images/edit-alignment-right.png");
 	height: 32px;
 	width: 32px;
 }
 
 toolbarbutton.align-justify-button {
-	list-style-image: url("chrome://exchangecalendar-common/skin/images/edit-alignment-justify.png");
+	list-style-image: url("chrome://exchangecommon-common/skin/images/edit-alignment-justify.png");
 	height: 32px;
 	width: 32px;
 }
 
 toolbarbutton.addlink-button {
-	list-style-image: url("chrome://exchangecalendar-common/skin/images/chain--plus.png");
+	list-style-image: url("chrome://exchangecommon-common/skin/images/chain--plus.png");
 	height: 32px;
 	width: 32px;
 }
 
 toolbarbutton.removelink-button {
-	list-style-image: url("chrome://exchangecalendar-common/skin/images/chain--minus.png");
+	list-style-image: url("chrome://exchangecommon-common/skin/images/chain--minus.png");
 	height: 32px;
 	width: 32px;
 }
 
 toolbarbutton.editlink-button {
-	list-style-image: url("chrome://exchangecalendar-common/skin/images/chain--pencil.png");
+	list-style-image: url("chrome://exchangecommon-common/skin/images/chain--pencil.png");
 	height: 32px;
 	width: 32px;
 }

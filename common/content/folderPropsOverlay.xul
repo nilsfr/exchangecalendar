@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE dialog
 [ 
-    <!ENTITY % delegateFolder1DTD SYSTEM "chrome://exchangecalendar/locale/delegate-folder.dtd" > 
+    <!ENTITY % delegateFolder1DTD SYSTEM "chrome://exchangecommon/locale/delegate-folder.dtd" > 
       %delegateFolder1DTD;
 ]>
 <!--
@@ -14,7 +14,7 @@
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
     <script type="application/javascript"
-            src="chrome://exchangecalendar/content/delegateFolder.js" />
+            src="chrome://exchangecommon/content/delegateFolder.js" />
     <tabbox id="folderPropTabBox">
         <tabs id="folderPropTabs">
             <tab id="delegationTab"

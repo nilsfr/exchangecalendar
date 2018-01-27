@@ -32,7 +32,7 @@ var Ci = Components.interfaces;
 var Cc = Components.classes;
 
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://exchangecalendar/erGetAttachments.js");
+Cu.import("resource://exchangecommon/erGetAttachments.js");
 
 function exchAttachments(aDocument, aWindow) {
     this._document = aDocument;
@@ -159,10 +159,10 @@ exchAttachments.prototype = {
             this.globalFunctions.LOG(" == extension:" + extension);
 
             if (ext2file[extension]) {
-                item.setAttribute("image", "chrome://exchangecalendar-common/skin/images/" + ext2file[extension]);
+                item.setAttribute("image", "chrome://exchangecommon-common/skin/images/" + ext2file[extension]);
             }
             else {
-                item.setAttribute("image", "chrome://exchangecalendar-common/skin/images/document--exclamation.png");
+                item.setAttribute("image", "chrome://exchangecommon-common/skin/images/document--exclamation.png");
             }
 
             // full attachment object is stored here

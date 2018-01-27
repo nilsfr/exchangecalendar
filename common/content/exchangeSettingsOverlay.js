@@ -40,13 +40,13 @@ var Cu = Components.utils;
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 Cu.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://exchangecalendar/erAutoDiscover.js");
-Cu.import("resource://exchangecalendar/erAutoDiscoverySOAP.js");
-Cu.import("resource://exchangecalendar/erPrimarySMTPCheck.js");
-Cu.import("resource://exchangecalendar/erConvertID.js");
-Cu.import("resource://exchangecalendar/erFindFolder.js");
-Cu.import("resource://exchangecalendar/erGetFolder.js");
-Cu.import("resource://exchangecalendar/erGetUserAvailability.js");
+Cu.import("resource://exchangecommon/erAutoDiscover.js");
+Cu.import("resource://exchangecommon/erAutoDiscoverySOAP.js");
+Cu.import("resource://exchangecommon/erPrimarySMTPCheck.js");
+Cu.import("resource://exchangecommon/erConvertID.js");
+Cu.import("resource://exchangecommon/erFindFolder.js");
+Cu.import("resource://exchangecommon/erGetFolder.js");
+Cu.import("resource://exchangecommon/erGetUserAvailability.js");
 
 Cu.import("resource://calendar/modules/calUtils.jsm");
 
@@ -662,7 +662,7 @@ exchSettingsOverlay.prototype = {
             if (ewsUrls.length > 1) {
                 // We have got multiple ews urls returned. Let the user choose.
 
-                this._window.openDialog("chrome://exchangecalendar/content/selectEWSUrl.xul",
+                this._window.openDialog("chrome://exchangecommon/content/selectEWSUrl.xul",
                     "selectfrommultipleews",
                     "chrome,titlebar,toolbar,centerscreen,dialog,modal=yes,resizable=no",
                     ewsUrls, selectedEWSUrl);
@@ -860,7 +860,7 @@ exchSettingsOverlay.prototype = {
             }
         };
 
-        this._window.openDialog("chrome://exchangecalendar/content/browseFolder.xul",
+        this._window.openDialog("chrome://exchangecommon/content/browseFolder.xul",
             "browseFolder",
             "chrome,titlebar,toolbar,centerscreen,dialog,modal=yes,resizable=no",
             input);

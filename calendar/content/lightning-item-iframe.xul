@@ -31,17 +31,17 @@
  * ***** BEGIN LICENSE BLOCK *****/
 -->
 <!-- CSS for the HTML content editor -->
-<?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/itemBodyEditor.css"?>
-<?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/exchWebServiceEditor.css"?>
+<?xml-stylesheet type="text/css" href="chrome://exchangecommon/skin/itemBodyEditor.css"?>
+<?xml-stylesheet type="text/css" href="chrome://exchangecommon/skin/exchWebServiceEditor.css"?>
 <!-- Attachment overlay -->
-<?xul-overlay href="chrome://exchangecalendar/content/attachments-view.xul"?>
+<?xul-overlay href="chrome://exchangecommon/content/attachments-view.xul"?>
 <!DOCTYPE dialog
 [
 
 <!ENTITY % eventDialogDTD SYSTEM "chrome://calendar/locale/calendar-event-dialog.dtd">
     %eventDialogDTD;
 
-<!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/lightning-item-iframe.dtd" >
+<!ENTITY % dtd1 SYSTEM "chrome://exchangecommon/locale/lightning-item-iframe.dtd" >
     %dtd1;
 ]>
 <overlay id="exchangecalendar-lightning-item-iframe.xul"

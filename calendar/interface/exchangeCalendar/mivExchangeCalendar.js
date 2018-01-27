@@ -50,20 +50,20 @@ Cu.import("resource://calendar/modules/calAlarmUtils.jsm");
 Cu.import("resource://calendar/modules/calProviderUtils.jsm");
 Cu.import("resource://calendar/modules/calAuthUtils.jsm");
 
-Cu.import("resource://exchangecalendar/ecFunctions.js");
-Cu.import("resource://exchangecalendar/soapFunctions.js");
-Cu.import("resource://exchangecalendar/ecExchangeRequest.js");
+Cu.import("resource://exchangecommon/ecFunctions.js");
+Cu.import("resource://exchangecommon/soapFunctions.js");
+Cu.import("resource://exchangecommon/ecExchangeRequest.js");
 
-Cu.import("resource://exchangecalendar/erFindFolder.js");
-Cu.import("resource://exchangecalendar/erGetFolder.js");
+Cu.import("resource://exchangecommon/erFindFolder.js");
+Cu.import("resource://exchangecommon/erGetFolder.js");
 
-Cu.import("resource://exchangecalendar/erGetItems.js");
-Cu.import("resource://exchangecalendar/erCreateItem.js");
-Cu.import("resource://exchangecalendar/erUpdateItem.js");
-Cu.import("resource://exchangecalendar/erDeleteItem.js");
+Cu.import("resource://exchangecommon/erGetItems.js");
+Cu.import("resource://exchangecommon/erCreateItem.js");
+Cu.import("resource://exchangecommon/erUpdateItem.js");
+Cu.import("resource://exchangecommon/erDeleteItem.js");
 
-Cu.import("resource://exchangecalendar/erSyncFolderItems.js");
-Cu.import("resource://exchangecalendar/erGetUserAvailability.js");
+Cu.import("resource://exchangecommon/erSyncFolderItems.js");
+Cu.import("resource://exchangecommon/erGetUserAvailability.js");
 
 Cu.import("resource://exchangecalendartask/erFindCalendarItems.js");
 Cu.import("resource://exchangecalendartask/erFindTaskItems.js");
@@ -1663,7 +1663,7 @@ calExchangeCalendar.prototype = {
                         }
 
                         if ((calWindow) && (attendees > 0) && (weHaveChanges)) {
-                            calWindow.openDialog("chrome://exchangecalendar/content/sendUpdateTo.xul",
+                            calWindow.openDialog("chrome://exchangecommon/content/sendUpdateTo.xul",
                                 "sendUpdateTo",
                                 "chrome,titlebar,toolbar,centerscreen,dialog,modal=yes,resizable=yes",
                                 input);
@@ -2105,7 +2105,7 @@ calExchangeCalendar.prototype = {
                 }
 
                 if ((calWindow) && (attendees > 0)) {
-                    calWindow.openDialog("chrome://exchangecalendar/content/sendUpdateTo.xul",
+                    calWindow.openDialog("chrome://exchangecommon/content/sendUpdateTo.xul",
                         "sendUpdateTo",
                         "chrome,titlebar,toolbar,centerscreen,dialog,modal=yes,resizable=yes",
                         input);
@@ -5628,7 +5628,7 @@ calExchangeCalendar.prototype = {
         };
 
         if (calWindow) {
-            calWindow.openDialog("chrome://exchangecalendar/content/preInvitationResponse.xul",
+            calWindow.openDialog("chrome://exchangecommon/content/preInvitationResponse.xul",
                 "preInvitationResponseId",
                 "chrome,titlebar,toolbar,centerscreen,dialog,modal=yes,resizable=yes",
                 preInput);
@@ -5658,7 +5658,7 @@ calExchangeCalendar.prototype = {
             }
 
             if ((calWindow) && (!aBodyText)) {
-                calWindow.openDialog("chrome://exchangecalendar/content/invitationResponse.xul",
+                calWindow.openDialog("chrome://exchangecommon/content/invitationResponse.xul",
                     "invitationResponseId",
                     "chrome,titlebar,toolbar,centerscreen,dialog,modal=yes,resizable=yes",
                     input);

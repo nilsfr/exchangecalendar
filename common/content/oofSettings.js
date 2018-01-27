@@ -40,10 +40,10 @@ var Cu = Components.utils;
 
 
 Cu.import("resource://calendar/modules/calUtils.jsm");
-Cu.import("resource://exchangecalendar/erGetUserOofSettings.js");
-Cu.import("resource://exchangecalendar/erSetUserOofSettings.js");
+Cu.import("resource://exchangecommon/erGetUserOofSettings.js");
+Cu.import("resource://exchangecommon/erSetUserOofSettings.js");
 
-//Cu.import("resource://exchangecalendar/ecFunctions.js");
+//Cu.import("resource://exchangecommon/ecFunctions.js");
 
 //if (! exchWebService) var exchWebService = {};
 
@@ -242,7 +242,7 @@ exchOOFSettings.prototype = {
     },
 
     infoPopup: function _infoPopup(title, msg) {
-        var image = "chrome://exchangecalendar-common/skin/images/notify-icon.png";
+        var image = "chrome://exchangecommon-common/skin/images/notify-icon.png";
         var win = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].
         getService(Components.interfaces.nsIWindowWatcher).
         openWindow(null, 'chrome://global/content/alerts/alert.xul',

@@ -1,6 +1,6 @@
 .priorityColumnHeaderIcon
 {
-	list-style-image: url("chrome://exchangecalendar-common/skin/images/threadCol-PriorityIcon.gif");
+	list-style-image: url("chrome://exchangecommon-common/skin/images/threadCol-PriorityIcon.gif");
 }
 
 #threadTree treechildren::-moz-tree-row(lcolor-FFFFFF), .blcolor-FFFFFF {

@@ -28,8 +28,8 @@ var Ci = Components.interfaces;
 var Cu = Components.utils;
 
 
-Cu.import("resource://exchangecalendar/ecFunctions.js");
-Cu.import("chrome://exchangecalendar/content/msgHdrUtils.js");
+Cu.import("resource://exchangecommon/ecFunctions.js");
+Cu.import("chrome://exchangecommon/content/msgHdrUtils.js");
 Cu.import("resource:///modules/gloda/utils.js");
 
 if (!exchWebService) var exchWebService = {};

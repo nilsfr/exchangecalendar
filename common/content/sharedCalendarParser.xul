@@ -38,15 +38,15 @@
 -->
 <!DOCTYPE dialog
 [
-    <!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/sharedCalendarParser.dtd" > %dtd1;
+    <!ENTITY % dtd1 SYSTEM "chrome://exchangecommon/locale/sharedCalendarParser.dtd" > %dtd1;
 ]>
-<?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/sharedCalendarParser.css"?>
+<?xml-stylesheet type="text/css" href="chrome://exchangecommon/skin/sharedCalendarParser.css"?>
 <overlay id="exchWebServiceMessengerOverlay"
          xmlns:html="http://www.w3.org/1999/xhtml"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
     <script type="application/x-javascript"
-            src="chrome://exchangecalendar/content/sharedCalendarParser.js" />
+            src="chrome://exchangecommon/content/sharedCalendarParser.js" />
     <vbox id="messagepanebox">
         <vbox position="1">
             <vbox id="exchWebServiceSharedCalendarBox"
@@ -54,7 +54,7 @@
                   align="center"
                   class="exchWebServiceSharedCalendarBox">
                 <hbox>
-                    <image src="chrome://exchangecalendar/content/lightningexchangecalendar.png" />
+                    <image src="chrome://exchangecommon/content/lightningexchangecalendar.png" />
                     <vbox>
                         <label value="&exchWebService_vbox_label;" />
                         <label id="exchWebServiceSharedCalendarLabel"

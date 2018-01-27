@@ -57,7 +57,7 @@ exchCalPopUpMenu.prototype = {
                 calendar: myCal,
                 answer: ""
             };
-            this._window.openDialog("chrome://exchangecalendar/content/exchangeSettings.xul",
+            this._window.openDialog("chrome://exchangecommon/content/exchangeSettings.xul",
                 "exchangeSettings",
                 "chrome,titlebar,toolbar,centerscreen,dialog,modal=yes,resizable=no",
                 aResult);
@@ -72,7 +72,7 @@ exchCalPopUpMenu.prototype = {
                 calendar: myCal,
                 answer: ""
             };
-            this._window.openDialog("chrome://exchangecalendar/content/oofSettings.xul",
+            this._window.openDialog("chrome://exchangecommon/content/oofSettings.xul",
                 "oofSettings",
                 "chrome,titlebar,toolbar,centerscreen,dialog,modal=yes,resizable=yes",
                 aResult);
@@ -207,7 +207,7 @@ exchCalPopUpMenu.prototype = {
                 calendar: myCal,
                 answer: ""
             };
-            this._window.openDialog("chrome://exchangecalendar/content/exchangeCloneSettings.xul",
+            this._window.openDialog("chrome://exchangecommon/content/exchangeCloneSettings.xul",
                 "exchangeCloneSettings",
                 "chrome,titlebar,toolbar,centerscreen,dialog,modal=yes,resizable=no",
                 aResult);

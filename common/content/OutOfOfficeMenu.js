@@ -38,7 +38,7 @@ var Cu = Components.utils;
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://exchangecalendar/ecFunctions.js");
+Cu.import("resource://exchangecommon/ecFunctions.js");
 
 //if (! exchWebService) var exchWebService = {};
 
@@ -87,7 +87,7 @@ exchToolsMenu.prototype = {
             calendar: myCal,
             answer: ""
         };
-        this._window.openDialog("chrome://exchangecalendar/content/oofSettings.xul",
+        this._window.openDialog("chrome://exchangecommon/content/oofSettings.xul",
             "oofSettings",
             "chrome,titlebar,toolbar,centerscreen,dialog,modal=yes,resizable=yes",
             aResult);

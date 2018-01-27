@@ -43,8 +43,8 @@ var components = Components;
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 Cu.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://exchangecalendar/ecExchangeRequest.js");
-Cu.import("resource://exchangecalendar/erBrowseFolder.js");
+Cu.import("resource://exchangecommon/ecExchangeRequest.js");
+Cu.import("resource://exchangecommon/erBrowseFolder.js");
 
 if (!exchWebService) var exchWebService = {};
 
@@ -195,38 +195,38 @@ exchWebService_browseTreeView.prototype = {
         if (column.id == "exchWebService_foldername") {
             switch (this.folders[idx].folderClass) {
             case "IPF.Appointment":
-                return "chrome://exchangecalendar-common/skin/images/calendar-month.png";
+                return "chrome://exchangecommon-common/skin/images/calendar-month.png";
                 break;
             case "IPF.Note":
-                return "chrome://exchangecalendar-common/skin/images/mail.png";
+                return "chrome://exchangecommon-common/skin/images/mail.png";
                 break;
             case "IPF.Contact":
-                return "chrome://exchangecalendar-common/skin/images/address-book.png";
+                return "chrome://exchangecommon-common/skin/images/address-book.png";
                 break;
             case "IPF.Configuration":
-                return "chrome://exchangecalendar-common/skin/images/wrench-screwdriver.png";
+                return "chrome://exchangecommon-common/skin/images/wrench-screwdriver.png";
                 break;
             case "IPF.Note.OutlookHomepage":
             case "IPF.Note.SocialConnector.FeedItems":
-                return "chrome://exchangecalendar-common/skin/images/feed.png";
+                return "chrome://exchangecommon-common/skin/images/feed.png";
                 break;
             case "IPF.Task":
-                return "chrome://exchangecalendar-common/skin/images/task.png";
+                return "chrome://exchangecommon-common/skin/images/task.png";
                 break;
             case "IPF.StickyNote":
-                return "chrome://exchangecalendar-common/skin/images/sticky-notes.png";
+                return "chrome://exchangecommon-common/skin/images/sticky-notes.png";
                 break;
             case "IPF.Journal":
-                return "chrome://exchangecalendar-common/skin/images/blog.png";
+                return "chrome://exchangecommon-common/skin/images/blog.png";
                 break;
 
             }
 
             if (this.folders[idx].isContainerOpen) {
-                return "chrome://exchangecalendar-common/skin/images/folder-open.png";
+                return "chrome://exchangecommon-common/skin/images/folder-open.png";
             }
 
-            return "chrome://exchangecalendar-common/skin/images/folder.png";
+            return "chrome://exchangecommon-common/skin/images/folder.png";
         }
     },
 

@@ -34,17 +34,17 @@
 [
     <!ENTITY % eventDialogDTD SYSTEM "chrome://calendar/locale/calendar-event-dialog.dtd">
     %eventDialogDTD;
-    <!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/attachments-view.dtd" > 
+    <!ENTITY % dtd1 SYSTEM "chrome://exchangecommon/locale/attachments-view.dtd" > 
     %dtd1;
 ]>
-<?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/attachments-view.css"?>
+<?xml-stylesheet type="text/css" href="chrome://exchangecommon/skin/attachments-view.css"?>
 <?xml-stylesheet type="text/css" href="chrome://calendar/skin/calendar-event-dialog.css"?>
 <?xml-stylesheet type="text/css" href="chrome://calendar/content/calendar-event-dialog.css"?>
 <overlay id="exchWebService-attachment-view"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
     <script type="application/javascript"
-            src="chrome://exchangecalendar/content/attachments-view.js" />
+            src="chrome://exchangecommon/content/attachments-view.js" />
     <!-- Commands -->
     <commandset>
         <command id="exchWebService_openAttachment"

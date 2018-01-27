@@ -24,15 +24,15 @@
  * ***** BEGIN LICENSE BLOCK *****/
 -->
 <?xml-stylesheet type="text/css" href="chrome://global/skin/"?>
-<?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/manageEWSAccounts.css"?>
+<?xml-stylesheet type="text/css" href="chrome://exchangecommon/skin/manageEWSAccounts.css"?>
 <!DOCTYPE dialog
 [
-    <!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/manageEWSAccounts.dtd" > %dtd1;
+    <!ENTITY % dtd1 SYSTEM "chrome://exchangecommon/locale/manageEWSAccounts.dtd" > %dtd1;
 ]>
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
          id="manage-EWS-Accounts-dialog">
     <script type="application/javascript"
-            src="chrome://exchangecalendar/content/manageEWSAccounts.js" />
+            src="chrome://exchangecommon/content/manageEWSAccounts.js" />
     <hbox id="manage-EWS-Accounts-dialog-hbox">
         <vbox>
             <listbox id="exchWebService-manageEWSAccounts-accounts-listbox"

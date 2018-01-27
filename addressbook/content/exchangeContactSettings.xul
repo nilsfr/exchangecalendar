@@ -28,7 +28,7 @@
 [
     <!ENTITY % dtd1 SYSTEM "chrome://exchangecontacts/locale/exchangeContactSettings.dtd" > %dtd1;
 ]>
-<?xul-overlay href="chrome://exchangecalendar/content/exchangeSettingsOverlay.xul"?>
+<?xul-overlay href="chrome://exchangecommon/content/exchangeSettingsOverlay.xul"?>
 <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         id="exchWebService_ContactSettings_dialog"
         title="Exchange Contact Settings"

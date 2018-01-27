@@ -23,7 +23,7 @@
         <em:unpack>true</em:unpack>
         <em:name>Exchange Calendar</em:name>
         <em:homepageURL>https://github.com/ExchangeCalendar/exchangecalendar</em:homepageURL>
-        <em:iconURL>chrome://exchangecalendar-common/skin/images/lightningexchangecalendar.png</em:iconURL>
+        <em:iconURL>chrome://exchangecommon-common/skin/images/lightningexchangecalendar.png</em:iconURL>
         <em:creator>Michel Verbraak</em:creator>
         <em:developer>ExchangeCalendar community</em:developer>
         <em:translator>Michel Verbraak (nl)</em:translator>

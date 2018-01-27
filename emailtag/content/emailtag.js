@@ -12,13 +12,13 @@ var Cu = Components.utils;
 
 Cu.import("resource://interfaces/xml2json/xml2json.js");
 Cu.import("resource://gre/modules/Services.jsm");
-Cu.import("resource://exchangecalendar/erGetItems.js");
-Cu.import("resource://exchangecalendar/erFindInboxFolder.js");
-Cu.import("resource://exchangecalendar/erSubscribe.js");
-Cu.import("resource://exchangecalendar/erGetEvents.js");
-Cu.import("resource://exchangecalendar/erFindItems.js");
-Cu.import("resource://exchangecalendar/erUpdateItem.js");
-Cu.import("resource://exchangecalendar/erUnsubscribe.js");
+Cu.import("resource://exchangecommon/erGetItems.js");
+Cu.import("resource://exchangecommon/erFindInboxFolder.js");
+Cu.import("resource://exchangecommon/erSubscribe.js");
+Cu.import("resource://exchangecommon/erGetEvents.js");
+Cu.import("resource://exchangecommon/erFindItems.js");
+Cu.import("resource://exchangecommon/erUpdateItem.js");
+Cu.import("resource://exchangecommon/erUnsubscribe.js");
 
 const eventTypes = ["NewMailEvent", "ModifiedEvent", "MovedEvent", "CopiedEvent", "CreatedEvent"];
 

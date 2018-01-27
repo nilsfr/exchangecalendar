@@ -19,10 +19,10 @@
  * ***** BEGIN LICENSE BLOCK *****/
 -->
 <!DOCTYPE overlay>
-<?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/addressingWidgetOverlay.css"?>
+<?xml-stylesheet type="text/css" href="chrome://exchangecommon/skin/addressingWidgetOverlay.css"?>
 <overlay id="exchangeAddressingWidgetOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
     <script type="application/javascript"
-            src="chrome://exchangecalendar/content/addressingWidgetOverlay.js" />
+            src="chrome://exchangecommon/content/addressingWidgetOverlay.js" />
 </overlay>

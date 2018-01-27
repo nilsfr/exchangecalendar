@@ -31,7 +31,7 @@ var Cc = Components.classes;
 var Ci = Components.interfaces;
 var Cu = Components.utils;
 
-//Cu.import("resource://exchangecalendar/ecFunctions.js");
+//Cu.import("resource://exchangecommon/ecFunctions.js");
 Cu.import("resource://calendar/modules/calUtils.jsm");
 
 //if (! exchWebService) var exchWebService = {};

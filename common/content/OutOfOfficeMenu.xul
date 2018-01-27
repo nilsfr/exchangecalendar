@@ -39,7 +39,7 @@
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
     <script type="application/javascript"
-            src="chrome://exchangecalendar/content/OutOfOfficeMenu.js" />
+            src="chrome://exchangecommon/content/OutOfOfficeMenu.js" />
     <menupopup id="menu_Event_Task_Popup">
         <menuitem id="exchangecalendar-OutOfOfficeMenu"
                   label="Out of Office..."

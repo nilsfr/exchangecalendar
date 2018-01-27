@@ -31,7 +31,7 @@ var Cc = Components.classes;
 var Ci = Components.interfaces;
 var Cu = Components.utils;
 
-//Cu.import("resource://exchangecalendar/ecFunctions.js");
+//Cu.import("resource://exchangecommon/ecFunctions.js");
 
 //if (! exchWebService) var exchWebService = {};
 
@@ -53,10 +53,10 @@ exchProgressPanel.prototype = {
     isLoaded: false,
     imageCounter: 1,
     imageList: {
-        image1: "chrome://exchangecalendar-common/skin/images/arrow-circle.png",
-        image2: "chrome://exchangecalendar-common/skin/images/arrow-circle-315.png",
-        image3: "chrome://exchangecalendar-common/skin/images/arrow-circle-225.png",
-        image4: "chrome://exchangecalendar-common/skin/images/arrow-circle-135.png"
+        image1: "chrome://exchangecommon-common/skin/images/arrow-circle.png",
+        image2: "chrome://exchangecommon-common/skin/images/arrow-circle-315.png",
+        image3: "chrome://exchangecommon-common/skin/images/arrow-circle-225.png",
+        image4: "chrome://exchangecommon-common/skin/images/arrow-circle-135.png"
     },
     loadBalancer: Cc["@1st-setup.nl/exchange/loadbalancer;1"]
         .getService(Ci.mivExchangeLoadBalancer),

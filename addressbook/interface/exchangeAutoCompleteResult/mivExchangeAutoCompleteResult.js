@@ -230,7 +230,7 @@ mivExchangeAutoCompleteResult.prototype = {
     //AString getImageAt(in long index);
     getImageAt: function _getImageAt(aIndex) {
         //dump("getImageAt: aIndex:"+aIndex+"\n");
-        return "chrome://exchangecalendar/content/exchange-addrbook.png";
+        return "chrome://exchangecommon/content/exchange-addrbook.png";
     },
 
     /**

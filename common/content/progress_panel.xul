@@ -29,12 +29,12 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-<?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/progress_panel.css"?>
+<?xml-stylesheet type="text/css" href="chrome://exchangecommon/skin/progress_panel.css"?>
 <overlay id="exchWebService-calendar-list-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
     <script type="application/javascript"
-            src="chrome://exchangecalendar/content/progress_panel.js" />
+            src="chrome://exchangecommon/content/progress_panel.js" />
     <popupset>
         <tooltip id="exchWebServicesprogresstip"
                  orient="vertical">

@@ -24,10 +24,10 @@ var Cc = Components.classes;
 var Ci = Components.interfaces;
 var Cu = Components.utils;
 
-Cu.import("resource://exchangecalendar/ecFunctions.js");
-Cu.import("resource://exchangecalendar/erAutoDiscover.js");
-Cu.import("resource://exchangecalendar/erPrimarySMTPCheck.js");
-Cu.import("resource://exchangecalendar/erGetFolder.js");
+Cu.import("resource://exchangecommon/ecFunctions.js");
+Cu.import("resource://exchangecommon/erAutoDiscover.js");
+Cu.import("resource://exchangecommon/erPrimarySMTPCheck.js");
+Cu.import("resource://exchangecommon/erGetFolder.js");
 
 if (!exchWebService) var exchWebService = {};
 
@@ -313,7 +313,7 @@ exchWebService.manageEWSAccounts = {
             if (ewsUrls.length() > 1) {
                 // We have got multiple ews urls returned. Let the use choose.
 
-                window.openDialog("chrome://exchangecalendar/content/selectEWSUrl.xul",
+                window.openDialog("chrome://exchangecommon/content/selectEWSUrl.xul",
                     "selectfrommultipleews",
                     "chrome,titlebar,toolbar,centerscreen,dialog,modal=yes,resizable=no",
                     ewsUrls, selectedEWSUrl);

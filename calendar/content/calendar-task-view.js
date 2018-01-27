@@ -7,7 +7,7 @@ var Cu = Components.utils;
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://exchangecalendar/ecFunctions.js");
+Cu.import("resource://exchangecommon/ecFunctions.js");
 Cu.import("resource:///modules/gloda/public.js")
 Cu.import("resource:///modules/MailUtils.js");
 Cu.import("resource://calendar/modules/calUtils.jsm");

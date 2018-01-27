@@ -40,9 +40,9 @@ var Cu = Components.utils;
 Cu.import("resource://gre/modules/Services.jsm");
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
-//Cu.import("resource://exchangecalendar/ecFunctions.js");
-Cu.import("resource://exchangecalendar/ecExchangeRequest.js");
-Cu.import("resource://exchangecalendar/erForewardItem.js");
+//Cu.import("resource://exchangecommon/ecFunctions.js");
+Cu.import("resource://exchangecommon/ecExchangeRequest.js");
+Cu.import("resource://exchangecommon/erForewardItem.js");
 
 
 //if (! exchWebService) var exchWebService = {};
@@ -105,7 +105,7 @@ exchForewardEvent.prototype = {
         if (aResp) {
             var title = "Forwarding Event";
             var msg = aResp;
-            var image = "chrome://exchangecalendar-common/skin/images/notify-icon.png";
+            var image = "chrome://exchangecommon-common/skin/images/notify-icon.png";
             var win = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].
             getService(Components.interfaces.nsIWindowWatcher).
             openWindow(null, 'chrome://global/content/alerts/alert.xul',

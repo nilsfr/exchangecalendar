@@ -40,17 +40,17 @@
 [
     <!ENTITY % lightningDTD SYSTEM "chrome://lightning/locale/lightning.dtd">
     <!ENTITY % preferencesDTD SYSTEM "chrome://calendar/locale/preferences/preferences.dtd">
-    <!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/preferences.dtd" >
+    <!ENTITY % dtd1 SYSTEM "chrome://exchangecommon/locale/preferences.dtd" >
     %lightningDTD;
     %preferencesDTD;
     %dtd1;
 ]>
-<?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/preferences.css"?>
+<?xml-stylesheet type="text/css" href="chrome://exchangecommon/skin/preferences.css"?>
 <overlay id="exchangeWebService_debug_preferences_overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
     <script type="application/javascript"
-            src="chrome://exchangecalendar/content/debugPreferences.js" />
+            src="chrome://exchangecommon/content/debugPreferences.js" />
     <vbox id="exchangeWebService_debug_preferences_vbox">
         <preferences>
             <preference id="extensions.1st-setup.debug.log"

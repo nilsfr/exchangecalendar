@@ -7,7 +7,7 @@
 
 #exchWebService-progress-image
 {
-	list-style-image: url("chrome://exchangecalendar-common/skin/images/arrow-circle.png");
+	list-style-image: url("chrome://exchangecommon-common/skin/images/arrow-circle.png");
 	height:16px;
 	width:16px;
 }
@@ -18,7 +18,7 @@ label.serverline-bold
 }
 
 exchangeProgressGrid {
-	-moz-binding: url("chrome://exchangecalendar/content/progress_panel.xml#exchangeProgressGrid");
+	-moz-binding: url("chrome://exchangecommon/content/progress_panel.xml#exchangeProgressGrid");
 	border-top-style: solid;
 	border-top-color: lightgray;
 }

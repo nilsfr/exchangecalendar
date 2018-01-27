@@ -41,7 +41,7 @@
 <!DOCTYPE dialog
 [
     
-<!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/invitationResponse.dtd" > %dtd1; ]>
+<!ENTITY % dtd1 SYSTEM "chrome://exchangecommon/locale/invitationResponse.dtd" > %dtd1; ]>
 <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         id="exchWebService_invitationResponse_dialog"
         title="&description.invitationResponse;"
@@ -51,7 +51,7 @@
         ondialogaccept="return exchWebService.invitationResponse.onAccept();"
         onload="exchWebService.invitationResponse.onLoad();">
     <script type="application/javascript"
-            src="chrome://exchangecalendar/content/invitationResponse.js" />
+            src="chrome://exchangecommon/content/invitationResponse.js" />
     <script type="application/javascript"
             src="chrome://calendar/content/calendar-ui-utils.js" />
     <script type="application/javascript"

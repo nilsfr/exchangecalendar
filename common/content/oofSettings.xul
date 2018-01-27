@@ -39,11 +39,11 @@
 <?xml-stylesheet type="text/css" href="chrome://global/skin/"?>
 <?xml-stylesheet type="text/css" href="chrome://global/skin/xul.css"?>
 <?xml-stylesheet type="text/css" href="chrome://messenger/skin/messengercompose/messengercompose.css"?>
-<?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/oofSettings.css"?>
-<?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/exchWebServiceEditor.css"?>
+<?xml-stylesheet type="text/css" href="chrome://exchangecommon/skin/oofSettings.css"?>
+<?xml-stylesheet type="text/css" href="chrome://exchangecommon/skin/exchWebServiceEditor.css"?>
 <!DOCTYPE dialog
 [
-    <!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/oofSettings.dtd" > %dtd1;
+    <!ENTITY % dtd1 SYSTEM "chrome://exchangecommon/locale/oofSettings.dtd" > %dtd1;
 ]>
 <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         id="exchWebService_oofSettings_dialog"
@@ -55,7 +55,7 @@
         height="600px"
         persist="width height">
     <script type="application/javascript"
-            src="chrome://exchangecalendar/content/oofSettings.js" />
+            src="chrome://exchangecommon/content/oofSettings.js" />
     <commandset>
         <command id="exchWebService_cmd_oof_scheduled"
                  oncommand="tmpOOFSettings.doScheduledChanged();" />

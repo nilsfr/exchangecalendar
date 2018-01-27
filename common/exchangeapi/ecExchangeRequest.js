@@ -45,7 +45,7 @@ Cu.import("resource://gre/modules/Services.jsm");
 
 Cu.import("resource://calendar/modules/calUtils.jsm");
 
-Cu.import("resource://exchangecalendar/ecFunctions.js");
+Cu.import("resource://exchangecommon/ecFunctions.js");
 
 Cu.import("resource://interfaces/xml2jxon/mivIxml2jxon.js");
 Cu.import("resource://interfaces/xml2json/xml2json.js");

@@ -30,15 +30,15 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-<?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/calendar-summary-dialog.css"?>
+<?xml-stylesheet type="text/css" href="chrome://exchangecommon/skin/calendar-summary-dialog.css"?>
 <!DOCTYPE dialog
 [
     <!ENTITY % eventDialogDTD SYSTEM "chrome://calendar/locale/calendar-event-dialog.dtd">
     %eventDialogDTD;
-        <!ENTITY % summaryDialogDTD SYSTEM "chrome://exchangecalendar/locale/calendar-summary-dialog.dtd">
+        <!ENTITY % summaryDialogDTD SYSTEM "chrome://exchangecommon/locale/calendar-summary-dialog.dtd">
     %summaryDialogDTD;
 ]>
-<?xul-overlay href="chrome://exchangecalendar/content/attachments-view.xul"?>
+<?xul-overlay href="chrome://exchangecommon/content/attachments-view.xul"?>
 <overlay id="exchWebService-calendar-summary-dialog"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 

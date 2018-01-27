@@ -36,9 +36,9 @@
 
 var Cu = Components.utils;
 
-Cu.import("resource://exchangecalendar/ecFunctions.js");
-Cu.import("resource://exchangecalendar/ecExchangeRequest.js");
-Cu.import("resource://exchangecalendar/soapFunctions.js");
+Cu.import("resource://exchangecommon/ecFunctions.js");
+Cu.import("resource://exchangecommon/ecExchangeRequest.js");
+Cu.import("resource://exchangecommon/soapFunctions.js");
 
 Cu.import("resource://interfaces/xml2json/xml2json.js");
 

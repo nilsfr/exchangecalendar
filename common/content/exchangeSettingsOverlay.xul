@@ -38,13 +38,13 @@
 -->
 <!DOCTYPE dialog
 [
-    <!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/exchangeSettingsOverlay.dtd" > %dtd1;
+    <!ENTITY % dtd1 SYSTEM "chrome://exchangecommon/locale/exchangeSettingsOverlay.dtd" > %dtd1;
 ]>
 <overlay id="calendarCreation"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
     <script type="application/javascript"
-            src="chrome://exchangecalendar/content/exchangeSettingsOverlay.js" />
+            src="chrome://exchangecommon/content/exchangeSettingsOverlay.js" />
     <vbox id="exchWebService-exchange-settings">
         <groupbox>
             <caption label="&exchWebServices.exchtype.label;" />

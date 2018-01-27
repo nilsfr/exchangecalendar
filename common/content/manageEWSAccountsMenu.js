@@ -24,14 +24,14 @@ var Cc = Components.classes;
 var Ci = Components.interfaces;
 var Cu = Components.utils;
 
-Cu.import("resource://exchangecalendar/ecFunctions.js");
+Cu.import("resource://exchangecommon/ecFunctions.js");
 
 if (!exchWebService) var exchWebService = {};
 
 exchWebService.manageEWSAccountsMenu = {
 
     showManager: function _showManager() {
-        window.openDialog("chrome://exchangecalendar/content/manageEWSAccounts.xul",
+        window.openDialog("chrome://exchangecommon/content/manageEWSAccounts.xul",
             "manageEWSAccounts",
             "chrome,titlebar,toolbar,centerscreen,dialog,modal=yes,resizable=yes",
             null);

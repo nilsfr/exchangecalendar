@@ -35,8 +35,8 @@
     <!ENTITY % eventDialogDTD SYSTEM "chrome://calendar/locale/calendar-event-dialog.dtd">
     %eventDialogDTD;
 ]>
-<?xml-stylesheet type="text/css" href="chrome://exchangecalendar/skin/calendar-task-view.css"?>
-<?xul-overlay href="chrome://exchangecalendar/content/attachments-view.xul"?>
+<?xml-stylesheet type="text/css" href="chrome://exchangecommon/skin/calendar-task-view.css"?>
+<?xul-overlay href="chrome://exchangecommon/content/attachments-view.xul"?>
 <overlay id="calendar-task-view.xul"
          xmlns:html="http://www.w3.org/1999/xhtml"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">

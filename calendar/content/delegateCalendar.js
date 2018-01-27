@@ -12,9 +12,9 @@ var Cu = Components.utils;
 Cu.import("resource://gre/modules/Services.jsm");
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
-Cu.import("resource://exchangecalendar/ecFunctions.js");
-Cu.import("resource://exchangecalendar/ecExchangeRequest.js");
-Cu.import("resource://exchangecalendar/erFindFolder.js");
+Cu.import("resource://exchangecommon/ecFunctions.js");
+Cu.import("resource://exchangecommon/ecExchangeRequest.js");
+Cu.import("resource://exchangecommon/erFindFolder.js");
 
 Cu.import("resource://exchangecalendartask/erGetDelegateRequest.js");
 Cu.import("resource://exchangecalendartask/erAddDelegateRequest.js");

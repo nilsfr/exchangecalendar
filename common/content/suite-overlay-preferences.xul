@@ -39,16 +39,16 @@
  * ***** BEGIN LICENSE BLOCK *****/
 -->
 <?xml-stylesheet href="chrome://lightning/skin/lightning.css"?>
-<?xul-overlay href="chrome://exchangecalendar/content/debugPreferences.xul"?>
-<?xul-overlay href="chrome://exchangecalendar/content/cachePreferences.xul"?>
-<?xul-overlay href="chrome://exchangecalendar/content/otherPreferences.xul"?>
+<?xul-overlay href="chrome://exchangecommon/content/debugPreferences.xul"?>
+<?xul-overlay href="chrome://exchangecommon/content/cachePreferences.xul"?>
+<?xul-overlay href="chrome://exchangecommon/content/otherPreferences.xul"?>
 <!DOCTYPE overlay
 [
     <!ENTITY % lightningDTD SYSTEM "chrome://lightning/locale/lightning.dtd">
     %lightningDTD;
     <!ENTITY % preferencesDTD SYSTEM "chrome://calendar/locale/preferences/preferences.dtd">
     %preferencesDTD;
-    <!ENTITY % dtd1 SYSTEM "chrome://exchangecalendar/locale/preferences.dtd">
+    <!ENTITY % dtd1 SYSTEM "chrome://exchangecommon/locale/preferences.dtd">
     %dtd1;
 ]>
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
