@@ -347,6 +347,7 @@ mivExchangeAuthPrompt2.prototype = {
 
                     // try to get password.
                     try {
+                        this.logInfo("asyncPromptAuthNotifyCallback: asking password to user.");
                         password = this.getPassword(aChannel, username, aURL, realm, true, !(authInfo.flags & Ci.nsIAuthInformation.PREVIOUS_FAILED));
                     }
                     catch (err) {
@@ -359,7 +360,7 @@ mivExchangeAuthPrompt2.prototype = {
                         error = true;
                     }
                     else {
-                        aChannel.URI.password = encodeURIComponent(password);
+                        aChannel.URI.userPass = encodeURIComponent(username)  + ':' + encodeURIComponent(password);
                     }
                 }
             }
@@ -374,12 +375,12 @@ mivExchangeAuthPrompt2.prototype = {
                         if (username.indexOf("\\") > -1) {
                             authInfo.domain = username.substr(0, username.indexOf("\\"));
                             authInfo.username = username.substr(username.indexOf("\\") + 1);
-                            this.logInfo("asyncPromptAuthNotifyCallback: We have a domainname part in the username. Going to use it. domain=" + authInfo.domain);
+                            this.logInfo("asyncPromptAuthNotifyCallback: We have a domainname part in the username (after \\). Going to use it. domain=" + authInfo.domain);
                         }
                         else if (username.indexOf("@") > -1) {
                             authInfo.username = username;
                             authInfo.domain = "";
-                            this.logInfo("asyncPromptAuthNotifyCallback: We have a domainname part in the username. Going to use it. domain=" + authInfo.domain);
+                            this.logInfo("asyncPromptAuthNotifyCallback: We have a domainname part in the username (after @). Not setting it to authInfo.");
                         }
                         else {
                             this.logInfo("asyncPromptAuthNotifyCallback: We do not have a domainname part in the username. Specifying empty one.");
