@@ -1,10 +1,10 @@
 content exchangecalendar common/content/
 
-skin exchangecalendar fugue common/unix/
-skin exchangecalendar fugue common/win/ os=WINNT
-skin exchangecalendar fugue common/winaero/ os=WINNT osversion>=6
-skin exchangecalendar fugue common/mac/ os=Darwin
-skin exchangecalendar-common fugue common/common/
+skin exchangecalendar fugue common/theme/unix/
+skin exchangecalendar fugue common/theme/win/ os=WINNT
+skin exchangecalendar fugue common/theme/winaero/ os=WINNT osversion>=6
+skin exchangecalendar fugue common/theme/mac/ os=Darwin
+skin exchangecalendar-common fugue common/theme/common/
 
 resource exchangecalendar common/exchangeapi/
 resource interfaces common/interface/
