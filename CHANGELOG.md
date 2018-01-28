@@ -1,15 +1,34 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.0.0-beta5] - 2017-**-**
+## [4.0.0-beta5] - 2018-01-28
 ### Added
+- Code beautifiers are available for JavaScript, XML, XUL and RDF files
+- Translations are now managed with the Transifex tools.
+  You can participate with our [Transifex project](https://www.transifex.com/exchangecalendar/exchangecalendar/)
+- New locales: cs-CZ, pl, sk
+- Thunderbird Global Search preferences to explain that emailtag need them and won't work if disabled.
 
 ### Changed
-- Use Makefile instead of custom build shell
+- Use Makefile instead of custom build shell (#98)
 - Update install.rdf, README with new community
 - Builds now will disable automatic update checker to avoid issue with new forks
+- XML requests sent to Exchange servers now set "utf-8" for Content-Type HTTP header.
+- Logs now redirects to ExchangeCalendar Github community (#92)
+- Code tree has been structured to distinguish parts of the module (#80)
+  Current parts are now: addressbook, calendar, common and emailtag
+  Namespaces were updated too to reflect the new code structure.
 
 ### Fixed
+- Compatibilty with Lightning 5.4.2 and the new option to edit events and tasks from tabs (#60)
+- Some events were hidden from month view due to TimeZone errors (#67)
+- Hide password in logs if requested (#100)
+- Hide password shown in dialog boxes (#103)
+
+### Removed
+- `email` root directory contained only empty codes.
+- debug preferences were always enabled, they are now removed (#133)
+  It was disabling cache and forced the Thunderbird Global Search Indexer to be enabled.
 
 ## [4.0.0-beta4] - 2017-07-03
 ### Added
