@@ -360,7 +360,7 @@ mivExchangeAuthPrompt2.prototype = {
                         error = true;
                     }
                     else {
-                        aChannel.URI.userPass = encodeURIComponent(username)  + ':' + encodeURIComponent(password);
+                        aChannel.URI.userPass = encodeURIComponent(username) + ':' + encodeURIComponent(password);
                     }
                 }
             }

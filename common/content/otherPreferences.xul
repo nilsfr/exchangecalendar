@@ -168,7 +168,8 @@
                 <checkbox id="globalsearch"
                           preference="extensions.1st-setup.others.globalsearch"
                           label="&exchangeWebService.preference.globalsearch.label;" />
-                <label>&exchangeWebService.preference.globalsearch.explain;</label>
+                <label>
+                &exchangeWebService.preference.globalsearch.explain;</label>
             </vbox>
         </groupbox>
         <groupbox id="exchangeWebService_others_prefs_groupbox4">
