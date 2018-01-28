@@ -10,7 +10,7 @@
 <?xml-stylesheet type="text/css" href="chrome://exchangecommon/skin/delegateCalendar.css" ?>
 <!DOCTYPE dialog
 [ 
-    <!ENTITY % delegateDialogDTD SYSTEM "chrome://exchangecommon/locale/delegate-calendar-dialog.dtd" > 
+    <!ENTITY % delegateDialogDTD SYSTEM "chrome://exchangecalendar/locale/delegate-calendar-dialog.dtd" > 
       %delegateDialogDTD;
 ]>
 <dialog id="DelegateUserPopup"

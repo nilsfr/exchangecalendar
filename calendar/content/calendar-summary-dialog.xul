@@ -35,7 +35,7 @@
 [
     <!ENTITY % eventDialogDTD SYSTEM "chrome://calendar/locale/calendar-event-dialog.dtd">
     %eventDialogDTD;
-        <!ENTITY % summaryDialogDTD SYSTEM "chrome://exchangecommon/locale/calendar-summary-dialog.dtd">
+        <!ENTITY % summaryDialogDTD SYSTEM "chrome://exchangecalendar/locale/calendar-summary-dialog.dtd">
     %summaryDialogDTD;
 ]>
 <?xul-overlay href="chrome://exchangecommon/content/attachments-view.xul"?>

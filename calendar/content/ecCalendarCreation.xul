@@ -40,7 +40,7 @@
 [
     <!ENTITY % dtd1 SYSTEM "chrome://calendar/locale/calendarCreation.dtd" > %dtd1;
     <!ENTITY % dtd2 SYSTEM "chrome://calendar/locale/calendar.dtd" > %dtd2;
-    <!ENTITY % dtd3 SYSTEM "chrome://exchangecommon/locale/ecCalendarCreation.dtd" > %dtd3;
+    <!ENTITY % dtd3 SYSTEM "chrome://exchangecalendar/locale/ecCalendarCreation.dtd" > %dtd3;
 ]>
 <?xul-overlay href="chrome://exchangecommon/content/exchangeSettingsOverlay.xul"?>
 <overlay id="calendarCreation"

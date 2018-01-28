@@ -246,18 +246,18 @@ exchCalPopUpMenu.prototype = {
             let exchangeCurrentStatus = calendar.getProperty("exchangeCurrentStatus");
             if ((!Components.isSuccessCode(exchangeCurrentStatus)) || (calendar.getProperty("disabled"))) {
                 if (calendar.readOnly) {
-                    tooltipText = this.globalFunctions.getString("calExchangeCalendar", "tooltipCalendarDisconnectedReadOnly", [calendar.name, calendar.connectionStateDescription], "exchangecalendar");
+                    tooltipText = this.globalFunctions.getString("calExchangeCalendar", "tooltipCalendarDisconnectedReadOnly", [calendar.name, calendar.connectionStateDescription], "exchangecommon");
                 }
                 else {
-                    tooltipText = this.globalFunctions.getString("calExchangeCalendar", "tooltipCalendarDisconnected", [calendar.name, calendar.connectionStateDescription], "exchangecalendar");
+                    tooltipText = this.globalFunctions.getString("calExchangeCalendar", "tooltipCalendarDisconnected", [calendar.name, calendar.connectionStateDescription], "exchangecommon");
                 }
             }
             else {
                 if (calendar.readOnly) {
-                    tooltipText = this.globalFunctions.getString("calExchangeCalendar", "tooltipCalendarConnectedReadOnly", [calendar.name], "exchangecalendar");
+                    tooltipText = this.globalFunctions.getString("calExchangeCalendar", "tooltipCalendarConnectedReadOnly", [calendar.name], "exchangecommon");
                 }
                 else {
-                    tooltipText = this.globalFunctions.getString("calExchangeCalendar", "tooltipCalendarConnected", [calendar.name], "exchangecalendar");
+                    tooltipText = this.globalFunctions.getString("calExchangeCalendar", "tooltipCalendarConnected", [calendar.name], "exchangecommon");
                 }
             }
             setElementValue("calendar-list-tooltip", tooltipText, "label");

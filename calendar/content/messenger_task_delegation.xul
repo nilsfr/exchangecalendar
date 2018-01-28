@@ -30,7 +30,7 @@
  * ***** BEGIN LICENSE BLOCK *****/
 -->
 <!DOCTYPE 
-overlay SYSTEM "chrome://exchangecommon/locale/messenger_task_delegation.dtd">
+overlay SYSTEM "chrome://exchangecalendar/locale/messenger_task_delegation.dtd">
 <?xml-stylesheet type="text/css" href="chrome://calendar/skin/calendar-task-view.css"?>
 <overlay id="exchWebService-calendar-task-delegation-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
