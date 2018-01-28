@@ -16,10 +16,15 @@ manifest interface/exchangeAutoCompleteResult/mivExchangeAutoCompleteResult.mani
 
 locale exchangecontacts en    locale/en/
 
+locale exchangecontacts cs-CZ locale/cs_CZ/
 locale exchangecontacts de    locale/de/
 locale exchangecontacts en-US locale/en_US/
 locale exchangecontacts fr-FR locale/fr_FR/
+locale exchangecontacts it-IT locale/it_IT/
 locale exchangecontacts ja-JP locale/ja_JP/
 locale exchangecontacts nl    locale/nl/
+locale exchangecontacts pl    locale/pl/
 locale exchangecontacts ru    locale/ru/
+locale exchangecontacts sk    locale/sk/
 locale exchangecontacts sv    locale/sv/
+locale exchangecontacts tr    locale/tr/
