@@ -20,9 +20,9 @@ defaults/preferences/update.js:
 	cp defaults/preferences/update_$(update).txt $@
 
 # Target to publish a new release:
-release: l10n-auto-commit build
+release: build
 	git tag "v$(version)"
-	@echo 'Translations updated, build done, tag added.'
+	@echo 'Build done, tag added.'
 	@echo 'Now, if the release is well done, please run one "git push" to publish code and one "git push v$(version)" to publish the new tag.'
 
 # Targets to update translations
