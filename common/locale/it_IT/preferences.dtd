@@ -43,6 +43,10 @@
 <!ENTITY exchangeWebService.preference.loadbalancer.prefs.sleepBetweenJobs.label "Tempo minimo di attesa fra richieste al server Exchange:">
 <!ENTITY exchangeWebService.preference.userAgent.label "Agente utente HTTP:">
 
+<!ENTITY exchangeWebService.preference.globalsearch.caption "Thunderbird Global Search Index">
+<!ENTITY exchangeWebService.preference.globalsearch.label "Enable the Thunderbird Global Search Index">
+<!ENTITY exchangeWebService.preference.globalsearch.explain "If you enable this Thunderbird feature, exchangecalendar would be able to enable the email remote tagging and the invitation column in the mail tree view.">
+
 <!ENTITY exchangeWebService.preference.ntlmv1.label "Opzioni NTLM-v1:">
 <!ENTITY exchangeWebService.preference.ntlmv1.true.label "Abilita">
 <!ENTITY exchangeWebService.preference.ntlmv1.false.label "Disabilita">
