@@ -41,7 +41,7 @@ l10n-auto-commit: l10n-get
 # Send new texts to translate to Transifex
 l10n-push:
 	git checkout $(releasebranch)
-	tx push
+	tx push -s
 
 # Target to beautify and build your code while developing it
 dev: beautify build
