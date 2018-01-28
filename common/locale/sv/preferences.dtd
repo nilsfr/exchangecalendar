@@ -35,13 +35,18 @@
 <!ENTITY exchangeWebService.preference.updateFunction.label "Uppdateringsfunktion för tillägg:">
 <!ENTITY exchangeWebService.preference.checkForUpdates.label "Kontrollera automatiskt om en ny version av tillägget finns tillgänglig när Thunderbird startar.">
 <!ENTITY exchangeWebService.preference.warnForUpdates.label "Visa ett varningsmeddelande när en ny version finns tillgänglig.">
+<!ENTITY exchangeWebService.preference.warnForPrereleaseUpdates.label "Show warning when a new pre-release (beta, RC, etc.) is available.">
 
 <!ENTITY exchangeWebService.preference.loadbalancer.debug.caption "Lastbalansering:">
 <!ENTITY exchangeWebService.preference.loadbalancer.prefs.label "Lastbalansering:">
 <!ENTITY exchangeWebService.preference.loadbalancer.prefs.maxJobs.label "Maximalt antal samtidiga förfrågningar mot Exchange-server:">
 <!ENTITY exchangeWebService.preference.loadbalancer.prefs.sleepBetweenJobs.label "Minsta väntetid mellan förfrågningar mot Exchange-server:">
 <!ENTITY exchangeWebService.preference.userAgent.label "HTTP user agent:">
-<!ENTITY exchangeWebService.preference.warnForPrereleaseUpdates.label "Show warning when a new pre-release (beta, RC, etc.) is available.">
+
+<!ENTITY exchangeWebService.preference.globalsearch.caption "Thunderbird Global Search Index">
+<!ENTITY exchangeWebService.preference.globalsearch.label "Enable the Thunderbird Global Search Index">
+<!ENTITY exchangeWebService.preference.globalsearch.explain "If you enable this Thunderbird feature, exchangecalendar would be able to enable the email remote tagging and the invitation column in the mail tree view.">
+
 <!ENTITY exchangeWebService.preference.ntlmv1.label "Ntlm-v1 Preferences:">
 <!ENTITY exchangeWebService.preference.ntlmv1.true.label "Enable">
 <!ENTITY exchangeWebService.preference.ntlmv1.false.label "Disable">

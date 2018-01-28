@@ -42,7 +42,9 @@ locale exchangecommon fr-FR common/locale/fr_FR/
 locale exchangecommon it-IT common/locale/it_IT/
 locale exchangecommon ja-JP common/locale/ja_JP/
 locale exchangecommon nl common/locale/nl/
+locale exchangecommon pl common/locale/pl/
 locale exchangecommon ru common/locale/ru/
+locale exchangecommon sk common/locale/sk/
 locale exchangecommon sv common/locale/sv/
 locale exchangecommon tr common/locale/tr/
 

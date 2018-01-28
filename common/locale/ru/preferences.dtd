@@ -35,6 +35,7 @@
 <!ENTITY exchangeWebService.preference.updateFunction.label "Функция обновления дополнения:">
 <!ENTITY exchangeWebService.preference.checkForUpdates.label "Автоматически проверять наличие новой версии дополнения онлайн при запуске Thunderbird.">
 <!ENTITY exchangeWebService.preference.warnForUpdates.label "Предупреждать, что доступна новая версия. Таким образом, вы можете легко установить ее.">
+<!ENTITY exchangeWebService.preference.warnForPrereleaseUpdates.label "Show warning when a new pre-release (beta, RC, etc.) is available.">
 
 <!ENTITY exchangeWebService.preference.loadbalancer.debug.caption "Балансировка нагрузки:">
 <!ENTITY exchangeWebService.preference.loadbalancer.prefs.label "Балансировка нагрузки:">
@@ -42,8 +43,10 @@
 <!ENTITY exchangeWebService.preference.loadbalancer.prefs.sleepBetweenJobs.label "Минимальное время ожидания между запросами exchange сервера:">
 <!ENTITY exchangeWebService.preference.userAgent.label "HTTP агент пользователя:">
 
+<!ENTITY exchangeWebService.preference.globalsearch.caption "Thunderbird Global Search Index">
+<!ENTITY exchangeWebService.preference.globalsearch.label "Enable the Thunderbird Global Search Index">
+<!ENTITY exchangeWebService.preference.globalsearch.explain "If you enable this Thunderbird feature, exchangecalendar would be able to enable the email remote tagging and the invitation column in the mail tree view.">
 
-<!ENTITY exchangeWebService.preference.warnForPrereleaseUpdates.label "Show warning when a new pre-release (beta, RC, etc.) is available.">
 <!ENTITY exchangeWebService.preference.ntlmv1.label "Ntlm-v1 Preferences:">
 <!ENTITY exchangeWebService.preference.ntlmv1.true.label "Enable">
 <!ENTITY exchangeWebService.preference.ntlmv1.false.label "Disable">
