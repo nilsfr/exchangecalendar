@@ -26,8 +26,8 @@ source_lang = en
 type = MOZILLAPROPERTIES
 
 [exchangecalendar.attachments-view]
-file_filter = common/locale/<lang>/attachments-view.dtd
-source_file = common/locale/en/attachments-view.dtd
+file_filter = calendar/locale/<lang>/attachments-view.dtd
+source_file = calendar/locale/en/attachments-view.dtd
 source_lang = en
 type = DTD
 
@@ -44,14 +44,14 @@ source_lang = en
 type = DTD
 
 [exchangecalendar.exchangeReminderDialog]
-file_filter = common/locale/<lang>/exchangeReminderDialog.dtd
-source_file = common/locale/en/exchangeReminderDialog.dtd
+file_filter = calendar/locale/<lang>/exchangeReminderDialog.dtd
+source_file = calendar/locale/en/exchangeReminderDialog.dtd
 source_lang = en
 type = DTD
 
 [exchangecalendar.messenger_task_delegation]
-file_filter = common/locale/<lang>/messenger_task_delegation.dtd
-source_file = common/locale/en/messenger_task_delegation.dtd
+file_filter = calendar/locale/<lang>/messenger_task_delegation.dtd
+source_file = calendar/locale/en/messenger_task_delegation.dtd
 source_lang = en
 type = DTD
 
@@ -74,26 +74,26 @@ source_lang = en
 type = DTD
 
 [exchangecalendar.lightning-item-iframe]
-file_filter = common/locale/<lang>/lightning-item-iframe.dtd
-source_file = common/locale/en/lightning-item-iframe.dtd
+file_filter = calendar/locale/<lang>/lightning-item-iframe.dtd
+source_file = calendar/locale/en/lightning-item-iframe.dtd
 source_lang = en
 type = DTD
 
 [exchangecalendar.calendar-calendars-list]
-file_filter = common/locale/<lang>/calendar-calendars-list.dtd
-source_file = common/locale/en/calendar-calendars-list.dtd
+file_filter = calendar/locale/<lang>/calendar-calendars-list.dtd
+source_file = calendar/locale/en/calendar-calendars-list.dtd
 source_lang = en
 type = DTD
 
 [exchangecalendar.calendar-summary-dialog]
-file_filter = common/locale/<lang>/calendar-summary-dialog.dtd
-source_file = common/locale/en/calendar-summary-dialog.dtd
+file_filter = calendar/locale/<lang>/calendar-summary-dialog.dtd
+source_file = calendar/locale/en/calendar-summary-dialog.dtd
 source_lang = en
 type = DTD
 
 [exchangecalendar.delegate-calendar-dialog]
-file_filter = common/locale/<lang>/delegate-calendar-dialog.dtd
-source_file = common/locale/en/delegate-calendar-dialog.dtd
+file_filter = calendar/locale/<lang>/delegate-calendar-dialog.dtd
+source_file = calendar/locale/en/delegate-calendar-dialog.dtd
 source_lang = en
 type = DTD
 
@@ -170,8 +170,8 @@ source_lang = en
 type = DTD
 
 [exchangecalendar.ecCalendarCreation]
-file_filter = common/locale/<lang>/ecCalendarCreation.dtd
-source_file = common/locale/en/ecCalendarCreation.dtd
+file_filter = calendar/locale/<lang>/ecCalendarCreation.dtd
+source_file = calendar/locale/en/ecCalendarCreation.dtd
 source_lang = en
 type = DTD
 
