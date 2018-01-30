@@ -22,8 +22,8 @@ defaults/preferences/update.js:
 # Target to publish a new release:
 release: build
 	git tag "v$(version)"
-	@echo 'Build done, tag added.'
-	@echo 'Now, if the release is well done, please run one "git push" to publish code and one "git push v$(version)" to publish the new tag.'
+	@echo 'Build done, tag localy added.'
+	@echo 'If the release is well done, please run "git push origin v$(version)" to publish the new tag.'
 
 # Targets to update translations
 # Requires an already configured Transifex client: https://docs.transifex.com/client/introduction
