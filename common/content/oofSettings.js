@@ -90,7 +90,7 @@ exchOOFSettings.prototype = {
     },
 
     getOofSettings: function _getOofSettings() {
-        this._document.getElementById("exchWebService-load-error-message").value = this.globalFunctions.getString("calExchangeCalendar", "ecLoadingOofSettings", [], "exchangecalendar");
+        this._document.getElementById("exchWebService-load-error-message").value = this.globalFunctions.getString("calExchangeCalendar", "ecLoadingOofSettings", [], "exchangecommon");
 
         var self = this;
         var tmpObject = new erGetUserOofSettingsRequest({
@@ -112,7 +112,7 @@ exchOOFSettings.prototype = {
         this.globalFunctions.LOG("intern:" + this.intOofSettings.internalReply);
         this.globalFunctions.LOG("extern:" + this.intOofSettings.externalReply);
 
-        this._document.getElementById("exchWebService-load-error-message").value = this.globalFunctions.getString("calExchangeCalendar", "ecLoadedOofSettings", [], "exchangecalendar");
+        this._document.getElementById("exchWebService-load-error-message").value = this.globalFunctions.getString("calExchangeCalendar", "ecLoadedOofSettings", [], "exchangecommon");
 
         this._document.getElementById("exchWebService_oofSettings_dialog").buttons = "accept,cancel";
 
@@ -154,7 +154,7 @@ exchOOFSettings.prototype = {
     },
 
     getOofSettingsError: function _getOofSettingsError(aGetUserOofSettingsRequest, aCode, aMsg) {
-        this._document.getElementById("exchWebService-load-error-message").value = this.globalFunctions.getString("calExchangeCalendar", "ecErrorLoadingOofSettings", [aMsg, aCode], "exchangecalendar");
+        this._document.getElementById("exchWebService-load-error-message").value = this.globalFunctions.getString("calExchangeCalendar", "ecErrorLoadingOofSettings", [aMsg, aCode], "exchangecommon");
     },
 
     doScheduledChanged: function _doScheduledChanged() {
@@ -166,7 +166,7 @@ exchOOFSettings.prototype = {
     },
 
     setOofSettings: function _setOofSettings() {
-        this._document.getElementById("exchWebService-load-error-message").value = this.globalFunctions.getString("calExchangeCalendar", "ecSavingOofSettings", [], "exchangecalendar");
+        this._document.getElementById("exchWebService-load-error-message").value = this.globalFunctions.getString("calExchangeCalendar", "ecSavingOofSettings", [], "exchangecommon");
 
         var oofState = "Disabled";
         if (this._document.getElementById("exchWebService-oof-status").value == "Enabled") {
@@ -227,14 +227,14 @@ exchOOFSettings.prototype = {
     },
 
     setOofSettingsOK: function _setOofSettingsOK(aGetUserOofSettingsRequest) {
-        this._document.getElementById("exchWebService-load-error-message").value = this.globalFunctions.getString("calExchangeCalendar", "ecSavedOofSettings", [], "exchangecalendar");
+        this._document.getElementById("exchWebService-load-error-message").value = this.globalFunctions.getString("calExchangeCalendar", "ecSavedOofSettings", [], "exchangecommon");
         this.infoPopup(this._document.title, "Settings saved.");
         this.getOofSettings();
 
     },
 
     setOofSettingsError: function _setOofSettingsError(aGetUserOofSettingsRequest, aCode, aMsg) {
-        this._document.getElementById("exchWebService-load-error-message").value = this.globalFunctions.getString("calExchangeCalendar", "ecErrorSavingOofSettings", [aMsg, aCode], "exchangecalendar");
+        this._document.getElementById("exchWebService-load-error-message").value = this.globalFunctions.getString("calExchangeCalendar", "ecErrorSavingOofSettings", [aMsg, aCode], "exchangecommon");
         alert("Error saving settings. Msg:" + aMsg + ", Code:" + aCode);
 
         this.getOofSettings();
