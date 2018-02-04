@@ -72,8 +72,6 @@ interface mivFunctions : nsISupports
 
   void ASSERT(in jsval aCondition, [optional] in AUTF8String aMessage, [optional] in boolean aCritical);
 
-  AUTF8String trim(in AUTF8String str);
-
   uint64_t copyPreferences(in jsval aFromPrefs, in jsval aToPrefs);
 
   jsval xmlToJxon([optional] in AUTF8String aXMLString) ;

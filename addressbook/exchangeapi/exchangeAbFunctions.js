@@ -144,8 +144,7 @@ exchWebService.commonAbFunctions = {
             return false;
         }
 
-        // Trim leadin and trailing spaces
-        var cleanQuery = exchWebService.commonFunctions.trim(aQuery);
+        var cleanQuery = aQuery.trim();
 
         // Check for round brackets.
         if ((cleanQuery.substr(0, 1) != "(") || (cleanQuery.substr(cleanQuery.length - 1, 1) != ")")) {

@@ -225,19 +225,6 @@ function convertSpecialCharatersToXML(aXMLString) {
     return result;
 }
 
-function trim(aValue) {
-    var strLength = aValue.length;
-    var leftPos = 0;
-    while ((leftPos < strLength) && (aValue.charAt(leftPos) == " ")) {
-        leftPos++;
-    }
-    var rightPos = strLength - 1;
-    while ((rightPos >= 0) && (aValue.charAt(rightPos) == " ")) {
-        rightPos--;
-    }
-    return aValue.substr(leftPos, rightPos - leftPos + 1);
-}
-
 function hasXMLHeader(aStr, aSP) {
     if (!aStr) return 0;
 
@@ -310,7 +297,7 @@ function convertComparisonPart(a, aJSONObject) {
 
 function ifFunction(aCondition, aJSONObject) {
     var level = 0;
-    var tmpCondition = trim(aCondition);
+    var tmpCondition = aCondition.trim();
     var compareList = [];
     while (tmpCondition != "") {
         var startPos = 0;
@@ -380,8 +367,8 @@ function ifFunction(aCondition, aJSONObject) {
                     break;
                 }
                 compareList.push({
-                    left: trim(splitPart2),
-                    right: trim(splitPart.substr(splitPart2.length + comparison.length)),
+                    left: splitPart2.trim(),
+                    right: splitPart.substr(splitPart2.length + comparison.length).trim(),
                     operator: operator,
                     comparison: comparison,
                     subCondition: subCondition
@@ -389,7 +376,7 @@ function ifFunction(aCondition, aJSONObject) {
             }
             else {
                 compareList.push({
-                    left: trim(splitPart),
+                    left: splitPart.trim(),
                     right: "",
                     operator: operator,
                     comparison: comparison,
@@ -554,7 +541,7 @@ function realXPath(aParent, aPath) {
             throw "XPath error: Did not find closing square bracket. tagName:" + aParent.tagName + ", tmpPath:" + tmpPath;
         }
         tmpPath = tmpPath.substr(index.length + 2);
-        index = trim(index);
+        index = index.trim();
         if (index != "") {
             if (ifFunction(index, aParent)) {
                 result.push(aParent);
@@ -715,8 +702,8 @@ function realSetAttributeStr(aParent, aString) {
     if (sp == -1) {
         throw -13; // Equal sign not found.
     }
-    var an = trim(aString.substr(0, sp));
-    var av = trim(aString.substr(sp + 1));
+    var an = aString.substr(0, sp).trim();
+    var av = aString.substr(sp + 1).trim();
     var tc = av[0];
     if ((tc == "'") || (tc == '"')) {
         let vl = av.length;
