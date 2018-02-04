@@ -31,13 +31,13 @@ function tag(hdr) {
 function gCP(pref) {
     var prefService = Cc["@mozilla.org/preferences-service;1"]
         .getService(Ci.nsIPrefService);
-    return prefService.getCharPref("extensions.extras." + pref);
+    return prefService.getBranch("extensions.extras.").getCharPref(pref);
 }
 
 function gBP(pref) {
     var prefService = Cc["@mozilla.org/preferences-service;1"]
         .getService(Ci.nsIPrefService);
-    return prefService.getBoolPref("extensions.extras." + pref);
+    return prefService.getBranch("extensions.extras.").getBoolPref(pref);
 }
 
 function toggleMessageTagPostEwsUpdate(key, addKey, hdr) {
