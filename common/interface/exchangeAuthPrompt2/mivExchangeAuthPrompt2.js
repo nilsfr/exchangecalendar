@@ -311,7 +311,7 @@ mivExchangeAuthPrompt2.prototype = {
                 this.logInfo("asyncPromptAuthNotifyCallback: Trying to detect username.");
                 username = decodeURIComponent(aChannel.URI.username);
                 if (username) {
-                    username = this.globalFunctions.trim(decodeURIComponent(aChannel.URI.username));
+                    username = username.trim();
                 }
 
                 if (username === "") {
@@ -550,7 +550,7 @@ mivExchangeAuthPrompt2.prototype = {
         else {
             username = decodeURIComponent(aChannel.URI.username);
             if (username) {
-                username = this.globalFunctions.trim(decodeURIComponent(aChannel.URI.username));
+                username = username.trim();
             }
 
             if (username == "") {
@@ -614,7 +614,7 @@ mivExchangeAuthPrompt2.prototype = {
      *				result == false when password not found.
      */
     passwordManagerGet: function _passwordManagerGet(aUsername, aURL, aRealm) {
-        if ((!aUsername) || (this.globalFunctions.trim(aUsername) == "")) {
+        if ((!aUsername) || aUsername.trim() == "")) {
             this.logInfo("passwordManagerGet: username is undefined or empty.")
             return {
                 result: false

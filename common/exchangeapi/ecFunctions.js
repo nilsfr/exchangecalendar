@@ -138,7 +138,6 @@ exchWebService.commonFunctions.ERROR = mivFunctions.ERROR;
 exchWebService.commonFunctions.STACK = mivFunctions.STACK;
 exchWebService.commonFunctions.STACKshort = mivFunctions.STACKshort;
 exchWebService.commonFunctions.ASSERT = mivFunctions.ASSERT;
-exchWebService.commonFunctions.trim = mivFunctions.trim;
 exchWebService.commonFunctions.copyPreferences = mivFunctions.copyPreferences;
 exchWebService.commonFunctions.xmlToJxon = mivFunctions.xmlToJxon;
 exchWebService.commonFunctions.splitOnCharacter = mivFunctions.splitOnCharacter;

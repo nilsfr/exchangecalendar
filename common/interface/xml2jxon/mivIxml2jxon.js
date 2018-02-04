@@ -227,19 +227,6 @@ function convertSpecialCharatersToXML(aStr) {
     return result;
 }
 
-function trim(aValue) {
-    var strLength = aValue.length;
-    var leftPos = 0;
-    while ((leftPos < strLength) && (aValue[leftPos] == " ")) {
-        leftPos++;
-    }
-    var rightPos = strLength - 1;
-    while ((rightPos >= 0) && (aValue[rightPos] == " ")) {
-        rightPos--;
-    }
-    return aValue.substr(leftPos, rightPos - leftPos + 1);
-}
-
 var nameSpaceMgr = Cc["@1st-setup.nl/conversion/namespaces;1"]
     .getService(Ci.mivNameSpaces);
 
@@ -294,8 +281,8 @@ mivIxml2jxon.prototype = {
         if (sp == -1) {
             throw Ci.mivIxml2jxon.ERR_WRONG_ATTRIBUTE_SEPARATOR;
         }
-        var an = trim(a.substr(0, sp));
-        var av = trim(a.substr(sp + 1));
+        var an = a.substr(0, sp).trim();
+        var av = a.substr(sp + 1).trim();
         var tc = av[0];
         if ((tc == "'") || (tc == '"')) {
             let vl = av.length;
@@ -652,7 +639,7 @@ mivIxml2jxon.prototype = {
                 throw "XPath error: Did not find closing square bracket. tagName:" + this.tagName + ", tmpPath:" + tmpPath;
             }
             tmpPath = tmpPath.substr(index.length + 2);
-            index = trim(index);
+            index = index.trim();
             if (index != "") {
                 if (ifFunction(index, this)) {
                     result.push(this);
@@ -998,7 +985,7 @@ function convertComparisonPart(a, aXMLObject) {
 
 function ifFunction(aCondition, aXMLObject) {
     var level = 0;
-    var tmpCondition = trim(aCondition);
+    var tmpCondition = aCondition.trim();
     var compareList = [];
     while (tmpCondition != "") {
         var startPos = 0;
@@ -1068,8 +1055,8 @@ function ifFunction(aCondition, aXMLObject) {
                     break;
                 }
                 compareList.push({
-                    left: trim(splitPart2),
-                    right: trim(splitPart.substr(splitPart2.length + comparison.length)),
+                    left: splitPart2.trim(),
+                    right: splitPart.substr(splitPart2.length + comparison.length).trim(),
                     operator: operator,
                     comparison: comparison,
                     subCondition: subCondition
@@ -1077,7 +1064,7 @@ function ifFunction(aCondition, aXMLObject) {
             }
             else {
                 compareList.push({
-                    left: trim(splitPart),
+                    left: splitPart.trim(),
                     right: "",
                     operator: operator,
                     comparison: comparison,
