@@ -114,22 +114,22 @@ exchTaskDelegation.prototype = {
                 var lastChange = task.getProperty("exchWebService-PidLidTaskHistory");
                 switch (lastChange) {
                 case "4":
-                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.duedate.changed", [], "exchangecalendar");
+                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.duedate.changed", [], "exchangecommon");
                     break;
                 case "3":
-                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.some.property.changed", [], "exchangecalendar");
+                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.some.property.changed", [], "exchangecommon");
                     break;
                 case "1":
-                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.accepted", [task.getProperty("exchWebService-Owner")], "exchangecalendar");
+                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.accepted", [task.getProperty("exchWebService-Owner")], "exchangecommon");
                     break;
                 case "2":
-                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.rejected", [task.getProperty("exchWebService-Owner")], "exchangecalendar");
+                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.rejected", [task.getProperty("exchWebService-Owner")], "exchangecommon");
                     break;
                 case "5":
-                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.assigned", [task.getProperty("exchWebService-Owner")], "exchangecalendar");
+                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.assigned", [task.getProperty("exchWebService-Owner")], "exchangecommon");
                     break;
                 case "0":
-                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.no.changes", [], "exchangecalendar");
+                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.no.changes", [], "exchangecommon");
                     break;
                 }
 

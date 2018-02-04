@@ -416,10 +416,10 @@ exchSettingsOverlay.prototype = {
         case -30:
             break;
         case -6:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [this.exchWebServicesgServer], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [this.exchWebServicesgServer], "exchangecommon"));
             break;
         default:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecommon"));
         }
         this._document.getElementById("exchWebService_serverandmailboxcheckbutton").disabled = false;
         this.exchWebServicesCheckRequired();
@@ -437,7 +437,7 @@ exchSettingsOverlay.prototype = {
             this._document.getElementById("exchWebServices-SharedFolderID-label").value = aExchangeRequest.displayName;
         }
         else {
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecommon"));
         }
 
         this._document.getElementById("exchWebService_serverandmailboxcheckbutton").disabled = false;
@@ -453,10 +453,10 @@ exchSettingsOverlay.prototype = {
         case -30:
             break;
         case -6:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [this.exchWebServicesgServer], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [this.exchWebServicesgServer], "exchangecommon"));
             break;
         default:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecommon"));
         }
         this._document.getElementById("exchWebService_serverandmailboxcheckbutton").disabled = false;
         this.exchWebServicesCheckRequired();
@@ -485,7 +485,7 @@ exchSettingsOverlay.prototype = {
         case -30:
             break;
         case -6:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [this.exchWebServicesgServer], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [this.exchWebServicesgServer], "exchangecommon"));
             break;
         case -7:
         case -208: // folderNotFound. 
@@ -494,7 +494,7 @@ exchSettingsOverlay.prototype = {
         case -212:
             aMsg = aMsg + "(" + this.exchWebServicesgMailbox + ")";
         default:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecommon"));
         }
         this._document.getElementById("exchWebService_serverandmailboxcheckbutton").disabled = false;
         this.exchWebServicesCheckRequired();
@@ -543,7 +543,7 @@ exchSettingsOverlay.prototype = {
         this.globalFunctions.LOG("checkUserAvailabilityError");
         this.gexchWebServicesDetailsChecked = false;
 
-        alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecalendar"));
+        alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecommon"));
 
         this._document.getElementById("exchWebService_serverandmailboxcheckbutton").disabled = false;
         this.exchWebServicesCheckRequired();
@@ -602,10 +602,10 @@ exchSettingsOverlay.prototype = {
         case -30:
             break;
         case -6:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [this.exchWebServicesgServer], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [this.exchWebServicesgServer], "exchangecommon"));
             break;
         default:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheck", [aMsg, aCode], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheck", [aMsg, aCode], "exchangecommon"));
         }
         this._document.getElementById("exchWebService_servercheckbutton").disabled = false;
 
@@ -749,10 +749,10 @@ exchSettingsOverlay.prototype = {
         case -16:
         case -17:
         case -18:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorAutodiscoveryURLInvalid", [this.exchWebServicesgMailbox], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorAutodiscoveryURLInvalid", [this.exchWebServicesgMailbox], "exchangecommon"));
             break;
         default:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorAutodiscovery", [aMsg, aCode], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorAutodiscovery", [aMsg, aCode], "exchangecommon"));
         }
 
         this._document.getElementById("exchWebService_autodiscovercheckbutton").disabled = false;

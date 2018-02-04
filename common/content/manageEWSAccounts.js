@@ -363,10 +363,10 @@ exchWebService.manageEWSAccounts = {
         case -16:
         case -17:
         case -18:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorAutodiscoveryURLInvalid", [document.getElementById("exchWebService_mailbox").value], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorAutodiscoveryURLInvalid", [document.getElementById("exchWebService_mailbox").value], "exchangecommon"));
             break;
         default:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorAutodiscovery", [aMsg, aCode], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorAutodiscovery", [aMsg, aCode], "exchangecommon"));
         }
 
         document.getElementById("exchWebService_autodiscovercheckbutton").disabled = false;
@@ -411,10 +411,10 @@ exchWebService.manageEWSAccounts = {
         case -30:
             break;
         case -6:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [document.getElementById("exchWebService_server").value], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [document.getElementById("exchWebService_server").value], "exchangecommon"));
             break;
         default:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheck", [aMsg, aCode], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheck", [aMsg, aCode], "exchangecommon"));
         }
         document.getElementById("exchWebService_servercheckbutton").disabled = false;
 
