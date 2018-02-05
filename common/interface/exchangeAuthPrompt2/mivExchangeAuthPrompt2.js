@@ -614,7 +614,7 @@ mivExchangeAuthPrompt2.prototype = {
      *				result == false when password not found.
      */
     passwordManagerGet: function _passwordManagerGet(aUsername, aURL, aRealm) {
-        if ((!aUsername) || aUsername.trim() == "")) {
+        if ((!aUsername) || aUsername.trim() == "") {
             this.logInfo("passwordManagerGet: username is undefined or empty.")
             return {
                 result: false
