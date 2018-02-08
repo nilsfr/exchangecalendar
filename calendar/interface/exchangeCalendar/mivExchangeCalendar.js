@@ -575,8 +575,7 @@ calExchangeCalendar.prototype = {
     },
 
     set uri(aUri) {
-        //if (this.debug) this.logInfo("set uri:"+aUri.path);
-        this.myId = aUri.path.substr(1);
+        this.myId = aUri.pathQueryRef.substr(1);
         this.mUri = aUri;
 
         this.mPrefs = Cc["@mozilla.org/preferences-service;1"]
@@ -10971,7 +10970,7 @@ exchWebService.check4addon = {
         else {
             mivFunctions.LOG(aAddOn.name + " is installed.");
             try {
-                mivFunctions.LOG(aAddOn.name + " is installed from:" + aAddOn.sourceURI.prePath + aAddOn.sourceURI.path);
+                mivFunctions.LOG(aAddOn.name + " is installed from:" + aAddOn.sourceURI.prePath + aAddOn.sourceURI.pathQueryRef);
             }
             catch (err) {
                 mivFunctions.LOG(aAddOn.name + " unable to determine where installed from.");
