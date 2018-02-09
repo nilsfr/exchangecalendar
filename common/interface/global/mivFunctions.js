@@ -407,9 +407,6 @@ mivFunctions.prototype = {
     },
 
     LOG: function _LOG(aArg) {
-        //var prefB = Cc["@mozilla.org/preferences-service;1"].
-        //            getService(Ci.nsIPrefBranch);
-        //var shouldLog = this.safeGetBoolPref(prefB, "extensions.1st-setup.debug.log", false, true);
 
         if (!this.shouldLog()) {
             return;
@@ -433,7 +430,7 @@ mivFunctions.prototype = {
         }
         else {
             var dt = new Date();
-            string = "1st-setup:" + dt.getFullYear() + "-" + dt.getMonth() + "-" + dt.getDay() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds() + "." + dt.getMilliseconds() + ":" + aArg;
+            string = "ExchangeCalendar [" + dt.toISOString() + "]: " + aArg;
         }
 
         // xxx todo consider using function debug()
