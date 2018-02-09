@@ -2595,7 +2595,7 @@ calExchangeCalendar.prototype = {
             let offset = cal.createDuration();
             offset.weeks = -5;
 
-            aRangeStart = cal.now()
+            aRangeStart = cal.dtz.now()
             aRangeStart.addDuration(offset);
 
             // If cache already contains a bigger range, use it
@@ -2613,7 +2613,7 @@ calExchangeCalendar.prototype = {
             let offset = cal.createDuration();
             offset.weeks = 5;
 
-            aRangeEnd = cal.now()
+            aRangeEnd = cal.dtz.now()
             aRangeEnd.addDuration(offset);
 
             // If cache already contains a bigger range, use it
@@ -3579,7 +3579,7 @@ calExchangeCalendar.prototype = {
     },
 
     get startCacheDate() {
-        var aDate = cal.now();
+        var aDate = cal.dtz.now();
         var tmpDur = cal.createDuration();
         tmpDur.hours = -1 * 24 * this.cacheStartupBefore;
         aDate.addDuration(tmpDur);
@@ -3588,7 +3588,7 @@ calExchangeCalendar.prototype = {
     },
 
     get endCacheDate() {
-        var aDate = cal.now();
+        var aDate = cal.dtz.now();
         var tmpDur = cal.createDuration();
         tmpDur.hours = 1 * 24 * this.cacheStartupAfter;
         aDate.addDuration(tmpDur);
@@ -4486,7 +4486,7 @@ calExchangeCalendar.prototype = {
             var startDate = startDate.clone();
         }
         else {
-            var startDate = cal.now();
+            var startDate = cal.dtz.now();
         }
         startDate.isDate = true;
 
@@ -8719,12 +8719,12 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
             var offset = cal.createDuration();
             offset.days = -20;
             //offset.normalize();
-            aRangeStart = cal.now();
+            aRangeStart = cal.dtz.now();
             aRangeStart.addDuration(offset);
             var offset = cal.createDuration();
             offset.days = 20;
             //offset.normalize();
-            aRangeEnd = cal.now();
+            aRangeEnd = cal.dtz.now();
             aRangeEnd.addDuration(offset);
         }
 
@@ -10102,8 +10102,8 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
         var monthAfterDurarion = cal.createDuration("P" + monthsAfter + "D");
         var monthsBeforeDurarion = cal.createDuration("-P" + monthsBefore + "D");
 
-        var startDate = cal.now();
-        var endDate = cal.now();
+        var startDate = cal.dtz.now();
+        var endDate = cal.dtz.now();
         startDate.addDuration(monthsBeforeDurarion);
         endDate.addDuration(monthAfterDurarion);
 
