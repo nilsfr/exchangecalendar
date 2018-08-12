@@ -908,13 +908,13 @@ calExchangeCalendar.prototype = {
         var newItem = aItem;
 
         // Make sure we have one of our own object types
-        if ((cal.isEvent(aItem)) && (!aItem.className)) {
+        if ((cal.item.isEvent(aItem)) && (!aItem.className)) {
             var newItem = Cc["@1st-setup.nl/exchange/calendarevent;1"]
                 .createInstance(Ci.mivExchangeEvent);
             newItem.cloneToCalEvent(aItem);
         }
 
-        if ((!cal.isEvent(aItem)) && (!aItem.className)) {
+        if ((!cal.item.isEvent(aItem)) && (!aItem.className)) {
             var newItem = Cc["@1st-setup.nl/exchange/calendartodo;1"]
                 .createInstance(Ci.mivExchangeTodo);
             newItem.cloneToCalEvent(aItem);
@@ -994,7 +994,7 @@ calExchangeCalendar.prototype = {
             return;
         }
 
-        if (cal.isEvent(aItem)) {
+        if (cal.item.isEvent(aItem)) {
             // michel123
 
             if (aItem.exchangeXML) {
@@ -1506,7 +1506,7 @@ calExchangeCalendar.prototype = {
         }
 
 
-        if (cal.isEvent(aNewItem)) {
+        if (cal.item.isEvent(aNewItem)) {
             if (this.debug) this.logInfo("ModifyItem: it is an event.");
             var doSendMeetingRespons = false;
             var meOld = this.getInvitedAttendee(aOldItem);
@@ -2042,7 +2042,7 @@ calExchangeCalendar.prototype = {
         }
 
         var self = this;
-        if (cal.isEvent(aItem)) {
+        if (cal.item.isEvent(aItem)) {
             if (this.debug) this.logInfo("deleteItem is calIEvent");
 
             var iAmOrganizer = ((aItem.organizer) && (aItem.organizer.id.replace(/^mailto:/i, '').toLowerCase() == this.mailbox.toLowerCase()));
@@ -2310,7 +2310,7 @@ calExchangeCalendar.prototype = {
         }
 
         var item_iid = null;
-        if (cal.isEvent(item))
+        if (cal.item.isEvent(item))
             item_iid = Ci.calIEvent;
         else if (isToDo(item))
             item_iid = Ci.calITodo;
@@ -2880,7 +2880,7 @@ calExchangeCalendar.prototype = {
             // Check also if invitation should be cancelled
             for (let itemid in ids) {
                 if (this.itemCacheById[itemid]
-                    && cal.isEvent(this.itemCacheById[itemid])) {
+                    && cal.item.isEvent(this.itemCacheById[itemid])) {
                     events.push(this.itemCacheById[itemid]);
 
                     if (this.deleteCancelledInvitation
@@ -4470,7 +4470,7 @@ calExchangeCalendar.prototype = {
 
         var startDate;
         var originalDate;
-        if (cal.isEvent(aItem)) {
+        if (cal.item.isEvent(aItem)) {
             startDate = aItem.startDate.clone();
             originalDate = aItem.startDate.clone();
         }
@@ -4550,7 +4550,7 @@ calExchangeCalendar.prototype = {
             break;
         }
 
-        if (cal.isEvent(aItem)) {
+        if (cal.item.isEvent(aItem)) {
             var startDateStr = cal.toRFC3339(startDate.getInTimezone(this.globalFunctions.ecUTC()));
             //			var startDateStr = cal.toRFC3339(originalDate.getInTimezone(this.globalFunctions.ecUTC()));
         }
@@ -4569,7 +4569,7 @@ calExchangeCalendar.prototype = {
         else if (!rrule.isByCount && rrule.untilDate) {
 
             var endDate = rrule.untilDate.clone();
-            if (cal.isEvent(aItem)) {
+            if (cal.item.isEvent(aItem)) {
                 endDate.isDate = true;
                 var endDateStr = cal.toRFC3339(endDate.getInTimezone(this.globalFunctions.ecUTC()));
             }
@@ -4613,7 +4613,7 @@ calExchangeCalendar.prototype = {
             var alarmTime = alarm.alarmDate;
             break;
         case Ci.calIAlarm.ALARM_RELATED_START:
-            if (cal.isEvent(aItem)) {
+            if (cal.item.isEvent(aItem)) {
                 var alarmTime = aItem.startDate.clone();
             }
             else {
@@ -4622,7 +4622,7 @@ calExchangeCalendar.prototype = {
             alarmTime.addDuration(alarm.offset);
             break;
         case Ci.calIAlarm.ALARM_RELATED_END:
-            if (cal.isEvent(aItem)) {
+            if (cal.item.isEvent(aItem)) {
                 var alarmTime = aItem.endDate.clone();
             }
             else {
@@ -5438,7 +5438,7 @@ calExchangeCalendar.prototype = {
         }
 
         // Make an event for thistory.
-        if (cal.isEvent(erCreateItemRequest.argument.item)) {
+        if (cal.item.isEvent(erCreateItemRequest.argument.item)) {
             this.addActivity(calGetString("calExchangeCalendar", "addCalendarEventMessage", [erCreateItemRequest.argument.item.title, this.name], "exchangecommon"), "", erCreateItemRequest.argument.actionStart, Date.now());
         }
         else {
@@ -6007,7 +6007,7 @@ calExchangeCalendar.prototype = {
         this.notConnected = false;
 
         // Make an event for thistory.
-        if (cal.isEvent(erUpdateItemRequest.argument.newItem)) {
+        if (cal.item.isEvent(erUpdateItemRequest.argument.newItem)) {
             this.addActivity(calGetString("calExchangeCalendar", "updateCalendarEventMessage", [erUpdateItemRequest.argument.newItem.title, this.name], "exchangecommon"), "", erUpdateItemRequest.argument.actionStart, Date.now());
         }
         else {
@@ -6112,7 +6112,7 @@ calExchangeCalendar.prototype = {
         }
 
 
-        if (cal.isEvent(erDeleteItemRequest.argument.item)) {
+        if (cal.item.isEvent(erDeleteItemRequest.argument.item)) {
             this.addActivity(calGetString("calExchangeCalendar", "deleteCalendarEventMessage", [erDeleteItemRequest.argument.item.title, this.name], "exchangecommon"), "", erDeleteItemRequest.argument.actionStart, Date.now());
         }
         else {
@@ -6813,7 +6813,7 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
                         for (var index in this.itemCacheById) {
 
                             if ((this.itemCacheById[index])
-                                && (cal.isEvent(this.itemCacheById[index]))
+                                && (cal.item.isEvent(this.itemCacheById[index]))
                                 && ((this.itemCacheById[index].calendarItemType == "Occurrence")
                                     || (this.itemCacheById[index].calendarItemType == "Exception"))
                                 && (this.itemCacheById[index].uid == aMaster.uid)
@@ -7147,7 +7147,7 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
                 for (var itemId in this.parentLessItems) {
                     parentLessCounter++;
                     if ((this.parentLessItems[itemId])
-                        && (cal.isEvent(this.parentLessItems[itemId]))
+                        && (cal.item.isEvent(this.parentLessItems[itemId]))
                         && ((this.parentLessItems[itemId].calendarItemType == "Occurrence")
                             || (this.parentLessItems[itemId].calendarItemType == "Exception"))
                         && (this.parentLessItems[itemId].uid == item.uid)
@@ -7601,7 +7601,7 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
                         this.addItemToCache(item);
                         this.itemCount++;
 
-                        if (cal.isEvent(item) && this.markEventasTentative) {
+                        if (cal.item.isEvent(item) && this.markEventasTentative) {
                             var isOldCacheItem = false;
                             var aItem = item.QueryInterface(Ci.mivExchangeEvent);
 
@@ -7820,7 +7820,7 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
         }
 
 
-        if (cal.isEvent(aNewItem)) {
+        if (cal.item.isEvent(aNewItem)) {
             if (this.debug) this.logInfo("modifyEventImmediate:  it is an event.");
             var doSendMeetingRespons = false;
             var meOld = this.getInvitedAttendee(aOldItem);
@@ -9661,7 +9661,7 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
 
         for each(var item in aList) {
 
-            if (cal.isEvent(item.calItem)) {
+            if (cal.item.isEvent(item.calItem)) {
                 var startDate = cal.toRFC3339(item.calItem.startDate.getInTimezone(this.globalFunctions.ecUTC()));
                 var endDate = cal.toRFC3339(item.calItem.endDate.getInTimezone(this.globalFunctions.ecUTC()));
                 var eventField = "y";
@@ -9777,7 +9777,7 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
 
             for each(var item in aList) {
 
-                if (cal.isEvent(item.calItem)) {
+                if (cal.item.isEvent(item.calItem)) {
                     var startDate = cal.toRFC3339(item.calItem.startDate.getInTimezone(this.globalFunctions.ecUTC()));
                     var endDate = cal.toRFC3339(item.calItem.endDate.getInTimezone(this.globalFunctions.ecUTC()));
                     var eventField = "y";
@@ -9804,7 +9804,7 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
                     var eventField = "n";
                 }
 
-                if (cal.isEvent(item.calItem)) {
+                if (cal.item.isEvent(item.calItem)) {
                     if (this.getItemType(item.calItem) == "M") {
                         // Lets find the real end date.
                         for (var childIndex in this.itemCacheById) {
@@ -9881,7 +9881,7 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
 
             for each(var item in aList) {
 
-                if (cal.isEvent(item.calItem)) {
+                if (cal.item.isEvent(item.calItem)) {
                     var startDate = cal.toRFC3339(item.calItem.startDate.getInTimezone(this.globalFunctions.ecUTC()));
                     var endDate = cal.toRFC3339(item.calItem.endDate.getInTimezone(this.globalFunctions.ecUTC()));
                     var eventField = "y";
@@ -9908,7 +9908,7 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
                     var eventField = "n";
                 }
 
-                if (cal.isEvent(item.calItem)) {
+                if (cal.item.isEvent(item.calItem)) {
                     if (this.getItemType(item.calItem) == "M") {
                         // Lets find the real end date.
                         if (this.noDB) return;
