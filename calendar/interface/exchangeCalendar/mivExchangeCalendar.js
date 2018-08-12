@@ -10951,11 +10951,6 @@ function convertToVersion1() {
 
 }
 
-/** Module Registration */
-const scriptLoadOrder = [
-    "calUtils.js"
-];
-
 if (!exchWebService) var exchWebService = {};
 
 exchWebService.check4addon = {
@@ -11002,7 +10997,7 @@ function NSGetFactory(cid) {
             // Load main script from lightning that we need.
             convertToVersion1();
 
-            cal.loadScripts(scriptLoadOrder, Cu.getGlobalForObject(this));
+            Services.scriptloader.loadSubScript("resource://calendar/calendar-js/calUtils.js", Cu.getGlobalForObject(this));
             NSGetFactory.mainEC = XPCOMUtils.generateNSGetFactory([calExchangeCalendar]);
 
         }
