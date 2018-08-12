@@ -3208,8 +3208,8 @@ calExchangeCalendar.prototype = {
                 serverUrl: this.serverUrl,
                 email: aCalId.replace(/^mailto:/i, ""),
                 attendeeType: 'Required',
-                start: cal.toRFC3339(tmpStartDate.getInTimezone(this.globalFunctions.ecUTC())),
-                end: cal.toRFC3339(tmpEndDate.getInTimezone(this.globalFunctions.ecUTC())),
+                start: cal.dtz.toRFC3339(tmpStartDate.getInTimezone(this.globalFunctions.ecUTC())),
+                end: cal.dtz.toRFC3339(tmpEndDate.getInTimezone(this.globalFunctions.ecUTC())),
                 calId: aCalId,
                 folderID: this.folderID,
                 changeKey: this.changeKey
@@ -4548,14 +4548,14 @@ calExchangeCalendar.prototype = {
         }
 
         if (cal.item.isEvent(aItem)) {
-            var startDateStr = cal.toRFC3339(startDate.getInTimezone(this.globalFunctions.ecUTC()));
-            //			var startDateStr = cal.toRFC3339(originalDate.getInTimezone(this.globalFunctions.ecUTC()));
+            var startDateStr = cal.dtz.toRFC3339(startDate.getInTimezone(this.globalFunctions.ecUTC()));
+            //			var startDateStr = cal.dtz.toRFC3339(originalDate.getInTimezone(this.globalFunctions.ecUTC()));
         }
         else {
             // We make a non-UTC datetime value for this.globalFunctions.
             // EWS will use the MeetingTimeZone or StartTimeZone and EndTimeZone to convert.
-            //LOG("  ==== tmpStart:"+cal.toRFC3339(tmpStart));
-            var startDateStr = cal.toRFC3339(startDate).substr(0, 19); //cal.toRFC3339(tmpStart).length-6);
+            //LOG("  ==== tmpStart:"+cal.dtz.toRFC3339(tmpStart));
+            var startDateStr = cal.dtz.toRFC3339(startDate).substr(0, 19); //cal.dtz.toRFC3339(tmpStart).length-6);
         }
 
         if (rrule.isByCount && rrule.count != -1) {
@@ -4568,7 +4568,7 @@ calExchangeCalendar.prototype = {
             var endDate = rrule.untilDate.clone();
             if (cal.item.isEvent(aItem)) {
                 endDate.isDate = true;
-                var endDateStr = cal.toRFC3339(endDate.getInTimezone(this.globalFunctions.ecUTC()));
+                var endDateStr = cal.dtz.toRFC3339(endDate.getInTimezone(this.globalFunctions.ecUTC()));
             }
             else {
                 if (!endDate.isDate) {
@@ -4580,7 +4580,7 @@ calExchangeCalendar.prototype = {
 
                     endDate.isDate = true;
                 }
-                var endDateStr = cal.toRFC3339(endDate).substr(0, 19); //cal.toRFC3339(tmpEnd).length-6);
+                var endDateStr = cal.dtz.toRFC3339(endDate).substr(0, 19); //cal.dtz.toRFC3339(tmpEnd).length-6);
             }
             var edr = r.addChildTag("EndDateRecurrence", "nsTypes", null);
             edr.addChildTag("StartDate", "nsTypes", startDateStr);
@@ -4691,7 +4691,7 @@ calExchangeCalendar.prototype = {
 
             var newSnoozeTime = cal.createDateTime(tmpStr);
             newSnoozeTime = newSnoozeTime.getInTimezone(cal.dtz.UTC);
-            eprop.addChildTag("Value", "nsTypes", cal.toRFC3339(newSnoozeTime));
+            eprop.addChildTag("Value", "nsTypes", cal.dtz.toRFC3339(newSnoozeTime));
         }
 
         if (this.debug) this.logInfo("getSingleSnoozeState END");
@@ -4798,7 +4798,7 @@ calExchangeCalendar.prototype = {
 
             var newSnoozeTime = cal.createDateTime(tmpStr);
             newSnoozeTime = newSnoozeTime.getInTimezone(cal.dtz.UTC);
-            eprop.addChildTag("Value", "nsTypes", cal.toRFC3339(newSnoozeTime));
+            eprop.addChildTag("Value", "nsTypes", cal.dtz.toRFC3339(newSnoozeTime));
         }
         if (this.debug) this.logInfo("getMasterSnoozeStates END");
         return tmpStr;
@@ -4952,13 +4952,13 @@ calExchangeCalendar.prototype = {
 
             // We make a non-UTC datetime value for this.globalFunctions.
             // EWS will use the MeetingTimeZone or StartTimeZone and EndTimeZone to convert.
-            var exchStart = cal.toRFC3339(tmpStart.getInTimezone(this.globalFunctions.ecUTC())).substr(0, 19) + "Z"; //cal.toRFC3339(tmpStart).length-6);
-            var exchEnd = cal.toRFC3339(tmpEnd.getInTimezone(this.globalFunctions.ecUTC())).substr(0, 19) + "Z"; //cal.toRFC3339(tmpEnd).length-6);
+            var exchStart = cal.dtz.toRFC3339(tmpStart.getInTimezone(this.globalFunctions.ecUTC())).substr(0, 19) + "Z"; //cal.dtz.toRFC3339(tmpStart).length-6);
+            var exchEnd = cal.dtz.toRFC3339(tmpEnd.getInTimezone(this.globalFunctions.ecUTC())).substr(0, 19) + "Z"; //cal.dtz.toRFC3339(tmpEnd).length-6);
         }
         else {
             // We set in bias advanced to UCT datetime values for this.globalFunctions.
-            var exchStart = cal.toRFC3339(tmpStart.getInTimezone(cal.dtz.UTC));
-            var exchEnd = cal.toRFC3339(tmpEnd.getInTimezone(cal.dtz.UTC));
+            var exchStart = cal.dtz.toRFC3339(tmpStart.getInTimezone(cal.dtz.UTC));
+            var exchEnd = cal.dtz.toRFC3339(tmpEnd.getInTimezone(cal.dtz.UTC));
         }
 
         var alarms = aItem.getAlarms({});
@@ -5013,7 +5013,7 @@ calExchangeCalendar.prototype = {
             extField.setAttribute("DistinguishedPropertySetId", "Common");
             extField.setAttribute("PropertyId", MAPI_PidLidReminderSignalTime);
             extField.setAttribute("PropertyType", "SystemTime");
-            eprop.addChildTag("Value", "nsTypes", cal.toRFC3339(newSnoozeTime));
+            eprop.addChildTag("Value", "nsTypes", cal.dtz.toRFC3339(newSnoozeTime));
 
         }
 
@@ -5247,7 +5247,7 @@ calExchangeCalendar.prototype = {
                 break;
             }
 
-            e.addChildTag("ReminderDueBy", "nsTypes", cal.toRFC3339(newAlarmTime));
+            e.addChildTag("ReminderDueBy", "nsTypes", cal.dtz.toRFC3339(newAlarmTime));
             e.addChildTag("ReminderIsSet", "nsTypes", "true");
         }
         else {
@@ -5296,7 +5296,7 @@ calExchangeCalendar.prototype = {
             extField.setAttribute("DistinguishedPropertySetId", "Common");
             extField.setAttribute("PropertyId", MAPI_PidLidReminderSignalTime);
             extField.setAttribute("PropertyType", "SystemTime");
-            eprop.addChildTag("Value", "nsTypes", cal.toRFC3339(newSnoozeTime));
+            eprop.addChildTag("Value", "nsTypes", cal.dtz.toRFC3339(newSnoozeTime));
 
         }
 
@@ -5332,7 +5332,7 @@ calExchangeCalendar.prototype = {
             	tmpDuration.minutes = -1;
             	tmpStart.addDuration(tmpDuration);*/
 
-            e.addChildTag("CompleteDate", "nsTypes", cal.toRFC3339(tmpStart));
+            e.addChildTag("CompleteDate", "nsTypes", cal.dtz.toRFC3339(tmpStart));
         }
 
 
@@ -5343,7 +5343,7 @@ calExchangeCalendar.prototype = {
                 aItem.dueDate = aItem.dueDate.getInTimezone(this.globalFunctions.ecDefaultTimeZone());
             }
 
-            e.addChildTag("DueDate", "nsTypes", cal.toRFC3339(aItem.dueDate));
+            e.addChildTag("DueDate", "nsTypes", cal.dtz.toRFC3339(aItem.dueDate));
         }
 
         if (aItem.mileage) {
@@ -5365,7 +5365,7 @@ calExchangeCalendar.prototype = {
                 aItem.entryDate = aItem.entryDate.getInTimezone(this.globalFunctions.ecDefaultTimeZone());
             }
 
-            e.addChildTag("StartDate", "nsTypes", cal.toRFC3339(aItem.entryDate));
+            e.addChildTag("StartDate", "nsTypes", cal.dtz.toRFC3339(aItem.entryDate));
         }
         //		}
 
@@ -5681,9 +5681,9 @@ calExchangeCalendar.prototype = {
         var proposeNewTime = false;
 
         if (proposeStart)
-            input.proposeStart = cal.toRFC3339(proposeStart.getInTimezone(this.globalFunctions.ecUTC()));
+            input.proposeStart = cal.dtz.toRFC3339(proposeStart.getInTimezone(this.globalFunctions.ecUTC()));
         if (proposeEnd)
-            input.proposeEnd = cal.toRFC3339(proposeEnd.getInTimezone(this.globalFunctions.ecUTC()));
+            input.proposeEnd = cal.dtz.toRFC3339(proposeEnd.getInTimezone(this.globalFunctions.ecUTC()));
 
         if (input.proposeStart && input.proposeEnd) {
             proposeNewTime = true;
@@ -8777,8 +8777,8 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
                 serverUrl: this.serverUrl,
                 email: this.mailbox.replace(/^mailto:/i, ""),
                 attendeeType: 'Required',
-                start: cal.toRFC3339(tmpStartDate.getInTimezone(this.globalFunctions.ecUTC())),
-                end: cal.toRFC3339(tmpEndDate.getInTimezone(this.globalFunctions.ecUTC())),
+                start: cal.dtz.toRFC3339(tmpStartDate.getInTimezone(this.globalFunctions.ecUTC())),
+                end: cal.dtz.toRFC3339(tmpEndDate.getInTimezone(this.globalFunctions.ecUTC())),
                 folderID: this.folderID,
                 changeKey: this.changeKey
             },
@@ -9659,24 +9659,24 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
         for each(var item in aList) {
 
             if (cal.item.isEvent(item.calItem)) {
-                var startDate = cal.toRFC3339(item.calItem.startDate.getInTimezone(this.globalFunctions.ecUTC()));
-                var endDate = cal.toRFC3339(item.calItem.endDate.getInTimezone(this.globalFunctions.ecUTC()));
+                var startDate = cal.dtz.toRFC3339(item.calItem.startDate.getInTimezone(this.globalFunctions.ecUTC()));
+                var endDate = cal.dtz.toRFC3339(item.calItem.endDate.getInTimezone(this.globalFunctions.ecUTC()));
                 var eventField = "y";
             }
             else {
                 if (item.calItem.entryDate) {
-                    var startDate = cal.toRFC3339(item.calItem.entryDate.getInTimezone(this.globalFunctions.ecUTC()));
+                    var startDate = cal.dtz.toRFC3339(item.calItem.entryDate.getInTimezone(this.globalFunctions.ecUTC()));
                 }
                 else {
                     var startDate = "";
                 };
 
                 if (((item.calItem.completedDate) && (item.calItem.dueDate) && (item.calItem.completedDate.compare(item.calItem.dueDate) == 1)) || ((item.calItem.completedDate) && (!item.calItem.dueDate))) {
-                    var endDate = cal.toRFC3339(item.calItem.completedDate.getInTimezone(this.globalFunctions.ecUTC()));
+                    var endDate = cal.dtz.toRFC3339(item.calItem.completedDate.getInTimezone(this.globalFunctions.ecUTC()));
                 }
                 else {
                     if (item.calItem.dueDate) {
-                        var endDate = cal.toRFC3339(item.calItem.dueDate.getInTimezone(this.globalFunctions.ecUTC()));
+                        var endDate = cal.dtz.toRFC3339(item.calItem.dueDate.getInTimezone(this.globalFunctions.ecUTC()));
                     }
                     else {
                         var endDate = "";
@@ -9775,24 +9775,24 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
             for each(var item in aList) {
 
                 if (cal.item.isEvent(item.calItem)) {
-                    var startDate = cal.toRFC3339(item.calItem.startDate.getInTimezone(this.globalFunctions.ecUTC()));
-                    var endDate = cal.toRFC3339(item.calItem.endDate.getInTimezone(this.globalFunctions.ecUTC()));
+                    var startDate = cal.dtz.toRFC3339(item.calItem.startDate.getInTimezone(this.globalFunctions.ecUTC()));
+                    var endDate = cal.dtz.toRFC3339(item.calItem.endDate.getInTimezone(this.globalFunctions.ecUTC()));
                     var eventField = "y";
                 }
                 else {
                     if (item.calItem.entryDate) {
-                        var startDate = cal.toRFC3339(item.calItem.entryDate.getInTimezone(this.globalFunctions.ecUTC()));
+                        var startDate = cal.dtz.toRFC3339(item.calItem.entryDate.getInTimezone(this.globalFunctions.ecUTC()));
                     }
                     else {
                         var startDate = "";
                     };
 
                     if (((item.calItem.completedDate) && (item.calItem.dueDate) && (item.calItem.completedDate.compare(item.calItem.dueDate) == 1)) || ((item.calItem.completedDate) && (!item.calItem.dueDate))) {
-                        var endDate = cal.toRFC3339(item.calItem.completedDate.getInTimezone(this.globalFunctions.ecUTC()));
+                        var endDate = cal.dtz.toRFC3339(item.calItem.completedDate.getInTimezone(this.globalFunctions.ecUTC()));
                     }
                     else {
                         if (item.calItem.dueDate) {
-                            var endDate = cal.toRFC3339(item.calItem.dueDate.getInTimezone(this.globalFunctions.ecUTC()));
+                            var endDate = cal.dtz.toRFC3339(item.calItem.dueDate.getInTimezone(this.globalFunctions.ecUTC()));
                         }
                         else {
                             var endDate = "";
@@ -9806,7 +9806,7 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
                         // Lets find the real end date.
                         for (var childIndex in this.itemCacheById) {
                             if ((this.itemCacheById[childIndex]) && (item.calItem.uid == this.itemCacheById[childIndex].uid)) {
-                                var childEnd = cal.toRFC3339(this.itemCacheById[childIndex].endDate.getInTimezone(this.globalFunctions.ecUTC()));
+                                var childEnd = cal.dtz.toRFC3339(this.itemCacheById[childIndex].endDate.getInTimezone(this.globalFunctions.ecUTC()));
                                 if (childEnd > endDate) {
                                     endDate = childEnd;
                                 }
@@ -9879,24 +9879,24 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
             for each(var item in aList) {
 
                 if (cal.item.isEvent(item.calItem)) {
-                    var startDate = cal.toRFC3339(item.calItem.startDate.getInTimezone(this.globalFunctions.ecUTC()));
-                    var endDate = cal.toRFC3339(item.calItem.endDate.getInTimezone(this.globalFunctions.ecUTC()));
+                    var startDate = cal.dtz.toRFC3339(item.calItem.startDate.getInTimezone(this.globalFunctions.ecUTC()));
+                    var endDate = cal.dtz.toRFC3339(item.calItem.endDate.getInTimezone(this.globalFunctions.ecUTC()));
                     var eventField = "y";
                 }
                 else {
                     if (item.calItem.entryDate) {
-                        var startDate = cal.toRFC3339(item.calItem.entryDate.getInTimezone(this.globalFunctions.ecUTC()));
+                        var startDate = cal.dtz.toRFC3339(item.calItem.entryDate.getInTimezone(this.globalFunctions.ecUTC()));
                     }
                     else {
                         var startDate = "";
                     };
 
                     if ((item.calItem.completedDate) && (item.calItem.completedDate.compare(item.calItem.dueDate) == 1)) {
-                        var endDate = cal.toRFC3339(item.calItem.completedDate.getInTimezone(this.globalFunctions.ecUTC()));
+                        var endDate = cal.dtz.toRFC3339(item.calItem.completedDate.getInTimezone(this.globalFunctions.ecUTC()));
                     }
                     else {
                         if (item.calItem.dueDate) {
-                            var endDate = cal.toRFC3339(item.calItem.dueDate.getInTimezone(this.globalFunctions.ecUTC()));
+                            var endDate = cal.dtz.toRFC3339(item.calItem.dueDate.getInTimezone(this.globalFunctions.ecUTC()));
                         }
                         else {
                             var endDate = "";
@@ -9990,13 +9990,13 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
             for each(var item in aList) {
 
 
-                var endDate = cal.toRFC3339(item.endDate.getInTimezone(this.globalFunctions.ecUTC()));
+                var endDate = cal.dtz.toRFC3339(item.endDate.getInTimezone(this.globalFunctions.ecUTC()));
 
                 if (this.getItemType(item) == "M") {
                     // Lets find the real end date.
                     for (var childIndex in this.itemCacheById) {
                         if ((this.itemCacheById[childIndex]) && (item.uid == this.itemCacheById[childIndex].uid)) {
-                            var childEnd = cal.toRFC3339(this.itemCacheById[childIndex].endDate.getInTimezone(this.globalFunctions.ecUTC()));
+                            var childEnd = cal.dtz.toRFC3339(this.itemCacheById[childIndex].endDate.getInTimezone(this.globalFunctions.ecUTC()));
                             if (childEnd > endDate) {
                                 endDate = childEnd;
                             }
@@ -10367,8 +10367,8 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
             utcEndDate.isDate = true;
         }
 
-        let startDate = cal.toRFC3339(utcStartDate);
-        let endDate = cal.toRFC3339(utcEndDate);
+        let startDate = cal.dtz.toRFC3339(utcStartDate);
+        let endDate = cal.dtz.toRFC3339(utcEndDate);
 
         let sqlStr = "SELECT item FROM items";
         let whereStr = "";
