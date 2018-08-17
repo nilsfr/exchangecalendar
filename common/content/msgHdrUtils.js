@@ -83,7 +83,7 @@ XPCOMUtils.defineLazyGetter(MailServices, "messenger", function () {
  * @param {nsIMsgDbHdr} aMsg The message
  * @return {String}
  */
-function msgHdrGetUri(aMsg)
+var msgHdrGetUri = aMsg =>
 aMsg.folder.getUriForMsg(aMsg)
 
 /**
@@ -107,7 +107,7 @@ function msgUriToMsgHdr(aUri) {
  * @param {nsIMsgDbHdr} msgHdr The message header to examine
  * @return {bool}
  */
-function msgHdrIsInbox(msgHdr)
+var msgHdrIsInbox = msgHdr =>
 msgHdr.folder.getFlag(nsMsgFolderFlags_Inbox)
 
 /**
@@ -115,7 +115,7 @@ msgHdr.folder.getFlag(nsMsgFolderFlags_Inbox)
  * @param {nsIMsgDbHdr} msgHdr The message header to examine
  * @return {bool}
  */
-function msgHdrIsDraft(msgHdr)
+var msgHdrIsDraft = msgHdr =>
 msgHdr.folder.getFlag(nsMsgFolderFlags_Drafts)
 
 /**
@@ -123,7 +123,7 @@ msgHdr.folder.getFlag(nsMsgFolderFlags_Drafts)
  * @param {nsIMsgDbHdr} msgHdr The message header to examine
  * @return {bool}
  */
-function msgHdrIsSent(msgHdr)
+var msgHdrIsSent = msgHdr =>
 msgHdr.folder.getFlag(nsMsgFolderFlags_SentMail)
 
 /**
@@ -131,7 +131,7 @@ msgHdr.folder.getFlag(nsMsgFolderFlags_SentMail)
  * @param {nsIMsgDbHdr} msgHdr The message header to examine
  * @return {bool}
  */
-function msgHdrIsArchive(msgHdr)
+var msgHdrIsArchive = msgHdr =>
 msgHdr.folder.getFlag(nsMsgFolderFlags_Archive)
 
 /**
@@ -139,7 +139,7 @@ msgHdr.folder.getFlag(nsMsgFolderFlags_Archive)
  * @param {String} The URL
  * @return {nsIMsgDbHdr} The message header.
  */
-function msgHdrFromNeckoUrl(aUrl)
+var msgHdrFromNeckoUrl = aUrl =>
 aUrl.QueryInterface(Ci.nsIMsgMessageUrl).messageHeader
 
 /**
@@ -306,7 +306,7 @@ function msgHdrsArchive(msgHdrs) {
     let mail3PaneWindow = getMail3Pane();
     let batchMover = new mail3PaneWindow.BatchMessageMover();
     batchMover.archiveMessages(msgHdrs.filter(
-        function (x) !msgHdrIsArchive(x) && getMail3Pane().getIdentityForHeader(x).archiveEnabled
+        (x) => !msgHdrIsArchive(x) && getMail3Pane().getIdentityForHeader(x).archiveEnabled
     ));
 }
 
@@ -315,7 +315,7 @@ function msgHdrsArchive(msgHdrs) {
  * @param {nsIMsgDbHdr} msgHdr The message header
  * @return {Bool}
  */
-function msgHdrIsRss(msgHdr)
+var msgHdrIsRss = msgHdr =>
 (msgHdr.folder.server instanceof Ci.nsIRssIncomingServer)
 
 /**
@@ -323,7 +323,7 @@ function msgHdrIsRss(msgHdr)
  * @param {nsIMsgDbHdr} msgHdr The message header
  * @return {Bool}
  */
-function msgHdrIsNntp(msgHdr)
+var msgHdrIsNntp = msgHdr =>
 (msgHdr.folder.server instanceof Ci.nsINntpIncomingServer)
 
 /**
@@ -331,7 +331,7 @@ function msgHdrIsNntp(msgHdr)
  * @param {nsIMsgDbHdr} msgHdr The message header
  * @return {Bool}
  */
-function msgHdrIsJunk(aMsgHdr)
+var msgHdrIsJunk = aMsgHdr =>
 aMsgHdr.getStringProperty("junkscore") == Ci.nsIJunkMailPlugin.IS_SPAM_SCORE
 
 /**
@@ -380,7 +380,7 @@ function msgHdrGetHeaders(aMsgHdr, k) {
     let uri = msgHdrGetUri(aMsgHdr);
     let messageService = MailServices.messenger.messageServiceFromURI(uri);
 
-    let fallback = function ()
+    let fallback = () =>
     MsgHdrToMimeMessage(aMsgHdr, null, function (aMsgHdr, aMimeMsg) {
         k(aMimeMsg);
     }, true, {
