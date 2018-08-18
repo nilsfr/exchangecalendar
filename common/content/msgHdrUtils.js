@@ -237,21 +237,23 @@ function msgHdrSetTags(aMsgHdr, aTags) {
  */
 function msgHdrsMarkAsRead(msgHdrs, read) {
     let pending = {};
-    for each(let msgHdr in msgHdrs) {
-        if (msgHdr.isRead == read)
-            continue;
-        if (!pending[msgHdr.folder.URI]) {
-            pending[msgHdr.folder.URI] = {
-                folder: msgHdr.folder,
-                msgs: Cc["@mozilla.org/array;1"].createInstance(Ci.nsIMutableArray)
-            };
+    if (msgHdrs) {
+        for (let msgHdr of Object.values(msgHdrs)) {
+            if (msgHdr.isRead == read)
+                continue;
+            if (!pending[msgHdr.folder.URI]) {
+                pending[msgHdr.folder.URI] = {
+                    folder: msgHdr.folder,
+                    msgs: Cc["@mozilla.org/array;1"].createInstance(Ci.nsIMutableArray)
+                };
+            }
+            pending[msgHdr.folder.URI].msgs.appendElement(msgHdr, false);
         }
-        pending[msgHdr.folder.URI].msgs.appendElement(msgHdr, false);
     }
-    for each(let {
+    for (let {
         folder,
         msgs
-    } in pending) {
+    } of Object.values(pending)) {
         folder.markMessagesRead(msgs, read);
         folder.msgDatabase = null; /* don't leak */
     }
@@ -263,19 +265,21 @@ function msgHdrsMarkAsRead(msgHdrs, read) {
  */
 function msgHdrsDelete(msgHdrs) {
     let pending = {};
-    for each(let msgHdr in msgHdrs) {
-        if (!pending[msgHdr.folder.URI]) {
-            pending[msgHdr.folder.URI] = {
-                folder: msgHdr.folder,
-                msgs: Cc["@mozilla.org/array;1"].createInstance(Ci.nsIMutableArray)
-            };
+    if (msgHdrs) {
+        for (let msgHdr of Object.values(msgHdrs)) {
+            if (!pending[msgHdr.folder.URI]) {
+                pending[msgHdr.folder.URI] = {
+                    folder: msgHdr.folder,
+                    msgs: Cc["@mozilla.org/array;1"].createInstance(Ci.nsIMutableArray)
+                };
+            }
+            pending[msgHdr.folder.URI].msgs.appendElement(msgHdr, false);
         }
-        pending[msgHdr.folder.URI].msgs.appendElement(msgHdr, false);
     }
-    for each(let {
+    for (let {
         folder,
         msgs
-    } in pending) {
+    } of Object.values(pending)) {
         folder.deleteMessages(msgs, getMail3Pane().msgWindow, false, false, null, true);
         folder.msgDatabase = null; /* don't leak */
     }
@@ -394,7 +398,7 @@ function msgHdrGetHeaders(aMsgHdr, k) {
                 let str = aRawString.replace(re, " ");
                 let lines = str.split(/\r?\n/);
                 let obj = {};
-                for each(let [, line] in Iterator(lines)) {
+                for (let line of Object.values(lines)) {
                     let i = line.indexOf(":");
                     if (i < 0)
                         continue;
