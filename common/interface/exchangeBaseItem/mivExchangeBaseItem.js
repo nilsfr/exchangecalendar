@@ -3455,9 +3455,9 @@ mivExchangeBaseItem.prototype = {
         // Alarm snooze or dismiss
         if (typeof this._newXMozSnoozeTime !== undefined) {
             //dump("checkAlarmChange: this._newXMozSnoozeTime was set to:"+this._newXMozSnoozeTime+", newReminderMinutesBeforeStart="+newReminderMinutesBeforeStart+"\n");
-            dump("\ncheckAlarmChange: snoozetime " + this._newXMozSnoozeTime);
+            dump("checkAlarmChange: snoozetime " + this._newXMozSnoozeTime + "\n");
             if ((this._newXMozSnoozeTime === null) && (newReminderMinutesBeforeStart !== true)) {
-                dump("\ncheckAlarmChange: dismissed " + newReminderMinutesBeforeStart + ".\n");
+                dump("checkAlarmChange: dismissed " + newReminderMinutesBeforeStart + ".\n");
                 //dump("checkAlarmChange: We have a change\n");
                 if (this.calendarItemType == "RecurringMaster") {
                     // Find out which occurrence or exception was dismissed
