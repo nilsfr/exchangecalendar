@@ -7642,7 +7642,7 @@ calExchangeCalendar.prototype = {
             var item = this.convertExchangeToCal(aItems[index], erGetItemsRequest, doNotify, fromOfflineCache);
 
             if (item) {
-                if (item.isCancelled && item.reminderIsSet && isEvent(item)) {
+                if (item.isCancelled && item.reminderIsSet && cal.item.isEvent(item)) {
                     var aNewItem = item.QueryInterface(Ci.mivExchangeEvent);
                     if (this.debug) this.logInfo("updateCalendar2: This item is Cancelled resetting reminder to false :  " + aNewItem.title);
                     this.itemCount++;
