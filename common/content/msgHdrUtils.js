@@ -189,13 +189,13 @@ function msgHdrGetTags(aMsgHdr) {
     let keywords = aMsgHdr.getStringProperty("keywords");
     let keywordList = keywords.split(' ');
     let keywordMap = {};
-    for (let [, keyword] in Iterator(keywordList)) {
+    for (let keyword of Object.values(keywordList)) {
         keywordMap[keyword] = true;
     }
 
     let tagArray = MailServices.tags.getAllTags({});
     let tags = [];
-    for (let [iTag, tag] in Iterator(tagArray)) {
+    for (let [iTag, tag] of Object.entries(tagArray)) {
         let tag = tagArray[iTag];
         if (tag.key in keywordMap)
             tags.push(tag);
