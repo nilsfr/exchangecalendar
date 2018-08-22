@@ -34,6 +34,7 @@ Cu.import("resource://exchangecalendar/erGetTimeZones.js");
 //Cu.import("resource://exchangecommoninterfaces/xml2jxon/mivIxml2jxon.js");
 
 Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
+Cu.importGlobalProperties(["XMLHttpRequest"]);
 
 function mivExchangeTimeZones() {
     this._timeZones = {};
@@ -234,7 +235,7 @@ mivExchangeTimeZones.prototype = {
         }
         else {
             // We need to get the timezone name for this id.
-            if (this._timeZones["Exchange2007_SP1"][aMeetingTimeZone]) {
+            if (this._timeZones["Exchange2007_SP1"] && this._timeZones["Exchange2007_SP1"][aMeetingTimeZone]) {
                 return this.getCalTimeZoneByExchangeTimeZone(this._timeZones["Exchange2007_SP1"][aMeetingTimeZone], "", aIndexDate);
             }
             else {
@@ -422,35 +423,16 @@ mivExchangeTimeZones.prototype = {
     },
 
     load_timezonedefinitions_file: function _load_timezonedefinitions_file() {
-        // var somefile = this.globalFunctions.chromeToPath("chrome://exchangeTimeZones/content/ewsTimesZoneDefinitions_2007.xml");
-        // var file = Components.classes["@mozilla.org/file/local;1"]
-        //     .createInstance(Components.interfaces.nsIFile);
-
-        // file.initWithPath(somefile);
-
-        // var istream = Components.classes["@mozilla.org/network/file-input-stream;1"].
-        // createInstance(Components.interfaces.nsIFileInputStream);
-        // istream.init(file, -1, -1, 0);
-        // istream.QueryInterface(Components.interfaces.nsILineInputStream);
-
-        // // read lines into array  
-        // var line = {},
-        //     lines = "",
-        //     hasmore;
-        // do {
-        //     hasmore = istream.readLine(line);
-        //     lines += line.value;
-        // } while (hasmore);
-
-        // istream.close();
-        var root = xml2json.newJSON();
-        // xml2json.parseXML(root, lines);
-        // var timezonedefinitions = root[telements][0];
-        this.addExchangeTimeZones(root, "Exchange2007_SP1");
-
-        // timezonedefinitions = null;
-        // lines = null;
-        // line = null;
+        var req = new XMLHttpRequest();
+        req.onload = (function onload(e) {
+            if (req && req.responseText) {
+                var root = xml2json.newJSON();
+                xml2json.parseXML(root, req.responseText.trim());
+                this.addExchangeTimeZones(root, "Exchange2007_SP1");
+            }
+        }).bind(this);
+        req.open("GET", "chrome://exchangeTimeZones/content/ewsTimesZoneDefinitions_2007.xml", false);
+        req.send(null);
     },
 
 }
