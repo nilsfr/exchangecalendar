@@ -54,16 +54,18 @@ exchAttachments.prototype = {
 
         fp.init(this._window, title, nsIFilePicker.modeOpen);
 
-        var ret = fp.show();
+        fp.open(rv => {
+            if (rv != Components.interfaces.nsIFilePicker.returnOK || !fp.file) {
+                return;
+            }
 
-        if (ret == nsIFilePicker.returnOK) {
             this.globalFunctions.LOG("[[" + fp.fileURL.spec + "]]");
 
             // Create attachment for item.
             var newAttachment = createAttachment();
             newAttachment.uri = fp.fileURL.clone();
             this.addAttachment(newAttachment);
-        }
+        });
 
     },
 
@@ -562,49 +564,51 @@ exchAttachments.prototype = {
                 var fileData = window.atob(aAttachments[index].content);
                 globalFunctions.LOG(" == Decoded:" + aAttachments[index].name);
 
+                var save_file = function _save_file(file) {
+                    //file.createUnique(Components.interfaces.nsIFile.NORMAL_FILE_TYPE, 0666);
+                    // do whatever you need to the created file
+                    globalFunctions.LOG(" == new tmp filename:" + file.path);
+
+                    var stream = Cc["@mozilla.org/network/safe-file-output-stream;1"].
+                    createInstance(Ci.nsIFileOutputStream);
+                    stream.init(file, 0x04 | 0x08 | 0x20, 384, 0); // readwrite, create, truncate
+
+                    globalFunctions.LOG(" == writing file:" + file.path);
+                    globalFunctions.LOG(" == writing:" + fileData.length + " bytes");
+                    stream.write(fileData, fileData.length);
+                    if (stream instanceof Ci.nsISafeOutputStream) {
+                        stream.finish();
+                    }
+                    else {
+                        stream.close();
+                    }
+
+                    // Dispose of the converted data in memory;
+                    //delete fileData;
+
+                    globalFunctions.LOG(" == written file:" + file.path);
+                    globalFunctions.LOG(" == written:" + fileData.length + " bytes");
+                }
+
                 if (aExchangeRequest.argument.doSave) {
                     var fp = Cc["@mozilla.org/filepicker;1"].createInstance(Ci.nsIFilePicker);
                     fp.init(window, "Save", Ci.nsIFilePicker.modeSave);
                     fp.defaultString = aAttachments[index].name;
-                    var result = fp.show();
-                    if (result == Ci.nsIFilePicker.returnCancel) {
-                        // User canceled. // Maybe we should have an option for only this attachment or all. Now for all.
-
-                        return;
-                    }
-                    var file = fp.file;
+                    fp.open(rv => {
+                        if (rv != Components.interfaces.nsIFilePicker.returnOK || !fp.file) {
+                            return;
+                        }
+                        save_file(fp.file);
+                    });
                 }
                 else {
                     var file = Cc["@mozilla.org/file/directory_service;1"].
                     getService(Ci.nsIProperties).
                     get("TmpD", Ci.nsIFile);
                     file.append(aAttachments[index].name);
-                }
-                //file.createUnique(Components.interfaces.nsIFile.NORMAL_FILE_TYPE, 0666);  
-                // do whatever you need to the created file  
-                globalFunctions.LOG(" == new tmp filename:" + file.path);
 
-                var stream = Cc["@mozilla.org/network/safe-file-output-stream;1"].
-                createInstance(Ci.nsIFileOutputStream);
-                stream.init(file, 0x04 | 0x08 | 0x20, 384, 0); // readwrite, create, truncate  
+                    save_file(file);
 
-                globalFunctions.LOG(" == writing file:" + file.path);
-                globalFunctions.LOG(" == writing:" + fileData.length + " bytes");
-                stream.write(fileData, fileData.length);
-                if (stream instanceof Ci.nsISafeOutputStream) {
-                    stream.finish();
-                }
-                else {
-                    stream.close();
-                }
-
-                // Dispose of the converted data in memory;
-                //delete fileData;
-
-                globalFunctions.LOG(" == written file:" + file.path);
-                globalFunctions.LOG(" == written:" + fileData.length + " bytes");
-
-                if (!aExchangeRequest.argument.doSave) {
                     // file is nsIFile  
                     var ios = Cc["@mozilla.org/network/io-service;1"].
                     getService(Ci.nsIIOService);
