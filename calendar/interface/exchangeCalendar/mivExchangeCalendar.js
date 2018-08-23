@@ -1072,7 +1072,7 @@ calExchangeCalendar.prototype = {
             }
             var ewsItem = this.convertCalAppointmentToExchangeAppointment(tmpItem, "create", true);
         }
-        if (isToDo(aItem)) {
+        if (cal.isToDo(aItem)) {
             var ewsItem = this.convertCalTaskToExchangeTask(aItem, "create");
         }
 
@@ -1790,7 +1790,7 @@ calExchangeCalendar.prototype = {
             }
         }
         else {
-            if (isToDo(aNewItem)) {
+            if (cal.isToDo(aNewItem)) {
                 if (this.debug) this.logInfo("modifyItem: it is a todo");
 
                 var changesObj = this.makeUpdateOneItem(aNewItem, aOldItem);
@@ -2200,7 +2200,7 @@ calExchangeCalendar.prototype = {
             }
         }
 
-        if (isToDo(aItem)) {
+        if (cal.isToDo(aItem)) {
             if (this.debug) this.logInfo("deleteItem is calITask");
             var self = this;
             this.addToQueue(erDeleteItemRequest, {
@@ -2313,7 +2313,7 @@ calExchangeCalendar.prototype = {
         var item_iid = null;
         if (cal.item.isEvent(item))
             item_iid = Ci.calIEvent;
-        else if (isToDo(item))
+        else if (cal.isToDo(item))
             item_iid = Ci.calITodo;
         else {
             this.notifyOperationComplete(aListener,
@@ -4213,7 +4213,7 @@ calExchangeCalendar.prototype = {
         //		var start = this.tryToSetDateValue(aCi.getTagValue("t:StartTime"));
         //		var end   = this.tryToSetDateValue(aCi.getTagValue("t:EndTime"));
         var type = types[xml2json.getTagValue(aCi, "t:BusyType")];
-        return new cal.FreeBusyInterval(aCalId, type,
+        return new cal.provider.FreeBusyInterval(aCalId, type,
             start, end);
     },
 
@@ -7448,7 +7448,7 @@ calExchangeCalendar.prototype = {
         //			return null;
         //		}
 
-        var item = createEvent();
+        var item = new mivExchangeEvent();
         //		var item = Cc["@1st-setup.nl/exchange/calendarevent;1"]
         //				.createInstance(Ci.mivExchangeEvent);
         item.calendar = this.superCalendar;
