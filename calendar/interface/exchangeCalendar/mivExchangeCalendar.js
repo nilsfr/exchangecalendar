@@ -3092,7 +3092,6 @@ calExchangeCalendar.prototype = {
         //var self = this;
 
         if (this.OnlyShowAvailability) {
-            if (!this.lastValidRangeStart) this.lastValidRangeStart = aRangeStart.clone();
             this.getOnlyFreeBusyInformation(this.lastValidRangeStart, this.lastValidRangeEnd);
         }
         else {
