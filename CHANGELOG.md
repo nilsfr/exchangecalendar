@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [4.0.0] - 2018-09-30
 ### Changed
 - Pull latest localization from Transifex
-- Update readme with Thunderbird version compatibility
+- Set maximum version restriction to Thunderbird 59
 
 ## [4.0.0-beta5] - 2018-01-28
 ### Added
