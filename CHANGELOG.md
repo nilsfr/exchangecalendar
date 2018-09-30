@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.0.0] - 2018-09-30
+### Changed
+- Pull latest localization from Transifex
+- Update readme with Thunderbird version compatibility
+
 ## [4.0.0-beta5] - 2018-01-28
 ### Added
 - Code beautifiers are available for JavaScript, XML, XUL and RDF files

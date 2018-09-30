@@ -14,6 +14,7 @@ Exchange Calendar extension can:
   * Manage the Exchange « out of office » feature.
 
 This extension requires:
+  * A recent Thunderbird version up to 59.
   * Lightning extension corresponding to the Thunderbird release.
   * The Exchange server has to provide an Exchange Web Service.
 
