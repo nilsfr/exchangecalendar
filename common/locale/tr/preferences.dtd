@@ -43,9 +43,9 @@
 <!ENTITY exchangeWebService.preference.loadbalancer.prefs.sleepBetweenJobs.label "Exchange sunucuna gönderilen istekler arasındaki en kısa bekleme süresi:">
 <!ENTITY exchangeWebService.preference.userAgent.label "HTTP kullanıcı aracısı:">
 
-<!ENTITY exchangeWebService.preference.globalsearch.caption "Thunderbird Global Search Index">
-<!ENTITY exchangeWebService.preference.globalsearch.label "Enable the Thunderbird Global Search Index">
-<!ENTITY exchangeWebService.preference.globalsearch.explain "If you enable this Thunderbird feature, exchangecalendar would be able to enable the email remote tagging and the invitation column in the mail tree view.">
+<!ENTITY exchangeWebService.preference.globalsearch.caption "Thunderbird Küresel Arama Dizini">
+<!ENTITY exchangeWebService.preference.globalsearch.label "Thunderbird Küresel Arama Dizinini Etkinleştir">
+<!ENTITY exchangeWebService.preference.globalsearch.explain "Eğer bu Thunderbird özelliğini etkinleştirirseniz, exchangecalendar, uzaktan eposta etiketlemeyi ve posta ağacı görüntüsünde davet sütununu göstermeyi açabilme yeteneklerini kazanacaktır.">
 
 <!ENTITY exchangeWebService.preference.ntlmv1.label "Ntlm-v1 Tercihleri:">
 <!ENTITY exchangeWebService.preference.ntlmv1.true.label "Etkinleştir">
