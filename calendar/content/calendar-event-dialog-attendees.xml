@@ -74,7 +74,7 @@
                                      completedefaultindex="true"
                                      forcecomplete="true"
                                      minresultsforpopup="1"
-                                     onblur="if (this.localName === 'textbox') document.getBindingParent(this).onBlurInput(event);"
+                                     onblur="if (this.localName === 'textbox') { if (document.getBindingParent(this).onBlurInput) { document.getBindingParent(this).onBlurInput(event); } };"
                                      ignoreblurwhilesearching="true"
                                      oninput="this.setAttribute('dirty', 'true');">
                         </xul:textbox>
@@ -141,7 +141,7 @@
 
                                           var numRowsAdded = 0;
                                           if (attendees.length > 0) {
-                                              for each (var attendee in attendees) {
+                                              for (var attendee of Object.values(attendees)) {
                                                   this.appendAttendee(attendee, listbox, template, false);
                                                   numRowsAdded++;
                                               }

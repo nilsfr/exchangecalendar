@@ -53,7 +53,6 @@ mivExchangeAutoCompleteResult.prototype = {
     classID: components.ID("{" + mivExchangeAutoCompleteResultGUID + "}"),
     contractID: "@1st-setup.nl/exchange/autocompleteresult;1",
     flags: Ci.nsIClassInfo.THREADSAFE,
-    implementationLanguage: Ci.nsIProgrammingLanguage.JAVASCRIPT,
 
     getInterfaces: function _getInterfaces(count) {
         var ifaces = [Ci.mivExchangeAutoCompleteResult,
@@ -254,11 +253,13 @@ mivExchangeAutoCompleteResult.prototype = {
     addResult: function _addResult(aCard) {
         // First check if this card is not already in the list
         var cardExists = false;
-        for each(var card in this._cards) {
-            if (card.localId == aCard.localId) {
+        if (this._cards) {
+            for (var card of Object.values(this._cards)) {
+                if (card.localId == aCard.localId) {
 
-                cardExists = true;
-                break;
+                    cardExists = true;
+                    break;
+                }
             }
         }
         if (!cardExists) {

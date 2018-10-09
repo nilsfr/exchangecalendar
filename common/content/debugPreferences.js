@@ -54,15 +54,16 @@ exchWebService.debugPreferences = {
 
         fp.init(window, title, nsIFilePicker.modeSave);
 
-        var ret = fp.show();
-
-        if (ret == nsIFilePicker.returnOK) {
+        fp.open(rv => {
+            if (rv != Components.interfaces.nsIFilePicker.returnOK || !fp.file) {
+                return;
+            }
             exchWebService.commonFunctions.LOG("[[" + fp.file.path + "]]");
             document.getElementById("extensions.1st-setup.debug.file").value = fp.file.path;
             //		exchWebService.commonFunctions.LOG("[["+fp.fileURL.spec.replace("file://", "")+"]]");
             //            document.getElementById("extensions.1st-setup.debug.file").value = fp.fileURL.spec.replace("file://", "");
             this.readLogLocation();
-        }
+        });
 
     },
 

@@ -29,7 +29,7 @@ Cu.import("resource://gre/modules/Services.jsm");
 
 Cu.import("resource://exchangecommon/ecExchangeRequest.js");
 
-Cu.import("resource://calendar/modules/calProviderUtils.jsm");
+Cu.import("resource://calendar/modules/calUtils.jsm");
 
 Cu.import("resource://exchangecommoninterfaces/exchangeBaseItem/mivExchangeBaseItem.js");
 Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
@@ -75,7 +75,6 @@ mivExchangeEvent.prototype = {
     classID: components.ID("{" + mivExchangeEventGUID + "}"),
     contractID: "@1st-setup.nl/exchange/calendarevent;1",
     flags: 0,
-    implementationLanguage: Ci.nsIProgrammingLanguage.JAVASCRIPT,
 
     getInterfaces: function _getInterfaces(count) {
         var ifaces = [Ci.mivExchangeEvent,
@@ -285,13 +284,15 @@ mivExchangeEvent.prototype = {
                     .createInstance(Ci.mivIxml2jxon);
                 var categories = this.getCategories({});
                 var first = true;
-                for each(var category in categories) {
-                    if (first) {
-                        first = false;
-                        categoriesXML.processXMLString("<t:String>" + category + "</t:String>", 0, null);
-                    }
-                    else {
-                        categoriesXML.addSibblingTag("String", "t", category);
+                if (categories) {
+                    for (var category of Object.values(categories)) {
+                        if (first) {
+                            first = false;
+                            categoriesXML.processXMLString("<t:String>" + category + "</t:String>", 0, null);
+                        }
+                        else {
+                            categoriesXML.addSibblingTag("String", "t", category);
+                        }
                     }
                 }
                 if (categories.length > 0) {
@@ -367,13 +368,13 @@ mivExchangeEvent.prototype = {
 
                     // We make a non-UTC datetime value for exchGlobalFunctions.
                     // EWS will use the MeetingTimeZone or StartTimeZone and EndTimeZone to convert.
-                    //					var exchStart = cal.toRFC3339(tmpStart).substr(0, 19)+"Z"; //cal.toRFC3339(tmpStart).length-6);
-                    var exchStart = cal.toRFC3339(tmpStart).substr(0, 19); //cal.toRFC3339(tmpStart).length-6);
+                    //					var exchStart = cal.dtz.toRFC3339(tmpStart).substr(0, 19)+"Z"; //cal.dtz.toRFC3339(tmpStart).length-6);
+                    var exchStart = cal.dtz.toRFC3339(tmpStart).substr(0, 19); //cal.dtz.toRFC3339(tmpStart).length-6);
                 }
                 else {
                     // We set in bias advanced to UCT datetime values for exchGlobalFunctions.
-                    //					var exchStart = cal.toRFC3339(tmpStart.getInTimezone(cal.UTC()));
-                    var exchStart = cal.toRFC3339(tmpStart).substr(0, 19);
+                    //					var exchStart = cal.dtz.toRFC3339(tmpStart.getInTimezone(cal.dtz.UTC));
+                    var exchStart = cal.dtz.toRFC3339(tmpStart).substr(0, 19);
                 }
                 this._nonPersonalDataChanged = true;
                 this.addSetItemField(updates, "Start", exchStart);
@@ -410,13 +411,13 @@ mivExchangeEvent.prototype = {
 
                     // We make a non-UTC datetime value for exchGlobalFunctions.
                     // EWS will use the MeetingTimeZone or StartTimeZone and EndTimeZone to convert.
-                    //					var exchEnd = cal.toRFC3339(tmpEnd).substr(0, 19)+"Z"; //cal.toRFC3339(tmpEnd).length-6);
-                    var exchEnd = cal.toRFC3339(tmpEnd).substr(0, 19); //cal.toRFC3339(tmpEnd).length-6);
+                    //					var exchEnd = cal.dtz.toRFC3339(tmpEnd).substr(0, 19)+"Z"; //cal.dtz.toRFC3339(tmpEnd).length-6);
+                    var exchEnd = cal.dtz.toRFC3339(tmpEnd).substr(0, 19); //cal.dtz.toRFC3339(tmpEnd).length-6);
                 }
                 else {
                     // We set in bias advanced to UCT datetime values for exchGlobalFunctions.
-                    //					var exchEnd = cal.toRFC3339(tmpEnd.getInTimezone(cal.UTC()));
-                    var exchEnd = cal.toRFC3339(tmpEnd).substr(0, 19);
+                    //					var exchEnd = cal.dtz.toRFC3339(tmpEnd.getInTimezone(cal.dtz.UTC));
+                    var exchEnd = cal.dtz.toRFC3339(tmpEnd).substr(0, 19);
                 }
                 this._nonPersonalDataChanged = true;
                 this.addSetItemField(updates, "End", exchEnd);
@@ -502,41 +503,43 @@ mivExchangeEvent.prototype = {
                         null: "Unknown"
                     };
 
-                    for each(var attendee in attendees) {
-                        switch (attendee.role) {
-                        case "REQ-PARTICIPANT":
-                            if (reqAttendeeCount == 0) {
-                                var reqAttendees = exchGlobalFunctions.xmlToJxon('<t:Attendee xmlns:m="' + nsMessagesStr + '" xmlns:t="' + nsTypesStr + '"/>');
-                                var ae = reqAttendees;
+                    if (attendees) {
+                        for (var attendee of Object.values(attendees)) {
+                            switch (attendee.role) {
+                            case "REQ-PARTICIPANT":
+                                if (reqAttendeeCount == 0) {
+                                    var reqAttendees = exchGlobalFunctions.xmlToJxon('<t:Attendee xmlns:m="' + nsMessagesStr + '" xmlns:t="' + nsTypesStr + '"/>');
+                                    var ae = reqAttendees;
+                                }
+                                else {
+                                    var ae = reqAttendees.addSibblingTag("Attendee", "t", null);
+                                }
+                                reqAttendeeCount++;
+                                break;
+                            case "OPT-PARTICIPANT":
+                                if (optAttendeeCount == 0) {
+                                    var optAttendees = exchGlobalFunctions.xmlToJxon('<t:Attendee xmlns:m="' + nsMessagesStr + '" xmlns:t="' + nsTypesStr + '"/>');
+                                    var ae = optAttendees;
+                                }
+                                else {
+                                    var ae = optAttendees.addSibblingTag("Attendee", "t", null);
+                                }
+                                optAttendeeCount++;
+                                break;
+                            }
+                            var mailbox = ae.addChildTag("Mailbox", "t", null);
+                            mailbox.addChildTag("Name", "t", attendee.commonName);
+
+                            var tmpEmailAddress = attendee.id.replace(/^mailto:/i, '');
+                            if (tmpEmailAddress.indexOf("@") > 0) {
+                                mailbox.addChildTag("EmailAddress", "t", tmpEmailAddress);
                             }
                             else {
-                                var ae = reqAttendees.addSibblingTag("Attendee", "t", null);
+                                mailbox.addChildTag("EmailAddress", "t", "unknown@somewhere.com");
                             }
-                            reqAttendeeCount++;
-                            break;
-                        case "OPT-PARTICIPANT":
-                            if (optAttendeeCount == 0) {
-                                var optAttendees = exchGlobalFunctions.xmlToJxon('<t:Attendee xmlns:m="' + nsMessagesStr + '" xmlns:t="' + nsTypesStr + '"/>');
-                                var ae = optAttendees;
-                            }
-                            else {
-                                var ae = optAttendees.addSibblingTag("Attendee", "t", null);
-                            }
-                            optAttendeeCount++;
-                            break;
-                        }
-                        var mailbox = ae.addChildTag("Mailbox", "t", null);
-                        mailbox.addChildTag("Name", "t", attendee.commonName);
+                            ae.addChildTag("ResponseType", "t", attendeeStatus[attendee.participationStatus]);
 
-                        var tmpEmailAddress = attendee.id.replace(/^mailto:/i, '');
-                        if (tmpEmailAddress.indexOf("@") > 0) {
-                            mailbox.addChildTag("EmailAddress", "t", tmpEmailAddress);
                         }
-                        else {
-                            mailbox.addChildTag("EmailAddress", "t", "unknown@somewhere.com");
-                        }
-                        ae.addChildTag("ResponseType", "t", attendeeStatus[attendee.participationStatus]);
-
                     }
                     if (reqAttendeeCount > 0) {
                         this._nonPersonalDataChanged = true;

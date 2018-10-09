@@ -46,9 +46,6 @@ Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 Cu.import("resource://gre/modules/Services.jsm");
 
 Cu.import("resource://calendar/modules/calUtils.jsm");
-Cu.import("resource://calendar/modules/calAlarmUtils.jsm");
-Cu.import("resource://calendar/modules/calProviderUtils.jsm");
-Cu.import("resource://calendar/modules/calAuthUtils.jsm");
 
 Cu.import("resource://exchangecommon/ecFunctions.js");
 Cu.import("resource://exchangecommon/soapFunctions.js");
@@ -438,7 +435,7 @@ calExchangeCalendar.prototype = {
         return elapsed;
     },
 
-    __proto__: cal.ProviderBase.prototype,
+    __proto__: cal.provider.BaseClass.prototype,
 
     // Begin nsIClassInfo
     classID: components.ID("{" + calExchangeCalendarGUID + "}"),
@@ -467,7 +464,6 @@ calExchangeCalendar.prototype = {
         return null;
     },
 
-    implementationLanguage: Ci.nsIProgrammingLanguage.JAVASCRIPT,
     flags: 0,
     // End nsIClassInfo
 
@@ -495,7 +491,7 @@ calExchangeCalendar.prototype = {
 
     get displayName() {
         if (this.debug) this.logInfo("get displayName()");
-        return calGetString("calExchangeCalendar", "displayName", null, "exchangecommon");
+        return cal.l10n.getAnyString("exchangecommon", "calExchangeCalendar", "displayName", null);
     },
 
     //  void createCalendar(in AUTF8String aName, in nsIURI aURL,
@@ -576,8 +572,7 @@ calExchangeCalendar.prototype = {
     },
 
     set uri(aUri) {
-        //if (this.debug) this.logInfo("set uri:"+aUri.path);
-        this.myId = aUri.path.substr(1);
+        this.myId = aUri.pathQueryRef.substr(1);
         this.mUri = aUri;
 
         this.mPrefs = Cc["@mozilla.org/preferences-service;1"]
@@ -910,13 +905,13 @@ calExchangeCalendar.prototype = {
         var newItem = aItem;
 
         // Make sure we have one of our own object types
-        if ((cal.isEvent(aItem)) && (!aItem.className)) {
+        if ((cal.item.isEvent(aItem)) && (!aItem.className)) {
             var newItem = Cc["@1st-setup.nl/exchange/calendarevent;1"]
                 .createInstance(Ci.mivExchangeEvent);
             newItem.cloneToCalEvent(aItem);
         }
 
-        if ((!cal.isEvent(aItem)) && (!aItem.className)) {
+        if ((!cal.item.isEvent(aItem)) && (!aItem.className)) {
             var newItem = Cc["@1st-setup.nl/exchange/calendartodo;1"]
                 .createInstance(Ci.mivExchangeTodo);
             newItem.cloneToCalEvent(aItem);
@@ -957,11 +952,13 @@ calExchangeCalendar.prototype = {
             // If I am invited. Remove myself.
             var attendees = newItem.getAttendees({});
             newItem.removeAllAttendees(); // Need to have this. When we add attendees when we create a new calendaritem we become organizer.
-            for each(var attendee in attendees) {
-                if ((attendee.id.replace(/^mailto:/i, '').toLowerCase() == this.mailbox.toLowerCase())
-                    || (attendee.id.replace(/^exchangecalendar:/, '').toLowerCase() == this.mailbox.toLowerCase())) {
-                    if (this.debug) this.logInfo("addItem: FOUND myself as an attendee and we are going to remove myself:" + newItem.title);
-                    newItem.removeAttendee(attendee);
+            if (attendees) {
+                for (var attendee of Object.values(attendees)) {
+                    if ((attendee.id.replace(/^mailto:/i, '').toLowerCase() == this.mailbox.toLowerCase())
+                        || (attendee.id.replace(/^exchangecalendar:/, '').toLowerCase() == this.mailbox.toLowerCase())) {
+                        if (this.debug) this.logInfo("addItem: FOUND myself as an attendee and we are going to remove myself:" + newItem.title);
+                        newItem.removeAttendee(attendee);
+                    }
                 }
             }
         }
@@ -996,7 +993,7 @@ calExchangeCalendar.prototype = {
             return;
         }
 
-        if (isEvent(aItem)) {
+        if (cal.item.isEvent(aItem)) {
             // michel123
 
             if (aItem.exchangeXML) {
@@ -1075,7 +1072,7 @@ calExchangeCalendar.prototype = {
             }
             var ewsItem = this.convertCalAppointmentToExchangeAppointment(tmpItem, "create", true);
         }
-        if (isToDo(aItem)) {
+        if (cal.isToDo(aItem)) {
             var ewsItem = this.convertCalTaskToExchangeTask(aItem, "create");
         }
 
@@ -1337,15 +1334,17 @@ calExchangeCalendar.prototype = {
         }
 
         // Master was modified so tell the chidlren they have a new parent.
-        for each(var item in this.itemCacheById) {
-            //			if ((item) && (item.parentItem.id != item.id) && (item.uid == aModifiedMaster.uid)) {
-            if ((item) && (item.uid == aModifiedMaster.uid)) {
-                //var newItem = item.clone();
-                var newItem = this.cloneItem(item);
-                newItem.parentItem = aModifiedMaster;
-                this.singleModified(newItem, true);
-                //this.notifyTheObservers("onModifyItem", [newItem, item]);
-                //this.itemCacheById[newItem.id] = newItem;
+        if (this.itemCacheById) {
+            for (var item of Object.values(this.itemCacheById)) {
+                //			if ((item) && (item.parentItem.id != item.id) && (item.uid == aModifiedMaster.uid)) {
+                if ((item) && (item.uid == aModifiedMaster.uid)) {
+                    //var newItem = item.clone();
+                    var newItem = this.cloneItem(item);
+                    newItem.parentItem = aModifiedMaster;
+                    this.singleModified(newItem, true);
+                    //this.notifyTheObservers("onModifyItem", [newItem, item]);
+                    //this.itemCacheById[newItem.id] = newItem;
+                }
             }
         }
 
@@ -1508,7 +1507,7 @@ calExchangeCalendar.prototype = {
         }
 
 
-        if (isEvent(aNewItem)) {
+        if (cal.item.isEvent(aNewItem)) {
             if (this.debug) this.logInfo("ModifyItem: it is an event.");
             var doSendMeetingRespons = false;
             var meOld = this.getInvitedAttendee(aOldItem);
@@ -1791,7 +1790,7 @@ calExchangeCalendar.prototype = {
             }
         }
         else {
-            if (isToDo(aNewItem)) {
+            if (cal.isToDo(aNewItem)) {
                 if (this.debug) this.logInfo("modifyItem: it is a todo");
 
                 var changesObj = this.makeUpdateOneItem(aNewItem, aOldItem);
@@ -2044,7 +2043,7 @@ calExchangeCalendar.prototype = {
         }
 
         var self = this;
-        if (isEvent(aItem)) {
+        if (cal.item.isEvent(aItem)) {
             if (this.debug) this.logInfo("deleteItem is calIEvent");
 
             var iAmOrganizer = ((aItem.organizer) && (aItem.organizer.id.replace(/^mailto:/i, '').toLowerCase() == this.mailbox.toLowerCase()));
@@ -2201,7 +2200,7 @@ calExchangeCalendar.prototype = {
             }
         }
 
-        if (isToDo(aItem)) {
+        if (cal.isToDo(aItem)) {
             if (this.debug) this.logInfo("deleteItem is calITask");
             var self = this;
             this.addToQueue(erDeleteItemRequest, {
@@ -2312,9 +2311,9 @@ calExchangeCalendar.prototype = {
         }
 
         var item_iid = null;
-        if (isEvent(item))
+        if (cal.item.isEvent(item))
             item_iid = Ci.calIEvent;
-        else if (isToDo(item))
+        else if (cal.isToDo(item))
             item_iid = Ci.calITodo;
         else {
             this.notifyOperationComplete(aListener,
@@ -2597,7 +2596,7 @@ calExchangeCalendar.prototype = {
             let offset = cal.createDuration();
             offset.weeks = -5;
 
-            aRangeStart = cal.now()
+            aRangeStart = cal.dtz.now()
             aRangeStart.addDuration(offset);
 
             // If cache already contains a bigger range, use it
@@ -2615,7 +2614,7 @@ calExchangeCalendar.prototype = {
             let offset = cal.createDuration();
             offset.weeks = 5;
 
-            aRangeEnd = cal.now()
+            aRangeEnd = cal.dtz.now()
             aRangeEnd.addDuration(offset);
 
             // If cache already contains a bigger range, use it
@@ -2862,7 +2861,7 @@ calExchangeCalendar.prototype = {
             // Convert date from local timezone to UTC
             // Given range is in local timezone and cache save in UTC
             dayPos.isDate = false;
-            dayPos = dayPos.getInTimezone(cal.UTC());
+            dayPos = dayPos.getInTimezone(cal.dtz.UTC);
             dayPos.isDate = true;
 
             // Go through all days bewteen the range start day and the range end day
@@ -2882,7 +2881,7 @@ calExchangeCalendar.prototype = {
             // Check also if invitation should be cancelled
             for (let itemid in ids) {
                 if (this.itemCacheById[itemid]
-                    && cal.isEvent(this.itemCacheById[itemid])) {
+                    && cal.item.isEvent(this.itemCacheById[itemid])) {
                     events.push(this.itemCacheById[itemid]);
 
                     if (this.deleteCancelledInvitation
@@ -3093,7 +3092,6 @@ calExchangeCalendar.prototype = {
         //var self = this;
 
         if (this.OnlyShowAvailability) {
-            if (!this.lastValidRangeStart) this.lastValidRangeStart = aRangeStart.clone();
             this.getOnlyFreeBusyInformation(this.lastValidRangeStart, this.lastValidRangeEnd);
         }
         else {
@@ -3151,16 +3149,18 @@ calExchangeCalendar.prototype = {
 
         // Parse through the attendees
         var attendees = aItem.getAttendees({});
-        for each(var attendee in attendees) {
-            if (this.debug) this.logInfo("getInvitedAttendee 2:" + attendee.id);
-            if ((attendee.id.replace(/^mailto:/i, '').toLowerCase() == this.mailbox.toLowerCase())
-                || (attendee.id.replace(/^exchangecalendar:/, '').toLowerCase() == this.mailbox.toLowerCase())) {
-                if (this.debug) this.logInfo("getInvitedAttendee FOUND myself:" + aItem.title + ", attendee.participationStatus:" + attendee.participationStatus + ", aItem.myResponseType:" + aItem.myResponseType);
-                //				attendee.participationStatus = participationMap[aItem.myResponseType];
-                return attendee; //.clone();
-            }
-            else {
-                if (this.debug) this.logInfo("getInvitedAttendee FOUND someonelse:" + aItem.title + ", attendee.id:" + attendee.id + ", attendee.participationStatus:" + attendee.participationStatus);
+        if (attendees) {
+            for (var attendee of Object.values(attendees)) {
+                if (this.debug) this.logInfo("getInvitedAttendee 2:" + attendee.id);
+                if ((attendee.id.replace(/^mailto:/i, '').toLowerCase() == this.mailbox.toLowerCase())
+                    || (attendee.id.replace(/^exchangecalendar:/, '').toLowerCase() == this.mailbox.toLowerCase())) {
+                    if (this.debug) this.logInfo("getInvitedAttendee FOUND myself:" + aItem.title + ", attendee.participationStatus:" + attendee.participationStatus + ", aItem.myResponseType:" + aItem.myResponseType);
+                    //				attendee.participationStatus = participationMap[aItem.myResponseType];
+                    return attendee; //.clone();
+                }
+                else {
+                    if (this.debug) this.logInfo("getInvitedAttendee FOUND someonelse:" + aItem.title + ", attendee.id:" + attendee.id + ", attendee.participationStatus:" + attendee.participationStatus);
+                }
             }
         }
 
@@ -3213,8 +3213,8 @@ calExchangeCalendar.prototype = {
                 serverUrl: this.serverUrl,
                 email: aCalId.replace(/^mailto:/i, ""),
                 attendeeType: 'Required',
-                start: cal.toRFC3339(tmpStartDate.getInTimezone(this.globalFunctions.ecUTC())),
-                end: cal.toRFC3339(tmpEndDate.getInTimezone(this.globalFunctions.ecUTC())),
+                start: cal.dtz.toRFC3339(tmpStartDate.getInTimezone(this.globalFunctions.ecUTC())),
+                end: cal.dtz.toRFC3339(tmpEndDate.getInTimezone(this.globalFunctions.ecUTC())),
                 calId: aCalId,
                 folderID: this.folderID,
                 changeKey: this.changeKey
@@ -3285,15 +3285,19 @@ calExchangeCalendar.prototype = {
     getExceptions: function _getExceptions(aRecurrenceItems) {
         var tmpCount = 0;
         var exceptions = {};
-        for each(var recurrenceItem in aRecurrenceItems) {
-            tmpCount++;
-            if (this.debug) this.logInfo("getExceptions: nr:" + tmpCount + ", isNegative:" + recurrenceItem.isNegative);
-            if (recurrenceItem.isNegative) {
-                // A deletion is an exception and therefore isNegative === true
-                var occurrences = recurrenceItem.getOccurrences(this.startDate, this.startDate, this.endDate, 0, {});
-                if (this.debug) this.logInfo("getExceptions: we have occurrences.length=" + occurrences.length);
-                for each(var occurrence in occurrences) {
-                    exceptions[occurrence.toString()] = occurrence;
+        if (aRecurrenceItems) {
+            for (var recurrenceItem of Object.values(aRecurrenceItems)) {
+                tmpCount++;
+                if (this.debug) this.logInfo("getExceptions: nr:" + tmpCount + ", isNegative:" + recurrenceItem.isNegative);
+                if (recurrenceItem.isNegative) {
+                    // A deletion is an exception and therefore isNegative === true
+                    var occurrences = recurrenceItem.getOccurrences(this.startDate, this.startDate, this.endDate, 0, {});
+                    if (this.debug) this.logInfo("getExceptions: we have occurrences.length=" + occurrences.length);
+                    if (occurrences) {
+                        for (var occurrence of Object.values(occurrences)) {
+                            exceptions[occurrence.toString()] = occurrence;
+                        }
+                    }
                 }
             }
         }
@@ -3315,17 +3319,21 @@ calExchangeCalendar.prototype = {
         if (newCount.value > oldCount.value) {
             if (this.debug) this.logInfo("getRemovedOccurrence: We have less occurrences than before.");
 
-            for each(var newOccurrence in newOccurrences) {
-                var foundOld = false;
-                for each(var oldOccurrence in oldOccurrences) {
-                    if (oldOccurrence.id == newOccurrence.id) {
-                        foundOld = true;
-                        break;
+            if (newOccurrences) {
+                for (var newOccurrence of Object.values(newOccurrences)) {
+                    var foundOld = false;
+                    if (oldOccurrences) {
+                        for (var oldOccurrence of Object.values(oldOccurrences)) {
+                            if (oldOccurrence.id == newOccurrence.id) {
+                                foundOld = true;
+                                break;
+                            }
+                        }
                     }
-                }
-                if (foundOld == false) {
-                    if (this.debug) this.logInfo("getRemovedOccurrence: We found the removed occurrence: startdate:" + newOccurrence.startDate.toString());
-                    return newOccurrence;
+                    if (foundOld == false) {
+                        if (this.debug) this.logInfo("getRemovedOccurrence: We found the removed occurrence: startdate:" + newOccurrence.startDate.toString());
+                        return newOccurrence;
+                    }
                 }
             }
         }
@@ -3343,17 +3351,21 @@ calExchangeCalendar.prototype = {
         if (newCount.value > oldCount.value) {
             if (this.debug) this.logInfo("getRemovedOccurrence: We have less exceptions than before.");
 
-            for each(var newException in newExceptions) {
-                var foundOld = false;
-                for each(var oldException in oldExceptions) {
-                    if (oldException.id == newException.id) {
-                        foundOld = true;
-                        break;
+            if (newExceptions) {
+                for (var newException of Object.values(newExceptions)) {
+                    var foundOld = false;
+                    if (oldExceptions) {
+                        for (var oldException of Object.values(oldExceptions)) {
+                            if (oldException.id == newException.id) {
+                                foundOld = true;
+                                break;
+                            }
+                        }
                     }
-                }
-                if (foundOld == false) {
-                    if (this.debug) this.logInfo("getRemovedOccurrence: We found the removed exception: startdate:" + newException.startDate.toString());
-                    return newException;
+                    if (foundOld == false) {
+                        if (this.debug) this.logInfo("getRemovedOccurrence: We found the removed exception: startdate:" + newException.startDate.toString());
+                        return newException;
+                    }
                 }
             }
         }
@@ -3387,8 +3399,8 @@ calExchangeCalendar.prototype = {
         if (this.firstrun) {
             this.firstrun = false;
 
-            //Add Prvider for busy free information for  invite attendees etc.
-            getFreeBusyService().addProvider(this);
+            //Add Provider for busy free information for  invite attendees etc.
+            cal.getFreeBusyService().addProvider(this);
 
             // The first thing we want to do is check the folderbase and folderpath for their id & changekey.
             // It might have changed between restarts.
@@ -3581,7 +3593,7 @@ calExchangeCalendar.prototype = {
     },
 
     get startCacheDate() {
-        var aDate = cal.now();
+        var aDate = cal.dtz.now();
         var tmpDur = cal.createDuration();
         tmpDur.hours = -1 * 24 * this.cacheStartupBefore;
         aDate.addDuration(tmpDur);
@@ -3590,7 +3602,7 @@ calExchangeCalendar.prototype = {
     },
 
     get endCacheDate() {
-        var aDate = cal.now();
+        var aDate = cal.dtz.now();
         var tmpDur = cal.createDuration();
         tmpDur.hours = 1 * 24 * this.cacheStartupAfter;
         aDate.addDuration(tmpDur);
@@ -3750,17 +3762,17 @@ calExchangeCalendar.prototype = {
         this.saveCredentials(erSyncFolderItemsRequest.argument);
 
         if ((creations.meetingrequests.length > 0) || (updates.meetingrequests.length > 0) || (deletions.meetingrequests.length > 0)) {
-            this.addActivity(calGetString("calExchangeCalendar", "syncInboxRequests", [creations.meetingrequests.length, updates.meetingrequests.length, deletions.meetingrequests.length, this.name], "exchangecommon"), "", erSyncInboxRequest.argument.actionStart, Date.now());
+            this.addActivity(cal.l10n.getAnyString("exchangecommon", "calExchangeCalendar", "syncInboxRequests", [creations.meetingrequests.length, updates.meetingrequests.length, deletions.meetingrequests.length, this.name]), "", erSyncInboxRequest.argument.actionStart, Date.now());
             this.refresh();
         }
 
         if ((creations.meetingCancellations.length > 0) || (updates.meetingCancellations.length > 0) || (deletions.meetingCancellations.length > 0)) {
-            this.addActivity(calGetString("calExchangeCalendar", "syncInboxCancelations", [creations.meetingCancellations.length, updates.meetingCancellations.length, deletions.meetingCancellations.length, this.name], "exchangecommon"), "", erSyncInboxRequest.argument.actionStart, Date.now());
+            this.addActivity(cal.l10n.getAnyString("exchangecommon", "calExchangeCalendar", "syncInboxCancelations", [creations.meetingCancellations.length, updates.meetingCancellations.length, deletions.meetingCancellations.length, this.name]), "", erSyncInboxRequest.argument.actionStart, Date.now());
             this.refresh();
         }
 
         if ((creations.meetingResponses.length > 0) || (updates.meetingResponses.length > 0) || (deletions.meetingResponses.length > 0)) {
-            this.addActivity(calGetString("calExchangeCalendar", "syncInboxResponses", [creations.meetingResponses.length, updates.meetingResponses.length, deletions.meetingResponses.length, this.name], "exchangecommon"), "", erSyncInboxRequest.argument.actionStart, Date.now());
+            this.addActivity(cal.l10n.getAnyString("exchangecommon", "calExchangeCalendar", "syncInboxResponses", [creations.meetingResponses.length, updates.meetingResponses.length, deletions.meetingResponses.length, this.name]), "", erSyncInboxRequest.argument.actionStart, Date.now());
             this.refresh();
         }
 
@@ -3789,7 +3801,7 @@ calExchangeCalendar.prototype = {
 
         // Save requests into cache.
         if (creations.meetingrequests.length > 0) {
-            for each(var request in creations.meetingrequests) {
+            for (var request of creations.meetingrequests) {
                 var meetingItem = this.convertExchangeAppointmentToCalAppointment(request, true);
                 if (meetingItem) {
                     if (this.debug) this.logInfo(" -- MeetingRequest creation:" + meetingItem.title + ", UID:" + meetingItem.uid + ",id:" + meetingItem.id + ",changeKey:" + meetingItem.changeKey);
@@ -3802,7 +3814,7 @@ calExchangeCalendar.prototype = {
         }
 
         if (updates.meetingrequests.length > 0) {
-            for each(var update in updates.meetingrequests) {
+            for (var update of updates.meetingrequests) {
                 var meetingItem = this.convertExchangeAppointmentToCalAppointment(update, true);
                 if (meetingItem) {
                     if (this.debug) this.logInfo(" -- MeetingRequest update:" + meetingItem.title + ", UID:" + meetingItem.uid + ",id:" + meetingItem.id + ",changeKey:" + meetingItem.changeKey);
@@ -3821,7 +3833,7 @@ calExchangeCalendar.prototype = {
         }
 
         if (deletions.meetingrequests.length > 0) {
-            for each(var deletion in deletions.meetingrequests) {
+            for (var deletion of deletions.meetingrequests) {
                 var meetingItem = this.convertExchangeAppointmentToCalAppointment(deletion, true);
                 if (meetingItem) {
                     if (this.debug) this.logInfo(" -- MeetingRequest deletion:" + meetingItem.title + ", UID:" + meetingItem.uid + ",id:" + meetingItem.id + ",changeKey:" + meetingItem.changeKey);
@@ -3834,7 +3846,7 @@ calExchangeCalendar.prototype = {
 
         // Save cancelations into cache and remove request for which we received a cancelation.
         if (creations.meetingCancellations.length > 0) {
-            for each(var request in creations.meetingCancellations) {
+            for (var request of Object.values(creations.meetingCancellations)) {
                 var cancelItem = this.convertExchangeAppointmentToCalAppointment(request, true);
                 if (cancelItem) {
                     if (this.debug) this.logInfo(" -- MeetingCancelation creation:" + cancelItem.title + ", UID:" + cancelItem.uid + ",id:" + cancelItem.id + ",changeKey:" + cancelItem.changeKey);
@@ -3845,7 +3857,7 @@ calExchangeCalendar.prototype = {
         }
 
         if (updates.meetingCancellations.length > 0) {
-            for each(var update in updates.meetingCancellations) {
+            for (var update of Object.values(updates.meetingCancellations)) {
                 var cancelItem = this.convertExchangeAppointmentToCalAppointment(update, true);
                 if (cancelItem) {
                     cancelItem.setProperty("X-MEETINGCANCELATION", true);
@@ -3860,7 +3872,7 @@ calExchangeCalendar.prototype = {
         }
 
         if (deletions.meetingCancellations.length > 0) {
-            for each(var deletion in deletions.meetingCancellations) {
+            for (var deletion of Object.values(deletions.meetingCancellations)) {
                 delete this.meetingCancelationsCache[deletion.id];
             }
         }
@@ -3868,7 +3880,7 @@ calExchangeCalendar.prototype = {
         var requestCount = 0;
         var cancelationCount = 0;
         var tmpInCalendarCache = {};
-        for each(var index in this.meetingRequestsCache) {
+        for (var index of this.meetingRequestsCache) {
             if (index) {
                 // Remove request for which we have an calendaritem which is confirmed
                 var tmpID = index.id;
@@ -3882,10 +3894,12 @@ calExchangeCalendar.prototype = {
 
                 // Check single items
                 if (!inCalendar) {
-                    for each(var item in this.itemCacheById) {
-                        if ((item) && (item.uid == tmpUID)) {
-                            inCalendar = item;
-                            break;
+                    if (this.itemCacheById) {
+                        for (var item of Object.values(this.itemCacheById)) {
+                            if ((item) && (item.uid == tmpUID)) {
+                                inCalendar = item;
+                                break;
+                            }
                         }
                     }
                 }
@@ -3922,7 +3936,7 @@ calExchangeCalendar.prototype = {
                         var bodyText = null;
                         if (this.sendAutoRespondMeetingRequestMessage) {
                             bodyText = this.autoRespondMeetingRequestMessage;
-                            this.addActivity(calGetString("calExchangeCalendar", "sendAutoRespondMeetingRequestMessage", [index.title, this.name], "exchangecommon"), "", Date.now(), Date.now());
+                            this.addActivity(cal.l10n.getAnyString("exchangecommon", "calExchangeCalendar", "sendAutoRespondMeetingRequestMessage", [index.title, this.name]), "", Date.now(), Date.now());
 
                         }
 
@@ -3951,7 +3965,7 @@ calExchangeCalendar.prototype = {
             }
         }
 
-        for each(var index in this.meetingCancelationsCache) {
+        for (var index of this.meetingCancelationsCache) {
             if (index) {
                 // Remove cancelation for which we do not have an calendaritem.
                 var tmpID = index.id;
@@ -3965,10 +3979,12 @@ calExchangeCalendar.prototype = {
 
                 // Check single items
                 if (!inCalendar) {
-                    for each(var item in this.itemCacheById) {
-                        if ((item) && (item.uid == tmpUID)) {
-                            inCalendar = item;
-                            break;
+                    if (this.itemCacheById) {
+                        for (var item of Object.values(this.itemCacheById)) {
+                            if ((item) && (item.uid == tmpUID)) {
+                                inCalendar = item;
+                                break;
+                            }
                         }
                     }
                 }
@@ -4034,7 +4050,7 @@ calExchangeCalendar.prototype = {
                                 // Remove calendar item and cancellation message
                                 // because user specified so in the EWS settings.
                                 // We remove it from the real calendar and in the inbox.
-                                this.addActivity(calGetString("calExchangeCalendar", "autoRemoveConfirmedInvitationOnCancellation", [inCalendar.title, this.name], "exchangecommon"), "", Date.now(), Date.now());
+                                this.addActivity(cal.l10n.getAnyString("exchangecommon", "calExchangeCalendar", "autoRemoveConfirmedInvitationOnCancellation", [inCalendar.title, this.name]), "", Date.now(), Date.now());
                                 inCalendar.setProperty("X-IsCancelled", true);
                                 this.deleteItem(inCalendar);
                                 this.removeMeetingItem(index);
@@ -4064,54 +4080,64 @@ calExchangeCalendar.prototype = {
 
         // Process Meetingresponses
         // Save responses into cache and remove request for which we received a cancelation.
-        for each(var response in creations.meetingResponses) {
-            this.meetingResponsesCache[xml2json.getAttributeByTag(response, "t:ItemId", "Id")] = response;
-        }
-
-        for each(var response in updates.meetingResponses) {
-            if (this.meetingResponsesCache[xml2json.getAttributeByTag(response, "t:ItemId", "Id")]) {
+        if (creations.meetingResponses) {
+            for (var response of creations.meetingResponses) {
                 this.meetingResponsesCache[xml2json.getAttributeByTag(response, "t:ItemId", "Id")] = response;
             }
-            else {
-                if (this.debug) this.logInfo("WE DO NOT HAVE A RESPONSE IN CACHE FOR THIS UPDATE!!!!. PLEASE REPORT");
-            }
         }
 
-        for each(var response in deletions.meetingResponses) {
-            if (this.meetingResponsesCache[xml2json.getAttributeByTag(response, "t:ItemId", "Id")]) {
-                delete this.meetingResponsesCache[xml2json.getAttributeByTag(response, "t:ItemId", "Id")];
-            }
-        }
-
-
-        if (this.doAutoRemoveInvitationResponse1) {
-            for each(var response in this.meetingResponsesCache) {
-                // Check if we have this meeting 
-                var tmpUID = xml2json.getTagValue(response, "t:UID");
-                var inCalendar = false;
-
-                // First check recurring Masters
-                if (this.recurringMasterCache[tmpUID]) {
-                    inCalendar = this.recurringMasterCache[tmpUID];
+        if (updates.meetingResponses) {
+            for (var response of updates.meetingResponses) {
+                if (this.meetingResponsesCache[xml2json.getAttributeByTag(response, "t:ItemId", "Id")]) {
+                    this.meetingResponsesCache[xml2json.getAttributeByTag(response, "t:ItemId", "Id")] = response;
                 }
+                else {
+                    if (this.debug) this.logInfo("WE DO NOT HAVE A RESPONSE IN CACHE FOR THIS UPDATE!!!!. PLEASE REPORT");
+                }
+            }
+        }
 
-                // Check single items
-                if (!inCalendar) {
-                    for each(var item in this.itemCacheById) {
-                        if ((item) && (item.uid == tmpUID)) {
-                            inCalendar = item;
-                            break;
+        if (deletions.meetingResponses) {
+            for (var response of deletions.meetingResponses) {
+                if (this.meetingResponsesCache[xml2json.getAttributeByTag(response, "t:ItemId", "Id")]) {
+                    delete this.meetingResponsesCache[xml2json.getAttributeByTag(response, "t:ItemId", "Id")];
+                }
+            }
+        }
+
+
+        if (this.doAfutoRemoveInvitationResponse1) {
+            if (this.meetingResponsesCache) {
+                for (var response of Object.values(this.meetingResponsesCache)) {
+                    // Check if we have this meeting 
+                    var tmpUID = xml2json.getTagValue(response, "t:UID");
+                    var inCalendar = false;
+
+                    // First check recurring Masters
+                    if (this.recurringMasterCache[tmpUID]) {
+                        inCalendar = this.recurringMasterCache[tmpUID];
+                    }
+
+                    // Check single items
+                    if (!inCalendar) {
+                        if (this.itemCacheById) {
+                            for (var item of Object.values(this.itemCacheById)) {
+                                if ((item) && (item.uid == tmpUID)) {
+                                    inCalendar = item;
+                                    break;
+                                }
+                            }
                         }
                     }
-                }
 
-                if (inCalendar) {
-                    // Check if we are the organiser of this item.
-                    var iAmOrganizer = ((inCalendar.organizer) && (inCalendar.organizer.id.replace(/^mailto:/i, '').toLowerCase() == this.mailbox.toLowerCase()));
-                    if (!iAmOrganizer) {
-                        // Remove the response in the inbox. Do not update calendar.
-                        this.removeResponseItem(response);
-                        delete this.meetingResponsesCache[xml2json.getAttributeByTag(response, "t:ItemId", "Id")];
+                    if (inCalendar) {
+                        // Check if we are the organiser of this item.
+                        var iAmOrganizer = ((inCalendar.organizer) && (inCalendar.organizer.id.replace(/^mailto:/i, '').toLowerCase() == this.mailbox.toLowerCase()));
+                        if (!iAmOrganizer) {
+                            // Remove the response in the inbox. Do not update calendar.
+                            this.removeResponseItem(response);
+                            delete this.meetingResponsesCache[xml2json.getAttributeByTag(response, "t:ItemId", "Id")];
+                        }
                     }
                 }
             }
@@ -4166,27 +4192,27 @@ calExchangeCalendar.prototype = {
         var start = null;
         if (xml2json.getTagValue(aCi, "t:StartTime", null)) {
             if (this.isVersion2007) {
-                start = cal.fromRFC3339(xml2json.getTagValue(aCi, "t:StartTime", null), this.globalFunctions.ecUTC());
+                start = cal.dtz.fromRFC3339(xml2json.getTagValue(aCi, "t:StartTime", null), this.globalFunctions.ecUTC());
             }
             else {
-                start = cal.fromRFC3339(xml2json.getTagValue(aCi, "t:StartTime", null), this.globalFunctions.ecDefaultTimeZone());
+                start = cal.dtz.fromRFC3339(xml2json.getTagValue(aCi, "t:StartTime", null), this.globalFunctions.ecDefaultTimeZone());
             }
         }
 
         var end = null;
         if (xml2json.getTagValue(aCi, "t:EndTime", null)) {
             if (this.isVersion2007) {
-                end = cal.fromRFC3339(xml2json.getTagValue(aCi, "t:EndTime", null), this.globalFunctions.ecUTC());
+                end = cal.dtz.fromRFC3339(xml2json.getTagValue(aCi, "t:EndTime", null), this.globalFunctions.ecUTC());
             }
             else {
-                end = cal.fromRFC3339(xml2json.getTagValue(aCi, "t:EndTime", null), this.globalFunctions.ecDefaultTimeZone());
+                end = cal.dtz.fromRFC3339(xml2json.getTagValue(aCi, "t:EndTime", null), this.globalFunctions.ecDefaultTimeZone());
             }
         }
 
         //		var start = this.tryToSetDateValue(aCi.getTagValue("t:StartTime"));
         //		var end   = this.tryToSetDateValue(aCi.getTagValue("t:EndTime"));
         var type = types[xml2json.getTagValue(aCi, "t:BusyType")];
-        return new cal.FreeBusyInterval(aCalId, type,
+        return new cal.provider.FreeBusyInterval(aCalId, type,
             start, end);
     },
 
@@ -4366,14 +4392,14 @@ calExchangeCalendar.prototype = {
         }
         else {
             if (this.debug) this.logInfo(" THIS IS STRANGE beginDate");
-            var oldBeginDate = now();
+            var oldBeginDate = cal.now();
         }
         if (this.endDate) {
             var oldEndDate = this.endDate.clone();
         }
         else {
             if (this.debug) this.logInfo(" THIS IS STRANGE endDate");
-            var oldEndDate = now();
+            var oldEndDate = cal.now();
         }
 
         this.startDate = null;
@@ -4411,7 +4437,7 @@ calExchangeCalendar.prototype = {
             + Ci.calICalendar.ITEM_FILTER_TYPE_EVENT, 0, oldBeginDate, oldEndDate, null);
 
         // Make an event for thistory.
-        this.addActivity(calGetString("calExchangeCalendar", "resetEventMessage", [this.name], "exchangecommon"), "", this.resetStart, Date.now());
+        this.addActivity(cal.l10n.getAnyString("exchangecommon", "calExchangeCalendar", "resetEventMessage", [this.name]), "", this.resetStart, Date.now());
         if (this.debug) this.logInfo(" performReset 2");
     },
 
@@ -4447,13 +4473,17 @@ calExchangeCalendar.prototype = {
         }
 
         var rrule = null;
-        for each(var ritem in aItem.recurrenceInfo.getRecurrenceItems({})) {
-            if (calInstanceOf(ritem, Ci.calIRecurrenceRule)) {
-                rrule = ritem;
-                if (this.debug) this.logInfo(" ;;;; rrule:" + rrule.icalProperty.icalString);
-                //break;
+        var ritems = aItem.recurrenceInfo.getRecurrenceItems({});
+        if (ritems) {
+            for (var ritem of Object.values(ritems)) {
+                if (cal.wrapInstance(ritem, Ci.calIRecurrenceRule)) {
+                    rrule = ritem;
+                    if (this.debug) this.logInfo(" ;;;; rrule:" + rrule.icalProperty.icalString);
+                    //break;
+                }
             }
         }
+        ritems = null;
 
         if (!rrule) {
             // XXX exception?
@@ -4465,14 +4495,14 @@ calExchangeCalendar.prototype = {
 
         /* can't get parameters of RRULEs... have to do it manually :/ */
         var prop = {};
-        for each(let ps in rrule.icalProperty.value.split(';')) {
+        for (let ps of rrule.icalProperty.value.split(';')) {
             let m = ps.split('=');
             prop[m[0]] = m[1];
         }
 
         var startDate;
         var originalDate;
-        if (isEvent(aItem)) {
+        if (cal.item.isEvent(aItem)) {
             startDate = aItem.startDate.clone();
             originalDate = aItem.startDate.clone();
         }
@@ -4488,7 +4518,7 @@ calExchangeCalendar.prototype = {
             var startDate = startDate.clone();
         }
         else {
-            var startDate = cal.now();
+            var startDate = cal.dtz.now();
         }
         startDate.isDate = true;
 
@@ -4529,7 +4559,7 @@ calExchangeCalendar.prototype = {
             wr.addChildTag("Interval", "nsTypes", rrule.interval);
             var days = [];
             var daystr = prop["BYDAY"] || dayIdxMap[startDate.weekday];
-            for each(let day in daystr.split(",")) {
+            for (let day of daystr.split(",")) {
                 days.push(dayRevMap[day]);
             }
             wr.addChildTag("DaysOfWeek", "nsTypes", days.join(' '));
@@ -4540,7 +4570,7 @@ calExchangeCalendar.prototype = {
                 wr.addChildTag("Interval", "nsTypes", rrule.interval);
                 var days = [];
                 var daystr = prop["BYDAY"];
-                for each(let day in daystr.split(",")) {
+                for (let day of daystr.split(",")) {
                     days.push(dayRevMap[day]);
                 }
                 wr.addChildTag("DaysOfWeek", "nsTypes", days.join(' '));
@@ -4552,15 +4582,15 @@ calExchangeCalendar.prototype = {
             break;
         }
 
-        if (isEvent(aItem)) {
-            var startDateStr = cal.toRFC3339(startDate.getInTimezone(this.globalFunctions.ecUTC()));
-            //			var startDateStr = cal.toRFC3339(originalDate.getInTimezone(this.globalFunctions.ecUTC()));
+        if (cal.item.isEvent(aItem)) {
+            var startDateStr = cal.dtz.toRFC3339(startDate.getInTimezone(this.globalFunctions.ecUTC()));
+            //			var startDateStr = cal.dtz.toRFC3339(originalDate.getInTimezone(this.globalFunctions.ecUTC()));
         }
         else {
             // We make a non-UTC datetime value for this.globalFunctions.
             // EWS will use the MeetingTimeZone or StartTimeZone and EndTimeZone to convert.
-            //LOG("  ==== tmpStart:"+cal.toRFC3339(tmpStart));
-            var startDateStr = cal.toRFC3339(startDate).substr(0, 19); //cal.toRFC3339(tmpStart).length-6);
+            //LOG("  ==== tmpStart:"+cal.dtz.toRFC3339(tmpStart));
+            var startDateStr = cal.dtz.toRFC3339(startDate).substr(0, 19); //cal.dtz.toRFC3339(tmpStart).length-6);
         }
 
         if (rrule.isByCount && rrule.count != -1) {
@@ -4571,9 +4601,9 @@ calExchangeCalendar.prototype = {
         else if (!rrule.isByCount && rrule.untilDate) {
 
             var endDate = rrule.untilDate.clone();
-            if (isEvent(aItem)) {
+            if (cal.item.isEvent(aItem)) {
                 endDate.isDate = true;
-                var endDateStr = cal.toRFC3339(endDate.getInTimezone(this.globalFunctions.ecUTC()));
+                var endDateStr = cal.dtz.toRFC3339(endDate.getInTimezone(this.globalFunctions.ecUTC()));
             }
             else {
                 if (!endDate.isDate) {
@@ -4585,7 +4615,7 @@ calExchangeCalendar.prototype = {
 
                     endDate.isDate = true;
                 }
-                var endDateStr = cal.toRFC3339(endDate).substr(0, 19); //cal.toRFC3339(tmpEnd).length-6);
+                var endDateStr = cal.dtz.toRFC3339(endDate).substr(0, 19); //cal.dtz.toRFC3339(tmpEnd).length-6);
             }
             var edr = r.addChildTag("EndDateRecurrence", "nsTypes", null);
             edr.addChildTag("StartDate", "nsTypes", startDateStr);
@@ -4615,7 +4645,7 @@ calExchangeCalendar.prototype = {
             var alarmTime = alarm.alarmDate;
             break;
         case Ci.calIAlarm.ALARM_RELATED_START:
-            if (isEvent(aItem)) {
+            if (cal.item.isEvent(aItem)) {
                 var alarmTime = aItem.startDate.clone();
             }
             else {
@@ -4624,7 +4654,7 @@ calExchangeCalendar.prototype = {
             alarmTime.addDuration(alarm.offset);
             break;
         case Ci.calIAlarm.ALARM_RELATED_END:
-            if (isEvent(aItem)) {
+            if (cal.item.isEvent(aItem)) {
                 var alarmTime = aItem.endDate.clone();
             }
             else {
@@ -4634,7 +4664,7 @@ calExchangeCalendar.prototype = {
             break;
         }
 
-        alarmTime = alarmTime.getInTimezone(cal.UTC());
+        alarmTime = alarmTime.getInTimezone(cal.dtz.UTC);
 
         return alarmTime;
     },
@@ -4695,8 +4725,8 @@ calExchangeCalendar.prototype = {
             extField.setAttribute("PropertyType", "SystemTime");
 
             var newSnoozeTime = cal.createDateTime(tmpStr);
-            newSnoozeTime = newSnoozeTime.getInTimezone(cal.UTC());
-            eprop.addChildTag("Value", "nsTypes", cal.toRFC3339(newSnoozeTime));
+            newSnoozeTime = newSnoozeTime.getInTimezone(cal.dtz.UTC);
+            eprop.addChildTag("Value", "nsTypes", cal.dtz.toRFC3339(newSnoozeTime));
         }
 
         if (this.debug) this.logInfo("getSingleSnoozeState END");
@@ -4749,7 +4779,7 @@ calExchangeCalendar.prototype = {
                     }
                     else {
                         if (this.debug) this.logInfo("Master has no alarmLastAck. We set the alarm to the first child with an alarm in the future.");
-                        var prevTime = cal.createDateTime().getInTimezone(cal.UTC());
+                        var prevTime = cal.createDateTime().getInTimezone(cal.dtz.UTC);
                     }
 
                     var childEvent = null;
@@ -4802,8 +4832,8 @@ calExchangeCalendar.prototype = {
             extField.setAttribute("PropertyType", "SystemTime");
 
             var newSnoozeTime = cal.createDateTime(tmpStr);
-            newSnoozeTime = newSnoozeTime.getInTimezone(cal.UTC());
-            eprop.addChildTag("Value", "nsTypes", cal.toRFC3339(newSnoozeTime));
+            newSnoozeTime = newSnoozeTime.getInTimezone(cal.dtz.UTC);
+            eprop.addChildTag("Value", "nsTypes", cal.dtz.toRFC3339(newSnoozeTime));
         }
         if (this.debug) this.logInfo("getMasterSnoozeStates END");
         return tmpStr;
@@ -4914,8 +4944,10 @@ calExchangeCalendar.prototype = {
 
         var categories = aItem.getCategories({});
         var categoriesTag = e.addChildTag("Categories", "nsTypes", null);
-        for each(var category in categories) {
-            categoriesTag.addChildTag("String", "nsTypes", category);
+        if (categories) {
+            for (var category of Object.values(categories)) {
+                categoriesTag.addChildTag("String", "nsTypes", category);
+            }
         }
 
         var importance = "Normal";
@@ -4957,13 +4989,13 @@ calExchangeCalendar.prototype = {
 
             // We make a non-UTC datetime value for this.globalFunctions.
             // EWS will use the MeetingTimeZone or StartTimeZone and EndTimeZone to convert.
-            var exchStart = cal.toRFC3339(tmpStart.getInTimezone(this.globalFunctions.ecUTC())).substr(0, 19) + "Z"; //cal.toRFC3339(tmpStart).length-6);
-            var exchEnd = cal.toRFC3339(tmpEnd.getInTimezone(this.globalFunctions.ecUTC())).substr(0, 19) + "Z"; //cal.toRFC3339(tmpEnd).length-6);
+            var exchStart = cal.dtz.toRFC3339(tmpStart.getInTimezone(this.globalFunctions.ecUTC())).substr(0, 19) + "Z"; //cal.dtz.toRFC3339(tmpStart).length-6);
+            var exchEnd = cal.dtz.toRFC3339(tmpEnd.getInTimezone(this.globalFunctions.ecUTC())).substr(0, 19) + "Z"; //cal.dtz.toRFC3339(tmpEnd).length-6);
         }
         else {
             // We set in bias advanced to UCT datetime values for this.globalFunctions.
-            var exchStart = cal.toRFC3339(tmpStart.getInTimezone(cal.UTC()));
-            var exchEnd = cal.toRFC3339(tmpEnd.getInTimezone(cal.UTC()));
+            var exchStart = cal.dtz.toRFC3339(tmpStart.getInTimezone(cal.dtz.UTC));
+            var exchEnd = cal.dtz.toRFC3339(tmpEnd.getInTimezone(cal.dtz.UTC));
         }
 
         var alarms = aItem.getAlarms({});
@@ -5010,7 +5042,7 @@ calExchangeCalendar.prototype = {
         if (aItem.hasProperty("X-MOZ-SNOOZE-TIME")) {
             //dump("Item is snoozed. Going to set the snooze time\n");
             var newSnoozeTime = cal.createDateTime(aItem.getProperty("X-MOZ-SNOOZE-TIME"));
-            newSnoozeTime = newSnoozeTime.getInTimezone(cal.UTC());
+            newSnoozeTime = newSnoozeTime.getInTimezone(cal.dtz.UTC);
             const MAPI_PidLidReminderSignalTime = "34144";
 
             var eprop = e.addChildTag("ExtendedProperty", "nsTypes", null);
@@ -5018,7 +5050,7 @@ calExchangeCalendar.prototype = {
             extField.setAttribute("DistinguishedPropertySetId", "Common");
             extField.setAttribute("PropertyId", MAPI_PidLidReminderSignalTime);
             extField.setAttribute("PropertyType", "SystemTime");
-            eprop.addChildTag("Value", "nsTypes", cal.toRFC3339(newSnoozeTime));
+            eprop.addChildTag("Value", "nsTypes", cal.dtz.toRFC3339(newSnoozeTime));
 
         }
 
@@ -5071,44 +5103,46 @@ calExchangeCalendar.prototype = {
             var attendees = aItem.getAttendees({});
             var ae;
 
-            for each(var attendee in attendees) {
-                //dump("attendee.role:"+attendee.role+"\n");
-                switch (attendee.role) {
-                case "REQ-PARTICIPANT":
-                    if (!reqAttendees) {
-                        var reqAttendees = e.addChildTag("RequiredAttendees", "nsTypes", null);
+            if (attendees) {
+                for (var attendee of Object.values(attendees)) {
+                    //dump("attendee.role:"+attendee.role+"\n");
+                    switch (attendee.role) {
+                    case "REQ-PARTICIPANT":
+                        if (!reqAttendees) {
+                            var reqAttendees = e.addChildTag("RequiredAttendees", "nsTypes", null);
+                        }
+                        ae = reqAttendees.addChildTag("Attendee", "nsTypes", null);
+                        break;
+                    case "OPT-PARTICIPANT":
+                        if (!optAttendees) {
+                            var optAttendees = e.addChildTag("OptionalAttendees", "nsTypes", null);
+                        }
+                        ae = optAttendees.addChildTag("Attendee", "nsTypes", null);
+                        break;
+                    case "CHAIR":
+                        /*					if (!tmpOrganizer) {
+                        						var tmpOrganizer = e.addChildTag("Organizer", "nsTypes", null);
+                        					}
+                        					ae = tmpOrganizer;
+                        					break;*/ // Sadly this is not posible when we create a new item.
+                    default:
+                        ae = null;
                     }
-                    ae = reqAttendees.addChildTag("Attendee", "nsTypes", null);
-                    break;
-                case "OPT-PARTICIPANT":
-                    if (!optAttendees) {
-                        var optAttendees = e.addChildTag("OptionalAttendees", "nsTypes", null);
-                    }
-                    ae = optAttendees.addChildTag("Attendee", "nsTypes", null);
-                    break;
-                case "CHAIR":
-                    /*					if (!tmpOrganizer) {
-                    						var tmpOrganizer = e.addChildTag("Organizer", "nsTypes", null);
-                    					}
-                    					ae = tmpOrganizer;
-                    					break;*/ // Sadly this is not posible when we create a new item.
-                default:
-                    ae = null;
-                }
 
-                if (ae) {
-                    var mailbox = ae.addChildTag("Mailbox", "nsTypes", null);
-                    mailbox.addChildTag("Name", "nsTypes", attendee.commonName);
+                    if (ae) {
+                        var mailbox = ae.addChildTag("Mailbox", "nsTypes", null);
+                        mailbox.addChildTag("Name", "nsTypes", attendee.commonName);
 
-                    var tmpEmailAddress = attendee.id.replace(/^mailto:/i, '');
-                    if (tmpEmailAddress.indexOf("@") > 0) {
-                        mailbox.addChildTag("EmailAddress", "nsTypes", tmpEmailAddress);
-                    }
-                    else {
-                        mailbox.addChildTag("EmailAddress", "nsTypes", "unknown@somewhere.com");
-                    }
-                    if (attendee.role != "CHAIR") {
-                        ae.addChildTag("ResponseType", "nsTypes", attendeeStatus[attendee.participationStatus]);
+                        var tmpEmailAddress = attendee.id.replace(/^mailto:/i, '');
+                        if (tmpEmailAddress.indexOf("@") > 0) {
+                            mailbox.addChildTag("EmailAddress", "nsTypes", tmpEmailAddress);
+                        }
+                        else {
+                            mailbox.addChildTag("EmailAddress", "nsTypes", "unknown@somewhere.com");
+                        }
+                        if (attendee.role != "CHAIR") {
+                            ae.addChildTag("ResponseType", "nsTypes", attendeeStatus[attendee.participationStatus]);
+                        }
                     }
                 }
             }
@@ -5208,11 +5242,13 @@ calExchangeCalendar.prototype = {
 
         var categories = aItem.getCategories({});
         var categoriesTag = null;
-        for each(var category in categories) {
-            if (categoriesTag == null) {
-                categoriesTag = e.addChildTag("Categories", "nsTypes", null);
+        if (categories) {
+            for (var category of Object.values(categories)) {
+                if (categoriesTag == null) {
+                    categoriesTag = e.addChildTag("Categories", "nsTypes", null);
+                }
+                categoriesTag.addChildTag("String", "nsTypes", category);
             }
-            categoriesTag.addChildTag("String", "nsTypes", category);
         }
 
         var importance = "Normal";
@@ -5238,7 +5274,7 @@ calExchangeCalendar.prototype = {
             switch (alarms[0].related) {
             case Ci.calIAlarm.ALARM_RELATED_ABSOLUTE:
                 if (this.debug) this.logInfo("ALARM_RELATED_ABSOLUTE.");
-                var newAlarmTime = alarms[0].alarmDate.clone().getInTimezone(cal.UTC());
+                var newAlarmTime = alarms[0].alarmDate.clone().getInTimezone(cal.dtz.UTC);
                 break;
             case Ci.calIAlarm.ALARM_RELATED_START:
                 if (this.debug) this.logInfo("ALARM_RELATED_START we are going to calculate the absolute.");
@@ -5252,7 +5288,7 @@ calExchangeCalendar.prototype = {
                 break;
             }
 
-            e.addChildTag("ReminderDueBy", "nsTypes", cal.toRFC3339(newAlarmTime));
+            e.addChildTag("ReminderDueBy", "nsTypes", cal.dtz.toRFC3339(newAlarmTime));
             e.addChildTag("ReminderIsSet", "nsTypes", "true");
         }
         else {
@@ -5293,7 +5329,7 @@ calExchangeCalendar.prototype = {
         if (aItem.hasProperty("X-MOZ-SNOOZE-TIME")) {
             //dump("Item is snoozed. Going to set the snooze time\n");
             var newSnoozeTime = cal.createDateTime(aItem.getProperty("X-MOZ-SNOOZE-TIME"));
-            newSnoozeTime = newSnoozeTime.getInTimezone(cal.UTC());
+            newSnoozeTime = newSnoozeTime.getInTimezone(cal.dtz.UTC);
             const MAPI_PidLidReminderSignalTime = "34144";
 
             var eprop = e.addChildTag("ExtendedProperty", "nsTypes", null);
@@ -5301,7 +5337,7 @@ calExchangeCalendar.prototype = {
             extField.setAttribute("DistinguishedPropertySetId", "Common");
             extField.setAttribute("PropertyId", MAPI_PidLidReminderSignalTime);
             extField.setAttribute("PropertyType", "SystemTime");
-            eprop.addChildTag("Value", "nsTypes", cal.toRFC3339(newSnoozeTime));
+            eprop.addChildTag("Value", "nsTypes", cal.dtz.toRFC3339(newSnoozeTime));
 
         }
 
@@ -5317,8 +5353,10 @@ calExchangeCalendar.prototype = {
 
         var companies = aItem.getCompanies({});
         var first = true;
-        for each(var company in companies) {
-            companiesTag.addChildTag("String", "nsTypes", company);
+        if (companies) {
+            for (var company of Object.values(companies)) {
+                companiesTag.addChildTag("String", "nsTypes", company);
+            }
         }
 
         if (aItem.completedDate) {
@@ -5337,7 +5375,7 @@ calExchangeCalendar.prototype = {
             	tmpDuration.minutes = -1;
             	tmpStart.addDuration(tmpDuration);*/
 
-            e.addChildTag("CompleteDate", "nsTypes", cal.toRFC3339(tmpStart));
+            e.addChildTag("CompleteDate", "nsTypes", cal.dtz.toRFC3339(tmpStart));
         }
 
 
@@ -5348,7 +5386,7 @@ calExchangeCalendar.prototype = {
                 aItem.dueDate = aItem.dueDate.getInTimezone(this.globalFunctions.ecDefaultTimeZone());
             }
 
-            e.addChildTag("DueDate", "nsTypes", cal.toRFC3339(aItem.dueDate));
+            e.addChildTag("DueDate", "nsTypes", cal.dtz.toRFC3339(aItem.dueDate));
         }
 
         if (aItem.mileage) {
@@ -5370,7 +5408,7 @@ calExchangeCalendar.prototype = {
                 aItem.entryDate = aItem.entryDate.getInTimezone(this.globalFunctions.ecDefaultTimeZone());
             }
 
-            e.addChildTag("StartDate", "nsTypes", cal.toRFC3339(aItem.entryDate));
+            e.addChildTag("StartDate", "nsTypes", cal.dtz.toRFC3339(aItem.entryDate));
         }
         //		}
 
@@ -5440,12 +5478,12 @@ calExchangeCalendar.prototype = {
         }
 
         // Make an event for thistory.
-        if (isEvent(erCreateItemRequest.argument.item)) {
-            this.addActivity(calGetString("calExchangeCalendar", "addCalendarEventMessage", [erCreateItemRequest.argument.item.title, this.name], "exchangecommon"), "", erCreateItemRequest.argument.actionStart, Date.now());
+        if (cal.item.isEvent(erCreateItemRequest.argument.item)) {
+            this.addActivity(cal.l10n.getAnyString("exchangecommon", "calExchangeCalendar", "addCalendarEventMessage", [erCreateItemRequest.argument.item.title, this.name]), "", erCreateItemRequest.argument.actionStart, Date.now());
         }
         else {
             //this.notifyTheObservers("onAddItem", [newItem]);
-            this.addActivity(calGetString("calExchangeCalendar", "addTaskEventMessage", [erCreateItemRequest.argument.item.title, this.name], "exchangecommon"), "", erCreateItemRequest.argument.actionStart, Date.now());
+            this.addActivity(cal.l10n.getAnyString("exchangecommon", "calExchangeCalendar", "addTaskEventMessage", [erCreateItemRequest.argument.item.title, this.name]), "", erCreateItemRequest.argument.actionStart, Date.now());
         }
 
 
@@ -5686,9 +5724,9 @@ calExchangeCalendar.prototype = {
         var proposeNewTime = false;
 
         if (proposeStart)
-            input.proposeStart = cal.toRFC3339(proposeStart.getInTimezone(this.globalFunctions.ecUTC()));
+            input.proposeStart = cal.dtz.toRFC3339(proposeStart.getInTimezone(this.globalFunctions.ecUTC()));
         if (proposeEnd)
-            input.proposeEnd = cal.toRFC3339(proposeEnd.getInTimezone(this.globalFunctions.ecUTC()));
+            input.proposeEnd = cal.dtz.toRFC3339(proposeEnd.getInTimezone(this.globalFunctions.ecUTC()));
 
         if (input.proposeStart && input.proposeEnd) {
             proposeNewTime = true;
@@ -5747,7 +5785,7 @@ calExchangeCalendar.prototype = {
             //this.meetingrequestAnswered[erSendMeetingResponsRequest.argument.item.uid] = false;
         }
 
-        this.addActivity(calGetString("calExchangeCalendar", "ewsMeetingResponsEventMessage", [erSendMeetingResponsRequest.argument.item.title, erSendMeetingResponsRequest.argument.response, this.name], "exchangecommon"), erSendMeetingResponsRequest.argument.bodyText, erSendMeetingResponsRequest.argument.actionStart, Date.now());
+        this.addActivity(cal.l10n.getAnyString("exchangecommon", "calExchangeCalendar", "ewsMeetingResponsEventMessage", [erSendMeetingResponsRequest.argument.item.title, erSendMeetingResponsRequest.argument.response, this.name]), erSendMeetingResponsRequest.argument.bodyText, erSendMeetingResponsRequest.argument.actionStart, Date.now());
         this.refresh();
     },
 
@@ -5874,7 +5912,7 @@ calExchangeCalendar.prototype = {
             }
         }
         else {
-            this.addActivity(calGetString("calExchangeCalendar", "ewsErrorEventMessage", [this.name, aMsg, aCode], "exchangecommon"), aMsg, erGetOccurrenceIndexRequest.argument.actionStart, Date.now());
+            this.addActivity(cal.l10n.getAnyString("exchangecommon", "calExchangeCalendar", "ewsErrorEventMessage", [this.name, aMsg, aCode]), aMsg, erGetOccurrenceIndexRequest.argument.actionStart, Date.now());
 
             var promptService = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
                 .getService(Components.interfaces.nsIPromptService);
@@ -6009,11 +6047,11 @@ calExchangeCalendar.prototype = {
         this.notConnected = false;
 
         // Make an event for thistory.
-        if (isEvent(erUpdateItemRequest.argument.newItem)) {
-            this.addActivity(calGetString("calExchangeCalendar", "updateCalendarEventMessage", [erUpdateItemRequest.argument.newItem.title, this.name], "exchangecommon"), "", erUpdateItemRequest.argument.actionStart, Date.now());
+        if (cal.item.isEvent(erUpdateItemRequest.argument.newItem)) {
+            this.addActivity(cal.l10n.getAnyString("exchangecommon", "calExchangeCalendar", "updateCalendarEventMessage", [erUpdateItemRequest.argument.newItem.title, this.name]), "", erUpdateItemRequest.argument.actionStart, Date.now());
         }
         else {
-            this.addActivity(calGetString("calExchangeCalendar", "updateTaskEventMessage", [erUpdateItemRequest.argument.newItem.title, this.name], "exchangecommon"), "", erUpdateItemRequest.argument.actionStart, Date.now());
+            this.addActivity(cal.l10n.getAnyString("exchangecommon", "calExchangeCalendar", "updateTaskEventMessage", [erUpdateItemRequest.argument.newItem.title, this.name]), "", erUpdateItemRequest.argument.actionStart, Date.now());
         }
 
         if (!this.doAttachmentUpdates(erUpdateItemRequest.argument.attachmentsUpdates, erUpdateItemRequest.argument.item, erUpdateItemRequest.argument.sendto, erUpdateItemRequest.listener)) {
@@ -6114,11 +6152,11 @@ calExchangeCalendar.prototype = {
         }
 
 
-        if (isEvent(erDeleteItemRequest.argument.item)) {
-            this.addActivity(calGetString("calExchangeCalendar", "deleteCalendarEventMessage", [erDeleteItemRequest.argument.item.title, this.name], "exchangecommon"), "", erDeleteItemRequest.argument.actionStart, Date.now());
+        if (cal.item.isEvent(erDeleteItemRequest.argument.item)) {
+            this.addActivity(cal.l10n.getAnyString("exchangecommon", "calExchangeCalendar", "deleteCalendarEventMessage", [erDeleteItemRequest.argument.item.title, this.name]), "", erDeleteItemRequest.argument.actionStart, Date.now());
         }
         else {
-            this.addActivity(calGetString("calExchangeCalendar", "deleteTaskEventMessage", [erDeleteItemRequest.argument.item.title, this.name], "exchangecommon"), "", erDeleteItemRequest.argument.actionStart, Date.now());
+            this.addActivity(cal.l10n.getAnyString("exchangecommon", "calExchangeCalendar", "deleteTaskEventMessage", [erDeleteItemRequest.argument.item.title, this.name]), "", erDeleteItemRequest.argument.actionStart, Date.now());
         }
 
         //delete erDeleteItemRequest.argument.item;
@@ -6186,32 +6224,36 @@ calExchangeCalendar.prototype = {
         // Removed Single/Master items in the lists which we already have in memory
         var newIdList = new Array();
         //dump("     findCalendarItemsOK: aIds.length:"+aIds.length+"\n");
-        for each(var item in aIds) {
-            if (!doNotCheckCache) {
-                var inItemCache = ((this.itemCacheById[item.Id]) && (this.itemCacheById[item.Id].changeKey == item.ChangeKey));
-                if ((!inItemCache) && (this.useOfflineCache)) {
-                    inItemCache = (this.itemIsInOfflineCache(item.Id) == item.ChangeKey);
+        if (aIds) {
+            for (var item of Object.values(aIds)) {
+                if (!doNotCheckCache) {
+                    var inItemCache = ((this.itemCacheById[item.Id]) && (this.itemCacheById[item.Id].changeKey == item.ChangeKey));
+                    if ((!inItemCache) && (this.useOfflineCache)) {
+                        inItemCache = (this.itemIsInOfflineCache(item.Id) == item.ChangeKey);
+                    }
+                    var inMasterCache = ((item.type == "RecurringMaster") && (this.recurringMasterCache[item.uid]) && (this.recurringMasterCache[item.uid].changeKey == item.ChangeKey));
                 }
-                var inMasterCache = ((item.type == "RecurringMaster") && (this.recurringMasterCache[item.uid]) && (this.recurringMasterCache[item.uid].changeKey == item.ChangeKey));
-            }
-            else {
-                var inItemCache = false;
-                var inMasterCache = false;
-            }
-            if ((!inItemCache) && (!inMasterCache)) {
-                newIdList.push(item);
+                else {
+                    var inItemCache = false;
+                    var inMasterCache = false;
+                }
+                if ((!inItemCache) && (!inMasterCache)) {
+                    newIdList.push(item);
+                }
             }
         }
 
         // Remove Occurrence/Exception items in the lists which we already have in memory
         var newOccurrenceList = new Array();
         //dump("     findCalendarItemsOK: aOccurrences.length:"+aOccurrences.length+"\n");
-        for each(var item in aOccurrences) {
+        if (aOccurrences) {
+            for (var item of Object.values(aOccurrences)) {
                 if (!this.recurringMasterCache[item.uid]) {
                     newOccurrenceList.push(item);
                 }
             }
             //dump("     findCalendarItemsOK: newOccurrenceList.length:"+newOccurrenceList.length+"\n");
+        }
 
         var self = this;
 
@@ -6362,18 +6404,20 @@ calExchangeCalendar.prototype = {
         // Removed Single/Master items in the lists which we already have in memory
         var newIdList = new Array();
         //dump("     findCalendarItemsOK: aIds.length:"+aIds.length+"\n");
-        for each(var item in aIds) {
-            if (!doNotCheckCache) {
-                var inItemCache = ((this.itemCacheById[item.Id]) && (this.itemCacheById[item.Id].changeKey == item.ChangeKey));
-                if ((!inItemCache) && (this.useOfflineCache)) {
-                    inItemCache = (this.itemIsInOfflineCache(item.Id) == item.ChangeKey);
+        if (aIds) {
+            for (var item of Object.values(aIds)) {
+                if (!doNotCheckCache) {
+                    var inItemCache = ((this.itemCacheById[item.Id]) && (this.itemCacheById[item.Id].changeKey == item.ChangeKey));
+                    if ((!inItemCache) && (this.useOfflineCache)) {
+                        inItemCache = (this.itemIsInOfflineCache(item.Id) == item.ChangeKey);
+                    }
                 }
-            }
-            else {
-                var inItemCache = false;
-            }
-            if ((!inItemCache)) {
-                newIdList.push(item);
+                else {
+                    var inItemCache = false;
+                }
+                if ((!inItemCache)) {
+                    newIdList.push(item);
+                }
             }
         }
 
@@ -6408,7 +6452,7 @@ calExchangeCalendar.prototype = {
 
     tryToSetDateValue: function _TryToSetDateValue(ewsvalue, aDefault) {
         if ((ewsvalue) && (ewsvalue.toString().length)) {
-            return cal.fromRFC3339(ewsvalue, this.globalFunctions.ecTZService().UTC).getInTimezone(this.globalFunctions.ecDefaultTimeZone());
+            return cal.dtz.fromRFC3339(ewsvalue, this.globalFunctions.ecTZService().UTC).getInTimezone(this.globalFunctions.ecDefaultTimeZone());
         }
 
         return aDefault;
@@ -6642,30 +6686,38 @@ calExchangeCalendar.prototype = {
     removeChildrenFromMaster: function _removeChildrenFromMaster(aMaster) {
         if (this.debug) this.logInfo("removeChildrenFromMaster start. Title:" + aMaster.title);
         // Remove children of this master. They will be added later.
-        for each(var child in aMaster.getExceptions({})) {
-            this.notifyTheObservers("onDeleteItem", [child]);
-            aMaster.removeException(child);
-            /*if (this.itemCacheById[child.id]) {
-				this.itemCacheById[child.id].deleteItem();
-			}
-else { dump("Exception does not exist in cache anymore.\n");}
-			this.itemCacheById[child.id] = null;
-			delete this.itemCacheById[child.id];*/
-            this.removeItemFromCache(child);
+        var exceptions = aMaster.getExceptions({});
+        if (exceptions) {
+            for (var child of Object.values(exceptions)) {
+                this.notifyTheObservers("onDeleteItem", [child]);
+                aMaster.removeException(child);
+                /*if (this.itemCacheById[child.id]) {
+    				this.itemCacheById[child.id].deleteItem();
+    			}
+    else { dump("Exception does not exist in cache anymore.\n");}
+    			this.itemCacheById[child.id] = null;
+    			delete this.itemCacheById[child.id];*/
+                this.removeItemFromCache(child);
 
+            }
         }
+        exceptions = null;
 
-        for each(var child in aMaster.getOccurrences({})) {
-            this.notifyTheObservers("onDeleteItem", [child]);
-            aMaster.removeOccurrence(child);
-            /*if (this.itemCacheById[child.id]) {
-				this.itemCacheById[child.id].deleteItem();
-			}
-else { dump("Occurrence does not exist in cache anymore.\n");}
-			this.itemCacheById[child.id] = null;
-			delete this.itemCacheById[child.id];*/
-            this.removeItemFromCache(child);
+        var occurrences = aMaster.getOccurrences({});
+        if (occurrences) {
+            for (var child of Object.values(occurrences)) {
+                this.notifyTheObservers("onDeleteItem", [child]);
+                aMaster.removeOccurrence(child);
+                /*if (this.itemCacheById[child.id]) {
+    				this.itemCacheById[child.id].deleteItem();
+    			}
+    else { dump("Occurrence does not exist in cache anymore.\n");}
+    			this.itemCacheById[child.id] = null;
+    			delete this.itemCacheById[child.id];*/
+                this.removeItemFromCache(child);
+            }
         }
+        occurrences = null;
 
         if (this.debug) this.logInfo("removeChildrenFromMaster end.:" + aMaster.title);
     },
@@ -6709,16 +6761,18 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
         if (aExchangeItem.getTagValue("t:HasAttachments") == "true") {
             //			if (this.debug) this.logInfo("Title:"+aItem.title+"Attachments:"+aExchangeItem.getTagValue("Attachments"));
             var fileAttachments = aExchangeItem.XPath("/t:Attachments/t:FileAttachment");
-            for each(var fileAttachment in fileAttachments) {
-                //				if (this.debug) this.logInfo(" -- Attachment: name="+fileAttachment.getTagValue("t:Name"));
+            if (fileAttachments) {
+                for (var fileAttachment of Object.values(fileAttachments)) {
+                    //				if (this.debug) this.logInfo(" -- Attachment: name="+fileAttachment.getTagValue("t:Name"));
 
-                var newAttachment = createAttachment();
-                newAttachment.setParameter("X-AttachmentId", fileAttachment.getAttributeByTag("t:AttachmentId", "Id"));
-                newAttachment.uri = makeURL(this.serverUrl + "/?id=" + encodeURIComponent(fileAttachment.getAttributeByTag("t:AttachmentId", "Id")) + "&name=" + encodeURIComponent(fileAttachment.getTagValue("t:Name")) + "&size=" + encodeURIComponent(fileAttachment.getTagValue("t:Size", "")) + "&user=" + encodeURIComponent(this.user));
+                    var newAttachment = createAttachment();
+                    newAttachment.setParameter("X-AttachmentId", fileAttachment.getAttributeByTag("t:AttachmentId", "Id"));
+                    newAttachment.uri = makeURL(this.serverUrl + "/?id=" + encodeURIComponent(fileAttachment.getAttributeByTag("t:AttachmentId", "Id")) + "&name=" + encodeURIComponent(fileAttachment.getTagValue("t:Name")) + "&size=" + encodeURIComponent(fileAttachment.getTagValue("t:Size", "")) + "&user=" + encodeURIComponent(this.user));
 
-                if (this.debug) this.logInfo("New attachment URI:" + this.serverUrl + "/?id=" + encodeURIComponent(fileAttachment.getAttributeByTag("t:AttachmentId", "Id")) + "&name=" + encodeURIComponent(fileAttachment.getTagValue("t:Name")) + "&size=" + encodeURIComponent(fileAttachment.getTagValue("t:Size", "")) + "&user=" + encodeURIComponent(this.user));
+                    if (this.debug) this.logInfo("New attachment URI:" + this.serverUrl + "/?id=" + encodeURIComponent(fileAttachment.getAttributeByTag("t:AttachmentId", "Id")) + "&name=" + encodeURIComponent(fileAttachment.getTagValue("t:Name")) + "&size=" + encodeURIComponent(fileAttachment.getTagValue("t:Size", "")) + "&user=" + encodeURIComponent(this.user));
 
-                aItem.addAttachment(newAttachment);
+                    aItem.addAttachment(newAttachment);
+                }
             }
             fileAttachments = null;
         }
@@ -6815,7 +6869,7 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
                         for (var index in this.itemCacheById) {
 
                             if ((this.itemCacheById[index])
-                                && (isEvent(this.itemCacheById[index]))
+                                && (cal.item.isEvent(this.itemCacheById[index]))
                                 && ((this.itemCacheById[index].calendarItemType == "Occurrence")
                                     || (this.itemCacheById[index].calendarItemType == "Exception"))
                                 && (this.itemCacheById[index].uid == aMaster.uid)
@@ -7063,24 +7117,28 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
 
                     let ids = [];
                     let myExceptions = this.recurringMasterCache[item.uid].getExceptions({});
-                    for each(var tmpException in myExceptions) {
-                        ids.push({
-                            Id: tmpException.id,
-                            type: "Exception",
-                            uid: item.uid,
-                            start: null,
-                            end: null
-                        });
+                    if (myExceptions) {
+                        for (var tmpException of Object.values(myExceptions)) {
+                            ids.push({
+                                Id: tmpException.id,
+                                type: "Exception",
+                                uid: item.uid,
+                                start: null,
+                                end: null
+                            });
+                        }
                     }
                     let myOccurrences = this.recurringMasterCache[item.uid].getOccurrences({});
-                    for each(var tmpOccurrence in myOccurrences) {
-                        ids.push({
-                            Id: tmpOccurrence.id,
-                            type: "Occurrence",
-                            uid: item.uid,
-                            start: null,
-                            end: null
-                        });
+                    if (myOccurrences) {
+                        for (var tmpOccurrence of Object.values(myOccurrences)) {
+                            ids.push({
+                                Id: tmpOccurrence.id,
+                                type: "Occurrence",
+                                uid: item.uid,
+                                start: null,
+                                end: null
+                            });
+                        }
                     }
 
                     if (this.debug) this.logInfo("Going to request '" + ids.length + "' children to see if they are updated.");
@@ -7149,7 +7207,7 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
                 for (var itemId in this.parentLessItems) {
                     parentLessCounter++;
                     if ((this.parentLessItems[itemId])
-                        && (isEvent(this.parentLessItems[itemId]))
+                        && (cal.item.isEvent(this.parentLessItems[itemId]))
                         && ((this.parentLessItems[itemId].calendarItemType == "Occurrence")
                             || (this.parentLessItems[itemId].calendarItemType == "Exception"))
                         && (this.parentLessItems[itemId].uid == item.uid)
@@ -7389,7 +7447,7 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
         //			return null;
         //		}
 
-        var item = createEvent();
+        var item = new mivExchangeEvent();
         //		var item = Cc["@1st-setup.nl/exchange/calendarevent;1"]
         //				.createInstance(Ci.mivExchangeEvent);
         item.calendar = this.superCalendar;
@@ -7420,10 +7478,10 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
         item.startDate = null;
         if (xml2json.getTagValue(aCalendarEvent, "t:StartTime", null)) {
             if (this.isVersion2007) {
-                item.startDate = cal.fromRFC3339(xml2json.getTagValue(aCalendarEvent, "t:StartTime", null), this.globalFunctions.ecUTC());
+                item.startDate = cal.dtz.fromRFC3339(xml2json.getTagValue(aCalendarEvent, "t:StartTime", null), this.globalFunctions.ecUTC());
             }
             else {
-                item.startDate = cal.fromRFC3339(xml2json.getTagValue(aCalendarEvent, "t:StartTime", null), this.globalFunctions.ecDefaultTimeZone());
+                item.startDate = cal.dtz.fromRFC3339(xml2json.getTagValue(aCalendarEvent, "t:StartTime", null), this.globalFunctions.ecDefaultTimeZone());
             }
         }
 
@@ -7437,10 +7495,10 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
         item.endDate = null;
         if (xml2json.getTagValue(aCalendarEvent, "t:EndTime", null)) {
             if (this.isVersion2007) {
-                item.endDate = cal.fromRFC3339(xml2json.getTagValue(aCalendarEvent, "t:EndTime", null), this.globalFunctions.ecUTC());
+                item.endDate = cal.dtz.fromRFC3339(xml2json.getTagValue(aCalendarEvent, "t:EndTime", null), this.globalFunctions.ecUTC());
             }
             else {
-                item.endDate = cal.fromRFC3339(xml2json.getTagValue(aCalendarEvent, "t:EndTime", null), this.globalFunctions.ecDefaultTimeZone());
+                item.endDate = cal.dtz.fromRFC3339(xml2json.getTagValue(aCalendarEvent, "t:EndTime", null), this.globalFunctions.ecDefaultTimeZone());
             }
         }
 
@@ -7583,7 +7641,7 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
             var item = this.convertExchangeToCal(aItems[index], erGetItemsRequest, doNotify, fromOfflineCache);
 
             if (item) {
-                if (item.isCancelled && item.reminderIsSet && isEvent(item)) {
+                if (item.isCancelled && item.reminderIsSet && cal.item.isEvent(item)) {
                     var aNewItem = item.QueryInterface(Ci.mivExchangeEvent);
                     if (this.debug) this.logInfo("updateCalendar2: This item is Cancelled resetting reminder to false :  " + aNewItem.title);
                     this.itemCount++;
@@ -7603,7 +7661,7 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
                         this.addItemToCache(item);
                         this.itemCount++;
 
-                        if (isEvent(item) && this.markEventasTentative) {
+                        if (cal.item.isEvent(item) && this.markEventasTentative) {
                             var isOldCacheItem = false;
                             var aItem = item.QueryInterface(Ci.mivExchangeEvent);
 
@@ -7822,7 +7880,7 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
         }
 
 
-        if (isEvent(aNewItem)) {
+        if (cal.item.isEvent(aNewItem)) {
             if (this.debug) this.logInfo("modifyEventImmediate:  it is an event.");
             var doSendMeetingRespons = false;
             var meOld = this.getInvitedAttendee(aOldItem);
@@ -8274,7 +8332,7 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
         if (this.debug) this.logInfo("syncFolderItemsOK: Folderbase: " + erSyncFolderItemsRequest.folderBase + ", Creation:" + creations.length + ", Updates:" + updates.length + ", Deletions:" + deletions.length + ", syncState:" + syncState);
 
         if ((creations.length > 0) || (updates.length > 0) || (deletions.length > 0)) {
-            this.addActivity(calGetString("calExchangeCalendar", "syncFolderEventMessage", [creations.length, updates.length, deletions.length, this.name], "exchangecommon"), "", erSyncFolderItemsRequest.argument.actionStart, Date.now());
+            this.addActivity(cal.l10n.getAnyString("exchangecommon", "calExchangeCalendar", "syncFolderEventMessage", [creations.length, updates.length, deletions.length, this.name]), "", erSyncFolderItemsRequest.argument.actionStart, Date.now());
         }
 
         if (syncState) {
@@ -8302,11 +8360,15 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
         var self = this;
 
         var changes = [];
-        for each(var creation in creations) {
-            changes.push(creation);
+        if (creations) {
+            for (var creation of Object.values(creations)) {
+                changes.push(creation);
+            }
         }
-        for each(var update in updates) {
-            changes.push(update);
+        if (updates) {
+            for (var update of Object.values(updates)) {
+                changes.push(update);
+            }
         }
         if (changes.length > 0) {
             switch (erSyncFolderItemsRequest.folderBase) {
@@ -8343,7 +8405,7 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
         if (!syncState) return;
 
         if (deletions.length > 0) {
-            for each(var deleted in deletions) {
+            for (var deleted of deletions) {
                 var item = this.itemCacheById[deleted.Id];
                 if ((!item) && (this.useOfflineCache)) {
                     // It could be that the item is not yet loaded from offlineCache. We do this now.
@@ -8721,12 +8783,12 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
             var offset = cal.createDuration();
             offset.days = -20;
             //offset.normalize();
-            aRangeStart = cal.now();
+            aRangeStart = cal.dtz.now();
             aRangeStart.addDuration(offset);
             var offset = cal.createDuration();
             offset.days = 20;
             //offset.normalize();
-            aRangeEnd = cal.now();
+            aRangeEnd = cal.dtz.now();
             aRangeEnd.addDuration(offset);
         }
 
@@ -8782,8 +8844,8 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
                 serverUrl: this.serverUrl,
                 email: this.mailbox.replace(/^mailto:/i, ""),
                 attendeeType: 'Required',
-                start: cal.toRFC3339(tmpStartDate.getInTimezone(this.globalFunctions.ecUTC())),
-                end: cal.toRFC3339(tmpEndDate.getInTimezone(this.globalFunctions.ecUTC())),
+                start: cal.dtz.toRFC3339(tmpStartDate.getInTimezone(this.globalFunctions.ecUTC())),
+                end: cal.dtz.toRFC3339(tmpEndDate.getInTimezone(this.globalFunctions.ecUTC())),
                 folderID: this.folderID,
                 changeKey: this.changeKey
             },
@@ -9010,12 +9072,14 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
 
     findItemInListByDatesAndID: function _findItemInListByDates(aList, aItem) {
         var result = null;
-        for each(var listItem in aList) {
-            if ((aItem.getProperty("UID") == listItem.uid)
-                && (listItem.startDate.compare(aItem.startDate) == 0)
-                && (listItem.endDate.compare(aItem.endDate) == 0)) {
-                if (this.debug) this.logInfo("Found matching item in list.");
-                result = listItem;
+        if (aList) {
+            for (var listItem of Object.values(aList)) {
+                if ((aItem.getProperty("UID") == listItem.uid)
+                    && (listItem.startDate.compare(aItem.startDate) == 0)
+                    && (listItem.endDate.compare(aItem.endDate) == 0)) {
+                    if (this.debug) this.logInfo("Found matching item in list.");
+                    result = listItem;
+                }
             }
         }
 
@@ -9496,11 +9560,13 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
     },
 
     addAttachmentsToOfflineCache: function _addAttachmentsToOfflineCache(aList) {
-        for each(var item in aList) {
-            var attachments = item.calItem.getAttachments({});
-            this.removeAttachmentsFromOfflineCache(item.calItem);
-            for (var index in attachments) {
-                this.addAttachmentToOfflineCache(item.calItem, attachments[index]);
+        if (aList) {
+            for (var item of Object.values(aList)) {
+                var attachments = item.calItem.getAttachments({});
+                this.removeAttachmentsFromOfflineCache(item.calItem);
+                for (var index in attachments) {
+                    this.addAttachmentToOfflineCache(item.calItem, attachments[index]);
+                }
             }
         }
     },
@@ -9661,40 +9727,42 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
         //dump(this.name+":addToOfflineCache 1\n");
         var sqlQueries = [];
 
-        for each(var item in aList) {
+        if (aList) {
+            for (var item of Object.values(aList)) {
 
-            if (isEvent(item.calItem)) {
-                var startDate = cal.toRFC3339(item.calItem.startDate.getInTimezone(this.globalFunctions.ecUTC()));
-                var endDate = cal.toRFC3339(item.calItem.endDate.getInTimezone(this.globalFunctions.ecUTC()));
-                var eventField = "y";
-            }
-            else {
-                if (item.calItem.entryDate) {
-                    var startDate = cal.toRFC3339(item.calItem.entryDate.getInTimezone(this.globalFunctions.ecUTC()));
+                if (cal.item.isEvent(item.calItem)) {
+                    var startDate = cal.dtz.toRFC3339(item.calItem.startDate.getInTimezone(this.globalFunctions.ecUTC()));
+                    var endDate = cal.dtz.toRFC3339(item.calItem.endDate.getInTimezone(this.globalFunctions.ecUTC()));
+                    var eventField = "y";
                 }
                 else {
-                    var startDate = "";
-                };
-
-                if (((item.calItem.completedDate) && (item.calItem.dueDate) && (item.calItem.completedDate.compare(item.calItem.dueDate) == 1)) || ((item.calItem.completedDate) && (!item.calItem.dueDate))) {
-                    var endDate = cal.toRFC3339(item.calItem.completedDate.getInTimezone(this.globalFunctions.ecUTC()));
-                }
-                else {
-                    if (item.calItem.dueDate) {
-                        var endDate = cal.toRFC3339(item.calItem.dueDate.getInTimezone(this.globalFunctions.ecUTC()));
+                    if (item.calItem.entryDate) {
+                        var startDate = cal.dtz.toRFC3339(item.calItem.entryDate.getInTimezone(this.globalFunctions.ecUTC()));
                     }
                     else {
-                        var endDate = "";
+                        var startDate = "";
+                    };
+
+                    if (((item.calItem.completedDate) && (item.calItem.dueDate) && (item.calItem.completedDate.compare(item.calItem.dueDate) == 1)) || ((item.calItem.completedDate) && (!item.calItem.dueDate))) {
+                        var endDate = cal.dtz.toRFC3339(item.calItem.completedDate.getInTimezone(this.globalFunctions.ecUTC()));
                     }
+                    else {
+                        if (item.calItem.dueDate) {
+                            var endDate = cal.dtz.toRFC3339(item.calItem.dueDate.getInTimezone(this.globalFunctions.ecUTC()));
+                        }
+                        else {
+                            var endDate = "";
+                        }
+                    }
+                    var eventField = "n";
                 }
-                var eventField = "n";
+
+                var sqlStr = "SELECT '" + item.calItem.id + "' as realid, id, changeKey, COUNT() as itemcount from items WHERE id='" + item.calItem.id + "'";
+                //dump(this.name+":addToOfflineCache: sqlStr:"+sqlStr+"\n");
+                if (this.debug) this.logInfo("sql-query:" + sqlStr, 2);
+
+                sqlQueries.push(this.offlineCacheDB.createAsyncStatement(sqlStr));
             }
-
-            var sqlStr = "SELECT '" + item.calItem.id + "' as realid, id, changeKey, COUNT() as itemcount from items WHERE id='" + item.calItem.id + "'";
-            //dump(this.name+":addToOfflineCache: sqlStr:"+sqlStr+"\n");
-            if (this.debug) this.logInfo("sql-query:" + sqlStr, 2);
-
-            sqlQueries.push(this.offlineCacheDB.createAsyncStatement(sqlStr));
         }
 
         if (sqlQueries.length == 0) {
@@ -9777,57 +9845,59 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
             var sqlQueries = [];
             var mastersToBeUpdated = [];
 
-            for each(var item in aList) {
+            if (aList) {
+                for (var item of Object.values(aList)) {
 
-                if (isEvent(item.calItem)) {
-                    var startDate = cal.toRFC3339(item.calItem.startDate.getInTimezone(this.globalFunctions.ecUTC()));
-                    var endDate = cal.toRFC3339(item.calItem.endDate.getInTimezone(this.globalFunctions.ecUTC()));
-                    var eventField = "y";
-                }
-                else {
-                    if (item.calItem.entryDate) {
-                        var startDate = cal.toRFC3339(item.calItem.entryDate.getInTimezone(this.globalFunctions.ecUTC()));
+                    if (cal.item.isEvent(item.calItem)) {
+                        var startDate = cal.dtz.toRFC3339(item.calItem.startDate.getInTimezone(this.globalFunctions.ecUTC()));
+                        var endDate = cal.dtz.toRFC3339(item.calItem.endDate.getInTimezone(this.globalFunctions.ecUTC()));
+                        var eventField = "y";
                     }
                     else {
-                        var startDate = "";
-                    };
-
-                    if (((item.calItem.completedDate) && (item.calItem.dueDate) && (item.calItem.completedDate.compare(item.calItem.dueDate) == 1)) || ((item.calItem.completedDate) && (!item.calItem.dueDate))) {
-                        var endDate = cal.toRFC3339(item.calItem.completedDate.getInTimezone(this.globalFunctions.ecUTC()));
-                    }
-                    else {
-                        if (item.calItem.dueDate) {
-                            var endDate = cal.toRFC3339(item.calItem.dueDate.getInTimezone(this.globalFunctions.ecUTC()));
+                        if (item.calItem.entryDate) {
+                            var startDate = cal.dtz.toRFC3339(item.calItem.entryDate.getInTimezone(this.globalFunctions.ecUTC()));
                         }
                         else {
-                            var endDate = "";
-                        }
-                    }
-                    var eventField = "n";
-                }
+                            var startDate = "";
+                        };
 
-                if (isEvent(item.calItem)) {
-                    if (this.getItemType(item.calItem) == "M") {
-                        // Lets find the real end date.
-                        for (var childIndex in this.itemCacheById) {
-                            if ((this.itemCacheById[childIndex]) && (item.calItem.uid == this.itemCacheById[childIndex].uid)) {
-                                var childEnd = cal.toRFC3339(this.itemCacheById[childIndex].endDate.getInTimezone(this.globalFunctions.ecUTC()));
-                                if (childEnd > endDate) {
-                                    endDate = childEnd;
+                        if (((item.calItem.completedDate) && (item.calItem.dueDate) && (item.calItem.completedDate.compare(item.calItem.dueDate) == 1)) || ((item.calItem.completedDate) && (!item.calItem.dueDate))) {
+                            var endDate = cal.dtz.toRFC3339(item.calItem.completedDate.getInTimezone(this.globalFunctions.ecUTC()));
+                        }
+                        else {
+                            if (item.calItem.dueDate) {
+                                var endDate = cal.dtz.toRFC3339(item.calItem.dueDate.getInTimezone(this.globalFunctions.ecUTC()));
+                            }
+                            else {
+                                var endDate = "";
+                            }
+                        }
+                        var eventField = "n";
+                    }
+
+                    if (cal.item.isEvent(item.calItem)) {
+                        if (this.getItemType(item.calItem) == "M") {
+                            // Lets find the real end date.
+                            for (var childIndex in this.itemCacheById) {
+                                if ((this.itemCacheById[childIndex]) && (item.calItem.uid == this.itemCacheById[childIndex].uid)) {
+                                    var childEnd = cal.dtz.toRFC3339(this.itemCacheById[childIndex].endDate.getInTimezone(this.globalFunctions.ecUTC()));
+                                    if (childEnd > endDate) {
+                                        endDate = childEnd;
+                                    }
                                 }
                             }
                         }
-                    }
-                    else {
-                        if ((this.getItemType(item.calItem) == "RO") || (this.getItemType(item.calItem) == "RE")) {
-                            mastersToBeUpdated.push(item.calItem.parentItem);
+                        else {
+                            if ((this.getItemType(item.calItem) == "RO") || (this.getItemType(item.calItem) == "RE")) {
+                                mastersToBeUpdated.push(item.calItem.parentItem);
+                            }
                         }
                     }
+
+                    var sqlStr = "INSERT INTO items VALUES ('" + eventField + "','" + item.calItem.id + "', '" + item.calItem.changeKey + "', '" + startDate + "', '" + endDate + "', '" + item.calItem.uid + "', '" + this.getItemType(item.calItem) + "', '" + item.calItem.parentItem.id + "', '" + item.exchangeItemXML.replace(/\x27/g, "''") + "')";
+
+                    sqlQueries.push(this.offlineCacheDB.createAsyncStatement(sqlStr));
                 }
-
-                var sqlStr = "INSERT INTO items VALUES ('" + eventField + "','" + item.calItem.id + "', '" + item.calItem.changeKey + "', '" + startDate + "', '" + endDate + "', '" + item.calItem.uid + "', '" + this.getItemType(item.calItem) + "', '" + item.calItem.parentItem.id + "', '" + item.exchangeItemXML.replace(/\x27/g, "''") + "')";
-
-                sqlQueries.push(this.offlineCacheDB.createAsyncStatement(sqlStr));
             }
 
             //dump(this.name+":insertToOfflineCache 2\n");
@@ -9881,69 +9951,71 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
             var sqlQueries = [];
             var mastersToBeUpdated = [];
 
-            for each(var item in aList) {
+            if (aList) {
+                for (var item of Object.values(aList)) {
 
-                if (isEvent(item.calItem)) {
-                    var startDate = cal.toRFC3339(item.calItem.startDate.getInTimezone(this.globalFunctions.ecUTC()));
-                    var endDate = cal.toRFC3339(item.calItem.endDate.getInTimezone(this.globalFunctions.ecUTC()));
-                    var eventField = "y";
-                }
-                else {
-                    if (item.calItem.entryDate) {
-                        var startDate = cal.toRFC3339(item.calItem.entryDate.getInTimezone(this.globalFunctions.ecUTC()));
+                    if (cal.item.isEvent(item.calItem)) {
+                        var startDate = cal.dtz.toRFC3339(item.calItem.startDate.getInTimezone(this.globalFunctions.ecUTC()));
+                        var endDate = cal.dtz.toRFC3339(item.calItem.endDate.getInTimezone(this.globalFunctions.ecUTC()));
+                        var eventField = "y";
                     }
                     else {
-                        var startDate = "";
-                    };
-
-                    if ((item.calItem.completedDate) && (item.calItem.completedDate.compare(item.calItem.dueDate) == 1)) {
-                        var endDate = cal.toRFC3339(item.calItem.completedDate.getInTimezone(this.globalFunctions.ecUTC()));
-                    }
-                    else {
-                        if (item.calItem.dueDate) {
-                            var endDate = cal.toRFC3339(item.calItem.dueDate.getInTimezone(this.globalFunctions.ecUTC()));
+                        if (item.calItem.entryDate) {
+                            var startDate = cal.dtz.toRFC3339(item.calItem.entryDate.getInTimezone(this.globalFunctions.ecUTC()));
                         }
                         else {
-                            var endDate = "";
-                        }
-                    }
-                    var eventField = "n";
-                }
+                            var startDate = "";
+                        };
 
-                if (isEvent(item.calItem)) {
-                    if (this.getItemType(item.calItem) == "M") {
-                        // Lets find the real end date.
-                        if (this.noDB) return;
-                        var newMasterEndDate = this.executeQueryWithResults("SELECT max(endDate) as newEndDate FROM items WHERE uid='" + item.calItem.uid + "'", ["newEndDate"]);
-                        if ((newMasterEndDate) && (newMasterEndDate.length > 0)) {
-                            if (this.debug) this.logInfo("newMasterEndDate:" + newMasterEndDate[0].newEndDate);
-                            var endDateStr = newMasterEndDate[0].newEndDate;
-                            if (endDateStr) {
-                                if (endDateStr.length == 10) {
-                                    endDateStr += "T23:59:59Z";
-                                }
-                                if (this.debug) this.logInfo("newEndDate for master setting it to:" + endDateStr);
-                                endDate = endDateStr;
+                        if ((item.calItem.completedDate) && (item.calItem.completedDate.compare(item.calItem.dueDate) == 1)) {
+                            var endDate = cal.dtz.toRFC3339(item.calItem.completedDate.getInTimezone(this.globalFunctions.ecUTC()));
+                        }
+                        else {
+                            if (item.calItem.dueDate) {
+                                var endDate = cal.dtz.toRFC3339(item.calItem.dueDate.getInTimezone(this.globalFunctions.ecUTC()));
                             }
                             else {
-                                if (this.debug) this.logInfo("newEndDate for master is null not going to use this. Strange!!");
+                                var endDate = "";
                             }
                         }
+                        var eventField = "n";
+                    }
+
+                    if (cal.item.isEvent(item.calItem)) {
+                        if (this.getItemType(item.calItem) == "M") {
+                            // Lets find the real end date.
+                            if (this.noDB) return;
+                            var newMasterEndDate = this.executeQueryWithResults("SELECT max(endDate) as newEndDate FROM items WHERE uid='" + item.calItem.uid + "'", ["newEndDate"]);
+                            if ((newMasterEndDate) && (newMasterEndDate.length > 0)) {
+                                if (this.debug) this.logInfo("newMasterEndDate:" + newMasterEndDate[0].newEndDate);
+                                var endDateStr = newMasterEndDate[0].newEndDate;
+                                if (endDateStr) {
+                                    if (endDateStr.length == 10) {
+                                        endDateStr += "T23:59:59Z";
+                                    }
+                                    if (this.debug) this.logInfo("newEndDate for master setting it to:" + endDateStr);
+                                    endDate = endDateStr;
+                                }
+                                else {
+                                    if (this.debug) this.logInfo("newEndDate for master is null not going to use this. Strange!!");
+                                }
+                            }
+                            else {
+                                if (this.debug) this.logInfo("Could not get newEndDate for Master. What is wrong!!");
+                            }
+
+                        }
                         else {
-                            if (this.debug) this.logInfo("Could not get newEndDate for Master. What is wrong!!");
+                            if ((this.getItemType(item.calItem) == "RO") || (this.getItemType(item.calItem) == "RE")) {
+                                mastersToBeUpdated.push(item.calItem.parentItem);
+                            }
                         }
+                    }
 
-                    }
-                    else {
-                        if ((this.getItemType(item.calItem) == "RO") || (this.getItemType(item.calItem) == "RE")) {
-                            mastersToBeUpdated.push(item.calItem.parentItem);
-                        }
-                    }
+                    let sqlStr = "UPDATE items SET event='" + eventField + "', id='" + item.calItem.id + "', changeKey='" + item.calItem.changeKey + "', startDate='" + startDate + "', endDate='" + endDate + "', uid='" + item.calItem.uid + "', type='" + this.getItemType(item.calItem) + "', parentItem='" + item.calItem.parentItem.id + "', item='" + item.exchangeItemXML.replace(/\x27/g, "''") + "' WHERE id='" + item.calItem.id + "'";
+
+                    sqlQueries.push(this.offlineCacheDB.createAsyncStatement(sqlStr));
                 }
-
-                let sqlStr = "UPDATE items SET event='" + eventField + "', id='" + item.calItem.id + "', changeKey='" + item.calItem.changeKey + "', startDate='" + startDate + "', endDate='" + endDate + "', uid='" + item.calItem.uid + "', type='" + this.getItemType(item.calItem) + "', parentItem='" + item.calItem.parentItem.id + "', item='" + item.exchangeItemXML.replace(/\x27/g, "''") + "' WHERE id='" + item.calItem.id + "'";
-
-                sqlQueries.push(this.offlineCacheDB.createAsyncStatement(sqlStr));
             }
 
             if (mastersToBeUpdated.length > 0) {
@@ -9992,30 +10064,32 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
             var sqlQueries = [];
             var mastersToBeUpdated = [];
 
-            for each(var item in aList) {
+            if (aList) {
+                for (var item of Object.values(aList)) {
 
 
-                var endDate = cal.toRFC3339(item.endDate.getInTimezone(this.globalFunctions.ecUTC()));
+                    var endDate = cal.dtz.toRFC3339(item.endDate.getInTimezone(this.globalFunctions.ecUTC()));
 
-                if (this.getItemType(item) == "M") {
-                    // Lets find the real end date.
-                    for (var childIndex in this.itemCacheById) {
-                        if ((this.itemCacheById[childIndex]) && (item.uid == this.itemCacheById[childIndex].uid)) {
-                            var childEnd = cal.toRFC3339(this.itemCacheById[childIndex].endDate.getInTimezone(this.globalFunctions.ecUTC()));
-                            if (childEnd > endDate) {
-                                endDate = childEnd;
+                    if (this.getItemType(item) == "M") {
+                        // Lets find the real end date.
+                        for (var childIndex in this.itemCacheById) {
+                            if ((this.itemCacheById[childIndex]) && (item.uid == this.itemCacheById[childIndex].uid)) {
+                                var childEnd = cal.dtz.toRFC3339(this.itemCacheById[childIndex].endDate.getInTimezone(this.globalFunctions.ecUTC()));
+                                if (childEnd > endDate) {
+                                    endDate = childEnd;
+                                }
                             }
                         }
                     }
-                }
-                else {
-                    if ((this.getItemType(item) == "RO") || (this.getItemType(item) == "RE")) {
-                        mastersToBeUpdated.push(item.parentItem);
+                    else {
+                        if ((this.getItemType(item) == "RO") || (this.getItemType(item) == "RE")) {
+                            mastersToBeUpdated.push(item.parentItem);
+                        }
                     }
-                }
 
-                let sqlStr = "UPDATE items SET endDate='" + endDate + "' WHERE id='" + item.id + "'";
-                sqlQueries.push(this.offlineCacheDB.createAsyncStatement(sqlStr));
+                    let sqlStr = "UPDATE items SET endDate='" + endDate + "' WHERE id='" + item.id + "'";
+                    sqlQueries.push(this.offlineCacheDB.createAsyncStatement(sqlStr));
+                }
             }
 
             if (mastersToBeUpdated.length > 0) {
@@ -10104,8 +10178,8 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
         var monthAfterDurarion = cal.createDuration("P" + monthsAfter + "D");
         var monthsBeforeDurarion = cal.createDuration("-P" + monthsBefore + "D");
 
-        var startDate = cal.now();
-        var endDate = cal.now();
+        var startDate = cal.dtz.now();
+        var endDate = cal.dtz.now();
         startDate.addDuration(monthsBeforeDurarion);
         endDate.addDuration(monthAfterDurarion);
 
@@ -10322,7 +10396,7 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
                     // Check if this item is not in the itemCache already.
                     if (!this.itemCacheById[sqlStatement.row.id]) {
                         result.push(sqlStatement.row.id);
-                        cachedItem = null;
+                        // cachedItem = null;
                     }
                 }
             }
@@ -10361,19 +10435,19 @@ else { dump("Occurrence does not exist in cache anymore.\n");}
         if (aStartDate) {
             utcStartDate = aStartDate.clone();
             utcStartDate.isDate = false;
-            utcStartDate = utcStartDate.getInTimezone(cal.UTC());
+            utcStartDate = utcStartDate.getInTimezone(cal.dtz.UTC);
             utcStartDate.isDate = true;
         }
 
         if (aEndDate) {
             utcEndDate = aEndDate.clone();
             utcEndDate.isDate = false;
-            utcEndDate = utcEndDate.getInTimezone(cal.UTC());
+            utcEndDate = utcEndDate.getInTimezone(cal.dtz.UTC);
             utcEndDate.isDate = true;
         }
 
-        let startDate = cal.toRFC3339(utcStartDate);
-        let endDate = cal.toRFC3339(utcEndDate);
+        let startDate = cal.dtz.toRFC3339(utcStartDate);
+        let endDate = cal.dtz.toRFC3339(utcEndDate);
 
         let sqlStr = "SELECT item FROM items";
         let whereStr = "";
@@ -10885,7 +10959,7 @@ ecObserver.prototype = {
         Services.prefs.addObserver("extensions.1st-setup.core.debuglevel", this, false);
 
 
-        getCalendarManager().addObserver(this.ecInvitationsCalendarManagerObserver);
+        cal.getCalendarManager().addObserver(this.ecInvitationsCalendarManagerObserver);
     },
 
     unregister: function () {
@@ -10899,7 +10973,7 @@ ecObserver.prototype = {
         observerService.removeObserver(this, "quit-application");
         observerService.removeObserver(this, "network:offline-status-changed");
 
-        getCalendarManager().removeObserver(this.ecInvitationsCalendarManagerObserver);
+        cal.getCalendarManager().removeObserver(this.ecInvitationsCalendarManagerObserver);
     }
 }
 
@@ -10953,11 +11027,6 @@ function convertToVersion1() {
 
 }
 
-/** Module Registration */
-const scriptLoadOrder = [
-    "calUtils.js"
-];
-
 if (!exchWebService) var exchWebService = {};
 
 exchWebService.check4addon = {
@@ -10972,7 +11041,7 @@ exchWebService.check4addon = {
         else {
             mivFunctions.LOG(aAddOn.name + " is installed.");
             try {
-                mivFunctions.LOG(aAddOn.name + " is installed from:" + aAddOn.sourceURI.prePath + aAddOn.sourceURI.path);
+                mivFunctions.LOG(aAddOn.name + " is installed from:" + aAddOn.sourceURI.prePath + aAddOn.sourceURI.pathQueryRef);
             }
             catch (err) {
                 mivFunctions.LOG(aAddOn.name + " unable to determine where installed from.");
@@ -11004,7 +11073,6 @@ function NSGetFactory(cid) {
             // Load main script from lightning that we need.
             convertToVersion1();
 
-            cal.loadScripts(scriptLoadOrder, Cu.getGlobalForObject(this));
             NSGetFactory.mainEC = XPCOMUtils.generateNSGetFactory([calExchangeCalendar]);
 
         }
