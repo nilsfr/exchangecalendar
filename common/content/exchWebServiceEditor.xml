@@ -189,7 +189,7 @@
                         </xul:toolbaritem>
                     </xul:toolbar>
                 </xul:toolbox>
-                <xul:editor type="content-primary"
+                <xul:editor type="content"
                             anonid="editor"
                             class="exchWebService-editor"
                             src="about:blank"
