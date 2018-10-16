@@ -1,10 +1,9 @@
 version = $(shell cat VERSION)
-excludefromxpi = .git/\* .gitignore \*/.gitignore .tx/\* \*.xpi \*.sh update\*.txt Makefile VERSION install.rdf.template
-releasebranch = ec-4.0
+excludefromxpi = .\* \*/.gitignore \*.xpi \*.sh update\*.txt Makefile VERSION install.rdf.template
 update = disable
 xpi = exchangecalendar-v$(version).xpi
 
-.PHONY: build release l10n-get l10n-auto-commit l10n-push dev beautify beautify-xml beautify-js defaults/preferences/update.js $(xpi)
+.PHONY: build release l10n-get l10n-auto-commit l10n-push dev beautify beautify-xml beautify-js defaults/preferences/update.js install.rdf $(xpi)
 
 # Default target is build package
 build: $(xpi)
@@ -31,7 +30,6 @@ release: build
 
 # Get translations updates from Transifex
 l10n-get:
-	git checkout $(releasebranch)
 	tx pull -a
 
 l10n-auto-commit: l10n-get
@@ -40,7 +38,6 @@ l10n-auto-commit: l10n-get
 
 # Send new texts to translate to Transifex
 l10n-push:
-	git checkout $(releasebranch)
 	tx push -s
 
 # Target to beautify and build your code while developing it
@@ -63,6 +60,7 @@ beautify-xml:
 		--preserve-entities yes --quote-ampersand no --quote-nbsp no --output-xml yes \
 		--strict-tags-attributes no --write-back yes --wrap 0 \
 		{} \;
+
 beautify-js:
 	find . -name "*.js" -exec \
 		js-beautify --indent-size=4 --indent-char=' ' --jslint-happy \
