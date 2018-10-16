@@ -1,6 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [5.0.0-alpha1] - 2018-10-16
+### Added
+- Initial support for Thunderbird 60
+
+### Removed
+- Support for Thunderbird 59 and lower
+
 ## [4.0.0] - 2018-09-30
 ### Changed
 - Pull latest localization from Transifex
