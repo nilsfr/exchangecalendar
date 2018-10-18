@@ -86,6 +86,18 @@ repository.
 Please help us to review your code by making multiple small pull
 requests instead of big ones modifying big parts of the code.
 
+#### Building component interface files
+
+Whenever an `.idl` file is changed, it is necessary to regenerate the
+corresponding binary `.xpt` interface file. To
+do this, download and extract the 
+[Gecko SDK](https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Guide/Creating_components/Setting_up_the_Gecko_SDK).
+Next, go to the SDK's `idl` folder and run `python ../sdk/bin/typelib.py 
+-o $FILE.xpt $FILE.idl` to generate the binary interface file (replace 
+`$FILE` with the full path to an actual file). This SDK tool called 
+`pyxpidl` is documented 
+[here](https://developer.mozilla.org/en-US/docs/Mozilla/XPIDL/pyxpidl).
+
 ### Translate
 
 You are welcome to provide translation updates on our Transifex project:
