@@ -7475,7 +7475,7 @@ calExchangeCalendar.prototype = {
 
         //		item.setProperty("DESCRIPTION", aCalendarItem.getTagValue("t:Body"));
 
-        item.startDate = null;
+        // item.startDate = null;
         if (xml2json.getTagValue(aCalendarEvent, "t:StartTime", null)) {
             if (this.isVersion2007) {
                 item.startDate = cal.dtz.fromRFC3339(xml2json.getTagValue(aCalendarEvent, "t:StartTime", null), this.globalFunctions.ecUTC());
@@ -7492,7 +7492,7 @@ calExchangeCalendar.prototype = {
             return null;
         }
 
-        item.endDate = null;
+        // item.endDate = null;
         if (xml2json.getTagValue(aCalendarEvent, "t:EndTime", null)) {
             if (this.isVersion2007) {
                 item.endDate = cal.dtz.fromRFC3339(xml2json.getTagValue(aCalendarEvent, "t:EndTime", null), this.globalFunctions.ecUTC());
