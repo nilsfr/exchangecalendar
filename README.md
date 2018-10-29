@@ -52,6 +52,15 @@ reproduce and fix. Examples of helpful information are:
   * List of running Thunderbird add-ons
   * Log output
 
+#### Obtaining log output
+
+To obtain log output, ensure logging is turned on. This setting can be found
+in the Thunderbird menu under `Tools -> Add-on Preferences -> Lightning -> 
+Exchange (EWS) -> Logging`. Assert the checkbox is set for `Log information
+to the console and a file`. You can then find log output at the given 
+file path and in the Developer Toolbox console (`Thunderbird menu -> Tools -> 
+Developer Tools -> Developer Toolbox`).
+
 ### Patch the code
 
 To help us to maintain the code, we will be thankful to follow these main
