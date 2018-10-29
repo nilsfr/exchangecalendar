@@ -56,9 +56,13 @@ interface mivFunctions : nsISupports
 
   AUTF8String getUUID();
 
-  boolean shouldLog();
+  void setIsWriteLog(in boolean aIsWriteLog);
+
+  void setDebugLevel(in uint64_t aDebugLevel);
 
   void LOG(in AUTF8String aArg);
+
+  void DEBUG(in AUTF8String aArg);
 
   void writeToLogFile(in AUTF8String aString);
 

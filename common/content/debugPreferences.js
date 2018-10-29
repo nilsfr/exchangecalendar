@@ -84,10 +84,12 @@ exchWebService.debugPreferences = {
         if (aCheckBox.checked) {
             this.disableChildren(document.getElementById("exchangeWebService_debug_groupbox1"), false);
             this.disableChildren(document.getElementById("exchangeWebService_debug_groupbox2"), false);
+            this.disableChildren(document.getElementById("exchangeWebService_debug_groupbox3"), false);
         }
         else {
             this.disableChildren(document.getElementById("exchangeWebService_debug_groupbox1"), true);
             this.disableChildren(document.getElementById("exchangeWebService_debug_groupbox2"), true);
+            this.disableChildren(document.getElementById("exchangeWebService_debug_groupbox3"), true);
         }
     },
 
@@ -96,5 +98,4 @@ exchWebService.debugPreferences = {
         logUrl.value = document.getElementById("extensions.1st-setup.debug.file").value;
         return undefined;
     },
-
-}
+};

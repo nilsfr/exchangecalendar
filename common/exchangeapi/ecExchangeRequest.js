@@ -208,26 +208,8 @@ ExchangeRequest.prototype = {
         }
     },
 
-    get debug() {
-        if ((this.debuglevel === 0) || (!this.globalFunctions.shouldLog())) {
-            return false;
-        }
-
-        return this.globalFunctions.safeGetBoolPref(this.prefB, "extensions.1st-setup.network.debug", false, true);
-    },
-
-    get debuglevel() {
-        return this.globalFunctions.safeGetIntPref(this.prefB, "extensions.1st-setup.network.debuglevel", 0, true);
-    },
-
-    logInfo: function _logInfo(aMsg, aLevel) {
-        if (!aLevel) {
-            aLevel = 1;
-        }
-
-        if ((this.debug) && (aLevel <= this.debuglevel)) {
-            this.globalFunctions.LOG(this.uuid + ": " + aMsg);
-        }
+    logInfo: function _logInfo(aMsg) {
+        this.globalFunctions.LOG(this.uuid + ": " + aMsg);
     },
 
     get argument() {
@@ -360,16 +342,14 @@ ExchangeRequest.prototype = {
             },
             false);
 
-        if (this.debug) {
-            this.logInfo(": 1 ExchangeRequest.sendRequest : user="
-                + this.mArgument.user + ", url=" + this.currentUrl);
-        }
+        this.logInfo(": 1 ExchangeRequest.sendRequest : user="
+            + this.mArgument.user + ", url=" + this.currentUrl);
 
         // Open XML HTTP Request channel we'll use to coummunicate with the server
         try {
             // If a password is already known, we can try basic authentication diretcly.
             if (password) {
-                if (this.debug) this.logInfo("We have a prePassword: *******");
+                this.logInfo("We have a prePassword: *******");
                 this.xmlReq.open("POST", this.currentUrl, true, openUser, password);
             }
             else {
@@ -380,10 +360,8 @@ ExchangeRequest.prototype = {
             }
         }
         catch (err) {
-            if (this.debug) {
-                this.logInfo(": ERROR on ExchangeRequest.sendRequest to URL:"
-                    + this.currentUrl + ". err:" + err);
-            }
+            this.logInfo(": ERROR on ExchangeRequest.sendRequest to URL:"
+                + this.currentUrl + ". err:" + err);
 
             // Try another URL if possible
             if (this.tryNextURL()) {
@@ -419,9 +397,7 @@ ExchangeRequest.prototype = {
             this.logInfo("sendRequest: ERROR on httpChannel.allowPipelining to err:" + err);
         }
 
-        if (this.debug) {
-            this.logInfo(": sendRequest Sending: " + this.mData + "\n", 2);
-        }
+        this.logDebug(": sendRequest Sending: " + this.mData + "\n");
 
         // Finally, send data through the channel
         this.xmlReq.send(this.mData);
@@ -431,7 +407,7 @@ ExchangeRequest.prototype = {
      * loadstart: XML HTTP Request callback
      */
     loadstart: function _loadtstart(evt) {
-        if (this.debug) this.logInfo(": ExchangeRequest.loadstart");
+        this.logInfo(": ExchangeRequest.loadstart");
         this.shutdown = false;
         this.badCert = false;
     },
@@ -440,23 +416,19 @@ ExchangeRequest.prototype = {
      * loadend: XML HTTP Request callback
      */
     loadend: function _loadend(evt) {
-        if (this.debug) {
-            this.logInfo(": ExchangeRequest.loadend :"
-                + evt.type + ", readyState:" + this.mXmlReq.readyState
-                + ", status:" + this.mXmlReq.status);
-            this.logInfo(": ExchangeRequest.loadend :"
-                + this.mXmlReq.responseText, 2);
-        }
+        this.logInfo(": ExchangeRequest.loadend :"
+            + evt.type + ", readyState:" + this.mXmlReq.readyState
+            + ", status:" + this.mXmlReq.status);
+        this.logDebug(": ExchangeRequest.loadend :"
+            + this.mXmlReq.responseText);
     },
 
     /*
      * progress: XML HTTP Request callback
      */
     progress: function _progress(evt) {
-        if (this.debug) {
-            this.logInfo(": ExchangeRequest.progress. loaded:"
-                + evt.loaded + ", total:" + evt.total);
-        }
+        this.logInfo(": ExchangeRequest.progress. loaded:"
+            + evt.loaded + ", total:" + evt.total);
     },
 
     /*
@@ -466,14 +438,12 @@ ExchangeRequest.prototype = {
     error: function _error(evt) {
         let xmlReq = this.mXmlReq;
 
-        if (this.debug) {
-            this.logInfo(": ExchangeRequest.error :" + evt.type
-                + ", readyState:" + xmlReq.readyState + ", status:" + xmlReq.status
-                + ", lastStatus:" + this.channelCallbackEcAuthPrompt2.lastStatus);
-            this.logInfo(": ExchangeRequest.error :" + xmlReq.responseText, 2);
-            this.logInfo(': xmlReq.getResponseHeader("Location") :'
-                + xmlReq.getResponseHeader("Location"), 2);
-        }
+        this.logInfo(": ExchangeRequest.error :" + evt.type
+            + ", readyState:" + xmlReq.readyState + ", status:" + xmlReq.status
+            + ", lastStatus:" + this.channelCallbackEcAuthPrompt2.lastStatus);
+        this.logDebug(": ExchangeRequest.error :" + xmlReq.responseText);
+        this.logDebug(': xmlReq.getResponseHeader("Location") :'
+            + xmlReq.getResponseHeader("Location"));
 
         //////////////////////////////////////////////////////////
         // Check if error is related to TLS certification issue //
@@ -581,15 +551,11 @@ ExchangeRequest.prototype = {
      * abort: XML HTTP Request callback
      */
     abort: function _abort(evt) {
-        if (this.debug) {
-            this.logInfo("ExchangeRequest.abort: type:" + evt.type);
-        }
+        this.logInfo("ExchangeRequest.abort: type:" + evt.type);
     },
 
     onUserStop: function _onUserStop(aCode, aMsg) {
-        if (this.debug) {
-            this.logInfo("ecExchangeRequest.onUserStop: aCode:" + aCode + ", aMsg:" + aMsg);
-        }
+        this.logInfo("ecExchangeRequest.onUserStop: aCode:" + aCode + ", aMsg:" + aMsg);
 
         this.mXmlReq.abort();
         this.fail(aCode, aMsg);
@@ -601,10 +567,8 @@ ExchangeRequest.prototype = {
     isHTTPRedirect: function (evt) {
         let xmlReq = this.mXmlReq;
 
-        if (this.debug) {
-            this.logInfo("exchangeRequest.isHTTPRedirect.xmlReq. xmlReq.readyState:"
-                + xmlReq.readyState + ", xmlReq.status:" + xmlReq.status);
-        }
+        this.logInfo("exchangeRequest.isHTTPRedirect.xmlReq. xmlReq.readyState:"
+            + xmlReq.readyState + ", xmlReq.status:" + xmlReq.status);
 
         if (xmlReq.readyState != xmlReq.DONE) {
             return false;
@@ -615,11 +579,9 @@ ExchangeRequest.prototype = {
         case 301: // Moved Permanently
         case 302: // Found
         case 307: // Temporary redirect (since HTTP/1.1)
-            if (this.debug) {
-                this.logInfo(": ExchangeRequest.redirect :"
-                    + evt.type + ", readyState:" + xmlReq.readyState
-                    + ", status:" + xmlReq.status);
-            }
+            this.logInfo(": ExchangeRequest.redirect :"
+                + evt.type + ", readyState:" + xmlReq.readyState
+                + ", status:" + xmlReq.status);
 
             // Read new location from HTTP headers
             let httpChannel = xmlReq.channel.QueryInterface(Ci.nsIHttpChannel);
@@ -627,15 +589,11 @@ ExchangeRequest.prototype = {
 
             // The location could be a relative path
             if (loc.indexOf("http") === -1) {
-                if (this.debug) {
-                    this.logInfo("new location looks to be relative.");
-                }
+                this.logInfo("new location looks to be relative.");
 
                 // Relative to the root of the server
                 if (loc.indexOf("/") === 0) {
-                    if (this.debug) {
-                        this.logInfo("Relative to the root of the server.");
-                    }
+                    this.logInfo("Relative to the root of the server.");
 
                     // Retrieve current root path by looking for the third slash
                     // for the currenty requested URL (like https://xxx.yyy/)
@@ -664,15 +622,11 @@ ExchangeRequest.prototype = {
                 }
                 else {
                     // Relative to last dir.
-                    if (this.debug) {
-                        this.logInfo("it is relative to the last dir. Currently not able to handle this.");
-                    }
+                    this.logInfo("it is relative to the last dir. Currently not able to handle this.");
                 }
             }
 
-            if (this.debug) {
-                this.logInfo(": Redirect: " + loc + "\n");
-            }
+            this.logInfo(": Redirect: " + loc + "\n");
 
             // XXX pheer loops.
             xmlReq.abort();
@@ -698,15 +652,11 @@ ExchangeRequest.prototype = {
             var chunkLength = parseInt(aChunkedString.substr(0, pos), 16);
 
             if (isNaN(chunkLength)) {
-                if (this.debug) {
-                    this.logInfo("unchunk: 1st chunk is not a number:" + aChunkedString.substr(0, pos));
-                }
+                this.logInfo("unchunk: 1st chunk is not a number:" + aChunkedString.substr(0, pos));
                 return "";
             }
 
-            if (this.debug) {
-                this.logInfo("unchunk: 1st chunk has length:" + chunkLength);
-            }
+            this.logInfo("unchunk: 1st chunk has length:" + chunkLength);
 
             var gatheredString = "";
             while (chunkLength > 0) {
@@ -721,17 +671,13 @@ ExchangeRequest.prototype = {
                     }
                     else {
                         if (charCode <= 0xFFFF) {
-                            if (this.debug) {
-                                this.logInfo("unchunk: TWO bytes copied '" + aChunkedString.substr(pos, 1) + "'=" + charCode);
-                            }
+                            this.logInfo("unchunk: TWO bytes copied '" + aChunkedString.substr(pos, 1) + "'=" + charCode);
                             bytesToCopy = bytesToCopy - 2;
 
                         }
                         else {
                             if (charCode <= 0xFFFFFF) {
-                                if (this.debug) {
-                                    this.logInfo("unchunk: THREE bytes copied '" + aChunkedString.substr(pos, 1) + "'=" + charCode);
-                                }
+                                this.logInfo("unchunk: THREE bytes copied '" + aChunkedString.substr(pos, 1) + "'=" + charCode);
                                 bytesToCopy = bytesToCopy - 3;
                             }
                         }
@@ -739,17 +685,13 @@ ExchangeRequest.prototype = {
                     pos++;
                 }
 
-                if (this.debug) {
-                    this.logInfo("unchunk: pos:" + pos + ", CunkStr:" + gatheredString + "|");
-                }
+                this.logInfo("unchunk: pos:" + pos + ", CunkStr:" + gatheredString + "|");
 
                 // Next two bytes should be \r\n
                 var check = aChunkedString.substr(pos, 2);
                 if (check != "\r\n") {
-                    if (this.debug) {
-                        this.logInfo("unchunk: Strange. Expected 0D0A (Cr+Lf) but found:"
-                            + check + ". Stopping processing of this chunked message.");
-                    }
+                    this.logInfo("unchunk: Strange. Expected 0D0A (Cr+Lf) but found:"
+                        + check + ". Stopping processing of this chunked message.");
                     return "";
                 }
                 pos = pos + 2;
@@ -757,35 +699,25 @@ ExchangeRequest.prototype = {
                 var pos2 = tmpStr.indexOf("\r\n");
                 chunkCounter++;
                 if (pos2 > -1) {
-                    if (this.debug) {
-                        this.logInfo("unchunk: Found next chunk. Number:" + chunkCounter + ", LengthStr:" + tmpStr.substr(0, pos2));
-                    }
+                    this.logInfo("unchunk: Found next chunk. Number:" + chunkCounter + ", LengthStr:" + tmpStr.substr(0, pos2));
 
                     chunkLength = parseInt(tmpStr.substr(0, pos2), 16);
                     if (isNaN(chunkLength)) {
-                        if (this.debug) {
-                            this.logInfo("unchunk: Chunk '" + chunkCounter + "' is not a number:" + tmpStr);
-                        }
+                        this.logInfo("unchunk: Chunk '" + chunkCounter + "' is not a number:" + tmpStr);
                         return "";
                     }
-                    if (this.debug) {
-                        this.logInfo("unchunk: Chunk '" + chunkCounter + "' has length:" + chunkLength);
-                    }
+                    this.logInfo("unchunk: Chunk '" + chunkCounter + "' has length:" + chunkLength);
                     pos = pos + pos2;
                 }
                 else {
-                    if (this.debug) {
-                        this.logInfo("unchunk: Trying to determine chunk '" + chunkCounter + "' length but it is more than 4 bytes big!! size:" + tmpStr);
-                    }
+                    this.logInfo("unchunk: Trying to determine chunk '" + chunkCounter + "' length but it is more than 4 bytes big!! size:" + tmpStr);
                     return "";
                 }
             }
             return gatheredString;
         }
         else {
-            if (this.debug) {
-                this.logInfo("unchunk: Trying to determine first chunk length but it is very big...!! size:" + pos);
-            }
+            this.logInfo("unchunk: Trying to determine first chunk length but it is very big...!! size:" + pos);
             return aChunkedString;
         }
     },
@@ -843,19 +775,15 @@ ExchangeRequest.prototype = {
     onLoad: function _onLoad(evt) {
         let xmlReq = this.mXmlReq;
 
-        if (this.debug) {
-            this.logInfo(": ExchangeRequest.onLoad :" + evt.type
-                + ", readyState:" + xmlReq.readyState
-                + ", status:" + xmlReq.status);
-            this.logInfo(": ExchangeRequest.onLoad :"
-                + xmlReq.getAllResponseHeaders(), 2);
-            this.logInfo(": ExchangeRequest.onLoad :" + xmlReq.responseText, 2);
-        }
+        this.logInfo(": ExchangeRequest.onLoad :" + evt.type
+            + ", readyState:" + xmlReq.readyState
+            + ", status:" + xmlReq.status);
+        this.logDebug(": ExchangeRequest.onLoad :"
+            + xmlReq.getAllResponseHeaders());
+        this.logDebug(": ExchangeRequest.onLoad :" + xmlReq.responseText);
 
         if (xmlReq.readyState != xmlReq.DONE) {
-            if (this.debug) {
-                this.logInfo("readyState is not DONE inside the onLoad internal function. THIS SHOULD NEVER HAPPEN. PLEASE REPORT.");
-            }
+            this.logInfo("readyState is not DONE inside the onLoad internal function. THIS SHOULD NEVER HAPPEN. PLEASE REPORT.");
             this.fail(this.ER_ERROR_OPEN_FAILED,
                 "Ready state != 4, readyState:" + xmlReq.readyState);
             return;
@@ -880,9 +808,7 @@ ExchangeRequest.prototype = {
             }
         }
         catch (exc) {
-            if (this.debug) {
-                this.logInfo("createInstance error:" + exc);
-            }
+            this.logInfo("createInstance error:" + exc);
         }
 
         // Parse XML data
@@ -900,10 +826,8 @@ ExchangeRequest.prototype = {
             }
         }
         catch (exc) {
-            if (this.debug) {
-                this.logInfo("processXMLString error:" + exc.name + ","
-                    + exc.message + "\n" + xml);
-            }
+            this.logInfo("processXMLString error:" + exc.name + ","
+                + exc.message + "\n" + xml);
         }
 
         this.mAuthFail = 0;
@@ -947,11 +871,9 @@ ExchangeRequest.prototype = {
                 this.mCbOk(this, newXML);
             }
             catch (err) {
-                if (this.debug) {
-                    this.logInfo("onLoad: err:" + err);
-                    this.logInfo("onLoad: stack:" + this.globalFunctions.STACK());
-                    this.logInfo("onLoad: xml:" + xml);
-                }
+                this.logInfo("onLoad: err:" + err);
+                this.logInfo("onLoad: stack:" + this.globalFunctions.STACK());
+                this.logInfo("onLoad: xml:" + xml);
             }
             this.originalReq = null;
         }
@@ -965,9 +887,7 @@ ExchangeRequest.prototype = {
     },
 
     tryNextURL: function _tryNextURL() {
-        if (this.debug) {
-            this.logInfo("exchangeRequest.tryNextURL");
-        }
+        this.logInfo("exchangeRequest.tryNextURL");
 
         let xmlReq = this.mXmlReq;
 
@@ -976,7 +896,7 @@ ExchangeRequest.prototype = {
         }
 
         if (this.urllist.length > 0) {
-            if (this.debug) this.logInfo("exchangeRequest.tryNextURL: We have another URL to try the request on.");
+            this.logInfo("exchangeRequest.tryNextURL: We have another URL to try the request on.");
             this.sendRequest(this.mData);
             return true;
         }
@@ -1107,11 +1027,9 @@ ExchangeRequest.prototype = {
                     break;
                 }
 
-                if (this.debug) {
-                    this.logInfo(": isConnError req.status=" + xmlReq.status
-                        + ": " + errMsg + "\nURL:" + this.currentUrl + "\n"
-                        + xmlReq.responseText, 2);
-                }
+                this.logDebug(": isConnError req.status=" + xmlReq.status
+                    + ": " + errMsg + "\nURL:" + this.currentUrl + "\n"
+                    + xmlReq.responseText);
 
                 var myAuthPrompt2 = Cc["@1st-setup.nl/exchange/authprompt2;1"].getService(Ci.mivExchangeAuthPrompt2);
                 if (this.urllist.length > 0 && !myAuthPrompt2.getUserCanceled(this.currentUrl)) {
@@ -1144,9 +1062,7 @@ ExchangeRequest.prototype = {
                     errMsg = "Internal server error";
                     // First check if we have a version mismatch and we need a lower version. This sometimes happens.
                     if (xmlReq.responseText.indexOf("ErrorInvalidServerVersion") > -1) {
-                        if (this.debug) {
-                            this.logInfo(" ErrorInvalidServerVersion -> RequestServerVersion wrong:" + this.version + ".", 2);
-                        }
+                        this.logDebug(" ErrorInvalidServerVersion -> RequestServerVersion wrong:" + this.version + ".");
 
                         // We are going to retry with a different server version.
                         var tryAgain = false;
@@ -1171,9 +1087,7 @@ ExchangeRequest.prototype = {
                             tryAgain = false;
                         }
                         if (tryAgain) {
-                            if (this.debug) {
-                                this.logInfo("Going to retry with lower server version", 2);
-                            }
+                            this.logDebug("Going to retry with lower server version");
                             this.sendRequest(this.makeSoapMessage(this.originalReq), this.currentUrl);
                             return true;
                         }
@@ -1181,9 +1095,7 @@ ExchangeRequest.prototype = {
                     // Next check if we have a version mismatch and we need a higher version. This sometimes happens.
                     if (xmlReq.responseText.indexOf("ErrorIncorrectSchemaVersion") > -1
                         && xmlReq.responseText.indexOf("RequestServerVersion") > -1) {
-                        if (this.debug) {
-                            this.logInfo(" ErrorIncorrectSchemaVersion -> RequestServerVersion wrong:" + this.version + ".", 2);
-                        }
+                        this.logDebug(" ErrorIncorrectSchemaVersion -> RequestServerVersion wrong:" + this.version + ".");
                         // We are going to retry with a different serverversion.
                         var tryAgain = false;
                         switch (this.version) {
@@ -1207,9 +1119,7 @@ ExchangeRequest.prototype = {
                             tryAgain = false;
                         }
                         if (tryAgain) {
-                            if (this.debug) {
-                                this.logInfo("Going to retry with higher server version", 2);
-                            }
+                            this.logDebug("Going to retry with higher server version");
                             this.sendRequest(this.makeSoapMessage(this.originalReq), this.currentUrl);
                             return true;
                         }
@@ -1218,15 +1128,11 @@ ExchangeRequest.prototype = {
                     // This might be generated because of a password not yet supplied in open function during a request so we try again
                     if ((!exchWebService.prePasswords[this.mArgument.user + "@" + this.currentUrl])
                         || (exchWebService.prePasswords[this.mArgument.user + "@" + this.currentUrl].tryCount < 3)) {
-                        if (this.debug) {
-                            this.logInfo("isHTTPError: We are going to ask the user or password store for a password and try again.");
-                        }
+                        this.logInfo("isHTTPError: We are going to ask the user or password store for a password and try again.");
                         this.prePassword = this.getPrePassword(this.currentUrl, this.mArgument.user);
 
                         if (this.prePassword) {
-                            if (this.debug) {
-                                this.logInfo("isHTTPError: We received a prePassword. Going to retry current URL");
-                            }
+                            this.logInfo("isHTTPError: We received a prePassword. Going to retry current URL");
 
                             if (!exchWebService.prePasswords[this.mArgument.user + "@" + this.currentUrl]) {
                                 exchWebService.prePasswords[this.mArgument.user + "@" + this.currentUrl] = {};
@@ -1240,20 +1146,16 @@ ExchangeRequest.prototype = {
 
                             return true;
                         }
-                        if (this.debug) {
-                            this.logInfo("isHTTPError: User canceled request for prePassword.");
-                        }
+                        this.logInfo("isHTTPError: User canceled request for prePassword.");
                     }
 
                     // Password were given and that's the third try we have an error
                     if ((exchWebService.prePasswords[this.mArgument.user + "@" + this.currentUrl])
                         && (exchWebService.prePasswords[this.mArgument.user + "@" + this.currentUrl].tryCount > 2)) {
                         // Failed three times. Remove password also from password store.
-                        if (this.debug) {
-                            this.logInfo("isHTTPError: Failed password "
-                                + exchWebService.prePasswords[this.mArgument.user + "@" + this.currentUrl].tryCount
-                                + " times. Stopping communication.");
-                        }
+                        this.logInfo("isHTTPError: Failed password "
+                            + exchWebService.prePasswords[this.mArgument.user + "@" + this.currentUrl].tryCount
+                            + " times. Stopping communication.");
                         var title = "Microsoft Exchange EWS";
                         var tmpURL = this.currentUrl;
                         if (this.mArgument.user != "") {
@@ -1316,12 +1218,10 @@ ExchangeRequest.prototype = {
                     break;
                 }
 
-                if (this.debug) {
-                    this.logInfo(": isConnError req.status="
-                        + xmlReq.status + ": " + errMsg
-                        + "\nURL:" + this.currentUrl + "\n"
-                        + xmlReq.responseText, 2);
-                }
+                this.logDebug(": isConnError req.status="
+                    + xmlReq.status + ": " + errMsg
+                    + "\nURL:" + this.currentUrl + "\n"
+                    + xmlReq.responseText);
 
                 if (this.tryNextURL()) {
                     return true;
@@ -1347,9 +1247,7 @@ ExchangeRequest.prototype = {
     },
 
     fail: function (aCode, aMsg) {
-        if (this.debug) {
-            this.logInfo("ecExchangeRequest.fail: aCode:" + aCode + ", aMsg:" + aMsg);
-        }
+        this.logInfo("ecExchangeRequest.fail: aCode:" + aCode + ", aMsg:" + aMsg);
 
         if (this.mCbError) {
             this.mCbError(this, aCode, aMsg);
@@ -1685,12 +1583,6 @@ ecnsIAuthPrompt2.prototype = {
         },
 
         logInfo: function _logInfo(aMsg) {
-            var prefB = Cc["@mozilla.org/preferences-service;1"]
-                .getService(Ci.nsIPrefBranch);
-
-            this.debug = this.globalFunctions.safeGetBoolPref(prefB, "extensions.1st-setup.authentication.debug", false, true);
-            if (this.debug) {
-                this.globalFunctions.LOG(this.uuid + ": " + aMsg);
-            }
+            this.globalFunctions.LOG(this.uuid + ": " + aMsg);
         },
-    } // End of ecnsIAuthPrompt2 prototype
+    }; // End of ecnsIAuthPrompt2 prototype

@@ -49,10 +49,10 @@ function mivExchangeItemsManager() {
         .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl.");
 
     this._accountManager = Cc["@1st-setup.nl/exchange/accountmanager;1"]
-        .getService(Ci.mivExchangeAccountManager)
+        .getService(Ci.mivExchangeAccountManager);
 
     this._loadBalancer = Cc["@1st-setup.nl/exchange/loadbalancer;1"]
-        .getService(Ci.mivExchangeLoadBalancer)
+        .getService(Ci.mivExchangeLoadBalancer);
 
     this.uuid = this.globalFunctions.getUUID();
 
@@ -169,7 +169,7 @@ mivExchangeItemsManager.prototype = {
     },
 
     // Internal Methods
-    reset: function reset {
+    reset: function _reset() {
         if ((!this._exchangeAccount) || ((!this._folderBase) && (!this._folderId))) {
             return;
         }
@@ -212,22 +212,10 @@ mivExchangeItemsManager.prototype = {
 
     ecRequestError: function (aRequest, aCode, aMsg) {},
 
-    logInfo: function _logInfo(aMsg, aDebugLevel) {
+    logInfo: function _logInfo(aMsg) {
         this.globalFunctions.LOG("mivExchangeItemsManager: " + aMsg);
-        return;
-
-        if (!aDebugLevel) aDebugLevel = 1;
-
-        var prefB = Cc["@mozilla.org/preferences-service;1"]
-            .getService(Ci.nsIPrefBranch);
-
-        this.debugLevel = this.globalFunctions.safeGetIntPref(prefB, "extensions.1st-setup.core.debuglevel", 0, true);
-        if (aDebugLevel <= this.debugLevel) {
-            this.globalFunctions.LOG("mivExchangeItemsManager: " + aMsg);
-        }
     },
-
-}
+};
 
 function NSGetFactory(cid) {
 

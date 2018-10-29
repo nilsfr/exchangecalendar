@@ -61,60 +61,10 @@ exchWebService.commonFunctions = {
                 return aObj[this._keys[this._i++]];
             }
         };
-    },
+    }
+};
 
-    /*	copyCalendarSettings: function _copyCalendarSettings(aFromId, aToId)
-    	{
-    		var fromCalPrefs = Cc["@mozilla.org/preferences-service;1"]
-    		            .getService(Ci.nsIPrefService)
-    			    .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl."+aFromId+".");
-
-    		if (aToId == undefined) {
-    			var toId = Cc["@1st-setup.nl/global/functions;1"].getService(Ci.mivFunctions).getUUID();
-    		}
-    		else {
-    			var toId = aToId;
-    		}
-
-    		var toCalPrefs = Cc["@mozilla.org/preferences-service;1"]
-    		            .getService(Ci.nsIPrefService)
-    			    .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl."+toId+".");
-
-    		
-    		Cc["@1st-setup.nl/global/functions;1"].getService(Ci.mivFunctions).copyPreferences(fromCalPrefs, toCalPrefs);
-    		toCalPrefs.deleteBranch("folderProperties");
-
-    		fromCalPrefs = Cc["@mozilla.org/preferences-service;1"]
-    		            .getService(Ci.nsIPrefService)
-    			    .getBranch("calendar.registry."+aFromId+".");
-
-    		toCalPrefs = Cc["@mozilla.org/preferences-service;1"]
-    		            .getService(Ci.nsIPrefService)
-    			    .getBranch("calendar.registry."+toId+".");
-
-    		Cc["@1st-setup.nl/global/functions;1"].getService(Ci.mivFunctions).copyPreferences(fromCalPrefs, toCalPrefs);
-
-    		return toId;
-    	},
-    */
-    /*	addCalendarById: function _addCalendarById(aId)
-    	{
-    		var ioService = Cc["@mozilla.org/network/io-service;1"]  
-    				.getService(Ci.nsIIOService);  
-    		var tmpURI = ioService.newURI("https://auto/"+aId, null, null);  
-
-    		var calManager = Cc["@mozilla.org/calendar/manager;1"]
-    			.getService(Ci.calICalendarManager);
-    		var newCal = calManager.createCalendar("exchangecalendar", tmpURI);
-
-    		newCal.id = aId;
-
-    		calManager.registerCalendar(newCal);
-    	},*/
-
-}
-
-var mivFunctions = Cc["@1st-setup.nl/global/functions;1"].getService(Ci.mivFunctions);
+let mivFunctions = Cc["@1st-setup.nl/global/functions;1"].getService(Ci.mivFunctions);
 exchWebService.commonFunctions.doEncodeFolderSpecialChars = mivFunctions.doEncodeFolderSpecialChars;
 exchWebService.commonFunctions.encodeFolderSpecialChars = mivFunctions.encodeFolderSpecialChars;
 exchWebService.commonFunctions.doDecodeFolderSpecialChars = mivFunctions.doDecodeFolderSpecialChars;
@@ -130,8 +80,8 @@ exchWebService.commonFunctions.safeGetIntPref = mivFunctions.safeGetIntPref;
 exchWebService.commonFunctions.getStringBundle = mivFunctions.getStringBundle;
 exchWebService.commonFunctions.getString = mivFunctions.getString;
 exchWebService.commonFunctions.getUUID = mivFunctions.getUUID;
-exchWebService.commonFunctions.shouldLog = mivFunctions.shouldLog;
 exchWebService.commonFunctions.LOG = mivFunctions.LOG;
+exchWebService.commonFunctions.DEBUG = mivFunctions.DEBUG;
 exchWebService.commonFunctions.writeToLogFile = mivFunctions.writeToLogFile;
 exchWebService.commonFunctions.WARN = mivFunctions.WARN;
 exchWebService.commonFunctions.ERROR = mivFunctions.ERROR;

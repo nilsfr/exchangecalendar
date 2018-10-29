@@ -29,6 +29,7 @@ var components = Components;
 
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 Cu.import("resource://gre/modules/Services.jsm");
+Cu.import("resource://gre/modules/Console.jsm");
 
 Cu.import("resource://exchangecommoninterfaces/xml2jxon/mivIxml2jxon.js");
 Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
@@ -39,6 +40,10 @@ function mivFunctions() {
         .getService(Ci.nsIDOMParser);
     this.xmlSerializer = Cc["@mozilla.org/xmlextras/xmlserializer;1"]
         .createInstance(Ci.nsIDOMSerializer);
+
+    let prefB = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefBranch);
+    this.setIsWriteLog(this.safeGetBoolPref(prefB, "extensions.1st-setup.debug.log", false, true));
+    this.setDebugLevel(this.safeGetIntPref(prefB, "extensions.1st-setup.core.debuglevel", 0, true));
 }
 
 mivFunctions.prototype = {
@@ -59,6 +64,8 @@ mivFunctions.prototype = {
     classID: components.ID("{c7543f10-e2d1-44b3-ae37-9221e0d5b524}"),
     contractID: "@1st-setup.nl/global/functions;1",
     flags: Ci.nsIClassInfo.SINGLETON || Ci.nsIClassInfo.THREADSAFE,
+    isWriteLog: false,
+    debugLevel: 1,
 
     doEncodeFolderSpecialChars: function _doEncodeFolderSpecialChars(str, r1) {
         var result = str;
@@ -225,13 +232,12 @@ mivFunctions.prototype = {
 
     safeGetCharPref: function _safeGetCharPref(aBranch, aName, aDefaultValue, aCreateWhenNotAvailable) {
         if (!aBranch) {
-            //			return aDefaultValue;
-            var realBranche = this.getBranch(aName);
-            if (!realBranche.branch) {
+            let realBranch = this.getBranch(aName);
+            if (!realBranch.branch) {
                 return aDefaultValue;
             }
-            aBranch = realBranche.branch;
-            aName = realBranche.name;
+            aBranch = realBranch.branch;
+            aName = realBranch.name;
         }
 
         if (!aCreateWhenNotAvailable) {
@@ -257,13 +263,12 @@ mivFunctions.prototype = {
 
     safeGetBoolPref: function _safeGetBoolPref(aBranch, aName, aDefaultValue, aCreateWhenNotAvailable) {
         if (!aBranch) {
-            //			return aDefaultValue;
-            var realBranche = this.getBranch(aName);
-            if (!realBranche.branch) {
+            let realBranch = this.getBranch(aName);
+            if (!realBranch.branch) {
                 return aDefaultValue;
             }
-            aBranch = realBranche.branch;
-            aName = realBranche.name;
+            aBranch = realBranch.branch;
+            aName = realBranch.name;
         }
 
         if (!aCreateWhenNotAvailable) {
@@ -289,13 +294,12 @@ mivFunctions.prototype = {
 
     safeGetIntPref: function _safeGetIntPref(aBranch, aName, aDefaultValue, aCreateWhenNotAvailable) {
         if (!aBranch) {
-            //			return aDefaultValue;
-            var realBranche = this.getBranch(aName);
-            if (!realBranche.branch) {
+            let realBranch = this.getBranch(aName);
+            if (!realBranch.branch) {
                 return aDefaultValue;
             }
-            aBranch = realBranche.branch;
-            aName = realBranche.name;
+            aBranch = realBranch.branch;
+            aName = realBranch.name;
         }
 
         if (!aCreateWhenNotAvailable) {
@@ -380,17 +384,17 @@ mivFunctions.prototype = {
         return this.uuidGen.generateUUID().toString().replace(/[{}]/g, '');
     },
 
-
-    /* Shortcut to the console service */
-    getConsoleService: function _getConsoleService() {
-        return Cc["@mozilla.org/consoleservice;1"]
-            .getService(Ci.nsIConsoleService);
-    },
-
-
     /****
      **** debug code
      ****/
+
+    setIsWriteLog: function _setIsWriteLog(aIsWriteLog) {
+        this.isWriteLog = aIsWriteLog;
+    },
+
+    setDebugLevel: function _setDebugLevel(aDebugLevel) {
+        this.debugLevel = aDebugLevel;
+    },
 
     /**
      * Logs a string or an object to both stderr and the js-console only in the case
@@ -399,18 +403,29 @@ mivFunctions.prototype = {
      * @param aArg  either a string to log or an object whose entire set of
      *              properties should be logged.
      */
-    shouldLog: function _shouldLog() {
-        var prefB = Cc["@mozilla.org/preferences-service;1"].
-        getService(Ci.nsIPrefBranch);
-        return this.safeGetBoolPref(prefB, "extensions.1st-setup.debug.log", false, true);
-    },
-
     LOG: function _LOG(aArg) {
-
-        if (!this.shouldLog()) {
+        if (!this.isWriteLog) {
             return;
         }
 
+        let output = this.convertArgToString(aArg);
+
+        console.log(output);
+
+        this.writeToLogFile(output);
+    },
+
+    DEBUG: function _DEBUG(aArg) {
+        if (!this.isWriteLog || this.debugLevel < 2) {
+            return;
+        }
+
+        let output = this.convertArgToString(aArg);
+
+        console.debug(output);
+    },
+
+    convertArgToString: function _convertArgToString(aArg) {
         try {
             this.ASSERT(aArg, "Bad log argument.", true);
         }
@@ -418,26 +433,20 @@ mivFunctions.prototype = {
             aArg = exc;
         }
 
-        var string;
-        // We should just dump() both String objects, and string primitives.
-        if (!(aArg instanceof String) && !(typeof (aArg) == "string")) {
-            var string = "1st-setup: Logging object...\n";
-            for (var prop in aArg) {
-                string += prop + ': ' + aArg[prop] + '\n';
+        let output;
+        if (!(aArg instanceof String) && !(typeof (aArg) === "string")) {
+            output = "1st-setup: Logging object...\n";
+            for (let prop in aArg) {
+                output += prop + ': ' + aArg[prop] + '\n';
             }
-            string += "End object\n";
+            output += "End object\n";
         }
         else {
-            var dt = new Date();
-            string = "ExchangeCalendar [" + dt.toISOString() + "]: " + aArg;
+            let dt = new Date();
+            output = "ExchangeCalendar [" + dt.toISOString() + "]: " + aArg;
         }
 
-        // xxx todo consider using function debug()
-        dump(string + '\n');
-        this.getConsoleService().logStringMessage(string);
-
-        this.writeToLogFile(string);
-
+        return output;
     },
 
     writeToLogFile: function _writeToLogFile(aString) {
@@ -446,8 +455,6 @@ mivFunctions.prototype = {
         var file = this.safeGetCharPref(prefB, "extensions.1st-setup.debug.file", "/tmp/exchangecalendar.log", true);
         if (file != "") {
             // file is nsIFile, data is a string  
-            //this.getConsoleService().logStringMessage(" >>>>>>>>>>>>>>>");
-
             var localFile = Cc["@mozilla.org/file/local;1"]
                 .createInstance(Ci.nsIFile);
 
@@ -491,13 +498,12 @@ mivFunctions.prototype = {
      * @param aMessage warning message
      */
     WARN: function _WARN(aMessage) {
-        dump("1st-setup: Warning: " + aMessage + '\n');
-        var scriptError = Cc["@mozilla.org/scripterror;1"]
-            .createInstance(Ci.nsIScriptError);
+        console.warn("1st-setup: Warning: " + aMessage + '\n');
+        var scriptError = Cc["@mozilla.org/scripterror;1"].createInstance(Ci.nsIScriptError);
         scriptError.init("1st-setup: " + aMessage, null, null, 0, 0,
             Ci.nsIScriptError.warningFlag,
             "component javascript");
-        this.getConsoleService().logMessage(scriptError);
+        console.warn(scriptError);
     },
 
     /**
@@ -506,13 +512,12 @@ mivFunctions.prototype = {
      * @param aMessage error message
      */
     ERROR: function _ERROR(aMessage) {
-        dump("1st-setup: Error: " + aMessage + '\n');
-        var scriptError = Cc["@mozilla.org/scripterror;1"]
-            .createInstance(Ci.nsIScriptError);
+        console.error("1st-setup: Error: " + aMessage + '\n');
+        var scriptError = Cc["@mozilla.org/scripterror;1"].createInstance(Ci.nsIScriptError);
         scriptError.init("1st-setup: " + aMessage, null, null, 0, 0,
             Ci.nsIScriptError.errorFlag,
             "component javascript");
-        this.getConsoleService().logMessage(scriptError);
+        console.error(scriptError);
     },
 
     /**
@@ -869,8 +874,7 @@ mivFunctions.prototype = {
 
         return this.xmlSerializer.serializeToString(parsedHtml);
     },
-
-}
+};
 
 function NSGetFactory(cid) {
 
@@ -878,7 +882,6 @@ function NSGetFactory(cid) {
         if (!NSGetFactory.mivFunctions) {
             // Load main script from lightning that we need.
             NSGetFactory.mivFunctions = XPCOMUtils.generateNSGetFactory([mivFunctions]);
-
         }
 
     }
