@@ -85,7 +85,7 @@ exchChangeCalendarPropertiesReminder.prototype = {
             // first alarm type.
             var absDate = this._document.getElementById("reminder-absolute-date");
             reminder.related = reminder.ALARM_RELATED_ABSOLUTE;
-            reminder.alarmDate = cal.jsDateToDateTime(absDate.value,
+            reminder.alarmDate = cal.dtz.jsDateToDateTime(absDate.value,
                 this._argument.timezone);
             //reminder.offset = 0;
             if ("DISPLAY" in allowedActionsMap) {

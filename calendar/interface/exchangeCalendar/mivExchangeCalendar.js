@@ -4392,14 +4392,14 @@ calExchangeCalendar.prototype = {
         }
         else {
             if (this.debug) this.logInfo(" THIS IS STRANGE beginDate");
-            var oldBeginDate = cal.now();
+            var oldBeginDate = cal.dtz.now();
         }
         if (this.endDate) {
             var oldEndDate = this.endDate.clone();
         }
         else {
             if (this.debug) this.logInfo(" THIS IS STRANGE endDate");
-            var oldEndDate = cal.now();
+            var oldEndDate = cal.dtz.now();
         }
 
         this.startDate = null;
