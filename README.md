@@ -15,56 +15,42 @@ Exchange Calendar extension can:
 
 This extension requires:
   * A recent Thunderbird version up to 59.
+    * See the [releases page](https://github.com/ExchangeCalendar/exchangecalendar/releases)
+  for preview builds of ExchangeCalendar version 5 with Thunderbird 60 support.
   * Lightning extension corresponding to the Thunderbird release.
   * The Exchange server has to provide an Exchange Web Service.
 
-This extension was developed by its original author (Michel Verbraak) for
-Exchange 2007, 2010 and 2013.
+ExchangeCalendar is developed by a community of interested developers. 
+Support is best effort and cannot be guaranteed. Contributions are welcome.
 
-The ExchangeCalendar community is now maintaining this extension. Support is
-best effort and cannot be guaranteed. Contributions are welcome.
+### Installation
+
+Download a pre-built release from our 
+[releases page](https://github.com/ExchangeCalendar/exchangecalendar/releases)
+or build your own release as shown below.
 
 ## Contributing
 
-This add-on is open source and based on the work of many
+This add-on was originally created by Michel Verbraak. It is open source and based 
+on the work of many 
 [contributors](https://github.com/ExchangeCalendar/exchangecalendar/graphs/contributors).
 
-This project is a community driven effort to develop and maintain the
-"Exchange EWS Provider" extension originally created by Michel Verbraak.
+### Financial support
 
-### Provide feedback, report issue
+If you would like to financially support the maintainer of ExchangeCalendar,
+please consider making a [Patreon donation](https://www.patreon.com/advancingu).
 
-You are welcome to provide feedback on our Github project:
-https://github.com/ExchangeCalendar/exchangecalendar
+### Report issues
 
-Please note that the project is built only for latest stable Thunderbird release
-and latest stable Lightning release.
+Please report any issues that have not previously been reported
+[here](https://github.com/ExchangeCalendar/exchangecalendar/issues).
 
 The more information you can provide about an issue, the easier it becomes to
-reproduce and fix. Examples of helpful informations are:
+reproduce and fix. Examples of helpful information are:
   * Thunderbird version
   * Lightning version
-  * Active Thunderbird add-ons
+  * List of running Thunderbird add-ons
   * Log output
-
-### Get project and build it
-
-To build the add-on, you have to:
-```bash
-# clone this project
-git clone https://github.com/ExchangeCalendar/exchangecalendar.git
-cd exchangecalendar
-# build it
-make build
-```
-Then an `xpi` file is created in the project folder.
-This file is directly installable from the add-on page of Thunderbird.
-
-If it doesn't work, please check you have these tools installed (example for
-Debian):
-```bash
-sudo apt install git-core zip
-```
 
 ### Patch the code
 
@@ -102,6 +88,25 @@ Next, go to the SDK's `idl` folder and run `python ../sdk/bin/typelib.py
 
 You are welcome to provide translation updates on our Transifex project:
 https://www.transifex.com/ExchangeCalendar/exchangecalendar
+
+## Build instructions
+
+To manually build the add-on, you have to:
+```bash
+# clone this project
+git clone https://github.com/ExchangeCalendar/exchangecalendar.git
+cd exchangecalendar
+# build it
+make build
+```
+Then an `xpi` file is created in the project folder.
+This file is directly installable from the add-on page of Thunderbird.
+
+If it doesn't work, please check you have these tools installed (example for
+Debian):
+```bash
+sudo apt install git-core zip
+```
 
 ## License
 
