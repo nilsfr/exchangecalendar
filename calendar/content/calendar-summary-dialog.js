@@ -674,7 +674,7 @@ exchEventSummaryDialog.prototype = {
             if (extProtService.isExposedProtocol(scheme)) {
                 var ioService = Cc["@mozilla.org/network/io-service;1"]
                     .getService(Ci.nsIIOService);
-                extProtService.loadUrl(ioService.newURI(href, null, null));
+                extProtService.loadURI(ioService.newURI(href, null, null));
             }
         }
         catch (ex) {

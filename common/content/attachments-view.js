@@ -506,15 +506,15 @@ exchAttachments.prototype = {
             return;
         }
 
-        var URL = aAttachment.uri;
+        var URI = aAttachment.uri;
 
-        this.globalFunctions.LOG(" == Going to open:" + URL.prePath + URL.path);
+        this.globalFunctions.LOG(" == Going to open:" + URI.prePath + URI.path);
 
         var externalLoader = Cc["@mozilla.org/uriloader/external-protocol-service;1"]
             .getService(Ci.nsIExternalProtocolService);
 
         try {
-            externalLoader.loadUrl(URL);
+            externalLoader.URI(URI);
         }
         catch (ex) {
             this.globalFunctions.LOG(" == ERROR:" + ex);
@@ -612,15 +612,15 @@ exchAttachments.prototype = {
                     // file is nsIFile  
                     var ios = Cc["@mozilla.org/network/io-service;1"].
                     getService(Ci.nsIIOService);
-                    var URL = ios.newFileURI(file);
+                    var URI = ios.newFileURI(file);
 
-                    globalFunctions.LOG(" == Going to open:" + URL.prePath + URL.path);
+                    globalFunctions.LOG(" == Going to open:" + URI.prePath + URI.path);
 
                     var externalLoader = Cc["@mozilla.org/uriloader/external-protocol-service;1"]
                         .getService(Ci.nsIExternalProtocolService);
 
                     try {
-                        externalLoader.loadUrl(URL);
+                        externalLoader.loadURI(URI);
                     }
                     catch (ex) {
                         globalFunctions.LOG(" == ERROR:" + ex);
