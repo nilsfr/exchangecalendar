@@ -7442,7 +7442,7 @@ calExchangeCalendar.prototype = {
 
         //		item.setProperty("DESCRIPTION", aCalendarItem.getTagValue("t:Body"));
 
-        item.startDate = null;
+        // item.startDate = null;
         if (xml2json.getTagValue(aCalendarEvent, "t:StartTime", null)) {
             if (this.isVersion2007) {
                 item.startDate = cal.dtz.fromRFC3339(xml2json.getTagValue(aCalendarEvent, "t:StartTime", null), this.globalFunctions.ecUTC());
@@ -7459,7 +7459,7 @@ calExchangeCalendar.prototype = {
             return null;
         }
 
-        item.endDate = null;
+        // item.endDate = null;
         if (xml2json.getTagValue(aCalendarEvent, "t:EndTime", null)) {
             if (this.isVersion2007) {
                 item.endDate = cal.dtz.fromRFC3339(xml2json.getTagValue(aCalendarEvent, "t:EndTime", null), this.globalFunctions.ecUTC());
@@ -7478,7 +7478,7 @@ calExchangeCalendar.prototype = {
 
         var startDateStr = xml2json.getTagValue(aCalendarEvent, "t:StartTime", "");
         var endDateStr = xml2json.getTagValue(aCalendarEvent, "t:EndTime", "");
-        item.id = this.md5(startDateStr + endDateStr);
+        item.clearId(this.md5(startDateStr + endDateStr));
         if (this.itemCacheById[item.id]) {
             //dump("\n-- we already know this one --:"+xml2json.toString(aCalendarEvent)+"\n");
             //item = null;
