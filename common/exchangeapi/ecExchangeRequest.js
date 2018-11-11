@@ -212,6 +212,10 @@ ExchangeRequest.prototype = {
         this.globalFunctions.LOG(this.uuid + ": " + aMsg);
     },
 
+    logDebug: function _logDebug(aMsg) {
+        this.globalFunctions.DEBUG(this.uuid + ": " + aMsg);
+    },
+
     get argument() {
         return this.mArgument;
     },
