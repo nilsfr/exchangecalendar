@@ -1,6 +1,18 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [5.0.0-alpha2] - 2018-11-25
+### Changed
+- Improved logging (#201)
+- Replaced dummy domain `somewhere` with `localhost` (#220)
+
+### Fixed
+- Date function calls changed to new interface (#205)
+- Synchronization issues (#206)
+- Meeting link references (#214)
+- Logging issues introduced by #201 (#213)
+- Calls to build URIs changed to new interface (#219)
+
 ## [5.0.0-alpha1] - 2018-10-16
 ### Added
 - Initial support for Thunderbird 60
