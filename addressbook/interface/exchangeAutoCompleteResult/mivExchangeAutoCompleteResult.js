@@ -18,11 +18,8 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 
-var Cc = Components.classes;
 var Ci = Components.interfaces;
 var Cu = Components.utils;
-var Cr = Components.results;
-var components = Components;
 
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 Cu.import("resource://gre/modules/Services.jsm");
@@ -30,9 +27,10 @@ Cu.import("resource://gre/modules/Services.jsm");
 Cu.import("resource:///modules/mailServices.js");
 
 function mivExchangeAutoCompleteResult() {
-
-    //dump("mivExchangeAutoCompleteResult init\n");
-    this._cards = new Array();
+    // _cards contain all Cards in value and are fetchable by localid as key
+    this._cards = new Object();
+    // _idcards keeps localids sorted by arrive
+    this._idcards = new Array();
 }
 
 var mivExchangeAutoCompleteResultGUID = "64587912-6dc2-413c-93ad-f062e21feaeb";
@@ -50,7 +48,7 @@ mivExchangeAutoCompleteResult.prototype = {
 
     classDescription: "Exchange Autocomplete Search Result",
 
-    classID: components.ID("{" + mivExchangeAutoCompleteResultGUID + "}"),
+    classID: Components.ID("{" + mivExchangeAutoCompleteResultGUID + "}"),
     contractID: "@1st-setup.nl/exchange/autocompleteresult;1",
     flags: Ci.nsIClassInfo.THREADSAFE,
 
@@ -90,7 +88,6 @@ mivExchangeAutoCompleteResult.prototype = {
      */
     //readonly attribute AString searchString;
     get searchString() {
-        //dump("searchString:"+this._searchString+"\n");
         return this._searchString;
     },
 
@@ -103,7 +100,6 @@ mivExchangeAutoCompleteResult.prototype = {
      */
     //readonly attribute unsigned short searchResult;
     get searchResult() {
-        //dump("searchResult:"+this._searchResult+"\n");
         return this._searchResult;
     },
 
@@ -116,8 +112,9 @@ mivExchangeAutoCompleteResult.prototype = {
      */
     //readonly attribute long defaultIndex;
     get defaultIndex() {
-        //dump("defaultIndex\n");
-        if (this._cards.length == 0) {
+        var defaultId = this._idcards.length;
+
+        if (defaultId == 0) {
             return -1;
         }
 
@@ -129,7 +126,6 @@ mivExchangeAutoCompleteResult.prototype = {
      */
     //readonly attribute AString errorDescription;
     get errorDescription() {
-        //dump("errorDescription\n");
         return null;
     },
 
@@ -138,8 +134,7 @@ mivExchangeAutoCompleteResult.prototype = {
      */
     //readonly attribute unsigned long matchCount;
     get matchCount() {
-        //dump("matchCount:"+this._cards.length+"\n");
-        return this._cards.length;
+        return this._idcards.length;
     },
 
     /**
@@ -149,7 +144,7 @@ mivExchangeAutoCompleteResult.prototype = {
      */
     //readonly attribute boolean typeAheadResult;
     get typeAheadResult() {
-        return this._cards.length <= 1;
+        return this._idcards.length <= 1;
     },
 
     /**
@@ -157,10 +152,16 @@ mivExchangeAutoCompleteResult.prototype = {
      */
     //AString getValueAt(in long index);
     getValueAt: function _getValueAt(aIndex) {
-        //dump("getValueAt["+aIndex+"]:"+this._cards[aIndex].primaryEmail+"\n");
-        if ((this._cards[aIndex].isMailList) && (this._cards[aIndex].primaryEmail.indexOf("@") == -1)) {
-            //dump("  >> I am a mailingList:"+this._cards[aIndex].mailListURI+"\n");
-            var dir = MailServices.ab.getDirectory(this._cards[aIndex].mailListURI);
+
+        var localid = this._idcards[aIndex];
+        var card = this._cards[localid];
+        var result = "";
+
+        if (card.isMailList
+            && card.primaryEmail.indexOf("@") == -1) {
+
+            var dir = MailServices.ab.getDirectory(card.mailListURI);
+
             if (dir) {
                 var emailList = "";
                 var childNodes = dir.childCards;
@@ -169,28 +170,23 @@ mivExchangeAutoCompleteResult.prototype = {
                         emailList = emailList + ",";
                     }
                     var tmpCard = childNodes.getNext().QueryInterface(Ci.mivExchangeAbCard);
-                    //dump(" || "+tmpCard+"\n");
-                    //					emailList = emailList + tmpCard.displayName + " <" + tmpCard.primaryEmail + ">" ;
                     emailList = emailList + tmpCard.firstName + " " + tmpCard.lastName + " <" + tmpCard.primaryEmail + ">";
                 }
-                //dump("  ++ addr:"+emailList+"\n");
-                return emailList;
+                result = emailList;
             }
-            //dump("  -- mailListURI:"+this._cards[aIndex].mailListURI+"\n");
         }
-        //		return this._cards[aIndex].displayName + " <" + this._cards[aIndex].primaryEmail + ">";
-        //dump("firstname:"+this._cards[aIndex].firstName+", lastname:"+this._cards[aIndex].lastName+", displayName:"+this._cards[aIndex].displayName+"\n");
-        if ((this._cards[aIndex].firstName != "") || (this._cards[aIndex].lastName != "")) {
-            return this._cards[aIndex].firstName + " " + this._cards[aIndex].lastName + " <" + this._cards[aIndex].primaryEmail + ">";
+        else if (card.firstName != ""
+                || card.lastName != "") {
+            result = card.firstName + " " + card.lastName + " <" + card.primaryEmail + ">";
+        }
+        else if (card.displayName != "") {
+            result = card.displayName + " <" + card.primaryEmail + ">";
         }
         else {
-            if (this._cards[aIndex].displayName != "") {
-                return this._cards[aIndex].displayName + " <" + this._cards[aIndex].primaryEmail + ">";
-            }
-            else {
-                return this._cards[aIndex].primaryEmail;
-            }
+            result = card.primaryEmail;
         }
+
+        return result;
     },
 
     /**
@@ -198,7 +194,6 @@ mivExchangeAutoCompleteResult.prototype = {
      */
     //AString getLabelAt(in long index);
     getLabelAt: function _getLabelAt(aIndex) {
-        //dump("getLabelAt: aIndex:"+aIndex+"\n");
         return this.getValueAt(aIndex);
     },
 
@@ -207,11 +202,15 @@ mivExchangeAutoCompleteResult.prototype = {
      */
     //AString getCommentAt(in long index);
     getCommentAt: function _getCommentAt(aIndex) {
-        //dump("getCommentAt: aIndex:"+aIndex+"\n");
-        if ((this._cards[aIndex].isMailList) && (this._cards[aIndex].primaryEmail.indexOf("@") == -1)) {
-            return this._cards[aIndex].displayName;
+        var localid = this._idcards[aIndex];
+        var card = this._cards[localid];
+        var comment = "Exchange Calendar";
+
+        if (card.isMailList && card.primaryEmail.indexOf("@") == -1) {
+            comment = card.displayName;
         }
-        return "Exchange Contact";
+
+        return comment;
     },
 
     /**
@@ -219,7 +218,6 @@ mivExchangeAutoCompleteResult.prototype = {
      */
     //AString getStyleAt(in long index);
     getStyleAt: function _getStyleAt(aIndex) {
-        //dump("getStyleAt: aIndex:"+aIndex+"\n");
         return "exchange-abook";
     },
 
@@ -228,8 +226,7 @@ mivExchangeAutoCompleteResult.prototype = {
      */
     //AString getImageAt(in long index);
     getImageAt: function _getImageAt(aIndex) {
-        //dump("getImageAt: aIndex:"+aIndex+"\n");
-        return "chrome://exchangecommon/content/exchange-addrbook.png";
+        return "chrome://exchangecommon-common/skin/images/exchange-addrbook.png";
     },
 
     /**
@@ -247,32 +244,33 @@ mivExchangeAutoCompleteResult.prototype = {
      * persistent storage as well.
      */
     //void removeValueAt(in long rowIndex, in boolean removeFromDb);
-    removeValueAt: function _removeValueAt(aRowIndex, removeFromDb) {},
+    removeValueAt: function _removeValueAt(aRowIndex, removeFromDb) {
+        var localid = this._idcards.splice(aRowIndex, 1);
+        delete this._cards[localid];
+    },
 
     //void addResult(in mivExchangeAbCard aCard);
     addResult: function _addResult(aCard) {
         // First check if this card is not already in the list
         var cardExists = false;
-        if (this._cards) {
-            for (var card of Object.values(this._cards)) {
-                if (card.localId == aCard.localId) {
 
-                    cardExists = true;
-                    break;
-                }
-            }
+        if (this._cards
+            && this._cards[aCard.localId]) {
+                cardExists = true;
         }
+
         if (!cardExists) {
-            //dump("addResult:"+aCard.displayName+", primaryEmail:"+aCard.primaryEmail+", length:"+this._cards.length+"\n");
-            //			if ((aCard.primaryEmail != "") && (aCard.primaryEmail.indexOf("@") > -1)) {
-            if (((aCard.primaryEmail != "") && (aCard.primaryEmail.indexOf("@") > -1)) || (aCard.isMailList)) {
-                this._cards.push(aCard);
+            if ((aCard.primaryEmail != "" && aCard.primaryEmail.indexOf("@") > -1)
+                || (aCard.isMailList)) {
+                this._cards[aCard.localId] =  aCard;
+                this._idcards.push(aCard.localId);
             }
         }
     },
 
     clearResults: function _clearResults() {
-        this._cards = new Array();
+        this._cards = new Object();
+        this._idcards = new Array();
         this._searchResult = this.RESULT_NOMATCH_ONGOING;
         this._searchString = "";
     },
@@ -280,20 +278,18 @@ mivExchangeAutoCompleteResult.prototype = {
 };
 
 function NSGetFactory(cid) {
-
     try {
         if (!NSGetFactory.mivExchangeAutoCompleteResult) {
             // Load main script from lightning that we need.
             NSGetFactory.mivExchangeAutoCompleteResult = XPCOMUtils.generateNSGetFactory([mivExchangeAutoCompleteResult]);
-
         }
-
     }
     catch (e) {
-        Components.utils.reportError(e);
+        Cu.reportError(e);
         dump(e);
         throw e;
     }
 
     return NSGetFactory.mivExchangeAutoCompleteResult(cid);
 }
+
