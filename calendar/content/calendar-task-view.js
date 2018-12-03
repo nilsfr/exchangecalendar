@@ -3,12 +3,12 @@
  */
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://exchangecommon/ecFunctions.js");
-Cu.import("resource://calendar/modules/calUtils.jsm");
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
 const globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
     .getService(Ci.mivFunctions);

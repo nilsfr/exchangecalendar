@@ -27,12 +27,12 @@
  * the Initial Developer. All Rights Reserved.
  *
  * ***** BEGIN LICENSE BLOCK *****/
-var Cu = Components.utils;
+
 var Ci = Components.interfaces;
 var Cc = Components.classes;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://exchangecommon/erGetAttachments.js");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://exchangecommon/erGetAttachments.js");
 
 function exchAttachments(aDocument, aWindow) {
     this._document = aDocument;

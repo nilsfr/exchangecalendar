@@ -22,12 +22,12 @@
  * ***** BEGIN LICENSE BLOCK *****/
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
 
-Cu.import("resource://exchangecommon/ecFunctions.js");
-Cu.import("resource://exchangecommon/erAutoDiscover.js");
-Cu.import("resource://exchangecommon/erPrimarySMTPCheck.js");
-Cu.import("resource://exchangecommon/erGetFolder.js");
+
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://exchangecommon/erAutoDiscover.js");
+ChromeUtils.import("resource://exchangecommon/erPrimarySMTPCheck.js");
+ChromeUtils.import("resource://exchangecommon/erGetFolder.js");
 
 if (!exchWebService) var exchWebService = {};
 

@@ -27,12 +27,12 @@
  * the Initial Developer. All Rights Reserved.
  *
  * ***** BEGIN LICENSE BLOCK *****/
-var Cu = Components.utils;
+
 var Ci = Components.interfaces;
 var Cc = Components.classes;
 
-Cu.import("resource://calendar/modules/calUtils.jsm");
-Cu.import("resource://gre/modules/Preferences.jsm");
+ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Preferences.jsm");
 
 if (!exchWebService) var exchWebService = {};
 
