@@ -29,7 +29,7 @@ Cu.import("resource:///modules/mailServices.js");
 function mivExchangeAutoCompleteResult() {
     // _cards contain all Cards in value and are fetchable by localid as key
     this._cards = new Object();
-    // _idcards keeps localids sorted by arrive
+    // _idcards keeps localids sorted by order of arrival
     this._idcards = new Array();
 }
 
