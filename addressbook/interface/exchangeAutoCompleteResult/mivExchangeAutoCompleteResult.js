@@ -252,19 +252,17 @@ mivExchangeAutoCompleteResult.prototype = {
     //void addResult(in mivExchangeAbCard aCard);
     addResult: function _addResult(aCard) {
         // First check if this card is not already in the list
-        var cardExists = false;
-
         if (this._cards
             && this._cards[aCard.localId]) {
-                cardExists = true;
+                return;
         }
 
-        if (!cardExists) {
-            if ((aCard.primaryEmail != "" && aCard.primaryEmail.indexOf("@") > -1)
-                || (aCard.isMailList)) {
-                this._cards[aCard.localId] =  aCard;
-                this._idcards.push(aCard.localId);
-            }
+        // Before really adding the result, check the card is a mailing list
+        // and, otherwise, check it's primary email has at least a "@"
+        if ((aCard.primaryEmail != "" && aCard.primaryEmail.indexOf("@") > -1)
+            || (aCard.isMailList)) {
+            this._cards[aCard.localId] =  aCard;
+            this._idcards.push(aCard.localId);
         }
     },
 
