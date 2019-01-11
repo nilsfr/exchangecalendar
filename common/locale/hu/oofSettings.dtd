@@ -1,0 +1,26 @@
+<!ENTITY title.oofsettings "Irodán kívüli beállításai">
+<!ENTITY label.acceptbutton "Mentés">
+<!ENTITY label.cancelbutton "Bezárás">
+<!ENTITY label.oofsettings.title "Irodán kívüli beállítások:">
+
+<!ENTITY label.oofstatus "Irodán kívüli állapot:">
+
+<!ENTITY label.externalaudience "Mely külső személyeket szeretné elküldeni az irodán kívüli üzenetekből:">
+<!ENTITY menuitem.label.exchWebService-oof-externalaudience.none "Senkinek">
+<!ENTITY menuitem.label.exchWebService-oof-externalaudience.known "Csak a névjegyzékben szereplő személyek számára">
+<!ENTITY menuitem.label.exchWebService-oof-externalaudience.all "Mindenkinek">
+
+<!ENTITY button.label.internal "Belső üzenet">
+<!ENTITY button.label.external "Külső üzenet">
+<!ENTITY label.internalreply "A szervezeten belüli emberek számára küldött üzenet:">
+<!ENTITY label.externalreply "A szervezeten kívüli személyek számára küldött üzenet:">
+
+<!ENTITY menuitem.label.exchWebService-oof-status.disabled "Tiltva">
+<!ENTITY menuitem.label.exchWebService-oof-status.enabled "Engedélyezve">
+
+<!ENTITY checkbox.label.exchWebService-oof-scheduled "Csak meghatározott időn belül engedélyezve:">
+<!ENTITY label.hbox-oof-scheduled-startTime "Kezdés:">
+<!ENTITY label.hbox-oof-scheduled-endTime "Befejezés:">
+
+
+

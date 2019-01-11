@@ -1,0 +1,34 @@
+locale exchangecommon en locale/en/
+
+locale exchangecommon cs-CZ locale/cs_CZ/
+locale exchangecommon de locale/de/
+locale exchangecommon en-US locale/en_US/
+locale exchangecommon fr-FR locale/fr_FR/
+locale exchangecommon hu locale/hu/
+locale exchangecommon it-IT locale/it_IT/
+locale exchangecommon ja-JP locale/ja_JP/
+locale exchangecommon nl locale/nl/
+locale exchangecommon pl locale/pl/
+locale exchangecommon ru locale/ru/
+locale exchangecommon sk locale/sk/
+locale exchangecommon sv locale/sv/
+locale exchangecommon tr locale/tr/
+
+manifest interface/exchangeAccountManager/mivExchangeAccountManager.manifest
+manifest interface/exchangeAuthPrompt2/mivExchangeAuthPrompt2.manifest
+manifest interface/exchangeAuthPromptProvider/mivExchangeAuthPromptProvider.manifest
+manifest interface/exchangeBadCertListener2/mivExchangeBadCertListener2.manifest
+manifest interface/exchangeBaseItem/mivExchangeBaseItem.manifest
+manifest interface/exchangeLightningNotifier/mivExchangeLightningNotifier.manifest
+manifest interface/exchangeLoadBalancer/mivExchangeLoadBalancer.manifest
+manifest interface/exchangeStatistics/mivExchangeStatistics.manifest
+manifest interface/global/mivFunctions.manifest
+manifest interface/updater/mivUpdater.manifest
+manifest interface/xml2jxon/mivIxml2jxon.manifest
+manifest interface/xml2jxon/mivNameSpaces.manifest
+manifest interface/xml2jxon/mivTagNames.manifest
+
+content exchangecommon content/
+
+resource exchangecommon exchangeapi/
+resource exchangecommoninterfaces interface/

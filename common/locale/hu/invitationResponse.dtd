@@ -1,0 +1,20 @@
+<!ENTITY label.acceptbutton "Változtatás megerősítése">
+<!ENTITY label.cancelbutton "Változtatás érvénytelenítése">
+
+<!ENTITY description.invitationResponse "Találkozó válasz megváltoztatás megerősítése.">
+
+<!ENTITY label.calendarName "Naptár:">
+<!ENTITY label.itemTitle "Tárgy:">
+<!ENTITY label.itemStart "Kezdés:">
+<!ENTITY label.itemResponse "Válaszát:">
+<!ENTITY label.meetingOrganiser "Szervező:">
+
+<!ENTITY label.messageReponseBody "Válaszüzenet:">
+
+<!ENTITY menuitem.label.ec-autorespond-answer.tentative "Lehet, hogy részt fogok venni">
+<!ENTITY menuitem.label.ec-autorespond-answer.accepted "Részt fogok venni">
+<!ENTITY menuitem.label.ec-autorespond-answer.declined "Nem fogok részt venni">
+
+<!ENTITY label.proposenewtime.title "Javasoljon új időt (Exchange 2013 vagy újabb)">
+<!ENTITY label.proposenewtime.start "Kezdés">
+<!ENTITY label.proposenewtime.end "Befejezés">

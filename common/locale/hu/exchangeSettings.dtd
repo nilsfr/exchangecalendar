@@ -1,0 +1,54 @@
+<!ENTITY label.acceptbutton "Mentés és visszaállítás">
+<!ENTITY label.cancelbutton "Mégse">
+<!ENTITY ecsettings.title "EWS (Exchange Web Services – csere internetes szolgáltatások) naptár és levelezési beállításai">
+<!ENTITY ecsettings.tab.adsettings "Exchange/Windows AD (Active Directory – működő könyvtár)">
+<!ENTITY ecsettings.tab.meetingrequestsettings "Találkozó felkérése">
+<!ENTITY ecsettings.tab.calendarfolderproperties "Mappa tulajdonságai">
+
+<!ENTITY label.ecExchangeSettings.title "A naptár beállításai:">
+
+<!ENTITY label.poll.inbox "A lekérdezések, a módosítások és a törlések lekérése a beérkezett üzenetekhez.">
+<!ENTITY label.poll.inbox.interval "Beérkezett üzenetek lekérdezési gyakorisága (másodperc):">
+<!ENTITY label.poll.calendar.interval "Naptár lekérdezési gyakorisága (másodperc):">
+
+<!ENTITY label.nomeetingrequestsettings "A találkozási felkérést nem beállítható, mert a fő postafiók naptár nincs kiválasztva">
+
+<!ENTITY label.autorespond.meetingrequest "Önműködően válaszolhat egy új meghívóra a következővel: ">
+
+<!ENTITY menuitem.label.ec-autorespond-answer.tentative "Lehet, hogy részt fogok venni">
+<!ENTITY menuitem.label.ec-autorespond-answer.accepted "Részt fogok venni">
+<!ENTITY menuitem.label.ec-autorespond-answer.declined "Nem fogok részt venni">
+
+<!ENTITY label.autoremove.invitation_cancellation1 "Önműködően távolítsa el a meghívást és a kísérő törlési üzenetet, ha még nem válaszolt a meghívási kérelemre.">
+<!ENTITY label.autoremove.invitation_cancellation2 "Önműködően törölje a megerősített meghívást, amikor kap egy törlési üzenetet.">
+
+<!ENTITY label.autoremove.invitation_response1 "Önműködően távolítsa el a másoktól érkező válaszokat egy találkozási meghívóra, amelyről Ön nem a szervező.">
+
+<!ENTITY label.doautorespond.meetingrequest.message "Küldje el a következő üzenetet a válaszokkal ahelyett, hogy üzenetet kérne.">
+<!ENTITY label.autorespond.meetingrequest.message "Az Ön üzenete:">
+
+<!ENTITY treecol.label.userid "Felhasználói azonosító">
+<!ENTITY treecol.label.email "E-mail">
+
+
+<!ENTITY ecsettings.tab.offlineCachingproperties "Kapcsolat nélküli gyorsítótárazás">
+
+<!ENTITY label.offlineCacheproperties.cachingStartDate "A gyorsítótár kezdői dátuma:">
+<!ENTITY label.offlineCacheproperties.cachingEndDate "A gyorsítótár befejezési dátuma:">
+<!ENTITY label.offlineCacheproperties.totalEvents "Gyorsítótárazott események teljes száma:">
+<!ENTITY label.offlineCacheproperties.totalTasks "Gyorsítótárazott feladatok teljes száma:">
+
+<!ENTITY label.offlineCacheproperties.monthsBeforeStartDate "Elem gyorsítótár (hónapok a mai nap előtt):">
+<!ENTITY label.offlineCacheproperties.monthsBeforeEndDate "Elem gyorsítótár (hónapok a mai nap után):">
+
+<!ENTITY button.offlineCacheproperties.clearCache "Kapcsolat nélküli gyorsítótár adatok törlése">
+<!ENTITY ecsettings.tab.autoprocessingproperties "Önműködő feldolgozás">
+<!ENTITY ecsettings.tab.mailitemsProperties "EWS (Exchange Web Services – csere internetes szolgáltatások) beállítások (levelek)">
+
+<!ENTITY label.syncmailitems.interval "Levelek összehangolásának késleltetése (címkék stb.)">
+<!ENTITY label.autoprocessingproperties.deletecancelleditems "A törölt események önműködő eltávolítása">
+<!ENTITY label.autoprocessingproperties.markeventtentative "Önműködően jelölje meg az eseményt kísérletként, és küldjön választ a szervezőnek">
+<!ENTITY label.syncmailitems.active "A levelek elemek (címkék stb.) összehangolásának engedélyezése">
+
+<!ENTITY label.syncfollowup.deactivtate "A feladat válasz letiltása">
+ 

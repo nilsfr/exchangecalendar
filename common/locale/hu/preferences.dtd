@@ -1,0 +1,52 @@
+<!ENTITY exchangeWebService.paneAccounts.title "EWS (Exchange Web Services – csere internetes szolgáltatások)">
+<!ENTITY exchangeWebService.paneDebug.title "Naplózás">
+
+<!ENTITY exchangeWebService.preferences.tab.accounts "Fiókok">
+<!ENTITY exchangeWebService.preferences.tab.debug "Naplózás">
+<!ENTITY exchangeWebService.preference.debug.file "Naplófájl helye:">
+<!ENTITY exchangeWebService.preference.network.debug.caption "Közlés Exchange-kiszolgálóval:">
+<!ENTITY exchangeWebService.preference.debug.log.label "Jelentkezzen be a vezérlőpultra és/vagy egy fájlra">
+<!ENTITY exchangeWebService.preference.debug.file.button "Tallózás">
+<!ENTITY exchangeWebService.preference.network.debug.label "Exchange-kiszolgáló kommunikációs naplózása">
+<!ENTITY exchangeWebService.preference.network.debuglevel.label1 "Naplószint">
+<!ENTITY exchangeWebService.preference.network.debuglevel.label2 "1 = Alap tájékoztató, 2 = Teljes kommunikáció">
+<!ENTITY exchangeWebService.preference.authentication.debug.label "A kommunikációs folyamatok információinak naplózása (pl. hitelesítés)">
+<!ENTITY exchangeWebService.preference.authentication.showpassword.label "Jelszó megjelenítése tiszta szövegben naplófájlban.">
+
+<!ENTITY exchangeWebService.preference.contacts.debug.caption "Névjegyzék:">
+<!ENTITY exchangeWebService.preference.contacts.debuglevel.label1 "Naplószint">
+<!ENTITY exchangeWebService.preference.contacts.debuglevel.label2 "1 = Alap tájékoztató, 2 = Teljes kommunikáció">
+<!ENTITY exchangeWebService.preference.contacts.debug.label "Naplózza a névjegyzéket">
+
+<!ENTITY exchangeWebService.preferences.titleWin "EWS (Exchange Web Services – csere internetes szolgáltatások) beállításai">
+
+<!ENTITY exchangeWebService.preference.core.debug.caption "Alapszolgáltató objektum:">
+<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "0 = Nincs, 1 = Alap tájékoztató, 2 = Kibővített tájékoztató">
+
+<!ENTITY exchangeWebService.preferences.tab.cache "Gyorsítótárazás">
+<!ENTITY exchangeWebService.preference.cache.memory.label "Minimális ideiglenes memória gyorsítótár">
+<!ENTITY exchangeWebService.preference.cache.memory.startupBefore.label "A program kezdési dátuma előtt letöltendő napok száma:">
+<!ENTITY exchangeWebService.preference.cache.memory.startupAfter.label "A program kezdési dátuma után letöltendő napok száma:">
+
+<!ENTITY exchangeWebService.preferences.tab.others "Egyéb">
+<!ENTITY exchangeWebService.preference.others.prefs.label "Kommunikációs beállítások:">
+<!ENTITY exchangeWebService.preference.others.prefs.retryCount.label "Az Exchange-kiszolgáló kommunikációjára irányuló újrapróbálkozások maximális száma:">
+
+<!ENTITY exchangeWebService.preference.updateFunction.label "Kiegészítő frissítési működés:">
+<!ENTITY exchangeWebService.preference.checkForUpdates.label "A Thunderbird indításakor önműködően ellenőrizze az új kiegészítő verziót.">
+<!ENTITY exchangeWebService.preference.warnForUpdates.label "Frissítések keresése, de a telepítés jóváhagyással történik">
+<!ENTITY exchangeWebService.preference.warnForPrereleaseUpdates.label "Figyelmeztetés megjelenítése, ha új előzetes kiadás (béta, kiadásjelölt stb.) áll rendelkezésre.">
+
+<!ENTITY exchangeWebService.preference.loadbalancer.debug.caption "Terhelés elosztó:">
+<!ENTITY exchangeWebService.preference.loadbalancer.prefs.label "Terhelés elosztó:">
+<!ENTITY exchangeWebService.preference.loadbalancer.prefs.maxJobs.label "Az Exchange-kiszolgálóra irányuló egyidejű kérések maximális száma:">
+<!ENTITY exchangeWebService.preference.loadbalancer.prefs.sleepBetweenJobs.label "Az Exchange-kiszolgáló kérései közötti legkevesebb várakozási idő:">
+<!ENTITY exchangeWebService.preference.userAgent.label "HTTP felhasználói ügynök:">
+
+<!ENTITY exchangeWebService.preference.globalsearch.caption "Thunderbird teljes keresés tárgymutató">
+<!ENTITY exchangeWebService.preference.globalsearch.label "Thunderbird teljes keresés tárgymutató engedélyezése">
+<!ENTITY exchangeWebService.preference.globalsearch.explain "Ha engedélyezi ezt a Thunderbird szolgáltatást, az Exchange naptár képes engedélyezni az e-mail távoli címkézést és a meghívási oszlopot a levélfa nézetben.">
+
+<!ENTITY exchangeWebService.preference.ntlmv1.label "NTLMv1 (NT LAN Manager version 1 – Új technológia helyi hálózati kezelő 1. verzió) beállítások:">
+<!ENTITY exchangeWebService.preference.ntlmv1.true.label "Engedélyezés">
+<!ENTITY exchangeWebService.preference.ntlmv1.false.label "Letiltás">

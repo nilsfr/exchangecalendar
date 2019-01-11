@@ -1,0 +1,45 @@
+ 
+<!ENTITY  label.delegatefolder.cancelbutton "Mégse">
+<!ENTITY  label.delegatefolder.userEmail "E-mail">
+ 
+<!ENTITY  label.delegatefolder.permissionLevel "Engedélyezési szint">
+<!ENTITY  label.delegatefolder.userboxcolumn1 "Felhasználó"> 
+<!ENTITY  label.delegatefolder.userboxcolumn2 "Engedélyek"> 
+
+<!ENTITY  menuitem.delegatefolder.permission.author "Szerző">
+<!ENTITY  menuitem.delegatefolder.permission.editor "Szerkesztő">
+<!ENTITY  menuitem.delegatefolder.permission.reviewer "Bíráló">
+<!ENTITY  menuitem.delegatefolder.permission.none "Nincs">
+<!ENTITY  menuitem.delegatefolder.permission.owner "Tulajdonos" > 
+<!ENTITY  menuitem.delegatefolder.permission.publishingEditor "Kiadói szerkesztő" >
+<!ENTITY  menuitem.delegatefolder.permission.publishingAuthor "Kiadói szerző" >
+<!ENTITY  menuitem.delegatefolder.permission.noneditingAuthor "Nem szerkesztő szerző" >
+<!ENTITY  menuitem.delegatefolder.permission.contributor "Közreműködők" >
+<!ENTITY  menuitem.delegatefolder.permission.custom "Egyéni" >
+                            
+<!ENTITY  delegatefolder.permission.description.author "A mappában lévő elemek olvasása és létrehozása." >
+<!ENTITY  delegatefolder.permission.description.editor "A mappában lévő elemek olvasása, létrehozása és módosítása." >
+<!ENTITY  delegatefolder.permission.description.reviewer "A mappában lévő elemek olvasása." >
+<!ENTITY  delegatefolder.permission.description.none "Nincs hozzáférési engedély a mappához." >
+
+ <!ENTITY  delegatefolder.permission.details.caption "Engedély"> 
+
+<!ENTITY  delegatefolder.tab.msg.label  "Nincs naptár vagy feladat ehhez a postafiókhoz található.">
+<!ENTITY  delegatefolder.tab.name  "Exchange mappa megosztás">
+
+<!ENTITY  delegatefolder.permissions.none  "Nincs">
+<!ENTITY  delegatefolder.permissions.own  "Saját elemek">
+<!ENTITY  delegatefolder.permissions.all  "Minden elem">
+<!ENTITY  delegatefolder.permissions.full  "Összes részlet">
+
+<!ENTITY  delegatefolder.permissions.cancreateitems  "Elemek létrehozása">
+<!ENTITY  delegatefolder.permissions.cancreatesubfolders  "Almappák létrehozása">
+<!ENTITY  delegatefolder.permissions.isfolderowner  "Mappa tulajdonosa">
+<!ENTITY  delegatefolder.permissions.isfoldervisible  "Mappa látható">
+<!ENTITY  delegatefolder.permissions.isfoldercontact  "Névjegyzék mappa">
+<!ENTITY  delegatefolder.permissions.edititems  "Elemek szerkesztése">
+<!ENTITY  delegatefolder.permissions.deleteitems  "Elemek törlése">
+<!ENTITY  delegatefolder.permissions.readitems  "Elemek olvasása">  
+ 
+<!ENTITY  delegatefolder.permissions.true  "Igaz">
+<!ENTITY  delegatefolder.permissions.false  "Hamis">

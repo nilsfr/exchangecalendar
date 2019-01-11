@@ -1,0 +1,16 @@
+<!ENTITY label.acceptbutton "Bezárás">
+
+<!ENTITY exchWebService.manageEWSAccounts.newAccount.button "Fiók hozzáadása…">
+<!ENTITY exchWebService.manageEWSAccounts.removeAccount.button "Fiók eltávolítása">
+<!ENTITY exchWebService.manageEWSAccounts.saveAccount.button "Beállítások mentése">
+
+<!ENTITY exchWebService.manageEWSAccounts.autodiscover.label "Az Exchange önműködő felfedezés működést használata.">
+<!ENTITY exchWebService.manageEWSAccounts.mailbox.label "Postafiók neve:">
+<!ENTITY exchWebService.manageEWSAccounts.windowsuser.label "Felhasználónév:">
+<!ENTITY exchWebService.manageEWSAccounts.windowsdomain.label "Tartománynév:">
+<!ENTITY exchWebService.manageEWSAccounts.autodiscover.button "Önműködő felfedezés futtatása">
+<!ENTITY exchWebService.manageEWSAccounts.servercheck.button "Kiszolgáló és fiók ellenőrzése">
+<!ENTITY exchWebService.manageEWSAccounts.name.label "Név:">
+
+<!ENTITY exchWebService.manageEWSAccounts.menuitem "EWS (Exchange Web Services – csere internetes szolgáltatások) fiókok">
+
