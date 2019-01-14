@@ -1,0 +1,26 @@
+<!ENTITY title.oofsettings "Axustes de ausencia">
+<!ENTITY label.acceptbutton "Gardar">
+<!ENTITY label.cancelbutton "Pechar">
+<!ENTITY label.oofsettings.title "Axustes de ausencia de:">
+
+<!ENTITY label.oofstatus "Estado de ausencia:">
+
+<!ENTITY label.externalaudience "A que personas externas queres enviar as mensaxes de ausencia:">
+<!ENTITY menuitem.label.exchWebService-oof-externalaudience.none "A ninguén">
+<!ENTITY menuitem.label.exchWebService-oof-externalaudience.known "Só a persoas da miña lista de contactos">
+<!ENTITY menuitem.label.exchWebService-oof-externalaudience.all "A todo o mundo">
+
+<!ENTITY button.label.internal "Mensaxe interna">
+<!ENTITY button.label.external "Mensaxe externa">
+<!ENTITY label.internalreply "A mensaxe enviarase a xente da miña organización">
+<!ENTITY label.externalreply "A mensaxe enviarase a xente fora da miña organización">
+
+<!ENTITY menuitem.label.exchWebService-oof-status.disabled "Deshabilitado">
+<!ENTITY menuitem.label.exchWebService-oof-status.enabled "Habilitado">
+
+<!ENTITY checkbox.label.exchWebService-oof-scheduled "Habilitado só nun período de tempo específico">
+<!ENTITY label.hbox-oof-scheduled-startTime "Hora de inicio:">
+<!ENTITY label.hbox-oof-scheduled-endTime "Hora de remate:">
+
+
+

@@ -1,0 +1,9 @@
+<!ENTITY toolbar.button.label.addaccount "Engadir cartafol de contactos de Exchange">
+<!ENTITY toolbar.button.tooltip.addaccount "Isto engadirá un cartafol novo de contactos de Exchange">
+
+<!ENTITY toolbar.button.label.deleteaccount "Eliminar cartafol de contactos de Exchange">
+<!ENTITY toolbar.button.tooltip.deleteaccount "Isto eliminará un cartafol de contactos de Exchange existente">
+
+<!ENTITY deleteExchangeCmd.label "Eliminar cartafol de contactos de Exchange">
+
+

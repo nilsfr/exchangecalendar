@@ -4,6 +4,7 @@ locale exchangecommon cs-CZ locale/cs_CZ/
 locale exchangecommon de locale/de/
 locale exchangecommon en-US locale/en_US/
 locale exchangecommon fr-FR locale/fr_FR/
+locale exchangecommon gl locale/gl/
 locale exchangecommon hu locale/hu/
 locale exchangecommon it-IT locale/it_IT/
 locale exchangecommon ja-JP locale/ja_JP/
