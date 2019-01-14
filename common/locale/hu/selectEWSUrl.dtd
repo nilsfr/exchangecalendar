@@ -1,0 +1,9 @@
+<!ENTITY label.acceptbutton "Kijelölés">
+<!ENTITY label.cancelbutton "Mégse">
+
+<!ENTITY description.selectews "Válasszon egy EWS (Exchange Web Services – csere internetes szolgáltatások) kiszolgálót a listából, amely alkalmas az Ön jelenlegi tartózkodási helyére.">
+<!ENTITY label.selectews "EWS (Exchange Web Services – csere internetes szolgáltatások) kiszolgáló lista:">
+
+
+
+

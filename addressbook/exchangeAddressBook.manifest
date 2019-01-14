@@ -20,6 +20,7 @@ locale exchangecontacts cs-CZ locale/cs_CZ/
 locale exchangecontacts de    locale/de/
 locale exchangecontacts en-US locale/en_US/
 locale exchangecontacts fr-FR locale/fr_FR/
+locale exchangecontacts hu    locale/hu/
 locale exchangecontacts it-IT locale/it_IT/
 locale exchangecontacts ja-JP locale/ja_JP/
 locale exchangecontacts nl    locale/nl/

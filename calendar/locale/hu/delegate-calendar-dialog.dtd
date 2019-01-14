@@ -1,0 +1,25 @@
+ 
+<!ENTITY  label.delegateCalendar.cancelbutton "Mégse">
+<!ENTITY  label.delegateCalendar.userEmail "E-mail">
+<!ENTITY  label.delegateCalendar.deliveryMeetingRerquestControl "Találkozók felkérése küldése">
+
+<!ENTITY  menuitem.delegateCalendar.deliverMeetingRequestslist.delegateOnly "Csak küldötteknek">
+<!ENTITY  menuitem.delegateCalendar.deliverMeetingRequestslist.delegateAndMe "Küldöttek és én">
+<!ENTITY  menuitem.delegateCalendar.deliverMeetingRequestslist.delegateAndInfo "Küldöttek és küld értesítéseket nekem">
+
+<!ENTITY  label.delegateCalendar.permission "Engedély">
+<!ENTITY  menuitem.delegateCalendar.permission.author "Szerző">
+<!ENTITY  menuitem.delegateCalendar.permission.editor "Szerkesztő">
+<!ENTITY  menuitem.delegateCalendar.permission.reviewer "Bíráló">
+<!ENTITY  menuitem.delegateCalendar.permission.none "Nincs">
+
+<!ENTITY  label.delegateCalendar.permission.receiveInvitationCopy "A találkozási üzenetek másolatainak átvétele" >
+<!ENTITY  label.delegateCalendar.permission.viewPrivateItems "Magán elemek megtekintése" >
+
+
+<!ENTITY  delegateCalendar.permission.description.author "A naptár mappában lévő elemek olvasása és létrehozása." >
+<!ENTITY  delegateCalendar.permission.description.editor "A naptár mappában lévő elemek olvasása, létrehozása és módosítása." >
+<!ENTITY  delegateCalendar.permission.description.reviewer "A naptár mappában lévő elemek olvasása." >
+<!ENTITY  delegateCalendar.permission.description.none "Nincs hozzáférési engedély a naptár mappához." >
+
+<!ENTITY  delegateCalendar.permission.details.label "Engedélyezési részletek:" >

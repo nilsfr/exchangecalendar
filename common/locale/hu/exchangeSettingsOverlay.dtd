@@ -1,0 +1,56 @@
+<!ENTITY ecautodiscover "Az Exchange önműködő felfedezés működést használata.">
+<!ENTITY ecfolderbase.label "Alap mappa:">
+<!ENTITY ecfolderpath.label "Könyvtár útvonala az alap mappa alatt:">
+<!ENTITY ecfolderidofshare.label "Megosztott mappaazonosító:">
+<!ENTITY exchWebServices.SharedFolderID.label "Megosztott mappa megjelenítendő név:">
+
+<!ENTITY menuitem.label.ecfolderbase.calendar "Naptár mappa">
+<!ENTITY menuitem.label.ecfolderbase.publicfoldersroot "Nyilvános mappák">
+<!ENTITY menuitem.label.ecfolderbase.inbox "Beérkezett üzenetek mappa">
+<!ENTITY menuitem.label.ecfolderbase.voicemail "Hangposta mappa">
+<!ENTITY menuitem.label.ecfolderbase.msgfolderroot "Üzenetmappa gyökér">
+<!ENTITY menuitem.label.ecfolderbase.root "Postafiók gyökére">
+<!ENTITY menuitem.label.ecfolderbase.tasks "Feladatok mappa">
+
+<!ENTITY menuitem.label.ecfolderbase.contacts "Névjegyzék mappa">
+<!ENTITY menuitem.label.ecfolderbase.deleteditems "Törölt elemek mappa">
+<!ENTITY menuitem.label.ecfolderbase.drafts "Piszkozatok mappa">
+<!ENTITY menuitem.label.ecfolderbase.journal "Napló mappa">
+<!ENTITY menuitem.label.ecfolderbase.notes "Megjegyzés mappa">
+<!ENTITY menuitem.label.ecfolderbase.outbox "Postázandó üzenetek mappa">
+<!ENTITY menuitem.label.ecfolderbase.sentitems "Elküldött elemek mappa">
+<!ENTITY menuitem.label.ecfolderbase.junkemail "Levélszemét üzenetek mappa">
+<!ENTITY menuitem.label.ecfolderbase.searchfolders "Mappák keresése mappa">
+<!ENTITY menuitem.label.ecfolderbase.version2010 "— Az alábbi lehetőségek csak az Exchange 2010-re vonatkoznak —">
+<!ENTITY menuitem.label.ecfolderbase.recoverableitemsroot "Kuka gyökérmappa">
+<!ENTITY menuitem.label.ecfolderbase.recoverableitemsdeletions "Kuka törlési mappa">
+<!ENTITY menuitem.label.ecfolderbase.recoverableitemsversion "Kuka változatok mappa">
+<!ENTITY menuitem.label.ecfolderbase.recoverableitemspurges "Kuka tisztítási mappa">
+<!ENTITY menuitem.label.ecfolderbase.archiveroot "Archívum gyökérmappa">
+<!ENTITY menuitem.label.ecfolderbase.archivemsgfolderroot "Üzenet archívum gyökérmappa">
+<!ENTITY menuitem.label.ecfolderbase.archivedeleteditems "Archívum törölt elemek mappa">
+<!ENTITY menuitem.label.ecfolderbase.archiverecoverableitemsroot "Archívum helyrehozható elemek gyökérmappa">
+<!ENTITY menuitem.label.ecfolderbase.Archiverecoverableitemsdeletions "Archívum helyrehozható elemek törlési mappa">
+<!ENTITY menuitem.label.ecfolderbase.Archiverecoverableitemsversions "Archívum helyrehozható elemek változatok mappa">
+<!ENTITY menuitem.label.ecfolderbase.Archiverecoverableitemspurges "Archívum helyrehozható elemek tisztítási mappa">
+
+<!ENTITY button.label.autodiscovercheck "Önműködő felfedezés futtatása">
+<!ENTITY button.label.serverandmailboxcheck "Kiszolgáló és postafiók ellenőrzése">
+<!ENTITY button.label.servercheck "Kiszolgáló és fiók ellenőrzése">
+
+<!ENTITY ecmailbox.label "Elsődleges e-mail címe:">
+<!ENTITY ecmailbox.tooltip "Ha nincs meghatározva egy postafiók, csak nyilvános mappákhoz tud hozzáférni.">
+<!ENTITY ecwindowsuser.label "Felhasználónév:">
+<!ENTITY ecwindowsdomain.label "Tartománynév:">
+<!ENTITY ecwindowspassword.label "Jelszó:">
+
+<!ENTITY button.label.folderpathcheck "Ellenőrzés">
+<!ENTITY button.label.folderbrowse "Tallózás">
+
+<!ENTITY exchWebServices.UserAvailability.label "Csak a postafiók naptárának felhasználói elérhetőségi állapota látható lesz.">
+
+<!ENTITY exchWebServices.exchtype.label "Exchange típus">
+<!ENTITY exchWebServices.hostexch.label "Hosted Exchange (az Exchange házigazdája)">
+<!ENTITY exchWebServices.365exch.label "Microsoft Office 365">
+<!ENTITY exchWebServices.detail.label "Részletek">
+ 

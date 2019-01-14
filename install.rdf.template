@@ -35,6 +35,7 @@
         <em:translator>Alexey Sinitsyn (ru)</em:translator>
         <em:translator>Alessandro Menti (it-IT)</em:translator>
         <em:translator>Engin Özkan (tr)</em:translator>
+        <em:translator>Óvári (hu)</em:translator>
         <em:localized>
             <Description>
                 <em:locale>en</em:locale>
@@ -47,6 +48,13 @@
                 <em:locale>fr</em:locale>
                 <em:name>Exchange Calendar</em:name>
                 <em:description>Vous permet de synchroniser les calendriers, tâches et contactes avec Microsoft Exchange.</em:description>
+            </Description>
+        </em:localized>
+        <em:localized>
+            <Description>
+                <em:locale>hu</em:locale> <!-- Hungarian -->
+                <em:name>Exchange-naptár (Exchange Calendar)</em:name>
+                <em:description>A naptárak, a feladatok és a névjegyzék összehangolása a Microsoft Exchange szolgáltatással</em:description>
             </Description>
         </em:localized>
     </Description>

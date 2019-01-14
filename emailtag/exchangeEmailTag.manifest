@@ -8,6 +8,7 @@ locale exchangeemailtag cs-CZ locale/cs_CZ/
 locale exchangeemailtag de    locale/de/
 locale exchangeemailtag en-US locale/en_US/
 locale exchangeemailtag fr-FR locale/fr_FR/
+locale exchangeemailtag hu    locale/hu/
 locale exchangeemailtag it-IT locale/it_IT/
 locale exchangeemailtag ja-JP locale/ja_JP/
 locale exchangeemailtag nl    locale/nl/

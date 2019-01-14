@@ -1,0 +1,9 @@
+<!ENTITY title.sendupdateto "Kinek szeretné elküldeni ezt a frissítést?">
+<!ENTITY label.acceptbutton "Végrehajtás">
+<!ENTITY label.cancelbutton "Mégse">
+<!ENTITY label.calendaritem.title "Találkozó frissítés küldés:">
+
+<!ENTITY radio.label.sendtonone "Küldés senkinek.">
+<!ENTITY radio.label.sendtoall "Küldés minden meghívottnak.">
+<!ENTITY radio.label.sendtochanged "Küldés csak a hozzáadott vagy eltávolított személyeknek.">
+

@@ -1,0 +1,14 @@
+<!ENTITY dialog.exchWebService.preInvitationResponse.title "Hogyan szeretnél válaszolni?">
+<!ENTITY label.acceptbutton "Rendben">
+<!ENTITY label.cancelbutton "Mégse">
+
+<!ENTITY label.calendarName "Naptár:">
+<!ENTITY label.itemTitle "Tárgy:">
+<!ENTITY label.itemStart "Kezdés:">
+<!ENTITY label.itemResponse "Válaszát:">
+<!ENTITY label.meetingOrganiser "Szervező:">
+
+<!ENTITY radio.label.exchWebService.preInvitationResponse.edit "Válasz szerkesztése a küldés előtt.">
+<!ENTITY radio.label.exchWebService.preInvitationResponse.sendnow "Válasz küldése most.">
+<!ENTITY radio.label.exchWebService.preInvitationResponse.donotsend "Ne küldjön választ.">
+

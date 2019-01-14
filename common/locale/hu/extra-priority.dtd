@@ -1,0 +1,18 @@
+<!ENTITY prefwindow.title "Rendkívüli">
+<!ENTITY general.label  "Általános"> 
+<!ENTITY about.label "Névjegye"> 
+ 
+<!ENTITY about.description.label "A Thunderbird és a SeaMonkey alkalmazások kiegészítője">
+<!ENTITY iconify.label "Csak a fontosságú ikonok megjelenítése"> 
+<!ENTITY shadeHigh.label "Színes háttér a magas fontosságú üzenetekhez">
+<!ENTITY shadeLow.label "Színes háttér az alacsony fontosságú üzenetekhez">
+<!ENTITY tagImportant.label "A magas fontosságú levelek önműködő címkézése fontos">
+ 
+<!ENTITY highestColor.label "Legmagasabb">
+
+<!ENTITY highColor.label "Magas">
+<!ENTITY lowColor.label "Alacsony">
+<!ENTITY lowestColor.label "Legalacsonyabb">
+ 
+<!ENTITY prioritycolor  "Egyéni szín">
+<!ENTITY pref.color "Színbeállítások:">
