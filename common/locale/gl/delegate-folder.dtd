@@ -1,0 +1,45 @@
+ 
+<!ENTITY  label.delegatefolder.cancelbutton "Cancelar">
+<!ENTITY  label.delegatefolder.userEmail "Correo electrónico">
+ 
+<!ENTITY  label.delegatefolder.permissionLevel "Nivel de permiso">
+<!ENTITY  label.delegatefolder.userboxcolumn1 "Usuario"> 
+<!ENTITY  label.delegatefolder.userboxcolumn2 "Permisos"> 
+
+<!ENTITY  menuitem.delegatefolder.permission.author "Autor">
+<!ENTITY  menuitem.delegatefolder.permission.editor "Editor">
+<!ENTITY  menuitem.delegatefolder.permission.reviewer "Revisor">
+<!ENTITY  menuitem.delegatefolder.permission.none "Ningún">
+<!ENTITY  menuitem.delegatefolder.permission.owner "Propietario" > 
+<!ENTITY  menuitem.delegatefolder.permission.publishingEditor "Editor de Publicación" >
+<!ENTITY  menuitem.delegatefolder.permission.publishingAuthor "Autor de Publicación" >
+<!ENTITY  menuitem.delegatefolder.permission.noneditingAuthor "Autor de Non Edición" >
+<!ENTITY  menuitem.delegatefolder.permission.contributor "Colaborador" >
+<!ENTITY  menuitem.delegatefolder.permission.custom "Personalizados" >
+                            
+<!ENTITY  delegatefolder.permission.description.author "Ler e crear elementos no cartafol." >
+<!ENTITY  delegatefolder.permission.description.editor "Ler, crear e modificar elementos no cartafol." >
+<!ENTITY  delegatefolder.permission.description.reviewer "Ler elementos no cartafol." >
+<!ENTITY  delegatefolder.permission.description.none "Sen permisos de acceso ao cartafol." >
+
+ <!ENTITY  delegatefolder.permission.details.caption "Permisos"> 
+
+<!ENTITY  delegatefolder.tab.msg.label  "Non se atoparon calendarios ou tarefas para esta conta de correo.">
+<!ENTITY  delegatefolder.tab.name  "Compartir carpeta de Exchange">
+
+<!ENTITY  delegatefolder.permissions.none  "Ningún">
+<!ENTITY  delegatefolder.permissions.own  "Elementos propios">
+<!ENTITY  delegatefolder.permissions.all  "Todos os elementos">
+<!ENTITY  delegatefolder.permissions.full  "Detalles completos">
+
+<!ENTITY  delegatefolder.permissions.cancreateitems  "Crear elementos">
+<!ENTITY  delegatefolder.permissions.cancreatesubfolders  "Crear subcartafoles">
+<!ENTITY  delegatefolder.permissions.isfolderowner  "Propietario do cartafol">
+<!ENTITY  delegatefolder.permissions.isfoldervisible  "Cartafol visible">
+<!ENTITY  delegatefolder.permissions.isfoldercontact  "Contacto do cartafol">
+<!ENTITY  delegatefolder.permissions.edititems  "Editar elementos">
+<!ENTITY  delegatefolder.permissions.deleteitems  "Eliminar elementos">
+<!ENTITY  delegatefolder.permissions.readitems  "Ler elementos">  
+ 
+<!ENTITY  delegatefolder.permissions.true  "Verdadeiro">
+<!ENTITY  delegatefolder.permissions.false  "Falso">

@@ -34,6 +34,7 @@ locale exchangecalendar cs-CZ locale/cs_CZ/
 locale exchangecalendar de    locale/de/
 locale exchangecalendar en-US locale/en_US/
 locale exchangecalendar fr-FR locale/fr_FR/
+locale exchangecalendar gl    locale/gl/
 locale exchangecalendar hu    locale/hu/
 locale exchangecalendar it-IT locale/it_IT/
 locale exchangecalendar ja-JP locale/ja_JP/

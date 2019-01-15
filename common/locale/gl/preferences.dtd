@@ -1,0 +1,52 @@
+<!ENTITY exchangeWebService.paneAccounts.title "Exchange (EWS)">
+<!ENTITY exchangeWebService.paneDebug.title "Acceso">
+
+<!ENTITY exchangeWebService.preferences.tab.accounts "Contas">
+<!ENTITY exchangeWebService.preferences.tab.debug "Acceso">
+<!ENTITY exchangeWebService.preference.debug.file "Ubicación do ficheiro de rexistros:">
+<!ENTITY exchangeWebService.preference.network.debug.caption "Comunicación co servidor de Exchange:">
+<!ENTITY exchangeWebService.preference.debug.log.label "Rexistrar a información á consola e/ou un ficheiro">
+<!ENTITY exchangeWebService.preference.debug.file.button "Explorar">
+<!ENTITY exchangeWebService.preference.network.debug.label "Rexistrar a comunicación co servidor de Exchange">
+<!ENTITY exchangeWebService.preference.network.debuglevel.label1 "Nivel de rexistro">
+<!ENTITY exchangeWebService.preference.network.debuglevel.label2 "1 = Información básica, 2 = Comunicación completa">
+<!ENTITY exchangeWebService.preference.authentication.debug.label "Rexistrar a información de progreso da comunicación (p. exem. a Autenticación)">
+<!ENTITY exchangeWebService.preference.authentication.showpassword.label "Amosar o contrasinal en claro no ficheiro de rexistro.">
+
+<!ENTITY exchangeWebService.preference.contacts.debug.caption "Libreta de direccións/Contactos:">
+<!ENTITY exchangeWebService.preference.contacts.debuglevel.label1 "Nivel de rexistro">
+<!ENTITY exchangeWebService.preference.contacts.debuglevel.label2 "1 = Información básica, 2 = Comunicación completa">
+<!ENTITY exchangeWebService.preference.contacts.debug.label "Rexistrar información sobre a parte da libreta de direccións/contactos">
+
+<!ENTITY exchangeWebService.preferences.titleWin "Preferencias de Exchange (EWS)">
+
+<!ENTITY exchangeWebService.preference.core.debug.caption "Objeto central do proveedor:">
+<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "0 = Ningunha, 1 = Información básica, 2 = Información estendida">
+
+<!ENTITY exchangeWebService.preferences.tab.cache "Cacheado">
+<!ENTITY exchangeWebService.preference.cache.memory.label "Caché de memoria temporal mínima">
+<!ENTITY exchangeWebService.preference.cache.memory.startupBefore.label "Número de días a descargar antes da data de inicio do programa:">
+<!ENTITY exchangeWebService.preference.cache.memory.startupAfter.label "Número de días a descargar despois da data de inicio do programa:">
+
+<!ENTITY exchangeWebService.preferences.tab.others "Outros">
+<!ENTITY exchangeWebService.preference.others.prefs.label "Preferencias da comunicación:">
+<!ENTITY exchangeWebService.preference.others.prefs.retryCount.label "Máximo número de reintentos para o intercambio de comunicación:">
+
+<!ENTITY exchangeWebService.preference.updateFunction.label "Función de actualización do complemento:">
+<!ENTITY exchangeWebService.preference.checkForUpdates.label "Comprobar automaticamente se existe unha nova versión do complemento en liña ao arrancar Thunderbird.">
+<!ENTITY exchangeWebService.preference.warnForUpdates.label "Amosar un aviso cando estea dispoñible unha nova versión para que a poidas instalar con facilidade.">
+<!ENTITY exchangeWebService.preference.warnForPrereleaseUpdates.label "Amosar un aviso cuando estea dispoñible unha versión previa (beta, RC, etc.)">
+
+<!ENTITY exchangeWebService.preference.loadbalancer.debug.caption "Balanceador de carga:">
+<!ENTITY exchangeWebService.preference.loadbalancer.prefs.label "Balanceador de carga:">
+<!ENTITY exchangeWebService.preference.loadbalancer.prefs.maxJobs.label "Número máximo de solicitudes simultáneas ao servidor de Exchange:">
+<!ENTITY exchangeWebService.preference.loadbalancer.prefs.sleepBetweenJobs.label "Tempo mínimo de espera entre solicitudes ao servidor de Exchange:">
+<!ENTITY exchangeWebService.preference.userAgent.label "Axente de usuario HTTP:">
+
+<!ENTITY exchangeWebService.preference.globalsearch.caption "Índice de Busca Global de Thunderbird">
+<!ENTITY exchangeWebService.preference.globalsearch.label "Habilitar o Índice de Busca Global de Thunderbird">
+<!ENTITY exchangeWebService.preference.globalsearch.explain "Se habilitas esta característica de Thunderbird, exchangecalendar poderá habilitar o etiquetado remoto de correo e a columna de invitación na vista en árbore de correo.">
+
+<!ENTITY exchangeWebService.preference.ntlmv1.label "Preferencias NTLM-v1:">
+<!ENTITY exchangeWebService.preference.ntlmv1.true.label "Habilitar">
+<!ENTITY exchangeWebService.preference.ntlmv1.false.label "Deshabilitar">

@@ -1,0 +1,15 @@
+ <!ENTITY rtews.selectaccountdesc "Selecciona a conta de correo de Microsoft Exchange que queres configurar.">
+ <!ENTITY rtews.accconfigured "Conta xa configurada">
+ <!ENTITY rtews.dicoverdesc "Podes elixir entre autodescubrir a URL dos Servizos Web de Exchange (EWS) e configurala manualmente">
+ <!ENTITY rtews.dicoverdesc2 "Para configurala manualmente insire a URL no campo seguinte.">
+ <!ENTITY rtews.autodiscover "Autodescubrir">
+ <!ENTITY rtews.doautodicover "Realizar o autodescubrimento">
+ <!ENTITY rtews.manual "Manual">
+ <!ENTITY rtews.test "Preme aquí para verificar a URL de EWS">
+ <!ENTITY rtews.msexchewsurl "URL de EWS verificada. Preme en Terminar para completar a configuración">
+ <!ENTITY rtews.selectaccount "Seleccionar conta">
+ <!ENTITY rtews.configure.label "Configurar…">
+ <!ENTITY rtews.rtforexch "Etiquetador remoto para Microsoft Exchange">
+ <!ENTITY rtews.confirmAccDetail "Confirma os seguintes detalles da conta">
+ <!ENTITY rtews.username "Nome de usuario">
+ <!ENTITY rtews.domain "Dominio">

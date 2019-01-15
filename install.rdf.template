@@ -26,16 +26,17 @@
         <em:iconURL>chrome://exchangecommon-common/skin/images/lightningexchangecalendar.png</em:iconURL>
         <em:creator>Michel Verbraak</em:creator>
         <em:developer>ExchangeCalendar community</em:developer>
-        <em:translator>Michel Verbraak (nl)</em:translator>
-        <em:translator>Michel Verbraak (en-US)</em:translator>
-        <em:translator>Dominique Fillon (fr-FR)</em:translator>
         <em:translator>Christian A. Meyer (de)</em:translator>
         <em:translator>Björn Töpper (de)</em:translator>
-        <em:translator>Hiroshi Miura (ja-JP)</em:translator>
-        <em:translator>Alexey Sinitsyn (ru)</em:translator>
-        <em:translator>Alessandro Menti (it-IT)</em:translator>
-        <em:translator>Engin Özkan (tr)</em:translator>
+        <em:translator>Michel Verbraak (en-US)</em:translator>
+        <em:translator>Dominique Fillon (fr-FR)</em:translator>
+        <em:translator>qosobrin (gl)</em:translator>
         <em:translator>Óvári (hu)</em:translator>
+        <em:translator>Alessandro Menti (it-IT)</em:translator>
+        <em:translator>Hiroshi Miura (ja-JP)</em:translator>
+        <em:translator>Michel Verbraak (nl)</em:translator>
+        <em:translator>Alexey Sinitsyn (ru)</em:translator>
+        <em:translator>Engin Özkan (tr)</em:translator>
         <em:localized>
             <Description>
                 <em:locale>en</em:locale>
