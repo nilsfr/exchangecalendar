@@ -146,6 +146,7 @@ mivExchangeAutoCompleteResult.prototype = {
      * Get the value of the result at the given index
      */
     //AString getValueAt(in long index);
+    // The returned value is used to fill the publicly readable "TO:" mail header
     getValueAt: function _getValueAt(aIndex) {
 
         var localid = this._idcards[aIndex];
@@ -170,12 +171,12 @@ mivExchangeAutoCompleteResult.prototype = {
                 result = emailList;
             }
         }
+        else if (card.displayName != "") {
+            result = card.displayName + " <" + card.primaryEmail + ">";
+        }
         else if (card.firstName != ""
                 || card.lastName != "") {
             result = card.firstName + " " + card.lastName + " <" + card.primaryEmail + ">";
-        }
-        else if (card.displayName != "") {
-            result = card.displayName + " <" + card.primaryEmail + ">";
         }
         else {
             result = card.primaryEmail;
@@ -199,11 +200,32 @@ mivExchangeAutoCompleteResult.prototype = {
     getCommentAt: function _getCommentAt(aIndex) {
         var localid = this._idcards[aIndex];
         var card = this._cards[localid];
-        var comment = "Exchange Calendar";
+        var comment = "";
 
         if (card.isMailList && card.primaryEmail.indexOf("@") == -1) {
             comment = card.displayName;
         }
+        else if (card.displayName != "") {
+          // Add first name and / or last name to comment if display name is used in the "TO:" header
+          if (card.firstName != "") {
+            comment += card.firstName;
+          }
+
+          if (card.lastName != "") {
+            if (comment != "")
+            {
+              comment += " "
+            }
+            comment += card.lastName
+          }
+        }
+
+        if (comment != "")
+        {
+          comment += ", "
+        }
+
+        comment += "Exchange Calendar";
 
         return comment;
     },
