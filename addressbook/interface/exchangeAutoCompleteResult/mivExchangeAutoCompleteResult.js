@@ -254,8 +254,8 @@ mivExchangeAutoCompleteResult.prototype = {
 
         // Before really adding the result, check the card is a mailing list
         // and, otherwise, check it's primary email has at least a "@"
-        if ((aCard.primaryEmail != "" && aCard.primaryEmail.indexOf("@") > -1)
-            || (aCard.isMailList)) {
+        if (aCard.isMailList
+            || aCard.primaryEmail.indexOf("@") > -1) {
             this._cards[aCard.localId] =  aCard;
             this._idcards.push(aCard.localId);
         }
