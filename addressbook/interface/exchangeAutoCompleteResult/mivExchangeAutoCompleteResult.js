@@ -112,13 +112,8 @@ mivExchangeAutoCompleteResult.prototype = {
      */
     //readonly attribute long defaultIndex;
     get defaultIndex() {
-        var defaultId = this._idcards.length;
-
-        if (defaultId == 0) {
-            return -1;
-        }
-
-        return 0;
+        // by default index is always 0 if the _idcards contains at least one element
+        return this._idcards.length > 0 ? 0 : -1;
     },
 
     /**
