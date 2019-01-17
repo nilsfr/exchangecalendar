@@ -112,8 +112,8 @@ mivExchangeAutoCompleteResult.prototype = {
      */
     //readonly attribute long defaultIndex;
     get defaultIndex() {
-        // by default index is always 0 if the _idcards contains at least one element
-        return this._idcards.length > 0 ? 0 : -1;
+        // by default index is always 0, except if the _idcards has not any elements
+        return this._idcards.length ? 0 : -1;
     },
 
     /**
