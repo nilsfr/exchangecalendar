@@ -153,8 +153,7 @@ mivExchangeAutoCompleteResult.prototype = {
         var card = this._cards[localid];
         var result = "";
 
-        if (card.isMailList
-            && card.primaryEmail.indexOf("@") == -1) {
+        if (card.isMailList && card.primaryEmail.indexOf("@") == -1) {
 
             var dir = MailServices.ab.getDirectory(card.mailListURI);
 
@@ -174,8 +173,7 @@ mivExchangeAutoCompleteResult.prototype = {
         else if (card.displayName != "") {
             result = card.displayName + " <" + card.primaryEmail + ">";
         }
-        else if (card.firstName != ""
-                || card.lastName != "") {
+        else if (card.firstName != "" || card.lastName != "") {
             result = card.firstName + " " + card.lastName + " <" + card.primaryEmail + ">";
         }
         else {
@@ -269,15 +267,13 @@ mivExchangeAutoCompleteResult.prototype = {
     //void addResult(in mivExchangeAbCard aCard);
     addResult: function _addResult(aCard) {
         // First check if this card is not already in the list
-        if (this._cards
-            && this._cards[aCard.localId]) {
+        if (this._cards && this._cards[aCard.localId]) {
                 return;
         }
 
         // Before really adding the result, check the card is a mailing list
         // and, otherwise, check it's primary email has at least a "@"
-        if (aCard.isMailList
-            || aCard.primaryEmail.indexOf("@") > -1) {
+        if (aCard.isMailList || aCard.primaryEmail.indexOf("@") > -1) {
             this._cards[aCard.localId] =  aCard;
             this._idcards.push(aCard.localId);
         }
