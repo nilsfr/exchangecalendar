@@ -210,7 +210,7 @@ exchAddressbookOverlay.prototype = {
     photoDisplayHandlerExternal: function _photoDisplayHandlerExternal(aCard, aImg) {
         if ((aCard) && (aCard.getProperty("PhotoData"))) {
             this.downloadAttachment(aImg, aCard);
-            aImg.setAttribute("src", "chrome://exchangecontacts/content/loading-from-server.png");
+            aImg.setAttribute("src", "chrome://exchangecommon-common/skin/images/loading-from-server.png");
             return true;
         }
         else {
@@ -291,7 +291,7 @@ exchAddressbookOverlay.prototype = {
 
     onDownloadAttachmentError: function _onDownloadAttachmentError(aExchangeRequest, aCode, aMsg) {
         this.globalFunctions.LOG("exchAddressbookOverlay.onDownloadAttachmentError: aCode:" + aCode + ", aMsg:" + aMsg);
-        aExchangeRequest.argument.img.setAttribute("src", "chrome://exchangecontacts/content/error-loading-from-server.png");
+        aExchangeRequest.argument.img.setAttribute("src", "chrome://exchangecommon-common/skin/images/error-loading-from-server.png");
     },
 
 }

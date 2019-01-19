@@ -63,7 +63,7 @@ var photoHandlerExternal = {
     onShow: function _onShow(aCard, aDocument, aTargetID) {
         if ((aCard) && (aCard.getProperty("PhotoData", ""))) {
             this.downloadAttachment(aDocument.getElementById(aTargetID), aCard);
-            aDocument.getElementById(aTargetID).setAttribute("src", "chrome://exchangecontacts/content/loading-from-server.png");
+            aDocument.getElementById(aTargetID).setAttribute("src", "chrome://exchangecommon-common/skin/images/loading-from-server.png");
             return true;
         }
         else {
@@ -108,7 +108,7 @@ var photoHandlerExternal = {
 
     onDownloadAttachmentError: function _onDownloadAttachmentError(aExchangeRequest, aCode, aMsg) {
         //dump("photoHandlerExternal.onDownloadAttachmentError: aCode:"+aCode+", aMsg:"+aMsg+"\n");
-        aExchangeRequest.argument.img.setAttribute("src", "chrome://exchangecontacts/content/error-loading-from-server.png");
+        aExchangeRequest.argument.img.setAttribute("src", "chrome://exchangecommon-common/skin/images/error-loading-from-server.png");
     },
 
 }
