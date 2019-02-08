@@ -49,7 +49,7 @@ mivExchangeAuthPrompt2.prototype = {
     /* void QueryInterface(
       in nsIIDRef uuid,
       [iid_is(uuid),retval] out nsQIResult result
-    );	 */
+    );     */
     QueryInterface: XPCOMUtils.generateQI([Ci.mivExchangeAuthPrompt2,
         Ci.nsIAuthPrompt2,
         Ci.nsISupports
@@ -122,13 +122,13 @@ mivExchangeAuthPrompt2.prototype = {
         }
 
         /* If we get here it means that we did not yet have a password or we had a password in the channel.
-        	So first we going to see if there is a password in cache. If so we use it.
-        	If there is no password in cache we going to query the password manager and use it when available.
+            So first we going to see if there is a password in cache. If so we use it.
+            If there is no password in cache we going to query the password manager and use it when available.
 
-        	if we have password from cache or manager, and we have a password in the channel. We are going to match them.
-        	Because when they are equal then the cached and stored password were wrong. Otherwise we did not get here.
+            if we have password from cache or manager, and we have a password in the channel. We are going to match them.
+            Because when they are equal then the cached and stored password were wrong. Otherwise we did not get here.
 
-        	When no password at all always ask. */
+            When no password at all always ask. */
 
         var password;
         if (this.passwordCache[username + "|" + aURL + "|" + realm]) {
@@ -206,12 +206,12 @@ mivExchangeAuthPrompt2.prototype = {
                 return null;
             }
 
-            /*			if (!this.details[aURL]) this.details[aURL] = { 
-            							showing: true, 
-            							canceled: false,
-            							queue: new Array(),
-            							ntlmCount: 0
-            						};*/
+            /*            if (!this.details[aURL]) this.details[aURL] = {
+                                        showing: true,
+                                        canceled: false,
+                                        queue: new Array(),
+                                        ntlmCount: 0
+                                    };*/
 
             this.logInfo("getPassword: Going to ask user to provide a new password.");
 
@@ -238,7 +238,7 @@ mivExchangeAuthPrompt2.prototype = {
                 this.details[aURL].showing = false;
             }
             else {
-                // user canceled the entering of a password. 
+                // user canceled the entering of a password.
                 // What do we do next.. Clear queue and !!??
                 this.details[aURL].canceled = true;
                 this.logInfo("getPassword: User canceled entering a password.");
@@ -361,7 +361,7 @@ mivExchangeAuthPrompt2.prototype = {
                     this.logInfo("asyncPromptAuthNotifyCallback: authInfo wants username and password and possibly domainname.");
                     if (authInfo.flags & Ci.nsIAuthInformation.NEED_DOMAIN) {
                         this.logInfo("asyncPromptAuthNotifyCallback: authInfo also wants domainname.");
-                        //						authInfo.domain = "";
+                        //                        authInfo.domain = "";
                         if (username.indexOf("\\") > -1) {
                             authInfo.domain = username.substr(0, username.indexOf("\\"));
                             authInfo.username = username.substr(username.indexOf("\\") + 1);
@@ -543,7 +543,7 @@ mivExchangeAuthPrompt2.prototype = {
                 username = username.trim();
             }
 
-            if (username == "") {
+            if (username === "") {
                 // We do not have a username. We need to prompt for one.
                 // This should always be filled in. So for now we error.
                 this.logInfo("promptAuth: username is empty. This is not allowed.");
@@ -586,7 +586,7 @@ mivExchangeAuthPrompt2.prototype = {
      * @param aHostName         The corresponding hostname
      * @param aRealm            The password realm (unused on branch)
      * @return                  An object of form { result: boolean, [optional] password: <found password> }
-     *				result == false when password not found.
+     *                result == false when password not found.
      */
     passwordManagerGet: function _passwordManagerGet(aUsername, aURL, aRealm) {
         if ((!aUsername) || aUsername.trim() == "") {
@@ -709,10 +709,10 @@ mivExchangeAuthPrompt2.prototype = {
     /**
      * Helper to retrieve a password from the usr via a prompt.
      *
-     * @param in  aUsername     The username to search
-     * @param in aURL           The corresponding hostname
-     * @return                  An object of form { result: boolean, [optional] password: <found password>, save: boolean }
-     *				result == false when password not found.
+     * @param aUsername The username to search
+     * @param aURL The corresponding hostname
+     * @return An object of form { result: boolean, [optional] password: <found password>, save: boolean }
+     *                result == false when password not found.
      */
     getCredentials: function _getCredentials(aUsername, aURL) {
 
@@ -723,28 +723,28 @@ mivExchangeAuthPrompt2.prototype = {
             };
         }
 
-        var watcher = Cc["@mozilla.org/embedcomp/window-watcher;1"].getService(Ci.nsIWindowWatcher);
+        let watcher = Cc["@mozilla.org/embedcomp/window-watcher;1"].getService(Ci.nsIWindowWatcher);
 
-        var prompter = watcher.getNewPrompter(null);
+        let prompter = watcher.getNewPrompter(null);
 
         // Only show the save password box if we are supposed to.
-        var savepasswordMsg = this.globalFunctions.getString("passwordmgr", "rememberPassword", null, "passwordmgr");
+        let savePasswordMsg = this.globalFunctions.getString("passwordmgr", "rememberPassword", null, "passwordmgr");
 
-        var aTitle = "Microsoft Exchange EWS: Password request.";
+        let aTitle = this.globalFunctions.getString("calExchangeCalendar", "authentication.passwordPrompt.title", null, "exchangecommon");
 
-        var aText = this.globalFunctions.getString("commonDialogs", "EnterPasswordFor", [aUsername, aURL], "global");
+        let aText = this.globalFunctions.getString("commonDialogs", "EnterPasswordFor", [aUsername, aURL], "global");
 
-        var aPassword = {
+        let aPassword = {
             value: ""
         };
-        var aSavePassword = {
+        let aSavePassword = {
             value: false
         };
 
-        var result = prompter.promptPassword(aTitle,
+        let result = prompter.promptPassword(aTitle,
             aText,
             aPassword,
-            savepasswordMsg,
+            savePasswordMsg,
             aSavePassword);
         return {
             result: result,
