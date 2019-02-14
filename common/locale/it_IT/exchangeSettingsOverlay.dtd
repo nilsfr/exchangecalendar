@@ -38,6 +38,7 @@
 <!ENTITY button.label.serverandmailboxcheck "Controlla server e casella di posta">
 <!ENTITY button.label.servercheck "Controlla server e account">
 
+<!ENTITY ecmailbox.server_url.label "Server URL:">
 <!ENTITY ecmailbox.label "Indirizzo di posta elettronica principale:">
 <!ENTITY ecmailbox.tooltip "Non specificando una casella di posta si sarà in grado di accedere solamente alle cartelle pubbliche.">
 <!ENTITY ecwindowsuser.label "Nome utente:">
@@ -53,4 +54,3 @@
 <!ENTITY exchWebServices.hostexch.label "Exchange hosted">
 <!ENTITY exchWebServices.365exch.label "Microsoft Office 365">
 <!ENTITY exchWebServices.detail.label "Dettagli">
-

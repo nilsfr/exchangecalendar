@@ -38,6 +38,7 @@
 <!ENTITY button.label.serverandmailboxcheck "Vérifier le serveur et la boite aux lettres">
 <!ENTITY button.label.servercheck "Vérifier le serveur et le compte">
 
+<!ENTITY ecmailbox.server_url.label "Server URL:">
 <!ENTITY ecmailbox.label "Nom de la boite aux lettres:">
 <!ENTITY ecmailbox.tooltip "Si vous ne précisez pas un nom de boite aux lettres, vous n'aurez accès qu'aux dossiers publics.">
 <!ENTITY ecwindowsuser.label "Utilisateur:">
@@ -48,7 +49,6 @@
 <!ENTITY button.label.folderbrowse "Parcourir">
 
 <!ENTITY exchWebServices.UserAvailability.label "Seul le status de disponibilité de l'utilsateur du calendrier de cette BAL sera visible.">
-
 
 <!ENTITY exchWebServices.exchtype.label "Infrastructure Exchange">
 <!ENTITY exchWebServices.hostexch.label "Infrastructure Exchange dédiée">

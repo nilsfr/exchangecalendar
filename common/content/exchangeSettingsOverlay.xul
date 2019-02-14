@@ -71,7 +71,7 @@
                 <rows>
                     <row id="exchWebService_serverrow"
                          align="center">
-                        <label value="Server URL:"
+                        <label value="&ecmailbox.server_url.label;"
                                control="ecserver" />
                         <vbox>
                             <textbox id="exchWebService_server"
