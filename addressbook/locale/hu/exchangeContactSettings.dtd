@@ -1,3 +1,5 @@
+<!ENTITY ecsettings.window.title "ExchangeCalendar Contact Settings">
+
 <!ENTITY label.acceptbutton "Mentés">
 <!ENTITY label.cancelbutton "Mégse">
 
@@ -8,4 +10,3 @@
 <!ENTITY exchangeWebService.preference.contacts.pollinterval "Frissítés időköz (másodperc):">
 
 <!ENTITY exchWebService.add.globaladdresslist.label "Teljes címlista hozzáadása a keresési eredményekhez.">
-

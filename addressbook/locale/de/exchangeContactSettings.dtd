@@ -1,3 +1,5 @@
+<!ENTITY ecsettings.window.title "ExchangeCalendar Kontakteinstellungen">
+
 <!ENTITY label.acceptbutton "Speichern">
 <!ENTITY label.cancelbutton "Abbrechen">
 
@@ -8,4 +10,3 @@
 <!ENTITY exchangeWebService.preference.contacts.pollinterval "Aktualisierungsintervall in Sekunden:">
 
 <!ENTITY exchWebService.add.globaladdresslist.label "Hinzufügen der globalen Adressliste zu den Suchergebnissen.">
-
