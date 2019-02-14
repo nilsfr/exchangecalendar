@@ -1,3 +1,5 @@
+<!ENTITY ecsettings.window.title "ExchangeCalendar Contact Settings">
+
 <!ENTITY label.acceptbutton "Uložit">
 <!ENTITY label.cancelbutton "Storno">
 
@@ -8,4 +10,3 @@
 <!ENTITY exchangeWebService.preference.contacts.pollinterval "Interval obnovování (v sekundách):">
 
 <!ENTITY exchWebService.add.globaladdresslist.label "Zahrnout globální adresář kontaktů do výsledků vyhledávání.">
-

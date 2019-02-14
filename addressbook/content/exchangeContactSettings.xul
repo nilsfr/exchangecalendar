@@ -31,7 +31,7 @@
 <?xul-overlay href="chrome://exchangecommon/content/exchangeSettingsOverlay.xul"?>
 <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         id="exchWebService_ContactSettings_dialog"
-        title="Exchange Contact Settings"
+        title="&ecsettings.window.title;"
         buttons="accept,cancel"
         buttonlabelaccept="&label.acceptbutton;"
         buttonlabelcancel="&label.cancelbutton;"
