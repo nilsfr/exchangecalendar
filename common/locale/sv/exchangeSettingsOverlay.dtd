@@ -38,6 +38,7 @@
 <!ENTITY button.label.serverandmailboxcheck "Kontrollera server och E-postlåda">
 <!ENTITY button.label.servercheck "Kontrollera server och konto">
 
+<!ENTITY ecmailbox.server_url.label "Server URL:">
 <!ENTITY ecmailbox.label "Primär E-postaddress:">
 <!ENTITY ecmailbox.tooltip "Om du inte anger en E-postlåda får du endast access till publika mappar.">
 <!ENTITY ecwindowsuser.label "Användarnamn:">
@@ -48,6 +49,7 @@
 <!ENTITY button.label.folderbrowse "Bläddra">
 
 <!ENTITY exchWebServices.UserAvailability.label "Användarens tillgänglighetsstatus för E-postlådans kalender visas.">
+
 <!ENTITY exchWebServices.exchtype.label "Exchange Type">
 <!ENTITY exchWebServices.hostexch.label "Hosted Exchange">
 <!ENTITY exchWebServices.365exch.label "Microsoft Office365">

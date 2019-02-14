@@ -38,6 +38,7 @@
 <!ENTITY button.label.serverandmailboxcheck "Zkontrolovat server a schránku">
 <!ENTITY button.label.servercheck "Zkontrolovat server a účet">
 
+<!ENTITY ecmailbox.server_url.label "Server URL:">
 <!ENTITY ecmailbox.label "Hlavní e-mailová adresa:">
 <!ENTITY ecmailbox.tooltip "Pokud nezadáte e-mailovou schránku, budete mít přístup pouze do věřejných složek.">
 <!ENTITY ecwindowsuser.label "Uživatelské jméno:">
@@ -53,4 +54,3 @@
 <!ENTITY exchWebServices.hostexch.label "Vlastní instalace">
 <!ENTITY exchWebServices.365exch.label "Microsoft Office365">
 <!ENTITY exchWebServices.detail.label "Podrobnosti">
- 

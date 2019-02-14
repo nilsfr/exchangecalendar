@@ -38,6 +38,7 @@
 <!ENTITY button.label.serverandmailboxcheck "Comprobar o servidor e a caixa de correo">
 <!ENTITY button.label.servercheck "Comprobar o servidor e a conta">
 
+<!ENTITY ecmailbox.server_url.label "Server URL:">
 <!ENTITY ecmailbox.label "Dirección de correo primaria:">
 <!ENTITY ecmailbox.tooltip "Se non especificas unha caixa de correo só tenás acceso aos cartafoles públicos.">
 <!ENTITY ecwindowsuser.label "Nome de usuario:">
@@ -53,4 +54,3 @@
 <!ENTITY exchWebServices.hostexch.label "Exchange aloxado">
 <!ENTITY exchWebServices.365exch.label "Microsoft Office 365">
 <!ENTITY exchWebServices.detail.label "Detalles">
- 
