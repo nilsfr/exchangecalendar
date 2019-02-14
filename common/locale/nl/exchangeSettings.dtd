@@ -1,6 +1,6 @@
 <!ENTITY label.acceptbutton "Opslaan">
 <!ENTITY label.cancelbutton "Annuleren">
-
+<!ENTITY ecsettings.title "EWS Calendar and Mail settings">
 <!ENTITY ecsettings.tab.adsettings "Exchange/Windows AD">
 <!ENTITY ecsettings.tab.meetingrequestsettings "Vergaderverzoeken">
 <!ENTITY ecsettings.tab.calendarfolderproperties "Mapeigenschappen">
@@ -30,6 +30,8 @@
 
 <!ENTITY treecol.label.userid "UserId">
 <!ENTITY treecol.label.email "Email">
+
+
 <!ENTITY ecsettings.tab.offlineCachingproperties "Offline buffer">
 
 <!ENTITY label.offlineCacheproperties.cachingStartDate "Startdatum van buffer:">
@@ -41,14 +43,13 @@
 <!ENTITY label.offlineCacheproperties.monthsBeforeEndDate "Aantal maanden om te bufferen na vandaag:">
 
 <!ENTITY button.offlineCacheproperties.clearCache "Verwijder offline gebufferde data">
-
 <!ENTITY ecsettings.tab.autoprocessingproperties "Automatische verwerking">
-
-<!ENTITY label.autoprocessingproperties.deletecancelleditems "Verwijder automatisch geannuleerde gebeurtenissen">
-
-<!ENTITY ecsettings.title "EWS Calendar and Mail settings">
 <!ENTITY ecsettings.tab.mailitemsProperties "EWS Settings (Mail)">
+
 <!ENTITY label.syncmailitems.interval "Delay syncing mail items (Tags,etc.)">
+<!ENTITY label.autoprocessingproperties.deletecancelleditems "Verwijder automatisch geannuleerde gebeurtenissen">
 <!ENTITY label.autoprocessingproperties.markeventtentative "Automatically mark event as tentative and send response to organizer">
 <!ENTITY label.syncmailitems.active "Keep enabled syncing mail items (Tags,etc.)">
+
 <!ENTITY label.syncfollowup.deactivtate "Disable Followup Task">
+ 

@@ -5,7 +5,7 @@
 <!ENTITY exchangeWebService.preferences.tab.debug "Günlük kaydı">
 <!ENTITY exchangeWebService.preference.debug.file "Günlük dosyasının yeri:">
 <!ENTITY exchangeWebService.preference.network.debug.caption "Exchange sunucusu ile iletişim:">
-<!ENTITY exchangeWebService.preference.debug.log.label "Konsola ve/veya bir dosyaya bilgi günlükleme">
+<!ENTITY exchangeWebService.preference.debug.log.label "Log information to the console and a file">
 <!ENTITY exchangeWebService.preference.debug.file.button "Tara">
 <!ENTITY exchangeWebService.preference.network.debug.label "Exchange sunucusu ile iletişim günlükle">
 <!ENTITY exchangeWebService.preference.network.debuglevel.label1 "Günlükleme seviyesi">
@@ -21,7 +21,7 @@
 <!ENTITY exchangeWebService.preferences.titleWin "Exchange (EWS) Seçenekleri">
 
 <!ENTITY exchangeWebService.preference.core.debug.caption "Ana sağlayıcı nesnesi:">
-<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "0 = Hiç, 1 = Temel bilgiler, 2 = Ek bilgiler">
+<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "1 = Basic information, 2 = Extended information">
 
 <!ENTITY exchangeWebService.preferences.tab.cache "Önbellekleme">
 <!ENTITY exchangeWebService.preference.cache.memory.label "En az geçici hafıza önbelleği">

@@ -1,15 +1,15 @@
- <!ENTITY rtews.selectaccountdesc "Select Microsoft Exchange mail account for which to configure.">
- <!ENTITY rtews.accconfigured "Account already configured">
- <!ENTITY rtews.dicoverdesc "You may choose to autodiscover the Exchange Web Services (EWS) URL or configure it manually">
- <!ENTITY rtews.dicoverdesc2 "To configure it manually enter the URL in the field below.">
- <!ENTITY rtews.autodiscover "Autodiscover">
- <!ENTITY rtews.doautodicover "Do autodiscovery">
- <!ENTITY rtews.manual "Manual">
- <!ENTITY rtews.test "Click here to verify the EWS URL">
- <!ENTITY rtews.msexchewsurl "Verified EWS URL. Click Finish to complete the configuration">
- <!ENTITY rtews.selectaccount "Select account">
- <!ENTITY rtews.configure.label "Configure...">
- <!ENTITY rtews.rtforexch "Remote tagger for Microsoft Exchange">
- <!ENTITY rtews.confirmAccDetail "Confirm following account details">
- <!ENTITY rtews.username "Username">
- <!ENTITY rtews.domain "Domain">
+ <!ENTITY rtews.selectaccountdesc "Zvoľte e-mailový účet Microsoft Exchange, pre ktorý bude konfigurácia určená.">
+ <!ENTITY rtews.accconfigured "Účet už je nakonfigurovaný">
+ <!ENTITY rtews.dicoverdesc "Môžete zvoliť automatické zistenie URL pre Exchange Webové Služby (EWS), alebo ju nastaviť ručne">
+ <!ENTITY rtews.dicoverdesc2 "Pre ručné nastavenie zadajte URL do políčka nižšie.">
+ <!ENTITY rtews.autodiscover "Automatické zistenie">
+ <!ENTITY rtews.doautodicover "Vykonať automatické zistenie">
+ <!ENTITY rtews.manual "Ručne">
+ <!ENTITY rtews.test "Sem kliknite na overenie URL pre EWS">
+ <!ENTITY rtews.msexchewsurl "URL pre EWS bola overená. Na dokončenie nastavenia kliknite na Dokončiť.">
+ <!ENTITY rtews.selectaccount "Zvoľte účet">
+ <!ENTITY rtews.configure.label "Nastaviť...">
+ <!ENTITY rtews.rtforexch "Vzdialený značkovač pre Microsoft Exchange">
+ <!ENTITY rtews.confirmAccDetail "Potvrďte nasledujúce údaje o účte">
+ <!ENTITY rtews.username "Používateľské meno">
+ <!ENTITY rtews.domain "Doména">

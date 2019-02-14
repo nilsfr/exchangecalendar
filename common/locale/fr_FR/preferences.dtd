@@ -5,7 +5,7 @@
 <!ENTITY exchangeWebService.preferences.tab.debug "Logging">
 <!ENTITY exchangeWebService.preference.debug.file "Emplacement du ficher de log:">
 <!ENTITY exchangeWebService.preference.network.debug.caption "Communication avec le serveur Exchange:">
-<!ENTITY exchangeWebService.preference.debug.log.label "Information à transmettre vers la console et/ou un fichier">
+<!ENTITY exchangeWebService.preference.debug.log.label "Log information to the console and a file">
 <!ENTITY exchangeWebService.preference.debug.file.button "Parcourir">
 <!ENTITY exchangeWebService.preference.network.debug.label "Communication avec le serveur Exchange">
 <!ENTITY exchangeWebService.preference.network.debuglevel.label1 "Niveau de log">
@@ -21,7 +21,7 @@
 <!ENTITY exchangeWebService.preferences.titleWin "Préférences Exchange (EWS)">
 
 <!ENTITY exchangeWebService.preference.core.debug.caption "Information de log:">
-<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "0 = Aucune, 1 = Information de base, 2 = Information étendue">
+<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "1 = Basic information, 2 = Extended information">
 
 <!ENTITY exchangeWebService.preferences.tab.cache "Cache">
 <!ENTITY exchangeWebService.preference.cache.memory.label "Mémoire cache temporaire minimale">

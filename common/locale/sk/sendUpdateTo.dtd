@@ -1,9 +1,9 @@
-<!ENTITY title.sendupdateto "To whom do you want to send this update?">
-<!ENTITY label.acceptbutton "Execute">
-<!ENTITY label.cancelbutton "Cancel">
-<!ENTITY label.calendaritem.title "Send update for meeting:">
+<!ENTITY title.sendupdateto "Komu chcete odoslať túto aktualizáciu?">
+<!ENTITY label.acceptbutton "Vykonať">
+<!ENTITY label.cancelbutton "Zrušiť">
+<!ENTITY label.calendaritem.title "Odoslať aktualizáciu pre schôdzku:">
 
-<!ENTITY radio.label.sendtonone "Send to nobody.">
-<!ENTITY radio.label.sendtoall "Send to everyone invited.">
-<!ENTITY radio.label.sendtochanged "Send only to added or removed persons.">
+<!ENTITY radio.label.sendtonone "Nikomu neodoslať.">
+<!ENTITY radio.label.sendtoall "Odoslať všetkým pozvaným.">
+<!ENTITY radio.label.sendtochanged "Odoslať len pridaným alebo odstráneným osobám.">
 

@@ -5,7 +5,7 @@
 <!ENTITY exchangeWebService.preferences.tab.debug "Логирование">
 <!ENTITY exchangeWebService.preference.debug.file "Расположение файла лога:">
 <!ENTITY exchangeWebService.preference.network.debug.caption "Обмен с Exchange сервером:">
-<!ENTITY exchangeWebService.preference.debug.log.label "Лог информации на консоль или/и в файл">
+<!ENTITY exchangeWebService.preference.debug.log.label "Log information to the console and a file">
 <!ENTITY exchangeWebService.preference.debug.file.button "Просмотр">
 <!ENTITY exchangeWebService.preference.network.debug.label "Лог обмена с Exchange сервером">
 <!ENTITY exchangeWebService.preference.network.debuglevel.label1 "Уровень логирования">
@@ -21,7 +21,7 @@
 <!ENTITY exchangeWebService.preferences.titleWin "Exchange (EWS) настройки">
 
 <!ENTITY exchangeWebService.preference.core.debug.caption "Ядро поставщиков объектов:">
-<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "0 = Ничего, 1 = Базовая информация, 2 = Полная информация">
+<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "1 = Basic information, 2 = Extended information">
 
 <!ENTITY exchangeWebService.preferences.tab.cache "Кэширование">
 <!ENTITY exchangeWebService.preference.cache.memory.label "Минимальная временная память кэша">
@@ -44,7 +44,7 @@
 <!ENTITY exchangeWebService.preference.userAgent.label "HTTP агент пользователя:">
 
 <!ENTITY exchangeWebService.preference.globalsearch.caption "Thunderbird Global Search Index">
-<!ENTITY exchangeWebService.preference.globalsearch.label "Enable the Thunderbird Global Search Index">
+<!ENTITY exchangeWebService.preference.globalsearch.label "Разрешить Thunderbird Global Search Index">
 <!ENTITY exchangeWebService.preference.globalsearch.explain "If you enable this Thunderbird feature, exchangecalendar would be able to enable the email remote tagging and the invitation column in the mail tree view.">
 
 <!ENTITY exchangeWebService.preference.ntlmv1.label "Ntlm-v1 Preferences:">

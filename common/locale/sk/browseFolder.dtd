@@ -1,10 +1,10 @@
-<!ENTITY label.acceptbutton "Select">
-<!ENTITY label.cancelbutton "Cancel">
+<!ENTITY label.acceptbutton "Vybrať">
+<!ENTITY label.cancelbutton "Zrušiť">
 
-<!ENTITY browsefolder.title "Browse folders">
+<!ENTITY browsefolder.title "Prechádzať priečinky">
 
-<!ENTITY treecol.label.foldername "Folder name">
-<!ENTITY treecol.label.folderclass "Folder class">
+<!ENTITY treecol.label.foldername "Názov priečinka">
+<!ENTITY treecol.label.folderclass "Druh priečinka">
 
 
 

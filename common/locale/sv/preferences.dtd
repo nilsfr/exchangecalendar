@@ -5,7 +5,7 @@
 <!ENTITY exchangeWebService.preferences.tab.debug "Loggning">
 <!ENTITY exchangeWebService.preference.debug.file "Loggfilsmapp:">
 <!ENTITY exchangeWebService.preference.network.debug.caption "Kommunikation med Exchange-server:">
-<!ENTITY exchangeWebService.preference.debug.log.label "Logga till terminal och/eller fil">
+<!ENTITY exchangeWebService.preference.debug.log.label "Log information to the console and a file">
 <!ENTITY exchangeWebService.preference.debug.file.button "Bläddra">
 <!ENTITY exchangeWebService.preference.network.debug.label "Logga kommunikation med Exchange-server">
 <!ENTITY exchangeWebService.preference.network.debuglevel.label1 "Loggningsnivå">
@@ -21,7 +21,7 @@
 <!ENTITY exchangeWebService.preferences.titleWin "Inställningar för Exchange (EWS)">
 
 <!ENTITY exchangeWebService.preference.core.debug.caption "Kärnfunktionalitet:">
-<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "0 = Ingen, 1 = Grundläggande information, 2 = Utökad information">
+<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "1 = Basic information, 2 = Extended information">
 
 <!ENTITY exchangeWebService.preferences.tab.cache "Cachning">
 <!ENTITY exchangeWebService.preference.cache.memory.label "Minimal tillfällig minnescache">

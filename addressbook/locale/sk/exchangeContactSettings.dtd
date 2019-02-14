@@ -1,12 +1,12 @@
 <!ENTITY ecsettings.window.title "ExchangeCalendar Contact Settings">
 
-<!ENTITY label.acceptbutton "Save">
-<!ENTITY label.cancelbutton "Cancel">
+<!ENTITY label.acceptbutton "Uložiť">
+<!ENTITY label.cancelbutton "Zrušiť">
 
-<!ENTITY ecsettings.tab.adsettings "Exchange/Windows AD">
-<!ENTITY ecsettings.tab.meetingrequestsettings "Meeting request">
+<!ENTITY ecsettings.tab.adsettings "Exchange / Windows AD">
+<!ENTITY ecsettings.tab.meetingrequestsettings "Požiadavka na stretnutie">
 
-<!ENTITY label.ecExchangeSettings.title "Name in list:">
-<!ENTITY exchangeWebService.preference.contacts.pollinterval "Refresh interval in seconds:">
+<!ENTITY label.ecExchangeSettings.title "Meno zo zoznamu:">
+<!ENTITY exchangeWebService.preference.contacts.pollinterval "Interval obnovovania v sekundách:">
 
-<!ENTITY exchWebService.add.globaladdresslist.label "Add global address list to search results.">
+<!ENTITY exchWebService.add.globaladdresslist.label "Pridať globálny zoznam adries do výsledkov vyhľadávania.">

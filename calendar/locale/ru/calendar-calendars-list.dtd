@@ -2,6 +2,4 @@
 <!ENTITY calendar.context.exchange.properties.label "Свойства Exchange (EWS)">
 <!ENTITY calendar.context.exchange.oof.settings.label "Настройки Заместителя">
 <!ENTITY calendar.context.exchange.clone.settings.label "Клонировать настройки в новый календарь">
-
-
 <!ENTITY calendar.context.exchange.delegate.calendar.settings.label "Delegate Calendar">
