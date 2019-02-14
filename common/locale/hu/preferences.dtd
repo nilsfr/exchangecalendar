@@ -5,7 +5,7 @@
 <!ENTITY exchangeWebService.preferences.tab.debug "Naplózás">
 <!ENTITY exchangeWebService.preference.debug.file "Naplófájl helye:">
 <!ENTITY exchangeWebService.preference.network.debug.caption "Közlés Exchange-kiszolgálóval:">
-<!ENTITY exchangeWebService.preference.debug.log.label "Jelentkezzen be a vezérlőpultra és/vagy egy fájlra">
+<!ENTITY exchangeWebService.preference.debug.log.label "Log information to the console and a file">
 <!ENTITY exchangeWebService.preference.debug.file.button "Tallózás">
 <!ENTITY exchangeWebService.preference.network.debug.label "Exchange-kiszolgáló kommunikációs naplózása">
 <!ENTITY exchangeWebService.preference.network.debuglevel.label1 "Naplószint">
@@ -21,7 +21,7 @@
 <!ENTITY exchangeWebService.preferences.titleWin "EWS (Exchange Web Services – csere internetes szolgáltatások) beállításai">
 
 <!ENTITY exchangeWebService.preference.core.debug.caption "Alapszolgáltató objektum:">
-<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "0 = Nincs, 1 = Alap tájékoztató, 2 = Kibővített tájékoztató">
+<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "1 = Basic information, 2 = Extended information">
 
 <!ENTITY exchangeWebService.preferences.tab.cache "Gyorsítótárazás">
 <!ENTITY exchangeWebService.preference.cache.memory.label "Minimális ideiglenes memória gyorsítótár">

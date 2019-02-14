@@ -1,25 +1,25 @@
  
-<!ENTITY  label.delegateCalendar.cancelbutton "Cancel">
-<!ENTITY  label.delegateCalendar.userEmail "Email">
-<!ENTITY  label.delegateCalendar.deliveryMeetingRerquestControl "Deliver meeting requests">
+<!ENTITY  label.delegateCalendar.cancelbutton "Zrušiť">
+<!ENTITY  label.delegateCalendar.userEmail "E-mail">
+<!ENTITY  label.delegateCalendar.deliveryMeetingRerquestControl "Doručiť požiadavky na stretnutie">
 
-<!ENTITY  menuitem.delegateCalendar.deliverMeetingRequestslist.delegateOnly "Delegates Only">
-<!ENTITY  menuitem.delegateCalendar.deliverMeetingRequestslist.delegateAndMe "Delegates and Me">
-<!ENTITY  menuitem.delegateCalendar.deliverMeetingRequestslist.delegateAndInfo "Delegates and Send Notifications to Me">
+<!ENTITY  menuitem.delegateCalendar.deliverMeetingRequestslist.delegateOnly "Len pre zástupcov">
+<!ENTITY  menuitem.delegateCalendar.deliverMeetingRequestslist.delegateAndMe "Zástupcom a mne">
+<!ENTITY  menuitem.delegateCalendar.deliverMeetingRequestslist.delegateAndInfo "Zástupcom a posielať notifikácie mne">
 
-<!ENTITY  label.delegateCalendar.permission "Permission">
-<!ENTITY  menuitem.delegateCalendar.permission.author "Author">
+<!ENTITY  label.delegateCalendar.permission "Oprávnenie">
+<!ENTITY  menuitem.delegateCalendar.permission.author "Autor">
 <!ENTITY  menuitem.delegateCalendar.permission.editor "Editor">
-<!ENTITY  menuitem.delegateCalendar.permission.reviewer "Reviewer">
-<!ENTITY  menuitem.delegateCalendar.permission.none "None">
+<!ENTITY  menuitem.delegateCalendar.permission.reviewer "Recenzent">
+<!ENTITY  menuitem.delegateCalendar.permission.none "Nikto">
 
-<!ENTITY  label.delegateCalendar.permission.receiveInvitationCopy "Receive copies Of meeting messages" >
-<!ENTITY  label.delegateCalendar.permission.viewPrivateItems "View private items" >
+<!ENTITY  label.delegateCalendar.permission.receiveInvitationCopy "Prijať kópie správ stretnutí" >
+<!ENTITY  label.delegateCalendar.permission.viewPrivateItems "Zobraziť súkromné položky" >
 
 
-<!ENTITY  delegateCalendar.permission.description.author "Read and create items in the calendar folder." >
-<!ENTITY  delegateCalendar.permission.description.editor "Read, create, and modify items in the calendar folder." >
-<!ENTITY  delegateCalendar.permission.description.reviewer "Read items in the calendar folder." >
-<!ENTITY  delegateCalendar.permission.description.none "No access permissions to the calendar folder." >
+<!ENTITY  delegateCalendar.permission.description.author "Čítať a vytvárať položky v priečinku kalendára." >
+<!ENTITY  delegateCalendar.permission.description.editor "Čítať, vytvárať a meniť položky v priečinku kalendára." >
+<!ENTITY  delegateCalendar.permission.description.reviewer "Čítať položky v priečinku kalendára." >
+<!ENTITY  delegateCalendar.permission.description.none "Žiadne oprávnenia na priečinok kalendára." >
 
-<!ENTITY  delegateCalendar.permission.details.label "Permission details: " >
+<!ENTITY  delegateCalendar.permission.details.label "Podrobnosti oprávnení:" >

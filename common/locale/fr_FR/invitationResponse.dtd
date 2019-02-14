@@ -15,8 +15,6 @@
 <!ENTITY menuitem.label.ec-autorespond-answer.accepted "J'accepte">
 <!ENTITY menuitem.label.ec-autorespond-answer.declined "Je n'accepte pas">
 
-
-
-<!ENTITY label.proposenewtime.title "Propose new time (>= Exchange2013)">
+<!ENTITY label.proposenewtime.title "Propose new time (&gt;= Exchange2013)">
 <!ENTITY label.proposenewtime.start "Start time">
 <!ENTITY label.proposenewtime.end "End time">

@@ -22,4 +22,4 @@
 <!ENTITY  delegateCalendar.permission.description.reviewer "Ereignisse im Kalenderordner lesen." >
 <!ENTITY  delegateCalendar.permission.description.none "Keine Zugriffsrechte auf den Kalenderordner." >
 
-<!ENTITY delegateCalendar.permission.details.label "Detaillierte Zugriffsrechte: " >
+<!ENTITY  delegateCalendar.permission.details.label "Detaillierte Zugriffsrechte: " >

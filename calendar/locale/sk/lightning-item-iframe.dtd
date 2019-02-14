@@ -1,7 +1,7 @@
-<!ENTITY exchWebService.owner.label "Owner:">
-<!ENTITY exchWebService.totalWork.label "Total work:">
-<!ENTITY exchWebService.actualWork.label "Actual work:">
-<!ENTITY exchWebService.mileage.label "Mileage:">
-<!ENTITY exchWebService.billingInformation.label "Billing information:">
-<!ENTITY exchWebService.companies.label "Company:">
+<!ENTITY exchWebService.owner.label "Vlastník:">
+<!ENTITY exchWebService.totalWork.label "Celková práca:">
+<!ENTITY exchWebService.actualWork.label "Skutočná práca:">
+<!ENTITY exchWebService.mileage.label "Prospešnosť:">
+<!ENTITY exchWebService.billingInformation.label "Zúčtovacie informácie:">
+<!ENTITY exchWebService.companies.label "Spoločnosť:">
 

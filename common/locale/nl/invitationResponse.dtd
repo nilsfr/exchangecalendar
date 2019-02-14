@@ -11,17 +11,10 @@
 
 <!ENTITY label.messageReponseBody "Antwoord bericht:">
 
-
 <!ENTITY menuitem.label.ec-autorespond-answer.tentative "Ik zal misschien aanwezig zijn">
 <!ENTITY menuitem.label.ec-autorespond-answer.accepted "Ik zal aanwezig zijn">
 <!ENTITY menuitem.label.ec-autorespond-answer.declined "Ik zal niet aanwezig zijn">
 
-
-
-
-
-
-
-<!ENTITY label.proposenewtime.title "Propose new time (>= Exchange2013)">
+<!ENTITY label.proposenewtime.title "Propose new time (&gt;= Exchange2013)">
 <!ENTITY label.proposenewtime.start "Start time">
 <!ENTITY label.proposenewtime.end "End time">

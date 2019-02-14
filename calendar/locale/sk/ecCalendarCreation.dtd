@@ -1,5 +1,5 @@
-<!ENTITY exchange1.description "Exchange/Windows Active Directory settings">
-<!ENTITY exchange.cache.label "Use offline cache">
+<!ENTITY exchange1.description "Nastavenia Exchange / Windows Active Directory">
+<!ENTITY exchange.cache.label "Používať medzipamäť pre stav odpojenia">
 
 
 

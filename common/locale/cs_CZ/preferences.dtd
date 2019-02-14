@@ -5,7 +5,7 @@
 <!ENTITY exchangeWebService.preferences.tab.debug "Záznam událostí">
 <!ENTITY exchangeWebService.preference.debug.file "Umístění souboru se záznamem událostí:">
 <!ENTITY exchangeWebService.preference.network.debug.caption "Komuniace s Exchange serverem:">
-<!ENTITY exchangeWebService.preference.debug.log.label "Zaznamenávat informace na konzoli a/nebo do souboru">
+<!ENTITY exchangeWebService.preference.debug.log.label "Zaznamenávat informace na konzoli a do souboru">
 <!ENTITY exchangeWebService.preference.debug.file.button "Procházet">
 <!ENTITY exchangeWebService.preference.network.debug.label "Zaznamenávat události komunikace s Exchange serverem">
 <!ENTITY exchangeWebService.preference.network.debuglevel.label1 "Stupeň podrobnosti zaznamenávání">
@@ -21,7 +21,7 @@
 <!ENTITY exchangeWebService.preferences.titleWin "Předvolby Exchange (EWS)">
 
 <!ENTITY exchangeWebService.preference.core.debug.caption "Objekt hlavního poskytovatele:">
-<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "0 = Žádný, 1 = Základní informace, 2 = Rozšířené informace">
+<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "1 = základní informace, 2 = rozšířené informace">
 
 <!ENTITY exchangeWebService.preferences.tab.cache "Ukládání do mezipaměti">
 <!ENTITY exchangeWebService.preference.cache.memory.label "V dočasné mezipaměti nejméně">

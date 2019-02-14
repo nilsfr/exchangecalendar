@@ -5,7 +5,7 @@
 <!ENTITY exchangeWebService.preferences.tab.debug "Acceso">
 <!ENTITY exchangeWebService.preference.debug.file "Ubicación do ficheiro de rexistros:">
 <!ENTITY exchangeWebService.preference.network.debug.caption "Comunicación co servidor de Exchange:">
-<!ENTITY exchangeWebService.preference.debug.log.label "Rexistrar a información á consola e/ou un ficheiro">
+<!ENTITY exchangeWebService.preference.debug.log.label "Rexistrar información na consola e nun ficheiro">
 <!ENTITY exchangeWebService.preference.debug.file.button "Explorar">
 <!ENTITY exchangeWebService.preference.network.debug.label "Rexistrar a comunicación co servidor de Exchange">
 <!ENTITY exchangeWebService.preference.network.debuglevel.label1 "Nivel de rexistro">
@@ -21,7 +21,7 @@
 <!ENTITY exchangeWebService.preferences.titleWin "Preferencias de Exchange (EWS)">
 
 <!ENTITY exchangeWebService.preference.core.debug.caption "Objeto central do proveedor:">
-<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "0 = Ningunha, 1 = Información básica, 2 = Información estendida">
+<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "1 = Información básica, 2 = Información extendida">
 
 <!ENTITY exchangeWebService.preferences.tab.cache "Cacheado">
 <!ENTITY exchangeWebService.preference.cache.memory.label "Caché de memoria temporal mínima">

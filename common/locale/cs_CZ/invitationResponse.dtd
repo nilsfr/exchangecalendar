@@ -15,5 +15,6 @@
 <!ENTITY menuitem.label.ec-autorespond-answer.accepted "Zúčastním se">
 <!ENTITY menuitem.label.ec-autorespond-answer.declined "Nezúčastním se">
 
-
-
+<!ENTITY label.proposenewtime.title "Navrhnout nový čas (Exchange 2013 a novější)">
+<!ENTITY label.proposenewtime.start "Čas zahájení">
+<!ENTITY label.proposenewtime.end "Čas ukončení">

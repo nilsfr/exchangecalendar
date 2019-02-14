@@ -1,26 +1,26 @@
-<!ENTITY title.oofsettings "Out of office settings">
-<!ENTITY label.acceptbutton "Save">
-<!ENTITY label.cancelbutton "Close">
-<!ENTITY label.oofsettings.title "Out of office settings for:">
+<!ENTITY title.oofsettings "Nastavenia neprítomnosti">
+<!ENTITY label.acceptbutton "Uložiť">
+<!ENTITY label.cancelbutton "Zatvoriť">
+<!ENTITY label.oofsettings.title "Nastavenia neprítomnosti pre:">
 
-<!ENTITY label.oofstatus "Out of office status:">
+<!ENTITY label.oofstatus "Stav neprítomnosti:">
 
-<!ENTITY label.externalaudience "To which external persons do you want to send out of office messages: ">
-<!ENTITY menuitem.label.exchWebService-oof-externalaudience.none "To nobody">
-<!ENTITY menuitem.label.exchWebService-oof-externalaudience.known "Only to persons in my contact list">
-<!ENTITY menuitem.label.exchWebService-oof-externalaudience.all "To everybody">
+<!ENTITY label.externalaudience "Ktorým externým osobám chcete odosielať váš stav neprítomnosti:">
+<!ENTITY menuitem.label.exchWebService-oof-externalaudience.none "Nikomu">
+<!ENTITY menuitem.label.exchWebService-oof-externalaudience.known "Iba osobám v mojom zozname kontaktov">
+<!ENTITY menuitem.label.exchWebService-oof-externalaudience.all "Všetkým">
 
-<!ENTITY button.label.internal "Internal message">
-<!ENTITY button.label.external "External message">
-<!ENTITY label.internalreply "Message that will be sent to people within my organization:">
-<!ENTITY label.externalreply "Message that will be sent to people outside my organization:">
+<!ENTITY button.label.internal "Interná správa">
+<!ENTITY button.label.external "Externá správa">
+<!ENTITY label.internalreply "Správa, ktorá bude odoslaná ľuďom v rámci mojej organizácie:">
+<!ENTITY label.externalreply "Správa, ktorá bude odoslaná ľuďom mimo mojej organizácie:">
 
-<!ENTITY menuitem.label.exchWebService-oof-status.disabled "Disabled">
-<!ENTITY menuitem.label.exchWebService-oof-status.enabled "Enabled">
+<!ENTITY menuitem.label.exchWebService-oof-status.disabled "Zakázané">
+<!ENTITY menuitem.label.exchWebService-oof-status.enabled "Povolené">
 
-<!ENTITY checkbox.label.exchWebService-oof-scheduled "Only enabled in specified time frame:">
-<!ENTITY label.hbox-oof-scheduled-startTime "Start time:">
-<!ENTITY label.hbox-oof-scheduled-endTime "End time:">
+<!ENTITY checkbox.label.exchWebService-oof-scheduled "Povolené iba v časovom intervale:">
+<!ENTITY label.hbox-oof-scheduled-startTime "Začiatočný čas:">
+<!ENTITY label.hbox-oof-scheduled-endTime "Koncový čas:">
 
 
 
