@@ -1,0 +1,56 @@
+<!ENTITY ecautodiscover "Usar la función de autodescubrimiento de Exchange.">
+<!ENTITY ecfolderbase.label "Carpeta base:">
+<!ENTITY ecfolderpath.label "Ruta a partir de la carpeta base:">
+<!ENTITY ecfolderidofshare.label "ID de la Carpeta Compartida:">
+<!ENTITY exchWebServices.SharedFolderID.label "Nombre para mostrar de la carpeta compartida:">
+
+<!ENTITY menuitem.label.ecfolderbase.calendar "Carpeta de Calendario">
+<!ENTITY menuitem.label.ecfolderbase.publicfoldersroot "Carpetas públicas">
+<!ENTITY menuitem.label.ecfolderbase.inbox "Carpeta de entrada de correo">
+<!ENTITY menuitem.label.ecfolderbase.voicemail "Carpeta de correo de voz">
+<!ENTITY menuitem.label.ecfolderbase.msgfolderroot "Raíz de la carpeta de mensajes">
+<!ENTITY menuitem.label.ecfolderbase.root "Raíz del buzón">
+<!ENTITY menuitem.label.ecfolderbase.tasks "Carpeta de tareas">
+
+<!ENTITY menuitem.label.ecfolderbase.contacts "Carpeta de contactos">
+<!ENTITY menuitem.label.ecfolderbase.deleteditems "Carpeta de elementos eliminados">
+<!ENTITY menuitem.label.ecfolderbase.drafts "Carpeta de borradores">
+<!ENTITY menuitem.label.ecfolderbase.journal "Carpeta de journal">
+<!ENTITY menuitem.label.ecfolderbase.notes "Carpeta de notas">
+<!ENTITY menuitem.label.ecfolderbase.outbox "Carpeta de correo saliente">
+<!ENTITY menuitem.label.ecfolderbase.sentitems "Carpeta de elementos enviados">
+<!ENTITY menuitem.label.ecfolderbase.junkemail "Carpeta de correo no deseado">
+<!ENTITY menuitem.label.ecfolderbase.searchfolders "Carpeta de búsquedas de carpetas">
+<!ENTITY menuitem.label.ecfolderbase.version2010 "— Las opciones siguientes son solo para Exchange 2010 —">
+<!ENTITY menuitem.label.ecfolderbase.recoverableitemsroot "Carpeta raíz de la papelera">
+<!ENTITY menuitem.label.ecfolderbase.recoverableitemsdeletions "Carpeta de borrados de la papelera">
+<!ENTITY menuitem.label.ecfolderbase.recoverableitemsversion "Carpeta de versiones de la papelera">
+<!ENTITY menuitem.label.ecfolderbase.recoverableitemspurges "Carpeta de eliminaciones de la papelera">
+<!ENTITY menuitem.label.ecfolderbase.archiveroot "Carpeta raíz del archivo">
+<!ENTITY menuitem.label.ecfolderbase.archivemsgfolderroot "Carpeta raíz del archivo de mensajes">
+<!ENTITY menuitem.label.ecfolderbase.archivedeleteditems "Carpeta de elementos eliminados del archivo">
+<!ENTITY menuitem.label.ecfolderbase.archiverecoverableitemsroot "Carpeta raíz de elementos recuperables del archivo">
+<!ENTITY menuitem.label.ecfolderbase.Archiverecoverableitemsdeletions "Carpeta de elementos borrados recuperables del archivo">
+<!ENTITY menuitem.label.ecfolderbase.Archiverecoverableitemsversions "Carpeta de versiones de elementos recuperables del archivo">
+<!ENTITY menuitem.label.ecfolderbase.Archiverecoverableitemspurges "Carpeta de eliminaciones de elementos recuperables del archivo">
+
+<!ENTITY button.label.autodiscovercheck "Realizar autodescubrimiento">
+<!ENTITY button.label.serverandmailboxcheck "Comprobar el servidor y el buzón">
+<!ENTITY button.label.servercheck "Comprobar el servidor y la cuenta">
+
+<!ENTITY ecmailbox.server_url.label "URL del Servidor:">
+<!ENTITY ecmailbox.label "Dirección de correo primaria:">
+<!ENTITY ecmailbox.tooltip "Si no especificas un buzón solo tendrás acceso a las carpetas públicas.">
+<!ENTITY ecwindowsuser.label "Nombre de usuario:">
+<!ENTITY ecwindowsdomain.label "Nombre de dominio:">
+<!ENTITY ecwindowspassword.label "Contraseña:">
+
+<!ENTITY button.label.folderpathcheck "Comprobar">
+<!ENTITY button.label.folderbrowse "Explorar">
+
+<!ENTITY exchWebServices.UserAvailability.label "Solo será visible el estado de la disponibilidad del calendario del buzón.">
+
+<!ENTITY exchWebServices.exchtype.label "Tipo de Exchange">
+<!ENTITY exchWebServices.hostexch.label "Exchange alojado">
+<!ENTITY exchWebServices.365exch.label "Microsoft Office 365">
+<!ENTITY exchWebServices.detail.label "Detalles">

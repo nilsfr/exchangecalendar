@@ -38,7 +38,7 @@
 <!ENTITY button.label.serverandmailboxcheck "Zkontrolovat server a schránku">
 <!ENTITY button.label.servercheck "Zkontrolovat server a účet">
 
-<!ENTITY ecmailbox.server_url.label "Server URL:">
+<!ENTITY ecmailbox.server_url.label "URL adresa serveru:">
 <!ENTITY ecmailbox.label "Hlavní e-mailová adresa:">
 <!ENTITY ecmailbox.tooltip "Pokud nezadáte e-mailovou schránku, budete mít přístup pouze do věřejných složek.">
 <!ENTITY ecwindowsuser.label "Uživatelské jméno:">

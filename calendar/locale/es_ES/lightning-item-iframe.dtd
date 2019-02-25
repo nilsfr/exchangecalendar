@@ -1,0 +1,7 @@
+<!ENTITY exchWebService.owner.label "Propietario:">
+<!ENTITY exchWebService.totalWork.label "Trabajo total:">
+<!ENTITY exchWebService.actualWork.label "Trabajo actual:">
+<!ENTITY exchWebService.mileage.label "Kilometraje:">
+<!ENTITY exchWebService.billingInformation.label "Información de facturación:">
+<!ENTITY exchWebService.companies.label "Empresa:">
+

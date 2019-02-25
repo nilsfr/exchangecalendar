@@ -2,6 +2,6 @@
 <!ENTITY exchWebService.totalWork.label "Teljes munka:">
 <!ENTITY exchWebService.actualWork.label "Tényleges munka:">
 <!ENTITY exchWebService.mileage.label "Távolság:">
-<!ENTITY exchWebService.billingInformation.label "Számlázási információ:">
+<!ENTITY exchWebService.billingInformation.label "Számlázási tájékoztató:">
 <!ENTITY exchWebService.companies.label "Szervezet:">
 
