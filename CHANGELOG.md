@@ -1,6 +1,25 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [5.0.0-alpha3] - 2019-02-25
+### Added
+- Hungarian translation (#234)
+- Galician translation (#235)
+- Spanish translation (#254)
+- Portuguese translation (#254)
+- Romanian translation (#254)
+
+### Changed
+- Improve contact auto complete search results (#223)
+- Improve password request dialog title (#229)
+
+### Fixed
+- ToDo item method call deprecation (#221)
+- Deprecated JavaScript definition (#227)
+- Deprecated calls to internal `Component.utils` functions (#228)
+- Exchange address books not shown in Directory/Contact panes (#209)
+- Settings window not properly localized (#240)
+
 ## [5.0.0-alpha2] - 2018-11-25
 ### Changed
 - Improved logging (#201)
