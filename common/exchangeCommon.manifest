@@ -3,6 +3,7 @@ locale exchangecommon en locale/en/
 locale exchangecommon cs-CZ locale/cs_CZ/
 locale exchangecommon de locale/de/
 locale exchangecommon en-US locale/en_US/
+locale exchangecommon es-ES locale/es_ES/
 locale exchangecommon fr-FR locale/fr_FR/
 locale exchangecommon gl locale/gl/
 locale exchangecommon hu locale/hu/
@@ -10,6 +11,8 @@ locale exchangecommon it-IT locale/it_IT/
 locale exchangecommon ja-JP locale/ja_JP/
 locale exchangecommon nl locale/nl/
 locale exchangecommon pl locale/pl/
+locale exchangecommon pt-BR locale/pt_BR/
+locale exchangecommon ro locale/ro/
 locale exchangecommon ru locale/ru/
 locale exchangecommon sk locale/sk/
 locale exchangecommon sv locale/sv/

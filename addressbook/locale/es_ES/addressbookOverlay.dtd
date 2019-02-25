@@ -1,0 +1,9 @@
+<!ENTITY toolbar.button.label.addaccount "Añadir carpeta de contactos de Exchange">
+<!ENTITY toolbar.button.tooltip.addaccount "Esto añadirá un carpeta nueva de contactos de Exchange">
+
+<!ENTITY toolbar.button.label.deleteaccount "Eliminar carpeta de contactos de Exchange">
+<!ENTITY toolbar.button.tooltip.deleteaccount "Esto eliminará una carpeta de contactos de Exchange existente">
+
+<!ENTITY deleteExchangeCmd.label "Eliminar carpeta de contactos de Exchange">
+
+

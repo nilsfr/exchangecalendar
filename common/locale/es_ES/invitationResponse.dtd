@@ -1,0 +1,20 @@
+<!ENTITY label.acceptbutton "Confirmar cambio">
+<!ENTITY label.cancelbutton "Cancelar cambio">
+
+<!ENTITY description.invitationResponse "Confirmar el cambio de la respuesta de reunión.">
+
+<!ENTITY label.calendarName "Calendario:">
+<!ENTITY label.itemTitle "Asunto:">
+<!ENTITY label.itemStart "Hora de inicio:">
+<!ENTITY label.itemResponse "Tu respuesta:">
+<!ENTITY label.meetingOrganiser "Organizador:">
+
+<!ENTITY label.messageReponseBody "Mensaje de respuesta:">
+
+<!ENTITY menuitem.label.ec-autorespond-answer.tentative "Podría asistir">
+<!ENTITY menuitem.label.ec-autorespond-answer.accepted "Asistiré">
+<!ENTITY menuitem.label.ec-autorespond-answer.declined "No asistiré">
+
+<!ENTITY label.proposenewtime.title "Propón nueva hora (≥ Exchange 2013)">
+<!ENTITY label.proposenewtime.start "Hora de inicio">
+<!ENTITY label.proposenewtime.end "Hora de finalización">

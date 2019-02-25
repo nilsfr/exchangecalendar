@@ -38,7 +38,7 @@
 <!ENTITY button.label.serverandmailboxcheck "Comprobar o servidor e a caixa de correo">
 <!ENTITY button.label.servercheck "Comprobar o servidor e a conta">
 
-<!ENTITY ecmailbox.server_url.label "Server URL:">
+<!ENTITY ecmailbox.server_url.label "URL do Servidor:">
 <!ENTITY ecmailbox.label "Dirección de correo primaria:">
 <!ENTITY ecmailbox.tooltip "Se non especificas unha caixa de correo só tenás acceso aos cartafoles públicos.">
 <!ENTITY ecwindowsuser.label "Nome de usuario:">

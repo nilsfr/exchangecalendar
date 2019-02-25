@@ -1,0 +1,18 @@
+<!ENTITY prefwindow.title "Extras">
+<!ENTITY general.label  "General"> 
+<!ENTITY about.label "Sobre"> 
+ 
+<!ENTITY about.description.label "Características mejoradas para aplicaciones Thunderbird y SeaMonkey">
+<!ENTITY iconify.label "Mostrar solo los iconos de prioridad"> 
+<!ENTITY shadeHigh.label "Colorear el fondo para los mensajes de alta prioridad">
+<!ENTITY shadeLow.label "Colorear el fondo para los mensajes de baja prioridad">
+<!ENTITY tagImportant.label "Marcar automáticamente como importante el correo de alta prioridad">
+ 
+<!ENTITY highestColor.label "La más alta">
+
+<!ENTITY highColor.label "Alta">
+<!ENTITY lowColor.label "Baja">
+<!ENTITY lowestColor.label "La más baja">
+ 
+<!ENTITY prioritycolor  "Color personalizado">
+<!ENTITY pref.color "Preferencias de color:">

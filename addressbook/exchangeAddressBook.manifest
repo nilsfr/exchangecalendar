@@ -19,6 +19,7 @@ locale exchangecontacts en    locale/en/
 locale exchangecontacts cs-CZ locale/cs_CZ/
 locale exchangecontacts de    locale/de/
 locale exchangecontacts en-US locale/en_US/
+locale exchangecontacts es-ES locale/es_ES/
 locale exchangecontacts fr-FR locale/fr_FR/
 locale exchangecontacts gl    locale/gl/
 locale exchangecontacts hu    locale/hu/
@@ -26,6 +27,8 @@ locale exchangecontacts it-IT locale/it_IT/
 locale exchangecontacts ja-JP locale/ja_JP/
 locale exchangecontacts nl    locale/nl/
 locale exchangecontacts pl    locale/pl/
+locale exchangecontacts pt-BR locale/pt_BR/
+locale exchangecontacts ro    locale/ro/
 locale exchangecontacts ru    locale/ru/
 locale exchangecontacts sk    locale/sk/
 locale exchangecontacts sv    locale/sv/

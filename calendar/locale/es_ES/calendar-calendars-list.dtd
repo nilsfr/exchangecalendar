@@ -1,0 +1,5 @@
+<!ENTITY calendar.context.exchange.convert.label "Complemento para convertir a Calendario y Tareas de Exchange 2007/2010">
+<!ENTITY calendar.context.exchange.properties.label "Propiedades de Exchange (EWS)">
+<!ENTITY calendar.context.exchange.oof.settings.label "Ajustes de Ausencia">
+<!ENTITY calendar.context.exchange.clone.settings.label "Clonar los ajustes a un calendario nuevo">
+<!ENTITY calendar.context.exchange.delegate.calendar.settings.label "Delegar calendario">

@@ -1,0 +1,12 @@
+<!ENTITY ecsettings.window.title "Ajustes de Contacto de ExchangeCalendar">
+
+<!ENTITY label.acceptbutton "Guardar">
+<!ENTITY label.cancelbutton "Cancelar">
+
+<!ENTITY ecsettings.tab.adsettings "Exchange/DA de Windows">
+<!ENTITY ecsettings.tab.meetingrequestsettings "Solicitud de reunión">
+
+<!ENTITY label.ecExchangeSettings.title "Nombre en la lista:">
+<!ENTITY exchangeWebService.preference.contacts.pollinterval "Intervalo de refresco en segundos:">
+
+<!ENTITY exchWebService.add.globaladdresslist.label "Añadir la lista global de direcciones a los resultados de la búsqueda.">

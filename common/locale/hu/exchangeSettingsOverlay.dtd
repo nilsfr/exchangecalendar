@@ -38,7 +38,7 @@
 <!ENTITY button.label.serverandmailboxcheck "Kiszolgáló és postafiók ellenőrzése">
 <!ENTITY button.label.servercheck "Kiszolgáló és fiók ellenőrzése">
 
-<!ENTITY ecmailbox.server_url.label "Server URL:">
+<!ENTITY ecmailbox.server_url.label "Kiszolgáló URL:">
 <!ENTITY ecmailbox.label "Elsődleges e-mail címe:">
 <!ENTITY ecmailbox.tooltip "Ha nincs meghatározva egy postafiók, csak nyilvános mappákhoz tud hozzáférni.">
 <!ENTITY ecwindowsuser.label "Felhasználónév:">
