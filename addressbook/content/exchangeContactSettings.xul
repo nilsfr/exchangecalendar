@@ -38,20 +38,30 @@
         ondialogaccept="return tmpExchangeContactSettings.onSave();"
         onload="tmpExchangeContactSettings.onLoad();">
     <script type="application/javascript"
-            src="chrome://exchangecontacts/content/exchangeContactSettings.js" />
-    <hbox>
-        <label value="&label.ecExchangeSettings.title;" />
-        <textbox id="exchWebService_contact_description" />
-    </hbox>
-    <hbox>
-        <label value="&exchangeWebService.preference.contacts.pollinterval;" />
-        <textbox id="exchangeWebService_preference_contacts_pollinterval"
-                 preference="extensions.1st-setup.core.debuglevel"
-                 increment="1"
-                 min="1"
-                 type="number" />
-    </hbox>
+            src="chrome://exchangecontacts/content/exchangeContactSettings.js"/>
+
+    <grid flex="1">
+        <columns>
+            <column/>
+            <column flex="1"/>
+        </columns>
+        <rows>
+            <row align="center">
+                <label value="&label.ecExchangeSettings.title;"/>
+                <textbox id="exchWebService_contact_description"/>
+            </row>
+            <row align="center">
+                <label value="&exchangeWebService.preference.contacts.pollinterval;"/>
+                <textbox id="exchangeWebService_preference_contacts_pollinterval"
+                         preference="extensions.1st-setup.core.debuglevel"
+                         increment="1"
+                         min="1"
+                         type="number"/>
+            </row>
+        </rows>
+    </grid>
     <checkbox label="&exchWebService.add.globaladdresslist.label;"
-              id="exchWebService-add-globaladdresslist" />
+              id="exchWebService-add-globaladdresslist"/>
+
     <vbox id="exchWebService-exchange-settings"></vbox>
 </dialog>

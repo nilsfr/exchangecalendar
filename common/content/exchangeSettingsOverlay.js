@@ -674,10 +674,8 @@ exchSettingsOverlay.prototype = {
             }
             else {
                 // We only have one url. Use it.
-                //			selectedEWSUrl.value = ewsUrls.text();
                 selectedEWSUrl.value = ewsUrls[0].value;
             }
-
         }
 
         if (!userCancel) {

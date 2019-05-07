@@ -14,10 +14,10 @@
  * -- Exchange 2007/2010 Calendar and Tasks Provider.
  * -- For Thunderbird with the Lightning add-on.
  *
- * This work is a combination of the Storage calendar, part of the default Lightning add-on, and 
+ * This work is a combination of the Storage calendar, part of the default Lightning add-on, and
  * the "Exchange Data Provider for Lightning" add-on currently, october 2011, maintained by Simon Schubert.
- * Primarily made because the "Exchange Data Provider for Lightning" add-on is a continuation 
- * of old code and this one is build up from the ground. It still uses some parts from the 
+ * Primarily made because the "Exchange Data Provider for Lightning" add-on is a continuation
+ * of old code and this one is build up from the ground. It still uses some parts from the
  * "Exchange Data Provider for Lightning" project.
  *
  * Author: Michel Verbraak (info@1st-setup.nl)
@@ -37,20 +37,9 @@
 var Cc = Components.classes;
 var Ci = Components.interfaces;
 
-
-
 ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 ChromeUtils.import("resource://exchangecommon/erGetUserOofSettings.js");
 ChromeUtils.import("resource://exchangecommon/erSetUserOofSettings.js");
-
-//ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
-
-//if (! exchWebService) var exchWebService = {};
-
-/*if (! this.cal) {
-	ChromeUtils.import("resource://calendar/modules/calUtils.jsm", exchWebService);
-}
-*/
 
 function exchOOFSettings(aDocument, aWindow) {
     this._document = aDocument;
@@ -61,8 +50,6 @@ function exchOOFSettings(aDocument, aWindow) {
 }
 
 exchOOFSettings.prototype = {
-
-    //exchWebService.oofSettings = {
 
     calPrefs: null,
     intOofSettings: {},
@@ -200,9 +187,7 @@ exchOOFSettings.prototype = {
         var externalReply = this.intOofSettings.externalReply;
 
         internalReply = "<html>" + this.internalEditorElement.content + "</html>";
-
         externalReply = "<html>" + this.externalEditorElement.content + "</html>";
-
 
         var self = this;
         var tmpObject = new erSetUserOofSettingsRequest({
