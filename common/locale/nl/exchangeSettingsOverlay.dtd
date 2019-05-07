@@ -1,4 +1,4 @@
-<!ENTITY ecautodiscover "Gebruik autodiscovery functie van Exchange.">
+<!ENTITY ecautodiscover "Use Exchange autodiscovery">
 <!ENTITY ecfolderbase.label "Basisfolder:">
 <!ENTITY ecfolderpath.label "Pad onder basis:">
 <!ENTITY ecfolderidofshare.label "Share FolderId:">

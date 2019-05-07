@@ -1,4 +1,4 @@
-<!ENTITY ecautodiscover "Använd Exchanges funktion för automatisk utforskning.">
+<!ENTITY ecautodiscover "Use Exchange autodiscovery">
 <!ENTITY ecfolderbase.label "Basmapp:">
 <!ENTITY ecfolderpath.label "Sökväg under basmapp:">
 <!ENTITY ecfolderidofshare.label "Basmapps-ID:">

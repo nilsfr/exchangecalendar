@@ -1,4 +1,4 @@
-<!ENTITY ecautodiscover "Usar a función de autodescubrimento de Exchange.">
+<!ENTITY ecautodiscover "Usar o autodescubrimento de Exchange">
 <!ENTITY ecfolderbase.label "Cartafol base:">
 <!ENTITY ecfolderpath.label "Ruta a partir da cartafol base:">
 <!ENTITY ecfolderidofshare.label "ID do Cartafol Compartido:">
@@ -39,7 +39,7 @@
 <!ENTITY button.label.servercheck "Comprobar o servidor e a conta">
 
 <!ENTITY ecmailbox.server_url.label "URL do Servidor:">
-<!ENTITY ecmailbox.label "Dirección de correo primaria:">
+<!ENTITY ecmailbox.label "Enderezo primario de correo:">
 <!ENTITY ecmailbox.tooltip "Se non especificas unha caixa de correo só tenás acceso aos cartafoles públicos.">
 <!ENTITY ecwindowsuser.label "Nome de usuario:">
 <!ENTITY ecwindowsdomain.label "Nome de dominio:">

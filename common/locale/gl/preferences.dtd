@@ -13,10 +13,10 @@
 <!ENTITY exchangeWebService.preference.authentication.debug.label "Rexistrar a información de progreso da comunicación (p. exem. a Autenticación)">
 <!ENTITY exchangeWebService.preference.authentication.showpassword.label "Amosar o contrasinal en claro no ficheiro de rexistro.">
 
-<!ENTITY exchangeWebService.preference.contacts.debug.caption "Libreta de direccións/Contactos:">
+<!ENTITY exchangeWebService.preference.contacts.debug.caption "Libreta de endrezos/Contactos:">
 <!ENTITY exchangeWebService.preference.contacts.debuglevel.label1 "Nivel de rexistro">
 <!ENTITY exchangeWebService.preference.contacts.debuglevel.label2 "1 = Información básica, 2 = Comunicación completa">
-<!ENTITY exchangeWebService.preference.contacts.debug.label "Rexistrar información sobre a parte da libreta de direccións/contactos">
+<!ENTITY exchangeWebService.preference.contacts.debug.label "Rexistrar información sobre a parte da libreta de enderezos/contactos">
 
 <!ENTITY exchangeWebService.preferences.titleWin "Preferencias de Exchange (EWS)">
 
