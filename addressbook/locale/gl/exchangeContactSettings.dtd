@@ -9,4 +9,4 @@
 <!ENTITY label.ecExchangeSettings.title "Nome na lista:">
 <!ENTITY exchangeWebService.preference.contacts.pollinterval "Intervalo de refresco en segundos:">
 
-<!ENTITY exchWebService.add.globaladdresslist.label "Engadir a lista global de direccións aos resultados da busca.">
+<!ENTITY exchWebService.add.globaladdresslist.label "Engadir a lista global de enderezos aos resultados da busca">

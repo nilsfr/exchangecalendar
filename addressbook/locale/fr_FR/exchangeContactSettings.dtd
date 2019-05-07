@@ -1,12 +1,12 @@
-<!ENTITY ecsettings.window.title "ExchangeCalendar Contact Settings">
+<!ENTITY ecsettings.window.title "Préférences des contacts ExchangeCalendar">
 
 <!ENTITY label.acceptbutton "Sauvegarder">
 <!ENTITY label.cancelbutton "Annuler">
 
-<!ENTITY ecsettings.tab.adsettings "Exchange/Windows AD">
-<!ENTITY ecsettings.tab.meetingrequestsettings "Réglages de rendez vous">
+<!ENTITY ecsettings.tab.adsettings "Exchange / Annuaire AD Windows">
+<!ENTITY ecsettings.tab.meetingrequestsettings "Demande de rendez‐vous">
 
-<!ENTITY label.ecExchangeSettings.title "Noms dans la liste:">
-<!ENTITY exchangeWebService.preference.contacts.pollinterval "Intervalle de rafraichissement en secondes:">
+<!ENTITY label.ecExchangeSettings.title "Nom dans la liste :">
+<!ENTITY exchangeWebService.preference.contacts.pollinterval "Intervalle de rafraîchissement en secondes :">
 
-<!ENTITY exchWebService.add.globaladdresslist.label "Ajouter la liste globale d'adresses aux résultats de recherche.">
+<!ENTITY exchWebService.add.globaladdresslist.label "Ajouter la liste d’adresses globale aux résultats de recherche">

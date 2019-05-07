@@ -5,7 +5,7 @@
 <!ENTITY exchangeWebService.preferences.tab.debug "Günlük kaydı">
 <!ENTITY exchangeWebService.preference.debug.file "Günlük dosyasının yeri:">
 <!ENTITY exchangeWebService.preference.network.debug.caption "Exchange sunucusu ile iletişim:">
-<!ENTITY exchangeWebService.preference.debug.log.label "Log information to the console and a file">
+<!ENTITY exchangeWebService.preference.debug.log.label "Konsola ve bir dosyaya bilgiieri kaydet">
 <!ENTITY exchangeWebService.preference.debug.file.button "Tara">
 <!ENTITY exchangeWebService.preference.network.debug.label "Exchange sunucusu ile iletişim günlükle">
 <!ENTITY exchangeWebService.preference.network.debuglevel.label1 "Günlükleme seviyesi">
@@ -21,7 +21,7 @@
 <!ENTITY exchangeWebService.preferences.titleWin "Exchange (EWS) Seçenekleri">
 
 <!ENTITY exchangeWebService.preference.core.debug.caption "Ana sağlayıcı nesnesi:">
-<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "1 = Basic information, 2 = Extended information">
+<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "1 = Temel bilgiler, 2 = Genişletilmiş bilgiler">
 
 <!ENTITY exchangeWebService.preferences.tab.cache "Önbellekleme">
 <!ENTITY exchangeWebService.preference.cache.memory.label "En az geçici hafıza önbelleği">
@@ -43,8 +43,8 @@
 <!ENTITY exchangeWebService.preference.loadbalancer.prefs.sleepBetweenJobs.label "Exchange sunucuna gönderilen istekler arasındaki en kısa bekleme süresi:">
 <!ENTITY exchangeWebService.preference.userAgent.label "HTTP kullanıcı aracısı:">
 
-<!ENTITY exchangeWebService.preference.globalsearch.caption "Thunderbird Küresel Arama Dizini">
-<!ENTITY exchangeWebService.preference.globalsearch.label "Thunderbird Küresel Arama Dizinini Etkinleştir">
+<!ENTITY exchangeWebService.preference.globalsearch.caption "Thunderbird Genel Arama Dizini">
+<!ENTITY exchangeWebService.preference.globalsearch.label "Thunderbird Genel Arama Dizinini Etkinleştir">
 <!ENTITY exchangeWebService.preference.globalsearch.explain "Eğer bu Thunderbird özelliğini etkinleştirirseniz, exchangecalendar, uzaktan eposta etiketlemeyi ve posta ağacı görüntüsünde davet sütununu göstermeyi açabilme yeteneklerini kazanacaktır.">
 
 <!ENTITY exchangeWebService.preference.ntlmv1.label "Ntlm-v1 Tercihleri:">

@@ -9,4 +9,4 @@
 <!ENTITY label.ecExchangeSettings.title "Név a listában:">
 <!ENTITY exchangeWebService.preference.contacts.pollinterval "Frissítés időköz (másodperc):">
 
-<!ENTITY exchWebService.add.globaladdresslist.label "Teljes címlista hozzáadása a keresési eredményekhez.">
+<!ENTITY exchWebService.add.globaladdresslist.label "Adjon globális címlistát a keresési eredményekhez">

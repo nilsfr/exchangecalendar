@@ -1,4 +1,4 @@
-<!ENTITY ecautodiscover "Použít funkci Exchange automatického zjištění.">
+<!ENTITY ecautodiscover "Použít Exchange automatické zjišťování">
 <!ENTITY ecfolderbase.label "Základ složky:">
 <!ENTITY ecfolderpath.label "Popis umístění pod základem složky:">
 <!ENTITY ecfolderidofshare.label "Identifikátor sdílené složky:">

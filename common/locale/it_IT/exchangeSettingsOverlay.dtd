@@ -1,4 +1,4 @@
-<!ENTITY ecautodiscover "Utilizza funzionalità ricerca automatica di Exchange.">
+<!ENTITY ecautodiscover "Use Exchange autodiscovery">
 <!ENTITY ecfolderbase.label "Cartella base:">
 <!ENTITY ecfolderpath.label "Percorso entro la cartella base:">
 <!ENTITY ecfolderidofshare.label "ID cartella condivisa:">

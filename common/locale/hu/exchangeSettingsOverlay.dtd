@@ -1,4 +1,4 @@
-<!ENTITY ecautodiscover "Az Exchange önműködő felfedezés működést használata.">
+<!ENTITY ecautodiscover "Az Exchange önműködő felfedezés futtatása">
 <!ENTITY ecfolderbase.label "Alap mappa:">
 <!ENTITY ecfolderpath.label "Könyvtár útvonala az alap mappa alatt:">
 <!ENTITY ecfolderidofshare.label "Megosztott mappaazonosító:">

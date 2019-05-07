@@ -1,20 +1,20 @@
-<!ENTITY label.acceptbutton "Confirmez la modification">
-<!ENTITY label.cancelbutton "Annulez la modification">
+<!ENTITY label.acceptbutton "Confirmer la modification">
+<!ENTITY label.cancelbutton "Annuler la modification">
 
-<!ENTITY description.invitationResponse "Confirmez la modification de votre réponse à l'invitation.">
+<!ENTITY description.invitationResponse "Confirmez la modification de votre réponse à l’invitation.">
 
-<!ENTITY label.calendarName "Calendrier:">
-<!ENTITY label.itemTitle "Sujet:">
-<!ENTITY label.itemStart "Heure de début:">
-<!ENTITY label.itemResponse "Votre réponse:">
-<!ENTITY label.meetingOrganiser "Organisateur:">
+<!ENTITY label.calendarName "Calendrier :">
+<!ENTITY label.itemTitle "Sujet :">
+<!ENTITY label.itemStart "Heure de début :">
+<!ENTITY label.itemResponse "Votre réponse :">
+<!ENTITY label.meetingOrganiser "Organisateur :">
 
-<!ENTITY label.messageReponseBody "Message de réponse:">
+<!ENTITY label.messageReponseBody "Message de réponse :">
 
-<!ENTITY menuitem.label.ec-autorespond-answer.tentative "Je participerai peut-être">
-<!ENTITY menuitem.label.ec-autorespond-answer.accepted "J'accepte">
-<!ENTITY menuitem.label.ec-autorespond-answer.declined "Je n'accepte pas">
+<!ENTITY menuitem.label.ec-autorespond-answer.tentative "J’y participerai probablement">
+<!ENTITY menuitem.label.ec-autorespond-answer.accepted "Je serai présent">
+<!ENTITY menuitem.label.ec-autorespond-answer.declined "Je serai absent">
 
-<!ENTITY label.proposenewtime.title "Propose new time (&gt;= Exchange2013)">
-<!ENTITY label.proposenewtime.start "Start time">
-<!ENTITY label.proposenewtime.end "End time">
+<!ENTITY label.proposenewtime.title "Proposer un nouvel horaire (Exchange 2013 et +)">
+<!ENTITY label.proposenewtime.start "Date de début">
+<!ENTITY label.proposenewtime.end "Date de fin">

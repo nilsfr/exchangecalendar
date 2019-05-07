@@ -1,4 +1,4 @@
-<!ENTITY ecautodiscover "Использовать функцию автопоиска Exchange.">
+<!ENTITY ecautodiscover "Use Exchange autodiscovery">
 <!ENTITY ecfolderbase.label "Базовая папка:">
 <!ENTITY ecfolderpath.label "Путь ниже базовой папки:">
 <!ENTITY ecfolderidofshare.label "Идентификатор общей папки:">

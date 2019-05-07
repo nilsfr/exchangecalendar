@@ -1,4 +1,4 @@
-<!ENTITY ecautodiscover "Použiť funkciu Exchange na automatické zisťovanie.">
+<!ENTITY ecautodiscover "Use Exchange autodiscovery">
 <!ENTITY ecfolderbase.label "Koreň priečinka:">
 <!ENTITY ecfolderpath.label "Cesta pod koreňom priečinka:">
 <!ENTITY ecfolderidofshare.label "ID zdieľaného priečinka:">

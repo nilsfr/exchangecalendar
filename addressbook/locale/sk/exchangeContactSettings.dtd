@@ -9,4 +9,4 @@
 <!ENTITY label.ecExchangeSettings.title "Meno zo zoznamu:">
 <!ENTITY exchangeWebService.preference.contacts.pollinterval "Interval obnovovania v sekundách:">
 
-<!ENTITY exchWebService.add.globaladdresslist.label "Pridať globálny zoznam adries do výsledkov vyhľadávania.">
+<!ENTITY exchWebService.add.globaladdresslist.label "Add global address list to search results">

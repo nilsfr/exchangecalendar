@@ -1,4 +1,4 @@
-<!ENTITY ecautodiscover "Usar la función de autodescubrimiento de Exchange.">
+<!ENTITY ecautodiscover "Usar el autodescubrimiento de Exchange">
 <!ENTITY ecfolderbase.label "Carpeta base:">
 <!ENTITY ecfolderpath.label "Ruta a partir de la carpeta base:">
 <!ENTITY ecfolderidofshare.label "ID de la Carpeta Compartida:">
