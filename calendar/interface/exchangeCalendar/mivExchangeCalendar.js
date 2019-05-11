@@ -8335,7 +8335,8 @@ calExchangeCalendar.prototype = {
             } else if (this.folderClass === "IPF.Note" && erSyncFolderItemsRequest.folderBase === "inbox") {
                 this.findFollowupTaskItemsOK(erSyncFolderItemsRequest, changes);
             } else {
-                this.logError("Changes could not be made." + erSyncFolderItemsRequest.folderBase);
+                this.logError("Changes could not be made: " + this.folderClass +
+                    ", " + erSyncFolderItemsRequest.folderBase);
             }
         }
 
