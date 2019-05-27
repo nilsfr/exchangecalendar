@@ -1079,16 +1079,16 @@ exchangeAbFolderDirectory.prototype = {
     },
 
     get user() {
-        var username = exchWebService.commonFunctions.safeGetCharPref(this.prefs, "user", "");
+        var username = exchWebService.commonFunctions.safeGetStringPref(this.prefs, "user", "");
         if (username.indexOf("@") > -1) {
             return username;
         }
         else {
             if (this.domain == "") {
-                return exchWebService.commonFunctions.safeGetCharPref(this.prefs, "user", "");
+                return exchWebService.commonFunctions.safeGetStringPref(this.prefs, "user", "");
             }
             else {
-                return this.domain + "\\" + exchWebService.commonFunctions.safeGetCharPref(this.prefs, "user", "");
+                return this.domain + "\\" + exchWebService.commonFunctions.safeGetStringPref(this.prefs, "user", "");
             }
         }
     },
@@ -1096,51 +1096,51 @@ exchangeAbFolderDirectory.prototype = {
     set user(value) {
         if (value.indexOf("\\") > -1) {
             this.domain = value.substr(0, value.indexOf("\\"));
-            this.prefs.setCharPref("user", value.substr(value.indexOf("\\") + 1));
+            this.prefs.setStringPref("user", value.substr(value.indexOf("\\") + 1));
         }
         else {
-            this.prefs.setCharPref("user", value);
+            this.prefs.setStringPref("user", value);
         }
     },
 
     get domain() {
-        return exchWebService.commonFunctions.safeGetCharPref(this.prefs, "domain", "");
+        return exchWebService.commonFunctions.safeGetStringPref(this.prefs, "domain", "");
     },
 
     set domain(value) {
-        return this.prefs.setCharPref("domain", value);
+        return this.prefs.setStringPref("domain", value);
     },
 
     get mailbox() {
-        return exchWebService.commonFunctions.safeGetCharPref(this.prefs, "mailbox", "");
+        return exchWebService.commonFunctions.safeGetStringPref(this.prefs, "mailbox", "");
     },
 
     get serverUrl() {
-        return exchWebService.commonFunctions.safeGetCharPref(this.prefs, "server", "");
+        return exchWebService.commonFunctions.safeGetStringPref(this.prefs, "server", "");
     },
 
     get folderBase() {
-        return exchWebService.commonFunctions.safeGetCharPref(this.prefs, "folderbase", "contacts");
+        return exchWebService.commonFunctions.safeGetStringPref(this.prefs, "folderbase", "contacts");
     },
 
     get folderPath() {
-        return exchWebService.commonFunctions.safeGetCharPref(this.prefs, "folderpath", "/");
+        return exchWebService.commonFunctions.safeGetStringPref(this.prefs, "folderpath", "/");
     },
 
     get folderID() {
-        return exchWebService.commonFunctions.safeGetCharPref(this.prefs, "folderid", null);
+        return exchWebService.commonFunctions.safeGetStringPref(this.prefs, "folderid", null);
     },
 
     set folderID(aValue) {
-        this.prefs.setCharPref("folderid", aValue);
+        this.prefs.setStringPref("folderid", aValue);
     },
 
     get changeKey() {
-        return exchWebService.commonFunctions.safeGetCharPref(this.prefs, "changekey", null);
+        return exchWebService.commonFunctions.safeGetStringPref(this.prefs, "changekey", null);
     },
 
     set changeKey(aValue) {
-        this.prefs.setCharPref("changekey", aValue);
+        this.prefs.setStringPref("changekey", aValue);
     },
 
     loadContactsFromExchange: function _loadContactsFromExchange() {

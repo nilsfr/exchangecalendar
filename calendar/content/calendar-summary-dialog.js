@@ -262,9 +262,10 @@ exchEventSummaryDialog.prototype = {
 
         var self = this;
         var tmpObject = new erForewardItemRequest({
-                user: this.globalFunctions.safeGetCharPref(calPrefs, "ecDomain") + "\\" + this.globalFunctions.safeGetCharPref(calPrefs, "ecUser"),
-                mailbox: this.globalFunctions.safeGetCharPref(calPrefs, "ecMailbox"),
-                serverUrl: this.globalFunctions.safeGetCharPref(calPrefs, "ecServer"),
+                user: this.globalFunctions.safeGetStringPref(calPrefs, "ecDomain") + "\\" +
+                    this.globalFunctions.safeGetStringPref(calPrefs, "ecUser"),
+                mailbox: this.globalFunctions.safeGetStringPref(calPrefs, "ecMailbox"),
+                serverUrl: this.globalFunctions.safeGetStringPref(calPrefs, "ecServer"),
                 item: item,
                 attendees: attendee
             },
@@ -378,9 +379,9 @@ exchEventSummaryDialog.prototype = {
     loadInlineAttachment: function _loadInLineAttachment(aAttachmentId, aCalendarId, inlineCount) {
         var prefs = "extensions.exchangecalendar@extensions.1st-setup.nl." + aCalendarId + ".";
 
-        var serverUrl = this.globalFunctions.safeGetCharPref(null, prefs + "ecServer", "");
-        var username = this.globalFunctions.safeGetCharPref(null, prefs + "ecUser", "");
-        var domain = this.globalFunctions.safeGetCharPref(null, prefs + "ecDomain", "");
+        var serverUrl = this.globalFunctions.safeGetStringPref(null, prefs + "ecServer", "");
+        var username = this.globalFunctions.safeGetStringPref(null, prefs + "ecUser", "");
+        var domain = this.globalFunctions.safeGetStringPref(null, prefs + "ecDomain", "");
         if (username.indexOf("@") == -1) {
             if (domain != "") {
                 username = domain + "\\" + username;

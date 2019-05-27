@@ -125,20 +125,20 @@ exchCalPopUpMenu.prototype = {
             .getBranch("calendar.registry." + uuid + ".");
 
         // Get the name of the calendar. Is for in the prompt.
-        var calName = this.globalFunctions.safeGetCharPref(currentPrefs, "name", "");
+        var calName = this.globalFunctions.safeGetStringPref(currentPrefs, "name", "");
 
         var prompts = Cc["@mozilla.org/embedcomp/prompt-service;1"].
         getService(Ci.nsIPromptService);
 
         // Get mail address from imip identity key
-        var identity = this.globalFunctions.safeGetCharPref(currentPrefs, "imip.identity.key", "");
+        var identity = this.globalFunctions.safeGetStringPref(currentPrefs, "imip.identity.key", "");
         if (identity != "") {
             var exchWebServicesIdentityprefs = Cc["@mozilla.org/preferences-service;1"]
                 .getService(Ci.nsIPrefService)
                 .getBranch("mail.identity." + identity + ".");
 
             var mailbox = {
-                value: exchWebServicesIdentityprefs.getCharPref("useremail")
+                value: exchWebServicesIdentityprefs.getStringPref("useremail")
             };
         }
         else {
@@ -152,7 +152,7 @@ exchCalPopUpMenu.prototype = {
             // We have a entry for the old Exchange Provider.
 
             // We need to get the uri
-            var uri = this.globalFunctions.safeGetCharPref(currentPrefs, "uri", "");
+            var uri = this.globalFunctions.safeGetStringPref(currentPrefs, "uri", "");
             if (uri != "") {
                 // We have a uri. Check for domainname and username.
                 var ioService = Components.classes["@mozilla.org/network/io-service;1"]
@@ -170,23 +170,23 @@ exchCalPopUpMenu.prototype = {
                 var newPrefs = Cc["@mozilla.org/preferences-service;1"]
                     .getService(Ci.nsIPrefService)
                     .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl." + uuid + ".");
-                newPrefs.setCharPref("ecChangeKey", "");
-                newPrefs.setCharPref("ecDisplayname", "");
+                newPrefs.setStringPref("ecChangeKey", "");
+                newPrefs.setStringPref("ecDisplayname", "");
                 if (domainname) {
-                    newPrefs.setCharPref("ecDomain", domainname);
+                    newPrefs.setStringPref("ecDomain", domainname);
                 }
                 else {
-                    newPrefs.setCharPref("ecDomain", "");
+                    newPrefs.setStringPref("ecDomain", "");
                 }
-                newPrefs.setCharPref("ecFolderID", "");
-                newPrefs.setCharPref("ecFolderbase", "calendar");
-                newPrefs.setCharPref("ecFolderpath", "/");
-                newPrefs.setCharPref("ecMailbox", mailbox.value); // We have to ask this in a prompt
-                newPrefs.setCharPref("ecServer", tmpURI.scheme + "://" + tmpURI.hostPort + tmpURI.pathQueryRef);
-                newPrefs.setCharPref("ecUser", username);
+                newPrefs.setStringPref("ecFolderID", "");
+                newPrefs.setStringPref("ecFolderbase", "calendar");
+                newPrefs.setStringPref("ecFolderpath", "/");
+                newPrefs.setStringPref("ecMailbox", mailbox.value); // We have to ask this in a prompt
+                newPrefs.setStringPref("ecServer", tmpURI.scheme + "://" + tmpURI.hostPort + tmpURI.pathQueryRef);
+                newPrefs.setStringPref("ecUser", username);
 
-                currentPrefs.setCharPref("type", "exchangecalendar");
-                currentPrefs.setCharPref("refreshInterval", "1");
+                currentPrefs.setStringPref("type", "exchangecalendar");
+                currentPrefs.setStringPref("refreshInterval", "1");
 
                 Application.restart();
             }

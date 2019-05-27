@@ -61,7 +61,8 @@ exchOOFSettings.prototype = {
         this.calPrefs = Cc["@mozilla.org/preferences-service;1"]
             .getService(Ci.nsIPrefService)
             .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl." + calId + ".");
-        this._document.getElementById("exchWebService-oofSettings-title").value = this.globalFunctions.safeGetCharPref(this.calPrefs, "ecMailbox", "null");
+        this._document.getElementById("exchWebService-oofSettings-title").value =
+            this.globalFunctions.safeGetStringPref(this.calPrefs, "ecMailbox", "null");
         this.getOofSettings();
 
         this.internalEditorElement = this._document.getElementById("exchWebService-oof-editor-internal");
@@ -81,9 +82,10 @@ exchOOFSettings.prototype = {
 
         var self = this;
         var tmpObject = new erGetUserOofSettingsRequest({
-                user: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecDomain", "null") + "\\" + this.globalFunctions.safeGetCharPref(this.calPrefs, "ecUser", "null"),
-                mailbox: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecMailbox", "null"),
-                serverUrl: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecServer", "null")
+                user: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecDomain", "null") + "\\" +
+                    this.globalFunctions.safeGetStringPref(this.calPrefs, "ecUser", "null"),
+                mailbox: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecMailbox", "null"),
+                serverUrl: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecServer", "null")
             },
             function (aGetUserOofSettingsRequest, aOofSettings) {
                 self.getOofSettingsOK(aGetUserOofSettingsRequest, aOofSettings);
@@ -191,9 +193,10 @@ exchOOFSettings.prototype = {
 
         var self = this;
         var tmpObject = new erSetUserOofSettingsRequest({
-                user: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecDomain", "null") + "\\" + this.globalFunctions.safeGetCharPref(this.calPrefs, "ecUser", "null"),
-                mailbox: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecMailbox", "null"),
-                serverUrl: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecServer", "null"),
+                user: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecDomain", "null") + "\\" +
+                    this.globalFunctions.safeGetStringPref(this.calPrefs, "ecUser", "null"),
+                mailbox: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecMailbox", "null"),
+                serverUrl: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecServer", "null"),
 
                 oofState: oofState,
                 externalAudience: this._document.getElementById("exchWebService-oof-externalaudience").value,

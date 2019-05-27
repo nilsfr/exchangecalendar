@@ -40,7 +40,7 @@ exchDelegateCalendarSettings.prototype = {
         var prefs = Cc["@mozilla.org/preferences-service;1"]
             .getService(Ci.nsIPrefService)
             .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl." + calender_id + ".");
-        if (this.globalFunctions.safeGetCharPref(prefs, "ecFolderbase") !== 'calendar') {
+        if (this.globalFunctions.safeGetStringPref(prefs, "ecFolderbase") !== 'calendar') {
             return;
         }
 
@@ -111,7 +111,7 @@ exchDelegateCalendarSettings.prototype = {
                         var prefs = Cc["@mozilla.org/preferences-service;1"]
                             .getService(Ci.nsIPrefService)
                             .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl." + tmpUUID + ".");
-                        if (this.globalFunctions.safeGetCharPref(prefs, "delegateOwner") == thisCalId) {
+                        if (this.globalFunctions.safeGetStringPref(prefs, "delegateOwner") == thisCalId) {
                             if (userArr.indexOf(primaryAddress) == -1) {
                                 userArr.push(primaryAddress);
 
@@ -128,9 +128,15 @@ exchDelegateCalendarSettings.prototype = {
 
                                 //add user
                                 cboxcell = this._document.createElement("treecell");
-                                cboxcell.setAttribute("label", this.globalFunctions.safeGetCharPref(prefs, "name"));
+                                cboxcell.setAttribute(
+                                    "label",
+                                    this.globalFunctions.safeGetStringPref(prefs, "name")
+                                );
                                 cboxcell.setAttribute("name", "name");
-                                cboxcell.setAttribute("value", this.globalFunctions.safeGetCharPref(prefs, "ecMailbox"));
+                                cboxcell.setAttribute(
+                                    "value",
+                                    this.globalFunctions.safeGetStringPref(prefs, "ecMailbox")
+                                );
                                 cboxcell.setAttribute("editable", false);
                                 cboxrow.appendChild(cboxcell);
                                 cboxitem.appendChild(cboxrow);
@@ -223,7 +229,7 @@ exchDelegateCalendarSettings.prototype = {
         var calPrefs = Cc["@mozilla.org/preferences-service;1"]
             .getService(Ci.nsIPrefService)
             .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl." + calId + ".");
-        return this.globalFunctions.safeGetCharPref(calPrefs, "ecMailbox");
+        return this.globalFunctions.safeGetStringPref(calPrefs, "ecMailbox");
     },
 
     emailDomain: function _emailDomain(email) {
@@ -367,7 +373,8 @@ exchDelegateCalendarSettings.prototype = {
                     var prefs = Cc["@mozilla.org/preferences-service;1"]
                         .getService(Ci.nsIPrefService)
                         .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl." + tmpUUID + ".");
-                    if (email == this.globalFunctions.safeGetCharPref(prefs, "ecMailbox") && thisCalId == this.globalFunctions.safeGetCharPref(prefs, "delegateOwner")) {
+                    if (email == this.globalFunctions.safeGetStringPref(prefs, "ecMailbox") &&
+                        thisCalId == this.globalFunctions.safeGetStringPref(prefs, "delegateOwner")) {
                         var calManager = Cc["@mozilla.org/calendar/manager;1"]
                             .getService(Ci.calICalendarManager);
 
@@ -405,11 +412,11 @@ exchDelegateCalendarSettings.prototype = {
             .getService(Ci.nsIPrefService)
             .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl." + calId + ".");
 
-        var exchWebServicesgServer = this.globalFunctions.safeGetCharPref(calPrefs, "ecServer");
-        var exchWebServicesgUser = this.globalFunctions.safeGetCharPref(calPrefs, "ecUser");
-        var exchWebServicesgDomain = this.globalFunctions.safeGetCharPref(calPrefs, "ecDomain");
-        var exchWebServicesgFolderPath = this.globalFunctions.safeGetCharPref(calPrefs, "ecFolderpath");
-        var exchWebServicesgFolderBase = this.globalFunctions.safeGetCharPref(calPrefs, "ecFolderbase");
+        var exchWebServicesgServer = this.globalFunctions.safeGetStringPref(calPrefs, "ecServer");
+        var exchWebServicesgUser = this.globalFunctions.safeGetStringPref(calPrefs, "ecUser");
+        var exchWebServicesgDomain = this.globalFunctions.safeGetStringPref(calPrefs, "ecDomain");
+        var exchWebServicesgFolderPath = this.globalFunctions.safeGetStringPref(calPrefs, "ecFolderpath");
+        var exchWebServicesgFolderBase = this.globalFunctions.safeGetStringPref(calPrefs, "ecFolderbase");
         var exchWebServicesgMailbox = emailAddress;
         var exchWebServicesgFolderIdOfShare = "";
         var exchWebServicesgFolderId = "";
@@ -422,15 +429,15 @@ exchDelegateCalendarSettings.prototype = {
             .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl." + newCalId + ".");
 
         if (exchWebServicesCalPrefs) {
-            exchWebServicesCalPrefs.setCharPref("ecServer", exchWebServicesgServer);
-            exchWebServicesCalPrefs.setCharPref("ecUser", exchWebServicesgUser);
-            exchWebServicesCalPrefs.setCharPref("ecDomain", exchWebServicesgDomain);
-            exchWebServicesCalPrefs.setCharPref("ecFolderpath", exchWebServicesgFolderPath);
-            exchWebServicesCalPrefs.setCharPref("ecFolderbase", exchWebServicesgFolderBase);
-            exchWebServicesCalPrefs.setCharPref("ecMailbox", exchWebServicesgMailbox);
+            exchWebServicesCalPrefs.setStringPref("ecServer", exchWebServicesgServer);
+            exchWebServicesCalPrefs.setStringPref("ecUser", exchWebServicesgUser);
+            exchWebServicesCalPrefs.setStringPref("ecDomain", exchWebServicesgDomain);
+            exchWebServicesCalPrefs.setStringPref("ecFolderpath", exchWebServicesgFolderPath);
+            exchWebServicesCalPrefs.setStringPref("ecFolderbase", exchWebServicesgFolderBase);
+            exchWebServicesCalPrefs.setStringPref("ecMailbox", exchWebServicesgMailbox);
 
-            exchWebServicesCalPrefs.setCharPref("name", calendarName);
-            exchWebServicesCalPrefs.setCharPref("delegateOwner", calId);
+            exchWebServicesCalPrefs.setStringPref("name", calendarName);
+            exchWebServicesCalPrefs.setStringPref("delegateOwner", calId);
 
         }
 
@@ -438,8 +445,8 @@ exchDelegateCalendarSettings.prototype = {
             exchWebServicesgFolderID = "";
             exchWebServicesgChangeKey = "";
         }
-        exchWebServicesCalPrefs.setCharPref("ecFolderID", exchWebServicesgFolderID);
-        exchWebServicesCalPrefs.setCharPref("ecChangeKey", exchWebServicesgChangeKey);
+        exchWebServicesCalPrefs.setStringPref("ecFolderID", exchWebServicesgFolderID);
+        exchWebServicesCalPrefs.setStringPref("ecChangeKey", exchWebServicesgChangeKey);
 
         // Need to save the useOfflineCache preference separetly because it is not part of the main.
         this.prefs = Cc["@mozilla.org/preferences-service;1"]
@@ -464,7 +471,7 @@ exchDelegateCalendarSettings.prototype = {
             .getService(Ci.nsIPrefService)
             .getBranch("calendar.registry." + newCalId + ".");
 
-        calPrefs.setCharPref("name", calendarName);
+        calPrefs.setStringPref("name", calendarName);
 
         newCal.setProperty("color", "Yellow");
         if (!reminderOption) {
@@ -495,9 +502,10 @@ exchDelegateCalendarSettings.prototype = {
 
         var tmpObject = new erGetDelegateRequest({
                 delegatingItem: "calendar",
-                mailbox: this.globalFunctions.safeGetCharPref(calPrefs, "ecMailbox"),
-                user: this.globalFunctions.safeGetCharPref(calPrefs, "ecDomain") + "\\" + this.globalFunctions.safeGetCharPref(calPrefs, "ecUser"),
-                serverUrl: this.globalFunctions.safeGetCharPref(calPrefs, "ecServer"),
+                mailbox: this.globalFunctions.safeGetStringPref(calPrefs, "ecMailbox"),
+                user: this.globalFunctions.safeGetStringPref(calPrefs, "ecDomain") + "\\" +
+                    this.globalFunctions.safeGetStringPref(calPrefs, "ecUser"),
+                serverUrl: this.globalFunctions.safeGetStringPref(calPrefs, "ecServer"),
             },
             function (erGetDelegateRequest, aResp) {
                 self.erGetDelegateRequestOK(erGetDelegateRequest, aResp)
@@ -627,9 +635,10 @@ exchDelegateCalendarSettings.prototype = {
             var tmpObject = new erRemoveDelegateRequest({
                     delegatingItem: "calendar",
                     DelegateEmail: email,
-                    mailbox: this.globalFunctions.safeGetCharPref(calPrefs, "ecMailbox"),
-                    user: this.globalFunctions.safeGetCharPref(calPrefs, "ecDomain") + "\\" + this.globalFunctions.safeGetCharPref(calPrefs, "ecUser"),
-                    serverUrl: this.globalFunctions.safeGetCharPref(calPrefs, "ecServer"),
+                    mailbox: this.globalFunctions.safeGetStringPref(calPrefs, "ecMailbox"),
+                    user: this.globalFunctions.safeGetStringPref(calPrefs, "ecDomain") + "\\" +
+                        this.globalFunctions.safeGetStringPref(calPrefs, "ecUser"),
+                    serverUrl: this.globalFunctions.safeGetStringPref(calPrefs, "ecServer"),
                 },
                 function (erRemoveDelegateRequest, aResp) {
                     self.erRemoveDelegateRequestOK(erRemoveDelegateRequest, aResp)
@@ -725,9 +734,10 @@ exchDelegateCalendarSettings.prototype = {
                     delegatingItem: "calendar",
                     delegateproperties: delegateProperties,
                     delegateemail: email,
-                    mailbox: this.globalFunctions.safeGetCharPref(calPrefs, "ecMailbox"),
-                    user: this.globalFunctions.safeGetCharPref(calPrefs, "ecDomain") + "\\" + this.globalFunctions.safeGetCharPref(calPrefs, "ecUser"),
-                    serverUrl: this.globalFunctions.safeGetCharPref(calPrefs, "ecServer"),
+                    mailbox: this.globalFunctions.safeGetStringPref(calPrefs, "ecMailbox"),
+                    user: this.globalFunctions.safeGetStringPref(calPrefs, "ecDomain") + "\\" +
+                        this.globalFunctions.safeGetStringPref(calPrefs, "ecUser"),
+                    serverUrl: this.globalFunctions.safeGetStringPref(calPrefs, "ecServer"),
                 },
                 function (erAddDelegateRequest, aResp) {
                     self.erAddDelegateRequestOK(erAddDelegateRequest, aResp)
@@ -797,9 +807,10 @@ exchDelegateCalendarSettings.prototype = {
                     delegatingItem: "calendar",
                     delegateproperties: delegateProperties,
                     delegateemail: email,
-                    mailbox: this.globalFunctions.safeGetCharPref(calPrefs, "ecMailbox"),
-                    user: this.globalFunctions.safeGetCharPref(calPrefs, "ecDomain") + "\\" + this.globalFunctions.safeGetCharPref(calPrefs, "ecUser"),
-                    serverUrl: this.globalFunctions.safeGetCharPref(calPrefs, "ecServer"),
+                    mailbox: this.globalFunctions.safeGetStringPref(calPrefs, "ecMailbox"),
+                    user: this.globalFunctions.safeGetStringPref(calPrefs, "ecDomain") + "\\" +
+                        this.globalFunctions.safeGetStringPref(calPrefs, "ecUser"),
+                    serverUrl: this.globalFunctions.safeGetStringPref(calPrefs, "ecServer"),
                 },
                 function (erUpdateDelegateRequest, aResp) {
                     self.erUpdateDelegateRequestOK(erUpdateDelegateRequest, aResp)

@@ -89,9 +89,10 @@ exchForewardEvent.prototype = {
             .getService(Ci.nsIPrefService)
             .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl." + calId + ".");
         var tmpObject = new erForewardItemRequest({
-                user: tmpForewardEvent.globalFunctions.safeGetCharPref(calPrefs, "ecDomain") + "\\" + tmpForewardEvent.globalFunctions.safeGetCharPref(calPrefs, "ecUser"),
-                mailbox: tmpForewardEvent.globalFunctions.safeGetCharPref(calPrefs, "ecMailbox"),
-                serverUrl: tmpForewardEvent.globalFunctions.safeGetCharPref(calPrefs, "ecServer"),
+                user: tmpForewardEvent.globalFunctions.safeGetStringPref(calPrefs, "ecDomain") + "\\" +
+                    tmpForewardEvent.globalFunctions.safeGetStringPref(calPrefs, "ecUser"),
+                mailbox: tmpForewardEvent.globalFunctions.safeGetStringPref(calPrefs, "ecMailbox"),
+                serverUrl: tmpForewardEvent.globalFunctions.safeGetStringPref(calPrefs, "ecServer"),
                 item: item,
                 attendees: attendee,
                 changeKey: item.changeKey,

@@ -607,14 +607,14 @@ rtews.prototype = {
     getIdentities: function _getIdentities() {
         var pref = getCalendarPref(this.identity.email);
         if (pref) {
-            this.session.subscriptionId = this.globalFunctions.safeGetCharPref(pref, "subscriptionId");
+            this.session.subscriptionId = this.globalFunctions.safeGetStringPref(pref, "subscriptionId");
         }
     },
 
     saveIdentities: function _saveIdentities() {
         var pref = getCalendarPref(this.identity.email);
         if (pref) {
-            pref.setCharPref("subscriptionId", this.session.subscriptionId);
+            pref.setStringPref("subscriptionId", this.session.subscriptionId);
         }
 
     },
@@ -1111,12 +1111,12 @@ function getAllAccounts() {
                         details = {
                             "server": account.incomingServer.prettyName,
                             "serverURI": account.incomingServer.serverURI,
-                            "email": mivFunctions.safeGetCharPref(calAccount, "ecMailbox"),
-                            "username": mivFunctions.safeGetCharPref(calAccount, "ecUser"),
+                            "email": mivFunctions.safeGetStringPref(calAccount, "ecMailbox"),
+                            "username": mivFunctions.safeGetStringPref(calAccount, "ecUser"),
                             "name": identity.fullName,
-                            "domain": mivFunctions.safeGetCharPref(calAccount, "ecDomain"),
+                            "domain": mivFunctions.safeGetStringPref(calAccount, "ecDomain"),
                             "enabled": enabled,
-                            "ewsUrl": mivFunctions.safeGetCharPref(calAccount, "ecServer"),
+                            "ewsUrl": mivFunctions.safeGetStringPref(calAccount, "ecServer"),
                             "prefs": calAccount,
                         };
                     }
@@ -1152,12 +1152,12 @@ function getAllAccounts() {
                         details = {
                             "server": account.incomingServer.prettyName,
                             "serverURI": account.incomingServer.serverURI,
-                            "email": mivFunctions.safeGetCharPref(calAccount, "ecMailbox"),
-                            "username": mivFunctions.safeGetCharPref(calAccount, "ecUser"),
+                            "email": mivFunctions.safeGetStringPref(calAccount, "ecMailbox"),
+                            "username": mivFunctions.safeGetStringPref(calAccount, "ecUser"),
                             "name": identity.fullName,
-                            "domain": mivFunctions.safeGetCharPref(calAccount, "ecDomain"),
+                            "domain": mivFunctions.safeGetStringPref(calAccount, "ecDomain"),
                             "enabled": enabled,
-                            "ewsUrl": mivFunctions.safeGetCharPref(calAccount, "ecServer"),
+                            "ewsUrl": mivFunctions.safeGetStringPref(calAccount, "ecServer"),
                             "prefs": calAccount,
                         };
                     }
@@ -1241,7 +1241,7 @@ function getCalendarPref(aEmail) {
                         .getService(Ci.nsIPrefService)
                         .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl." + cal.id + ".");
 
-                    if (calPref.getCharPref("ecFolderbase") == "calendar") {
+                    if (calPref.getStringPref("ecFolderbase") == "calendar") {
                         return calPref;
                     }
 

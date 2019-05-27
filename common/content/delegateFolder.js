@@ -189,7 +189,7 @@ exchDelegateCalendarSettings.prototype = {
     addSharedUser: function _addSharedUser() {},
 
     calendarEmail: function _calendarEmail() {
-        return this.globalFunctions.safeGetCharPref(this.calPrefs, "ecMailbox");
+        return this.globalFunctions.safeGetStringPref(this.calPrefs, "ecMailbox");
     },
 
     emailDomain: function _emailDomain(email) {
@@ -274,9 +274,10 @@ exchDelegateCalendarSettings.prototype = {
         this.onActionLoad();
         //Get Folders in Inbox includes hidden
         var tmpObject = new erFindInboxFolderRequest({
-                user: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecDomain") + "\\" + this.globalFunctions.safeGetCharPref(this.calPrefs, "ecUser"),
-                mailbox: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecMailbox"),
-                serverUrl: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecServer"),
+                user: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecDomain") + "\\" +
+                    this.globalFunctions.safeGetStringPref(this.calPrefs, "ecUser"),
+                mailbox: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecMailbox"),
+                serverUrl: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecServer"),
                 folderBase: "msgfolderroot",
                 folderPath: "",
                 actionStart: Date.now()
@@ -302,9 +303,10 @@ exchDelegateCalendarSettings.prototype = {
 
                 //Get Total users and permissions
                 var tmpObject = new erGetFolderPermissionRequest({
-                        user: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecDomain") + "\\" + this.globalFunctions.safeGetCharPref(this.calPrefs, "ecUser"),
-                        mailbox: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecMailbox"),
-                        serverUrl: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecServer"),
+                        user: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecDomain") + "\\" +
+                            this.globalFunctions.safeGetStringPref(this.calPrefs, "ecUser"),
+                        mailbox: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecMailbox"),
+                        serverUrl: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecServer"),
                         folderID: this.folderId,
                         changeKey: this.changeKey,
                         actionStart: Date.now()
@@ -437,9 +439,10 @@ exchDelegateCalendarSettings.prototype = {
                     permissionSet: newDelegatesList,
                     folderId: this.folderId,
                     changeKey: this.changeKey,
-                    mailbox: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecMailbox"),
-                    user: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecDomain") + "\\" + this.globalFunctions.safeGetCharPref(this.calPrefs, "ecUser"),
-                    serverUrl: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecServer"),
+                    mailbox: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecMailbox"),
+                    user: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecDomain") + "\\" +
+                        this.globalFunctions.safeGetStringPref(this.calPrefs, "ecUser"),
+                    serverUrl: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecServer"),
                 },
                 function (erUpdateFolderPermissionRequest, folderId, changeKey) {
                     self.erUpdateFolderPermissionRequestOK(erUpdateFolderPermissionRequest, folderId, changeKey)
@@ -526,9 +529,10 @@ exchDelegateCalendarSettings.prototype = {
                     permissionSet: newDelegatesList,
                     folderId: this.folderId,
                     changeKey: this.changeKey,
-                    mailbox: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecMailbox"),
-                    user: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecDomain") + "\\" + this.globalFunctions.safeGetCharPref(this.calPrefs, "ecUser"),
-                    serverUrl: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecServer"),
+                    mailbox: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecMailbox"),
+                    user: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecDomain") + "\\" +
+                        this.globalFunctions.safeGetStringPref(this.calPrefs, "ecUser"),
+                    serverUrl: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecServer"),
                 },
                 function (erUpdateFolderPermissionRequest, folderId, changeKey) {
                     self.erUpdateFolderPermissionRequestOK(erUpdateFolderPermissionRequest, folderId, changeKey)
@@ -597,9 +601,10 @@ exchDelegateCalendarSettings.prototype = {
                     permissionSet: newDelegatesList,
                     folderId: this.folderId,
                     changeKey: this.changeKey,
-                    mailbox: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecMailbox"),
-                    user: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecDomain") + "\\" + this.globalFunctions.safeGetCharPref(this.calPrefs, "ecUser"),
-                    serverUrl: this.globalFunctions.safeGetCharPref(this.calPrefs, "ecServer"),
+                    mailbox: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecMailbox"),
+                    user: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecDomain") + "\\" +
+                        this.globalFunctions.safeGetStringPref(this.calPrefs, "ecUser"),
+                    serverUrl: this.globalFunctions.safeGetStringPref(this.calPrefs, "ecServer"),
                 },
                 function (erUpdateFolderPermissionRequest, folderId, changeKey) {
                     self.erUpdateFolderPermissionRequestOK(erUpdateFolderPermissionRequest, folderId, changeKey)

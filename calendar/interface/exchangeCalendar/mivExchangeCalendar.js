@@ -3397,13 +3397,6 @@ calExchangeCalendar.prototype = {
             // It might have changed between restarts.
             this.checkFolderPath();
 
-            /* Disabled as on startup we do not wish to use old syncstate until we get some offline caching implemented for this (2013-12-20)
-            			this.syncInboxState = this.globalFunctions.safeGetCharPref(this.prefs,"syncInboxState", "");
-            			if (this.syncInboxState != "") {
-            				this.saveToFile("syncInboxState.txt", this.syncInboxState);
-            				this.prefs.deleteBranch("syncInboxState");
-            			}
-            */
             if (this.useOfflineCache) {
                 this.syncStateInbox = this.loadFromFile("syncStateInbox.txt");
                 this.prefs.deleteBranch("syncStateInbox");
@@ -3443,27 +3436,27 @@ calExchangeCalendar.prototype = {
 
     },
 
-    getCharPref: function (aName) {
-        return this.globalFunctions.safeGetCharPref(this.prefs, aName, null);
+    getStringPref: function (aName) {
+        return this.globalFunctions.safeGetStringPref(this.prefs, aName, null);
     },
 
-    setCharPref: function (aName, aValue) {
+    setStringPref: function (aName, aValue) {
         if (this.prefs) {
-            return this.prefs.setCharPref(aName, aValue);
+            return this.prefs.setStringPref(aName, aValue);
         }
     },
 
     get user() {
-        var username = this.globalFunctions.safeGetCharPref(this.prefs, "ecUser", "");
+        var username = this.globalFunctions.safeGetStringPref(this.prefs, "ecUser", "");
         if (username.indexOf("@") > -1) {
             return username;
         }
         else {
             if (this.domain == "") {
-                return this.globalFunctions.safeGetCharPref(this.prefs, "ecUser", "");
+                return this.globalFunctions.safeGetStringPref(this.prefs, "ecUser", "");
             }
             else {
-                return this.domain + "\\" + this.globalFunctions.safeGetCharPref(this.prefs, "ecUser", "");
+                return this.domain + "\\" + this.globalFunctions.safeGetStringPref(this.prefs, "ecUser", "");
             }
         }
     },
@@ -3471,59 +3464,59 @@ calExchangeCalendar.prototype = {
     set user(value) {
         if ((value.indexOf("\\") > -1) && (value.indexOf("@") == -1)) {
             this.domain = value.substr(0, value.indexOf("\\"));
-            this.setCharPref("ecUser", value.substr(value.indexOf("\\") + 1));
+            this.setStringPref("ecUser", value.substr(value.indexOf("\\") + 1));
         }
         else {
-            this.setCharPref("ecUser", value);
+            this.setStringPref("ecUser", value);
         }
     },
 
     get domain() {
-        return this.globalFunctions.safeGetCharPref(this.prefs, "ecDomain", "");
+        return this.globalFunctions.safeGetStringPref(this.prefs, "ecDomain", "");
     },
 
     set domain(value) {
-        return this.setCharPref("ecDomain", value);
+        return this.setStringPref("ecDomain", value);
     },
 
     get mailbox() {
-        return this.globalFunctions.safeGetCharPref(this.prefs, "ecMailbox", "");
+        return this.globalFunctions.safeGetStringPref(this.prefs, "ecMailbox", "");
     },
 
     get serverUrl() {
-        return this.globalFunctions.safeGetCharPref(this.prefs, "ecServer", "");
+        return this.globalFunctions.safeGetStringPref(this.prefs, "ecServer", "");
     },
 
     get userDisplayName() {
-        return this.globalFunctions.safeGetCharPref(this.prefs, "ecDisplayname", "");
+        return this.globalFunctions.safeGetStringPref(this.prefs, "ecDisplayname", "");
     },
 
     get folderBase() {
-        return this.globalFunctions.safeGetCharPref(this.prefs, "ecFolderbase", "calendar");
+        return this.globalFunctions.safeGetStringPref(this.prefs, "ecFolderbase", "calendar");
     },
 
     get folderPath() {
-        return this.globalFunctions.safeGetCharPref(this.prefs, "ecFolderpath", "/");
+        return this.globalFunctions.safeGetStringPref(this.prefs, "ecFolderpath", "/");
     },
 
     get folderID() {
-        return this.globalFunctions.safeGetCharPref(this.prefs, "ecFolderID", null);
+        return this.globalFunctions.safeGetStringPref(this.prefs, "ecFolderID", null);
     },
 
     set folderID(aValue) {
-        this.prefs.setCharPref("ecFolderID", aValue);
+        this.prefs.setStringPref("ecFolderID", aValue);
     },
 
     get changeKey() {
-        return this.globalFunctions.safeGetCharPref(this.prefs, "ecChangeKey", null);
+        return this.globalFunctions.safeGetStringPref(this.prefs, "ecChangeKey", null);
     },
 
     set changeKey(aValue) {
-        this.prefs.setCharPref("ecChangeKey", aValue);
+        this.prefs.setStringPref("ecChangeKey", aValue);
     },
 
     get folderIDOfShare() {
-        return this.globalFunctions.safeGetCharPref(this.prefs, "ecFolderIDOfShare", "");
+        return this.globalFunctions.safeGetStringPref(this.prefs, "ecFolderIDOfShare", "");
     },
 
     get isPublicFolder() {
@@ -3552,7 +3545,7 @@ calExchangeCalendar.prototype = {
     },
 
     get autoResponseAnswer() {
-        return this.globalFunctions.safeGetCharPref(this.prefs, "ecAutoRespondAnswer", "TENTATIVE");
+        return this.globalFunctions.safeGetStringPref(this.prefs, "ecAutoRespondAnswer", "TENTATIVE");
     },
 
     get doAutoRemoveInvitationCancelation1() {
@@ -3572,7 +3565,7 @@ calExchangeCalendar.prototype = {
     },
 
     get autoRespondMeetingRequestMessage() {
-        return this.globalFunctions.safeGetCharPref(this.prefs, "ecAutoRespondMeetingRequestMessage", "");
+        return this.globalFunctions.safeGetStringPref(this.prefs, "ecAutoRespondMeetingRequestMessage", "");
     },
 
     get cacheStartupBefore() {
@@ -3770,7 +3763,6 @@ calExchangeCalendar.prototype = {
         }
 
         this.syncInboxState = syncState;
-        //this.prefs.setCharPref("syncInboxState", syncState);
         this.saveToFile("syncInboxState.txt", syncState);
 
         if ((creations.meetingrequests.length == 0) && (updates.meetingrequests.length == 0) && (deletions.meetingrequests.length == 0)
@@ -6504,18 +6496,17 @@ calExchangeCalendar.prototype = {
 
         if ((erGetItemsRequest.argument) && (erGetItemsRequest.argument.syncState)) {
             this.logInfo("getTaskItemsOK: We have a syncState to save.");
-            //this.prefs.setCharPref("syncState", erGetItemsRequest.argument.syncState);
 
             switch (erGetItemsRequest.argument.folderBase) {
             case "inbox":
                 this.syncStateInbox = erGetItemsRequest.argument.syncState;
                 this.saveToFile("syncStateInbox.txt", erGetItemsRequest.argument.syncState);
-                this.prefs.setCharPref("syncStateInbox", erGetItemsRequest.argument.syncState);
+                this.prefs.setStringPref("syncStateInbox", erGetItemsRequest.argument.syncState);
                 break;
             default:
                 this.syncState = erGetItemsRequest.argument.syncState;
                 this.saveToFile("syncState.txt", erGetItemsRequest.argument.syncState);
-                this.prefs.setCharPref("syncState", erGetItemsRequest.argument.syncState);
+                this.prefs.setStringPref("syncState", erGetItemsRequest.argument.syncState);
             }
         }
 
@@ -8304,13 +8295,13 @@ calExchangeCalendar.prototype = {
             if (erSyncFolderItemsRequest.folderBase === "inbox") {
                 this.syncStateInbox = syncState;
                 this.prefs.deleteBranch("syncStateInbox");
-                this.prefs.setCharPref("syncStateInbox", syncState);
+                this.prefs.setStringPref("syncStateInbox", syncState);
                 this.saveToFile("syncStateInbox.txt", syncState);
             }
             else {
                 this.syncState = syncState;
                 this.prefs.deleteBranch("syncState");
-                this.prefs.setCharPref("syncState", syncState);
+                this.prefs.setStringPref("syncState", syncState);
                 this.saveToFile("syncState.txt", syncState);
             }
             this.weAreSyncing = false;
@@ -8420,12 +8411,12 @@ calExchangeCalendar.prototype = {
     // Check if specified folder still exists. If so get new id and changekey.
     checkFolderPath: function _checkFolderPath() {
         // We first restore from prefs.js file from the last time.
-        var tmpFolderClass = this.globalFunctions.safeGetCharPref(this.prefs, "folderClass", null);
+        var tmpFolderClass = this.globalFunctions.safeGetStringPref(this.prefs, "folderClass", null);
         if (tmpFolderClass) {
             this.logInfo("Restore folderClass from prefs.js:" + tmpFolderClass);
             this.setSupportedItems(tmpFolderClass);
 
-            var tmpFolderProperties = this.globalFunctions.safeGetCharPref(this.prefs, "folderProperties", null);
+            var tmpFolderProperties = this.globalFunctions.safeGetStringPref(this.prefs, "folderProperties", null);
             if (tmpFolderProperties) {
                 this.saveToFile("folderProperties.txt", tmpFolderProperties);
                 this.prefs.deleteBranch("folderProperties");
@@ -8515,7 +8506,7 @@ calExchangeCalendar.prototype = {
     setSupportedItems: function _setSupportedItems(aFolderClass) {
         this.folderClass = aFolderClass;
         this.logInfo("Set folderClass=" + this.folderClass.toString());
-        this.prefs.setCharPref("folderClass", aFolderClass);
+        this.prefs.setStringPref("folderClass", aFolderClass);
         var itemType = Ci.calICalendar.ITEM_FILTER_TYPE_EVENT;
 
         switch (aFolderClass.toString()) {
@@ -8665,11 +8656,11 @@ calExchangeCalendar.prototype = {
 
         this.folderProperties = erGetFolderRequest.properties;
         this.saveToFile("folderProperties.txt", this.folderProperties.toString());
-        //this.prefs.setCharPref("folderProperties", this.folderProperties.toString());
+        //this.prefs.setStringPref("folderProperties", this.folderProperties.toString());
 
-        this.prefs.setCharPref("lastServerVersion", this.exchangeStatistics.getServerVersion(this.serverUrl));
-        this.prefs.setCharPref("lastMajorVersion", this.exchangeStatistics.getMajorVersion(this.serverUrl));
-        this.prefs.setCharPref("lastMinorVersion", this.exchangeStatistics.getMinorVersion(this.serverUrl));
+        this.prefs.setStringPref("lastServerVersion", this.exchangeStatistics.getServerVersion(this.serverUrl));
+        this.prefs.setStringPref("lastMajorVersion", this.exchangeStatistics.getMajorVersion(this.serverUrl));
+        this.prefs.setStringPref("lastMinorVersion", this.exchangeStatistics.getMinorVersion(this.serverUrl));
 
         this.folderIsNotAvailable = true;
 
@@ -8796,9 +8787,9 @@ calExchangeCalendar.prototype = {
     },
 
     setServerVersion: function _setServerVersion() {
-        this.prefServerVersion = this.globalFunctions.safeGetCharPref(this.prefs, "lastServerVersion", null);
-        this.prefMajorVersion = this.globalFunctions.safeGetCharPref(this.prefs, "lastMajorVersion", null);
-        this.prefMinorVersion = this.globalFunctions.safeGetCharPref(this.prefs, "lastMinorVersion", null);
+        this.prefServerVersion = this.globalFunctions.safeGetStringPref(this.prefs, "lastServerVersion", null);
+        this.prefMajorVersion = this.globalFunctions.safeGetStringPref(this.prefs, "lastMajorVersion", null);
+        this.prefMinorVersion = this.globalFunctions.safeGetStringPref(this.prefs, "lastMinorVersion", null);
         if (this.prefServerVersion) {
             this.logInfo("Restored prefServerVersion from prefs.js:" + this.prefServerVersion + " (" + this.prefMajorVersion + "." + this.prefMinorVersion + ")");
             this.exchangeStatistics.setServerVersion(this.serverUrl, this.prefServerVersion, this.prefMajorVersion, this.prefMinorVersion);
@@ -10919,9 +10910,9 @@ function convertToVersion1() {
             if (tmpField == "uri") {
                 mivFunctions.LOG("Going to check calendar registry '" + tmpUUID + "' if it needs to be updated.");
 
-                var tmpType = mivFunctions.safeGetCharPref(null, "calendar.registry." + tmpUUID + ".type", null, false);
+                var tmpType = mivFunctions.safeGetStringPref(null, "calendar.registry." + tmpUUID + ".type", null, false);
 
-                var tmpURI = mivFunctions.safeGetCharPref(null, "calendar.registry." + children[index], null, false);
+                var tmpURI = mivFunctions.safeGetStringPref(null, "calendar.registry." + children[index], null, false);
                 if ((tmpURI != "https://auto/" + tmpUUID) && (tmpType == "exchangecalendar")) {
                     // update uri preference
                     mivFunctions.LOG("Going to upgrade calendar registry '" + tmpUUID + "'");
@@ -10929,7 +10920,7 @@ function convertToVersion1() {
                     var updatePrefs = Cc["@mozilla.org/preferences-service;1"]
                         .getService(Ci.nsIPrefService)
                         .getBranch("calendar.registry." + tmpUUID + ".");
-                    updatePrefs.setCharPref("uri", "https://auto/" + tmpUUID);
+                    updatePrefs.setStringPref("uri", "https://auto/" + tmpUUID);
 
                     var updatePrefs = Cc["@mozilla.org/preferences-service;1"]
                         .getService(Ci.nsIPrefService)

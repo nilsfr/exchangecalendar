@@ -29,7 +29,7 @@ function tag(hdr) {
 function gCP(pref) {
     var prefService = Cc["@mozilla.org/preferences-service;1"]
         .getService(Ci.nsIPrefService);
-    return prefService.getBranch("extensions.extras.").getCharPref(pref);
+    return prefService.getBranch("extensions.extras.").getStringPref(pref);
 }
 
 function gBP(pref) {

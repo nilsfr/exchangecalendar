@@ -73,8 +73,8 @@ exchExchangeCloneSettings.prototype = {
             .getService(Ci.nsIPrefService)
             .getBranch("calendar.registry." + newCalId + ".");
 
-        toCalPrefs.setCharPref("name", this._document.getElementById("exchWebService_clone_description").value);
-        toCalPrefs.setCharPref("uri", "https://auto/" + newCalId);
+        toCalPrefs.setStringPref("name", this._document.getElementById("exchWebService_clone_description").value);
+        toCalPrefs.setStringPref("uri", "https://auto/" + newCalId);
 
         // Store the new cal id for the calling process of this dialog.
         this._window.arguments[0].newCalId = newCalId;
