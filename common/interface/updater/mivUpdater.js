@@ -227,7 +227,7 @@ mivUpdater.prototype = {
         if (aAddon) {
             var url = "https://api.github.com/repos/ExchangeCalendar/exchangecalendar/releases";
             this._addon = aAddon;
-            this._updateURL = this.safeGetCharPref(null, EXTENSION_MAINPART + this._extensionID, url, true);
+            this._updateURL = this.safeGetStringPref(null, EXTENSION_MAINPART + this._extensionID, url, true);
             this._updateURL = url;
             this.xmlReq = new XMLHttpRequest();
 
@@ -247,7 +247,7 @@ mivUpdater.prototype = {
 
             var xulRuntime = Cc["@mozilla.org/xre/app-info;1"].getService(Ci.nsIXULRuntime);
 
-            var id = this.safeGetCharPref(null, EXTENSION_MAINPART + "id", this.getUUID(), true);
+            var id = this.safeGetStringPref(null, EXTENSION_MAINPART + "id", this.getUUID(), true);
             var localeService = Cc["@mozilla.org/intl/nslocaleservice;1"].getService(Ci.nsILocaleService);
 
             this.xmlReq.open("GET", this._updateURL, true);
@@ -397,7 +397,7 @@ mivUpdater.prototype = {
         };
     },
 
-    safeGetCharPref: function _safeGetCharPref(aBranch, aName, aDefaultValue, aCreateWhenNotAvailable) {
+    safeGetStringPref: function _safeGetStringPref(aBranch, aName, aDefaultValue, aCreateWhenNotAvailable) {
         if (!aBranch) {
             var realBranche = this.getBranch(aName);
             if (!realBranche.branch) {
@@ -412,16 +412,16 @@ mivUpdater.prototype = {
         }
 
         try {
-            return aBranch.getCharPref(aName);
+            return aBranch.getStringPref(aName);
         }
         catch (err) {
             if (aCreateWhenNotAvailable) {
                 try {
-                    aBranch.setCharPref(aName, aDefaultValue);
+                    aBranch.setStringPref(aName, aDefaultValue);
                 }
                 catch (er) {
                     aBranch.deleteBranch(aName);
-                    aBranch.setCharPref(aName, aDefaultValue);
+                    aBranch.setStringPref(aName, aDefaultValue);
                 }
             }
             return aDefaultValue;

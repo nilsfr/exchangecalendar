@@ -230,7 +230,7 @@ mivFunctions.prototype = {
         };
     },
 
-    safeGetCharPref: function _safeGetCharPref(aBranch, aName, aDefaultValue, aCreateWhenNotAvailable) {
+    safeGetStringPref: function _safeGetStringPref(aBranch, aName, aDefaultValue, aCreateWhenNotAvailable) {
         if (!aBranch) {
             let realBranch = this.getBranch(aName);
             if (!realBranch.branch) {
@@ -245,16 +245,16 @@ mivFunctions.prototype = {
         }
 
         try {
-            return aBranch.getCharPref(aName);
+            return aBranch.getStringPref(aName);
         }
         catch (err) {
             if (aCreateWhenNotAvailable) {
                 try {
-                    aBranch.setCharPref(aName, aDefaultValue);
+                    aBranch.setStringPref(aName, aDefaultValue);
                 }
                 catch (er) {
                     aBranch.deleteBranch(aName);
-                    aBranch.setCharPref(aName, aDefaultValue);
+                    aBranch.setStringPref(aName, aDefaultValue);
                 }
             }
             return aDefaultValue;
@@ -452,7 +452,7 @@ mivFunctions.prototype = {
     writeToLogFile: function _writeToLogFile(aString) {
         var prefB = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefBranch);
 
-        var file = this.safeGetCharPref(prefB, "extensions.1st-setup.debug.file", "/tmp/exchangecalendar.log", true);
+        var file = this.safeGetStringPref(prefB, "extensions.1st-setup.debug.file", "/tmp/exchangecalendar.log", true);
         if (file != "") {
             // file is nsIFile, data is a string  
             var localFile = Cc["@mozilla.org/file/local;1"]
@@ -627,7 +627,7 @@ mivFunctions.prototype = {
                 count++;
                 switch (aFromPrefs.getPrefType(children[index])) {
                 case aFromPrefs.PREF_STRING:
-                    aToPrefs.setCharPref(children[index], aFromPrefs.getCharPref(children[index]));
+                    aToPrefs.setStringPref(children[index], aFromPrefs.getStringPref(children[index]));
                     break;
                 case aFromPrefs.PREF_INT:
                     aToPrefs.setIntPref(children[index], aFromPrefs.getIntPref(children[index]));

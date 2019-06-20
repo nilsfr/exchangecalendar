@@ -61,7 +61,7 @@ mivExchangeAccountManager.prototype = {
 
     // External methods 
     getAccountIds: function _getAccountIds() {
-        var ids = this.globalFunctions.safeGetCharPref(this.prefs, "ids", "");
+        var ids = this.globalFunctions.safeGetStringPref(this.prefs, "ids", "");
         this.logInfo("ids:" + ids);
         return ids.split(",");
     },
@@ -101,7 +101,7 @@ mivExchangeAccountManager.prototype = {
                     case this.prefs.PREF_STRING:
                         account[attribute] = {
                             type: "string",
-                            value: this.prefs.getCharPref(children[index])
+                            value: this.prefs.getStringPref(children[index])
                         };
                         break;
                     case this.prefs.PREF_INT:
@@ -144,7 +144,7 @@ mivExchangeAccountManager.prototype = {
             if (index != "id") {
                 switch (aAccount[index].type) {
                 case "string":
-                    this.prefs.setCharPref(aAccount.id + "." + index, aAccount[index].value);
+                    this.prefs.setStringPref(aAccount.id + "." + index, aAccount[index].value);
                     break;
                 case "int":
                     this.prefs.setIntPref(aAccount.id + "." + index, aAccount[index].value);
@@ -170,7 +170,7 @@ mivExchangeAccountManager.prototype = {
         if (!idExists) {
             ids.push(aAccount.id);
             ids = ids.join(",");
-            this.prefs.setCharPref("ids", ids);
+            this.prefs.setStringPref("ids", ids);
         }
     },
 
@@ -197,7 +197,7 @@ mivExchangeAccountManager.prototype = {
         else {
             newIds = "";
         }
-        this.prefs.setCharPref("ids", newIds);
+        this.prefs.setStringPref("ids", newIds);
     },
 
     // Internal methods 

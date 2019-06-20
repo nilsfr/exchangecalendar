@@ -533,9 +533,9 @@ exchAttachments.prototype = {
 
         var prefs = "extensions.exchangecalendar@extensions.1st-setup.nl." + getParams.calendarid + ".";
 
-        var serverUrl = this.globalFunctions.safeGetCharPref(null, prefs + "ecServer", "");
-        var username = this.globalFunctions.safeGetCharPref(null, prefs + "ecUser", "");
-        var domain = this.globalFunctions.safeGetCharPref(null, prefs + "ecDomain", "");
+        var serverUrl = this.globalFunctions.safeGetStringPref(null, prefs + "ecServer", "");
+        var username = this.globalFunctions.safeGetStringPref(null, prefs + "ecUser", "");
+        var domain = this.globalFunctions.safeGetStringPref(null, prefs + "ecDomain", "");
         if (username.indexOf("@") == -1) {
             if (domain != "") {
                 username = domain + "\\" + username;

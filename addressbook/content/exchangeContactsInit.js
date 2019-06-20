@@ -32,8 +32,8 @@ function initPreferences() {
         .getService(Ci.nsIPrefService)
         .getBranch("ldap_2.servers.exchangecontacts.");
 
-    exchangeContactsInitPrefs.setCharPref("description", "Exchange Contacts");
-    exchangeContactsInitPrefs.setCharPref("uri", "exchangecalendar-addressbook://");
+    exchangeContactsInitPrefs.setStringPref("description", "Exchange Contacts");
+    exchangeContactsInitPrefs.setStringPref("uri", "exchangecalendar-addressbook://");
 
     Cc["@mozilla.org/preferences-service;1"]
         .getService(Ci.nsIPrefService).savePrefFile(null);

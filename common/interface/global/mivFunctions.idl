@@ -44,7 +44,7 @@ interface mivFunctions : nsISupports
 
   jsval	getBranch(in AUTF8String aName);
 
-  AUTF8String safeGetCharPref(in jsval aBranch, in AUTF8String aName, [optional] in AUTF8String aDefaultValue, [optional] in boolean aCreateWhenNotAvailable);
+  AUTF8String safeGetStringPref(in jsval aBranch, in AUTF8String aName, [optional] in AUTF8String aDefaultValue, [optional] in boolean aCreateWhenNotAvailable);
 
   boolean safeGetBoolPref(in jsval aBranch, in AUTF8String aName, [optional] in boolean aDefaultValue, [optional] in boolean aCreateWhenNotAvailable);
 
