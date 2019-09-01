@@ -2,7 +2,7 @@
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:em="http://www.mozilla.org/2004/em-rdf#">
     <Description about="urn:mozilla:install-manifest">
-        <em:id>exchangecalendar@github.com</em:id>
+        <em:id>github.com_exchangecalendar@community.invalid</em:id>
         <em:version>@VERSION@</em:version>
         <em:targetApplication>
             <Description>
