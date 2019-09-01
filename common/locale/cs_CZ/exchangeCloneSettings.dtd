@@ -1,6 +1,4 @@
 <!ENTITY label.acceptbutton "Uložit">
 <!ENTITY label.cancelbutton "Storno">
 
-<!ENTITY label.ecExchangeSettings.title "Nový popis:">
-
-
+<!ENTITY label.ecExchangeSettings.title "Název kalendáře:">

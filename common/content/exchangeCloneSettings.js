@@ -40,7 +40,7 @@ exchExchangeCloneSettings.prototype = {
         if (vbox) {
             let eList = vbox.getElementsByAttribute('required', 'true');
             for (let i = 0; i < eList.length && canAdvance; ++i) {
-                canAdvance = (eList[i].value != "");
+                canAdvance = (eList[i].value !== "");
             }
 
             if (canAdvance) {
@@ -60,16 +60,16 @@ exchExchangeCloneSettings.prototype = {
     },
 
     onSave: function _onSave() {
-        var oldCalId = this._window.arguments[0].calendar.id;
+        let oldCalId = this._window.arguments[0].calendar.id;
 
         // Clone the Calendar settings to a new cal id.
-        var newCalId = this.globalFunctions.copyCalendarSettings(oldCalId);
+        let newCalId = this.globalFunctions.copyCalendarSettings(oldCalId);
 
         // Save settings in dialog to new cal id.
         tmpSettingsOverlay.exchWebServicesSaveExchangeSettingsByCalId(newCalId);
 
         // Save the description/name for the calendar and create a new unique uri.
-        var toCalPrefs = Cc["@mozilla.org/preferences-service;1"]
+        let toCalPrefs = Cc["@mozilla.org/preferences-service;1"]
             .getService(Ci.nsIPrefService)
             .getBranch("calendar.registry." + newCalId + ".");
 
@@ -85,7 +85,6 @@ exchExchangeCloneSettings.prototype = {
             .getService(Ci.nsIPrefService).savePrefFile(null);
         return true;
     },
-
-}
+};
 
 var tmpExchangeCloneSettings = new exchExchangeCloneSettings(document, window);
