@@ -358,6 +358,31 @@ mivExchangeEvent.prototype = {
             }
 
 
+            // IsAllDayEvent must be inserted before Start/End, as updating the latter won't work if the event was all day previously
+            // See also: https://github.com/ExchangeCalendar/exchangecalendar/issues/286
+            if (this._newStartDate) {
+                this._nonPersonalDataChanged = true;
+                if (this._newStartDate.isDate) {
+                    this.addSetItemField(updates, "IsAllDayEvent", "true");
+                }
+                else {
+                    this.addSetItemField(updates, "IsAllDayEvent", "false");
+                }
+
+            }
+            else {
+                if (this._newEndDate) {
+                    this._nonPersonalDataChanged = true;
+                    if (this._newEndDate.isDate) {
+                        this.addSetItemField(updates, "IsAllDayEvent", "true");
+                    }
+                    else {
+                        this.addSetItemField(updates, "IsAllDayEvent", "false");
+                    }
+
+                }
+            }
+
             if (this._newStartDate) {
                 var tmpStart = this._newStartDate.clone();
                 if (this._newStartDate.isDate) {
@@ -440,29 +465,6 @@ mivExchangeEvent.prototype = {
                     tmpTimeZone.addChildTagObject(tmpTransitions);
 
                     this.addSetItemField(updates, "EndTimeZone", tmpTimeZone, null, true);
-                }
-            }
-
-            if (this._newStartDate) {
-                this._nonPersonalDataChanged = true;
-                if (this._newStartDate.isDate) {
-                    this.addSetItemField(updates, "IsAllDayEvent", "true");
-                }
-                else {
-                    this.addSetItemField(updates, "IsAllDayEvent", "false");
-                }
-
-            }
-            else {
-                if (this._newEndDate) {
-                    this._nonPersonalDataChanged = true;
-                    if (this._newEndDate.isDate) {
-                        this.addSetItemField(updates, "IsAllDayEvent", "true");
-                    }
-                    else {
-                        this.addSetItemField(updates, "IsAllDayEvent", "false");
-                    }
-
                 }
             }
 
