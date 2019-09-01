@@ -38,6 +38,7 @@
 -->
 <?xml-stylesheet type="text/css" href="chrome://global/skin/"?>
 <?xml-stylesheet type="text/css" href="chrome://global/skin/xul.css"?>
+<?xml-stylesheet type="text/css" href="chrome://messenger/content/bindings.css"?>
 <?xml-stylesheet type="text/css" href="chrome://messenger/skin/messengercompose/messengercompose.css"?>
 <?xml-stylesheet type="text/css" href="chrome://exchangecommon/skin/oofSettings.css"?>
 <?xml-stylesheet type="text/css" href="chrome://exchangecommon/skin/exchWebServiceEditor.css"?>
