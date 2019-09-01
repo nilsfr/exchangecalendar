@@ -1,6 +1,18 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [5.0.0-beta1] - 2019-09-01
+### Changed
+- Improved settings window usability (#241)
+- Updated translations (#274)
+- Improved calender clone window (#280)
+
+### Fixed
+- Fixed calendars from public calendars not working (#161)
+- Fixed adding calendar when name contains special character (#262)
+- Fixed missing Out of Office date and time pickers (#215)
+- Fixed saving of start and end time when an event is no longer full day (#286)
+
 ## [5.0.0-alpha3] - 2019-02-25
 ### Added
 - Hungarian translation (#234)
