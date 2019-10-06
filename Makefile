@@ -1,5 +1,5 @@
-version = $(shell cat VERSION)
-excludefromxpi = .git/\* .gitignore \*/.gitignore .tx/\* \*.xpi \*.sh update\*.txt Makefile VERSION install.rdf.template
+version = $(shell jq -r '.version' manifest.json)
+excludefromxpi = .git/\* .gitignore \*/.gitignore .tx/\* \*.xpi \*.sh update\*.txt Makefile
 releasebranch = ec-4.0
 update = disable
 xpi = exchangecalendar-v$(version).xpi
@@ -9,12 +9,9 @@ xpi = exchangecalendar-v$(version).xpi
 # Default target is build package
 build: $(xpi)
 
-$(xpi): install.rdf defaults/preferences/update.js
+$(xpi): defaults/preferences/update.js
 	rm -f $@
 	zip -r $@ -x $(excludefromxpi) -- .
-
-install.rdf: install.rdf.template
-	sed 's/@VERSION@/$(version)/g' $< > $@
 
 defaults/preferences/update.js:
 	cp defaults/preferences/update_$(update).txt $@
