@@ -20,12 +20,12 @@
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 function mivExchangeAuthPromptProvider() {
     //dump("\nmivExchangeAuthPromptProvider.init\n");
@@ -51,7 +51,6 @@ mivExchangeAuthPromptProvider.prototype = {
     classID: components.ID("{" + mivExchangeAuthPromptProviderGUID + "}"),
     contractID: "@1st-setup.nl/exchange/authpromptprovider;1",
     flags: Ci.nsIClassInfo.SINGLETON || Ci.nsIClassInfo.THREADSAFE,
-    implementationLanguage: Ci.nsIProgrammingLanguage.JAVASCRIPT,
 
     // External methods
 

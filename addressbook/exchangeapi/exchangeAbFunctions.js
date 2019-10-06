@@ -22,15 +22,15 @@
  * ***** BEGIN LICENSE BLOCK *****/
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
-Cu.import("resource:///modules/iteratorUtils.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource:///modules/iteratorUtils.jsm");
 
-Cu.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 
 var EXPORTED_SYMBOLS = [];
 
@@ -48,7 +48,7 @@ exchWebService.commonAbFunctions = {
      */
     getAccounts: function _getAccounts() {
         try {
-            var accounts = exchWebService.commonAbFunctions.exchangePrefs.getCharPref("accounts");
+            var accounts = exchWebService.commonAbFunctions.exchangePrefs.getStringPref("accounts");
         }
         catch (err) {
             this.logInfo("no Exchange accounts found.");
@@ -64,7 +64,7 @@ exchWebService.commonAbFunctions = {
         var newUUID = exchWebService.commonFunctions.getUUID();
 
         try {
-            var accounts = exchWebService.commonAbFunctions.exchangePrefs.getCharPref("accounts");
+            var accounts = exchWebService.commonAbFunctions.exchangePrefs.getStringPref("accounts");
             if (accounts != "") {
                 accounts = accounts + "," + newUUID;
             }
@@ -76,22 +76,22 @@ exchWebService.commonAbFunctions = {
             var accounts = newUUID;
         }
 
-        exchWebService.commonAbFunctions.exchangePrefs.setCharPref("accounts", accounts);
+        exchWebService.commonAbFunctions.exchangePrefs.setStringPref("accounts", accounts);
 
-        exchWebService.commonAbFunctions.exchangePrefs.setCharPref("account." + newUUID + ".description", aAccountObject.description);
-        exchWebService.commonAbFunctions.exchangePrefs.setCharPref("account." + newUUID + ".mailbox", aAccountObject.mailbox);
-        exchWebService.commonAbFunctions.exchangePrefs.setCharPref("account." + newUUID + ".user", aAccountObject.user);
-        exchWebService.commonAbFunctions.exchangePrefs.setCharPref("account." + newUUID + ".domain", aAccountObject.domain);
-        exchWebService.commonAbFunctions.exchangePrefs.setCharPref("account." + newUUID + ".server", aAccountObject.serverUrl);
+        exchWebService.commonAbFunctions.exchangePrefs.setStringPref("account." + newUUID + ".description", aAccountObject.description);
+        exchWebService.commonAbFunctions.exchangePrefs.setStringPref("account." + newUUID + ".mailbox", aAccountObject.mailbox);
+        exchWebService.commonAbFunctions.exchangePrefs.setStringPref("account." + newUUID + ".user", aAccountObject.user);
+        exchWebService.commonAbFunctions.exchangePrefs.setStringPref("account." + newUUID + ".domain", aAccountObject.domain);
+        exchWebService.commonAbFunctions.exchangePrefs.setStringPref("account." + newUUID + ".server", aAccountObject.serverUrl);
 
-        exchWebService.commonAbFunctions.exchangePrefs.setCharPref("account." + newUUID + ".folderbase", aAccountObject.folderBase);
-        exchWebService.commonAbFunctions.exchangePrefs.setCharPref("account." + newUUID + ".folderpath", aAccountObject.folderPath);
+        exchWebService.commonAbFunctions.exchangePrefs.setStringPref("account." + newUUID + ".folderbase", aAccountObject.folderBase);
+        exchWebService.commonAbFunctions.exchangePrefs.setStringPref("account." + newUUID + ".folderpath", aAccountObject.folderPath);
 
         if (aAccountObject.folderID) {
-            exchWebService.commonAbFunctions.exchangePrefs.setCharPref("account." + newUUID + ".folderid", aAccountObject.folderID);
+            exchWebService.commonAbFunctions.exchangePrefs.setStringPref("account." + newUUID + ".folderid", aAccountObject.folderID);
         }
         if (aAccountObject.changeKey) {
-            exchWebService.commonAbFunctions.exchangePrefs.setCharPref("account." + newUUID + ".changekey", aAccountObject.changeKey);
+            exchWebService.commonAbFunctions.exchangePrefs.setStringPref("account." + newUUID + ".changekey", aAccountObject.changeKey);
         }
 
         return newUUID;
@@ -101,20 +101,22 @@ exchWebService.commonAbFunctions = {
         this.logInfo("deleteAccount:" + aUUID);
         var currentAccounts = this.getAccounts();
         var newAccounts = [];
-        for each(var account in currentAccounts) {
-            this.logInfo("  Account:" + account);
-            if (account != aUUID) {
-                newAccounts.push(account);
+        if (currentAccounts) {
+            for (var account of Object.values(currentAccounts)) {
+                this.logInfo("  Account:" + account);
+                if (account != aUUID) {
+                    newAccounts.push(account);
+                }
             }
         }
         this.logInfo("  accounts:" + newAccounts.join(","));
-        exchWebService.commonAbFunctions.exchangePrefs.setCharPref("accounts", newAccounts.join(","));
+        exchWebService.commonAbFunctions.exchangePrefs.setStringPref("accounts", newAccounts.join(","));
         exchWebService.commonAbFunctions.exchangePrefs.deleteBranch("account." + aUUID);
     },
 
     getDescription: function _getDescription(aUUID) {
         try {
-            return exchWebService.commonAbFunctions.exchangePrefs.getCharPref("account." + aUUID + ".description");
+            return exchWebService.commonAbFunctions.exchangePrefs.getStringPref("account." + aUUID + ".description");
         }
         catch (err) {
             return "";
@@ -122,16 +124,16 @@ exchWebService.commonAbFunctions = {
     },
 
     setDescription: function _setDescription(aUUID, aValue) {
-        exchWebService.commonAbFunctions.exchangePrefs.setCharPref("account." + aUUID + ".description", aValue);
+        exchWebService.commonAbFunctions.exchangePrefs.setStringPref("account." + aUUID + ".description", aValue);
     },
 
     getRootUUID: function _getRootUUID() {
         try {
-            return exchWebService.commonAbFunctions.exchangePrefs.getCharPref("rootUUID");
+            return exchWebService.commonAbFunctions.exchangePrefs.getStringPref("rootUUID");
         }
         catch (err) {
             var newRootUUID = exchWebService.commonFunctions.getUUID();
-            exchWebService.commonAbFunctions.exchangePrefs.setCharPref("rootUUID", newRootUUID);
+            exchWebService.commonAbFunctions.exchangePrefs.setStringPref("rootUUID", newRootUUID);
             return newRootUUID;
         }
     },
@@ -144,8 +146,7 @@ exchWebService.commonAbFunctions = {
             return false;
         }
 
-        // Trim leadin and trailing spaces
-        var cleanQuery = exchWebService.commonFunctions.trim(aQuery);
+        var cleanQuery = aQuery.trim();
 
         // Check for round brackets.
         if ((cleanQuery.substr(0, 1) != "(") || (cleanQuery.substr(cleanQuery.length - 1, 1) != ")")) {

@@ -33,21 +33,18 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 
-var Cu = Components.utils;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://calendar/modules/calUtils.jsm");
-Cu.import("resource://calendar/modules/calAlarmUtils.jsm");
-Cu.import("resource://calendar/modules/calProviderUtils.jsm");
-Cu.import("resource://calendar/modules/calAuthUtils.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://exchangecommon/ecFunctions.js");
-Cu.import("resource://exchangecommon/ecExchangeRequest.js");
-Cu.import("resource://exchangecommon/soapFunctions.js");
+ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
-Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
+ChromeUtils.import("resource://exchangecommon/soapFunctions.js");
+
+ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 var EXPORTED_SYMBOLS = ["erForewardItemRequest"];
 
@@ -86,16 +83,18 @@ erForewardItemRequest.prototype = {
         var forwardItem = req.addChildTag("Items", "nsMessages", null).addChildTag("ForwardItem", "nsTypes", null);
         var toRecipients = forwardItem.addChildTag("ToRecipients", "nsTypes", null);
 
-        for each(let emailId in this.argument.attendees) {
-            var email = new String(emailId);
-            var start = email.indexOf('<');
-            if (start < 0) {
-                toRecipients.addChildTag("Mailbox", "nsTypes", null).addChildTag("EmailAddress", "nsTypes", email);
-            }
-            else {
-                email = email.substr(start + 1);
-                var end = email.indexOf('>');
-                toRecipients.addChildTag("Mailbox", "nsTypes", null).addChildTag("EmailAddress", "nsTypes", email.substr(0, end));
+        if (this.argument.attendees) {
+            for (let emailId of Object.values(this.argument.attendees)) {
+                var email = new String(emailId);
+                var start = email.indexOf('<');
+                if (start < 0) {
+                    toRecipients.addChildTag("Mailbox", "nsTypes", null).addChildTag("EmailAddress", "nsTypes", email);
+                }
+                else {
+                    email = email.substr(start + 1);
+                    var end = email.indexOf('>');
+                    toRecipients.addChildTag("Mailbox", "nsTypes", null).addChildTag("EmailAddress", "nsTypes", email.substr(0, end));
+                }
             }
         }
 

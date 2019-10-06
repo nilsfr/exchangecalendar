@@ -1,5 +1,3 @@
-Components.utils.import("resource:///modules/gloda/mimemsg.js");
-
 function showIconsAsInviteColumn() {}
 showIconsAsInviteColumn.prototype.execute = function () {
     var extrasObserver = {
@@ -75,7 +73,7 @@ showIconsAsInviteColumn.prototype.execute = function () {
 				    			              try {
 				  	    			             let attachments = aMimeMessage.allUserAttachments || aMimeMessage.allAttachments;
 				  	    			             if  ( attachments.length == 1){
-				 	    			                   for (let [index, att] in Iterator(attachments))
+				 	    			                   for (let [index, att] of Object.entries(attachments))
 				 	    			                   {
 							 	    			             if ( att.name == "invite.ics" ){
 							 	 	    					 	hdr.setStringProperty("isInviteMail","true");

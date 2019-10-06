@@ -1,0 +1,16 @@
+<!ENTITY label.acceptbutton "Pechar">
+
+<!ENTITY exchWebService.manageEWSAccounts.newAccount.button "Engadir conta">
+<!ENTITY exchWebService.manageEWSAccounts.removeAccount.button "Elimina conta">
+<!ENTITY exchWebService.manageEWSAccounts.saveAccount.button "Gardar axustes">
+
+<!ENTITY exchWebService.manageEWSAccounts.autodiscover.label "Usar a función de autodescubrimento de Exchange.">
+<!ENTITY exchWebService.manageEWSAccounts.mailbox.label "Nome da caixa de correo:">
+<!ENTITY exchWebService.manageEWSAccounts.windowsuser.label "Nome de usuario:">
+<!ENTITY exchWebService.manageEWSAccounts.windowsdomain.label "Nome de dominio:">
+<!ENTITY exchWebService.manageEWSAccounts.autodiscover.button "Realizar autodescubrimento">
+<!ENTITY exchWebService.manageEWSAccounts.servercheck.button "Comprobar o servidor e a conta">
+<!ENTITY exchWebService.manageEWSAccounts.name.label "Nome:">
+
+<!ENTITY exchWebService.manageEWSAccounts.menuitem "Contas dos Servizos Web de Exchange">
+

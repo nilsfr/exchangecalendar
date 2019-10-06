@@ -29,9 +29,9 @@
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
 
-Cu.import("resource:///modules/mailServices.js");
+
+ChromeUtils.import("resource:///modules/mailServices.js");
 
 function exchCheck4Lightning(aDocument, aWindow) {
     this._document = aDocument;
@@ -125,7 +125,7 @@ exchCheck4Lightning.prototype = {
         else {
             // Ligntning is installed check if it is enabled.
             try {
-                this.globalFunctions.LOG("Lightning was installed from:" + aAddOn.sourceURI.prePath + aAddOn.sourceURI.path);
+                this.globalFunctions.LOG("Lightning was installed from:" + aAddOn.sourceURI.prePath + aAddOn.sourceURI.pathQueryRef);
             }
             catch (er) {
                 this.globalFunctions.LOG("Lightning was installed from unknown source. Probably manualy outside the AddOnManager.");
@@ -156,7 +156,7 @@ exchCheck4Lightning.prototype = {
         this.checkingIfLightnigIsInstalled = true;
 
         if (this.lightningIsInstalled == -1) {
-            Cu.import("resource://gre/modules/AddonManager.jsm");
+            ChromeUtils.import("resource://gre/modules/AddonManager.jsm");
         }
         var self = this;
         AddonManager.getAddonByID("{e2fda1a4-762b-4020-b5ad-a41df1933103}", function (aAddon) {
@@ -167,7 +167,7 @@ exchCheck4Lightning.prototype = {
     onLoad: function _onLoad(event) {
 
         // We preload the exchange Address book
-        var rootDir = MailServices.ab.getDirectory("exchWebService-contactRoot-directory://");
+        var rootDir = MailServices.ab.getDirectory("exchangecalendar-addressbook://");
         var folders = rootDir.childNodes;
 
         this.checkLightningIsInstalled();

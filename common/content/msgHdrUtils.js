@@ -69,11 +69,9 @@ const nsMsgFolderFlags_Drafts = 0x00000400;
 const nsMsgFolderFlags_Archive = 0x00004000;
 const nsMsgFolderFlags_Inbox = 0x00001000;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm"); // for defineLazyServiceGetter
-Cu.import("resource:///modules/gloda/mimemsg.js");
-Cu.import("resource:///modules/gloda/utils.js");
-Cu.import("resource:///modules/iteratorUtils.jsm"); // for toXPCOMArray
-Cu.import("resource:///modules/mailServices.js");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm"); // for defineLazyServiceGetter
+ChromeUtils.import("resource:///modules/iteratorUtils.jsm"); // for toXPCOMArray
+ChromeUtils.import("resource:///modules/mailServices.js");
 
 // Adding a messenger lazy getter to the MailServices even though it's not a service
 XPCOMUtils.defineLazyGetter(MailServices, "messenger", function () {
@@ -85,7 +83,7 @@ XPCOMUtils.defineLazyGetter(MailServices, "messenger", function () {
  * @param {nsIMsgDbHdr} aMsg The message
  * @return {String}
  */
-function msgHdrGetUri(aMsg)
+var msgHdrGetUri = aMsg =>
 aMsg.folder.getUriForMsg(aMsg)
 
 /**
@@ -109,7 +107,7 @@ function msgUriToMsgHdr(aUri) {
  * @param {nsIMsgDbHdr} msgHdr The message header to examine
  * @return {bool}
  */
-function msgHdrIsInbox(msgHdr)
+var msgHdrIsInbox = msgHdr =>
 msgHdr.folder.getFlag(nsMsgFolderFlags_Inbox)
 
 /**
@@ -117,7 +115,7 @@ msgHdr.folder.getFlag(nsMsgFolderFlags_Inbox)
  * @param {nsIMsgDbHdr} msgHdr The message header to examine
  * @return {bool}
  */
-function msgHdrIsDraft(msgHdr)
+var msgHdrIsDraft = msgHdr =>
 msgHdr.folder.getFlag(nsMsgFolderFlags_Drafts)
 
 /**
@@ -125,7 +123,7 @@ msgHdr.folder.getFlag(nsMsgFolderFlags_Drafts)
  * @param {nsIMsgDbHdr} msgHdr The message header to examine
  * @return {bool}
  */
-function msgHdrIsSent(msgHdr)
+var msgHdrIsSent = msgHdr =>
 msgHdr.folder.getFlag(nsMsgFolderFlags_SentMail)
 
 /**
@@ -133,7 +131,7 @@ msgHdr.folder.getFlag(nsMsgFolderFlags_SentMail)
  * @param {nsIMsgDbHdr} msgHdr The message header to examine
  * @return {bool}
  */
-function msgHdrIsArchive(msgHdr)
+var msgHdrIsArchive = msgHdr =>
 msgHdr.folder.getFlag(nsMsgFolderFlags_Archive)
 
 /**
@@ -141,7 +139,7 @@ msgHdr.folder.getFlag(nsMsgFolderFlags_Archive)
  * @param {String} The URL
  * @return {nsIMsgDbHdr} The message header.
  */
-function msgHdrFromNeckoUrl(aUrl)
+var msgHdrFromNeckoUrl = aUrl =>
 aUrl.QueryInterface(Ci.nsIMsgMessageUrl).messageHeader
 
 /**
@@ -191,13 +189,13 @@ function msgHdrGetTags(aMsgHdr) {
     let keywords = aMsgHdr.getStringProperty("keywords");
     let keywordList = keywords.split(' ');
     let keywordMap = {};
-    for (let [, keyword] in Iterator(keywordList)) {
+    for (let keyword of Object.values(keywordList)) {
         keywordMap[keyword] = true;
     }
 
     let tagArray = MailServices.tags.getAllTags({});
     let tags = [];
-    for (let [iTag, tag] in Iterator(tagArray)) {
+    for (let [iTag, tag] of Object.entries(tagArray)) {
         let tag = tagArray[iTag];
         if (tag.key in keywordMap)
             tags.push(tag);
@@ -239,21 +237,23 @@ function msgHdrSetTags(aMsgHdr, aTags) {
  */
 function msgHdrsMarkAsRead(msgHdrs, read) {
     let pending = {};
-    for each(let msgHdr in msgHdrs) {
-        if (msgHdr.isRead == read)
-            continue;
-        if (!pending[msgHdr.folder.URI]) {
-            pending[msgHdr.folder.URI] = {
-                folder: msgHdr.folder,
-                msgs: Cc["@mozilla.org/array;1"].createInstance(Ci.nsIMutableArray)
-            };
+    if (msgHdrs) {
+        for (let msgHdr of Object.values(msgHdrs)) {
+            if (msgHdr.isRead == read)
+                continue;
+            if (!pending[msgHdr.folder.URI]) {
+                pending[msgHdr.folder.URI] = {
+                    folder: msgHdr.folder,
+                    msgs: Cc["@mozilla.org/array;1"].createInstance(Ci.nsIMutableArray)
+                };
+            }
+            pending[msgHdr.folder.URI].msgs.appendElement(msgHdr, false);
         }
-        pending[msgHdr.folder.URI].msgs.appendElement(msgHdr, false);
     }
-    for each(let {
+    for (let {
         folder,
         msgs
-    } in pending) {
+    } of Object.values(pending)) {
         folder.markMessagesRead(msgs, read);
         folder.msgDatabase = null; /* don't leak */
     }
@@ -265,19 +265,21 @@ function msgHdrsMarkAsRead(msgHdrs, read) {
  */
 function msgHdrsDelete(msgHdrs) {
     let pending = {};
-    for each(let msgHdr in msgHdrs) {
-        if (!pending[msgHdr.folder.URI]) {
-            pending[msgHdr.folder.URI] = {
-                folder: msgHdr.folder,
-                msgs: Cc["@mozilla.org/array;1"].createInstance(Ci.nsIMutableArray)
-            };
+    if (msgHdrs) {
+        for (let msgHdr of Object.values(msgHdrs)) {
+            if (!pending[msgHdr.folder.URI]) {
+                pending[msgHdr.folder.URI] = {
+                    folder: msgHdr.folder,
+                    msgs: Cc["@mozilla.org/array;1"].createInstance(Ci.nsIMutableArray)
+                };
+            }
+            pending[msgHdr.folder.URI].msgs.appendElement(msgHdr, false);
         }
-        pending[msgHdr.folder.URI].msgs.appendElement(msgHdr, false);
     }
-    for each(let {
+    for (let {
         folder,
         msgs
-    } in pending) {
+    } of Object.values(pending)) {
         folder.deleteMessages(msgs, getMail3Pane().msgWindow, false, false, null, true);
         folder.msgDatabase = null; /* don't leak */
     }
@@ -308,7 +310,7 @@ function msgHdrsArchive(msgHdrs) {
     let mail3PaneWindow = getMail3Pane();
     let batchMover = new mail3PaneWindow.BatchMessageMover();
     batchMover.archiveMessages(msgHdrs.filter(
-        function (x) !msgHdrIsArchive(x) && getMail3Pane().getIdentityForHeader(x).archiveEnabled
+        (x) => !msgHdrIsArchive(x) && getMail3Pane().getIdentityForHeader(x).archiveEnabled
     ));
 }
 
@@ -317,7 +319,7 @@ function msgHdrsArchive(msgHdrs) {
  * @param {nsIMsgDbHdr} msgHdr The message header
  * @return {Bool}
  */
-function msgHdrIsRss(msgHdr)
+var msgHdrIsRss = msgHdr =>
 (msgHdr.folder.server instanceof Ci.nsIRssIncomingServer)
 
 /**
@@ -325,7 +327,7 @@ function msgHdrIsRss(msgHdr)
  * @param {nsIMsgDbHdr} msgHdr The message header
  * @return {Bool}
  */
-function msgHdrIsNntp(msgHdr)
+var msgHdrIsNntp = msgHdr =>
 (msgHdr.folder.server instanceof Ci.nsINntpIncomingServer)
 
 /**
@@ -333,7 +335,7 @@ function msgHdrIsNntp(msgHdr)
  * @param {nsIMsgDbHdr} msgHdr The message header
  * @return {Bool}
  */
-function msgHdrIsJunk(aMsgHdr)
+var msgHdrIsJunk = aMsgHdr =>
 aMsgHdr.getStringProperty("junkscore") == Ci.nsIJunkMailPlugin.IS_SPAM_SCORE
 
 /**
@@ -342,10 +344,6 @@ aMsgHdr.getStringProperty("junkscore") == Ci.nsIJunkMailPlugin.IS_SPAM_SCORE
 function HeaderHandler(aHeaders) {
     this.headers = aHeaders;
 }
-
-HeaderHandler.prototype = {
-    __proto__: MimeMessage.prototype.__proto__, // == HeaderHandlerBase
-};
 
 /**
  * Creates a stream listener that will call k once done, passing it the string
@@ -386,7 +384,7 @@ function msgHdrGetHeaders(aMsgHdr, k) {
     let uri = msgHdrGetUri(aMsgHdr);
     let messageService = MailServices.messenger.messageServiceFromURI(uri);
 
-    let fallback = function ()
+    let fallback = () =>
     MsgHdrToMimeMessage(aMsgHdr, null, function (aMsgHdr, aMimeMsg) {
         k(aMimeMsg);
     }, true, {
@@ -400,7 +398,7 @@ function msgHdrGetHeaders(aMsgHdr, k) {
                 let str = aRawString.replace(re, " ");
                 let lines = str.split(/\r?\n/);
                 let obj = {};
-                for each(let [, line] in Iterator(lines)) {
+                for (let line of Object.values(lines)) {
                     let i = line.indexOf(":");
                     if (i < 0)
                         continue;

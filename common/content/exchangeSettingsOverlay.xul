@@ -71,7 +71,7 @@
                 <rows>
                     <row id="exchWebService_serverrow"
                          align="center">
-                        <label value="Server URL:"
+                        <label value="&ecmailbox.server_url.label;"
                                control="ecserver" />
                         <vbox>
                             <textbox id="exchWebService_server"
@@ -88,10 +88,10 @@
                             <textbox id="exchWebService_mailbox"
                                      required="true"
                                      oninput="tmpSettingsOverlay.exchWebServicesDoMailboxChanged(this);"
-                                     placeholder="yourname@example.com" />
+                                     placeholder="yourname@example.com"
+                                     flex="1" />
                             <label id="exchWebService_displayname"
-                                   value=""
-                                   flex="1" />
+                                   value="" />
                         </hbox>
                     </row>
                     <row align="center">

@@ -1,0 +1,5 @@
+<!ENTITY calendar.context.exchange.convert.label "Átalakítani az Exchange 2007/2010 Naptár és a Feladatok kiegészítésére">
+<!ENTITY calendar.context.exchange.properties.label "EWS (Exchange Web Services – csere internetes szolgáltatások) tulajdonságai">
+<!ENTITY calendar.context.exchange.oof.settings.label "Irodán kívüli beállítások">
+<!ENTITY calendar.context.exchange.clone.settings.label "A beállítások másolása új naptárba">
+<!ENTITY calendar.context.exchange.delegate.calendar.settings.label "Küldött naptárát">

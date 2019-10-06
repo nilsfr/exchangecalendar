@@ -1,0 +1,15 @@
+ <!ENTITY rtews.selectaccountdesc "Válassza ki a beállítani kívánt Microsoft Exchange postafiókot.">
+ <!ENTITY rtews.accconfigured "Fiók már be van állítva">
+ <!ENTITY rtews.dicoverdesc "Választhatja az EWS (Exchange Web Services – csere internetes szolgáltatások) URL önműködő felfedezését vagy kézi beállítását">
+ <!ENTITY rtews.dicoverdesc2 "Az alábbi mezőbe írja be az URL-t kézi beállításhoz.">
+ <!ENTITY rtews.autodiscover "Önműködő felfedezés">
+ <!ENTITY rtews.doautodicover "Önműködő felfedezés futtatása">
+ <!ENTITY rtews.manual "Kézi beállítás">
+ <!ENTITY rtews.test "Kattintson ide az EWS-URL ellenőrzéséhez">
+ <!ENTITY rtews.msexchewsurl "Ellenőrzött EWS-URL. A beállítás befejezéséhez kattintson a Befejezés gombra.">
+ <!ENTITY rtews.selectaccount "Fiók választása">
+ <!ENTITY rtews.configure.label "Beállítás…">
+ <!ENTITY rtews.rtforexch "A Microsoft Exchange távoli címkéje">
+ <!ENTITY rtews.confirmAccDetail "Erősítse meg a következő fiókadatokat">
+ <!ENTITY rtews.username "Felhasználónév">
+ <!ENTITY rtews.domain "Tartomány">

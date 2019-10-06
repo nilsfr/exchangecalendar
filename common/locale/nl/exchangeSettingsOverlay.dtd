@@ -1,4 +1,4 @@
-<!ENTITY ecautodiscover "Gebruik autodiscovery functie van Exchange.">
+<!ENTITY ecautodiscover "Use Exchange autodiscovery">
 <!ENTITY ecfolderbase.label "Basisfolder:">
 <!ENTITY ecfolderpath.label "Pad onder basis:">
 <!ENTITY ecfolderidofshare.label "Share FolderId:">
@@ -38,6 +38,7 @@
 <!ENTITY button.label.serverandmailboxcheck "Controleer server en mailbox">
 <!ENTITY button.label.servercheck "Controleer server en account">
 
+<!ENTITY ecmailbox.server_url.label "Server URL:">
 <!ENTITY ecmailbox.label "Primair e-mailadres:">
 <!ENTITY ecmailbox.tooltip "Als u geen mailbox opgeeft kunt u alleen toegang krijgen tot openbare mappen.">
 <!ENTITY ecwindowsuser.label "Gebuikersnaam:">
@@ -48,9 +49,6 @@
 <!ENTITY button.label.folderbrowse "Bladeren">
 
 <!ENTITY exchWebServices.UserAvailability.label "Alleen gebruikersaanwezigheidsstatus van de mailboxagenda zal zichtbaar zijn.">
-
-
-
 
 <!ENTITY exchWebServices.exchtype.label "Exchange Type">
 <!ENTITY exchWebServices.hostexch.label "Hosted Exchange">

@@ -24,8 +24,10 @@ var Cu = Components.utils;
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
+
+Cu.importGlobalProperties(["XMLHttpRequest"]);
 
 function installListener(aUpdater) {
     this._updater = aUpdater;
@@ -174,7 +176,6 @@ mivUpdater.prototype = {
     classID: components.ID("{" + mivUpdateGUID + "}"),
     contractID: "@1st-setup.nl/checkers/updater;1",
     flags: Ci.nsIClassInfo.SINGLETON || Ci.nsIClassInfo.THREADSAFE,
-    implementationLanguage: Ci.nsIProgrammingLanguage.JAVASCRIPT,
 
     // External methods
 
@@ -208,7 +209,7 @@ mivUpdater.prototype = {
         this._callBack = aCallBack;
         this._extensionID = aExtensionID;
 
-        Cu.import("resource://gre/modules/AddonManager.jsm");
+        ChromeUtils.import("resource://gre/modules/AddonManager.jsm");
         var self = this;
         AddonManager.getAddonByID(aExtensionID, function (aAddon) {
             self.addonByIDCallback(aAddon);
@@ -226,9 +227,9 @@ mivUpdater.prototype = {
         if (aAddon) {
             var url = "https://api.github.com/repos/ExchangeCalendar/exchangecalendar/releases";
             this._addon = aAddon;
-            this._updateURL = this.safeGetCharPref(null, EXTENSION_MAINPART + this._extensionID, url, true);
+            this._updateURL = this.safeGetStringPref(null, EXTENSION_MAINPART + this._extensionID, url, true);
             this._updateURL = url;
-            this.xmlReq = Cc["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance();
+            this.xmlReq = new XMLHttpRequest();
 
             this.preRelease = this.safeGetBoolPref(null, "extensions.1st-setup.others.warnAboutPrereleaseVersion", true, true);
             var tmp = this;
@@ -246,7 +247,7 @@ mivUpdater.prototype = {
 
             var xulRuntime = Cc["@mozilla.org/xre/app-info;1"].getService(Ci.nsIXULRuntime);
 
-            var id = this.safeGetCharPref(null, EXTENSION_MAINPART + "id", this.getUUID(), true);
+            var id = this.safeGetStringPref(null, EXTENSION_MAINPART + "id", this.getUUID(), true);
             var localeService = Cc["@mozilla.org/intl/nslocaleservice;1"].getService(Ci.nsILocaleService);
 
             this.xmlReq.open("GET", this._updateURL, true);
@@ -396,7 +397,7 @@ mivUpdater.prototype = {
         };
     },
 
-    safeGetCharPref: function _safeGetCharPref(aBranch, aName, aDefaultValue, aCreateWhenNotAvailable) {
+    safeGetStringPref: function _safeGetStringPref(aBranch, aName, aDefaultValue, aCreateWhenNotAvailable) {
         if (!aBranch) {
             var realBranche = this.getBranch(aName);
             if (!realBranche.branch) {
@@ -411,16 +412,16 @@ mivUpdater.prototype = {
         }
 
         try {
-            return aBranch.getCharPref(aName);
+            return aBranch.getStringPref(aName);
         }
         catch (err) {
             if (aCreateWhenNotAvailable) {
                 try {
-                    aBranch.setCharPref(aName, aDefaultValue);
+                    aBranch.setStringPref(aName, aDefaultValue);
                 }
                 catch (er) {
                     aBranch.deleteBranch(aName);
-                    aBranch.setCharPref(aName, aDefaultValue);
+                    aBranch.setStringPref(aName, aDefaultValue);
                 }
             }
             return aDefaultValue;

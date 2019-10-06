@@ -1,6 +1,4 @@
 <!ENTITY label.acceptbutton "Sauvegarder">
 <!ENTITY label.cancelbutton "Annuler">
 
-<!ENTITY label.ecExchangeSettings.title "Nouveaux nom:">
-
-
+<!ENTITY label.ecExchangeSettings.title "Calendar name:">

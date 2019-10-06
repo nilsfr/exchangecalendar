@@ -8,17 +8,17 @@
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
 
-Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
-Cu.import("resource://gre/modules/Services.jsm");
-Cu.import("resource://exchangecommon/erGetItems.js");
-Cu.import("resource://exchangecommon/erFindInboxFolder.js");
-Cu.import("resource://exchangecommon/erSubscribe.js");
-Cu.import("resource://exchangecommon/erGetEvents.js");
-Cu.import("resource://exchangecommon/erFindItems.js");
-Cu.import("resource://exchangecommon/erUpdateItem.js");
-Cu.import("resource://exchangecommon/erUnsubscribe.js");
+
+ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://exchangecommon/erGetItems.js");
+ChromeUtils.import("resource://exchangecommon/erFindInboxFolder.js");
+ChromeUtils.import("resource://exchangecommon/erSubscribe.js");
+ChromeUtils.import("resource://exchangecommon/erGetEvents.js");
+ChromeUtils.import("resource://exchangecommon/erFindItems.js");
+ChromeUtils.import("resource://exchangecommon/erUpdateItem.js");
+ChromeUtils.import("resource://exchangecommon/erUnsubscribe.js");
 
 const eventTypes = ["NewMailEvent", "ModifiedEvent", "MovedEvent", "CopiedEvent", "CreatedEvent"];
 
@@ -30,35 +30,13 @@ if (Cc["@1st-setup.nl/global/functions;1"]
     dump("\EwsTagging(exception) 2 :");
 }
 
-function globalLOG(msg, user) {
-    if (!debug) return;
+function LOG(msg, user) {
     if (user) {
         mivFunctions.LOG("ewsTagger(" + user + "): " + msg);
-    }
-    else {
+    } else {
         mivFunctions.LOG("ewsTagger-----: " + msg);
     }
 }
-
-var tmpDebug = null;
-
-try {
-    let prefB = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefBranch);
-    let storedDebugLevel = mivFunctions.safeGetIntPref(prefB, "extensions.1st-setup.core.debuglevel", 0, true);
-    tmpDebug = (storedDebugLevel > 0);
-
-    if ((storedDebugLevel == 0) || (!mivFunctions.shouldLog())) {
-        tmpDebug = false;
-    }
-
-}
-catch (e) {
-    dump("\EwsTagging(exception) 1 :" + e);
-}
-
-
-const debug = tmpDebug;
-const exchangeGlobalFunction = globalLOG;
 
 //hold all array of ews objects
 var ewsTaggerObj = [];
@@ -80,21 +58,21 @@ rtews.UpdateMessage.prototype = {
         var messageId = this.updates[0].msgId;
         var tags = this.updates[0].tags;
         var folderPath = this.updates[0].path;
-        exchangeGlobalFunction("Going to update server messages, total - " + this.updates.length);
+        LOG("Going to update server messages, total - " + this.updates.length);
 
         that.searchGloda(messageId, folderPath, function (msgHdrs) {
-            exchangeGlobalFunction("Going to update local messages, total - " + msgHdrs.length);
-            exchangeGlobalFunction("Searching Gloda for messageId - " + messageId + " in  folderPath - " + folderPath);
+            LOG("Going to update local messages, total - " + msgHdrs.length);
+            LOG("Searching Gloda for messageId - " + messageId + " in  folderPath - " + folderPath);
             if (msgHdrs.length == 0) {
-                exchangeGlobalFunction("Gloda did not find message for messageId - " + messageId + " in  folderPath - " + folderPath);
+                LOG("Gloda did not find message for messageId - " + messageId + " in  folderPath - " + folderPath);
             }
             else {
-                exchangeGlobalFunction("update messages with tags  " + String(tags));
+                LOG("update messages with tags  " + String(tags));
                 for (var x = 0; x < msgHdrs.length; x++) {
-                    exchangeGlobalFunction("Remove messages tags  " + String(tags));
+                    LOG("Remove messages tags  " + String(tags));
                     rtews.removeAllMessageTagsPostEwsUpdate(msgHdrs[x]);
                     if (tags.length > 0) {
-                        exchangeGlobalFunction("Toggle messages tags  " + String(tags));
+                        LOG("Toggle messages tags  " + String(tags));
                         that.addKeywordsToMessage(msgHdrs[x], tags);
                     }
                 }
@@ -121,7 +99,7 @@ rtews.UpdateMessage.prototype = {
             }
         }
         catch (e) {
-            exchangeGlobalFunction("addKeywordsToMessages.exception{1} " + e);
+            LOG("addKeywordsToMessages.exception{1} " + e);
         }
 
         OnTagsChange();
@@ -145,7 +123,6 @@ rtews.UpdateMessage.prototype = {
                 /* called when our database query completes */
                 onQueryCompleted: function queryListener_onQueryCompleted(aCollection) {
                     msgHdrs = [];
-                    //             exchangeGlobalFunction("rtews:UpdateMessage.update , Found messages "+aCollection.items.length);
                     try {
                         for (var j = 0; j < aCollection.items.length; j++) {
                             if (aCollection.items[j].folder.uri.toLowerCase().endsWith(folderPath.toLowerCase())) {
@@ -157,7 +134,7 @@ rtews.UpdateMessage.prototype = {
                         callback(msgHdrs);
                     }
                     catch (e) {
-                        exchangeGlobalFunction("searchGloda.exception{1} " + e);
+                        LOG("searchGloda.exception{1} " + e);
                         callback(msgHdrs);
                     }
                 }
@@ -165,7 +142,7 @@ rtews.UpdateMessage.prototype = {
             var collection = query.getCollection(queryListener);
         }
         catch (e) {
-            exchangeGlobalFunction("searchGloda.exception{2} " + e);
+            LOG("searchGloda.exception{2} " + e);
         }
     }
 };
@@ -257,7 +234,7 @@ rtews.prototype = {
      */
     addToQueue: function _addToQueue(aRequest, aArgument, aCbOk, aCbError, aListener) {
         if (mivFunctions.safeGetBoolPref(this.prefs, "mailsync.active", false) == false) {
-            exchangeGlobalFunction("Not adding to queue because we are disabled,  " + this.serverUrl, this.user);
+            LOG("Not adding to queue because we are disabled,  " + this.serverUrl, this.user);
             this.Running = false;
             return;
         }
@@ -277,7 +254,7 @@ rtews.prototype = {
      *
      */
     findFolders: function _findFolders(identity) {
-        exchangeGlobalFunction("Find all the folderd in msgfolderroot,  " + this.serverUrl, this.user);
+        LOG("Find all the folderd in msgfolderroot,  " + this.serverUrl, this.user);
         //Call API
         var self = this;
         this.addToQueue(erFindInboxFolderRequest, {
@@ -298,7 +275,7 @@ rtews.prototype = {
     },
 
     findFoldersOK: function _findFoldersOK(erFindInboxFolderRequest, afolders) {
-        exchangeGlobalFunction("folders found, going to subscribe  " + JSON.stringify(afolders), this.user);
+        LOG("folders found, going to subscribe  " + JSON.stringify(afolders), this.user);
         this.processFolders(afolders);
         var folders = this.getFoldersByIdentity(this.identity);
         if (folders.length > 0) {
@@ -307,7 +284,7 @@ rtews.prototype = {
     },
 
     subscribe: function _subscribe(folders) {
-        exchangeGlobalFunction("Trying to subscribe  ", this.user);
+        LOG("Trying to subscribe  ", this.user);
         var self = this;
         this.addToQueue(erSubscribeRequest, {
                 user: this.user,
@@ -330,15 +307,15 @@ rtews.prototype = {
     },
 
     subscribeOK: function _subscribeOK(erSubscribeRequest, subscriptionId, watermark) {
-        exchangeGlobalFunction("Subscribed,  subscriptionId - " + subscriptionId + ",  watermark  " + watermark, this.user);
-        exchangeGlobalFunction("Subscription Timeout set to " + this.subscriptionTimeout + "(minutes)", this.user);
+        LOG("Subscribed,  subscriptionId - " + subscriptionId + ",  watermark  " + watermark, this.user);
+        LOG("Subscription Timeout set to " + this.subscriptionTimeout + "(minutes)", this.user);
         this.session.subscriptionId = subscriptionId;
         this.session.watermark = watermark;
         this.poll();
     },
 
     unsubscribe: function _unsubscribe() {
-        exchangeGlobalFunction("Error occured Unsubscribing user.", this.user);
+        LOG("Error occured Unsubscribing user.", this.user);
         this.Running = false;
         var that = this;
         this.addToQueue(erUnsubscribeRequest, {
@@ -359,26 +336,26 @@ rtews.prototype = {
     },
 
     unsubscribeOK: function _unsubscribeOK(erUnsubscribeRequest, aResp) {
-        exchangeGlobalFunction("Unsubscribed user.", this.user);
+        LOG("Unsubscribed user.", this.user);
     },
 
     unsubscribeError: function _unsubscribeError(erUnsubscribeRequest, aCode, aMsg) {
-        exchangeGlobalFunction("unsubscribeError: " + aMsg);
+        LOG("unsubscribeError: " + aMsg);
     },
 
     poll: function _poll() {
         var self = this;
         this.Running = false;
-        exchangeGlobalFunction("Polltime set -  " + this.pollOffset + "(milliseconds)", this.user);
+        LOG("Polltime set -  " + this.pollOffset + "(milliseconds)", this.user);
 
         this.pollInterval = setInterval(function () {
             if (self.session == null) {
                 return;
             }
-            exchangeGlobalFunction("Syncting TagItems now.", self.user);
+            LOG("Syncting TagItems now.", self.user);
 
             if (self.Running == true) {
-                exchangeGlobalFunction("Already Running", self.user);
+                LOG("Already Running", self.user);
                 return;
             }
             //Check for new event on the mail box
@@ -387,11 +364,11 @@ rtews.prototype = {
     },
 
     getItemsError: function _getItemsError(erGetItemsRequest, aCode, aMsg) {
-        exchangeGlobalFunction("getItemsError: " + aMsg);
+        LOG("getItemsError: " + aMsg);
     },
 
     getItemsOK: function _getItemsOK(erGetItemsRequest, aItems, aItemErrors) {
-        exchangeGlobalFunction("getItemsOK, Received server items to update: " + aItems.length, this.user);
+        LOG("getItemsOK, Received server items to update: " + aItems.length, this.user);
         if (aItems.length > 0) {
 
             var getItem = function (aItem) {
@@ -401,7 +378,7 @@ rtews.prototype = {
                     "Id": id,
                     "ChangeKey": changeKey,
                 };
-            }
+            };
 
             var getParentItem = function (aItem) {
                 let id = xml2json.getAttributeByTag(aItem, 't:ParentFolderId', 'Id');
@@ -410,7 +387,7 @@ rtews.prototype = {
                     "Id": id,
                     "ChangeKey": changeKey,
                 };
-            }
+            };
 
             var updates = [];
 
@@ -425,7 +402,7 @@ rtews.prototype = {
                 }
                 messageId = messageId.replace('<', '').replace('>', '');
                 if (messageId == undefined || messageId == null || messageId == "") {
-                    exchangeGlobalFunction("(warn?) messageId " + messageId + " is invalid.", this.user);
+                    LOG("(warn?) messageId " + messageId + " is invalid.", this.user);
                     continue;
                 }
                 var categories = [];
@@ -478,7 +455,7 @@ rtews.prototype = {
                 }
             } //Close received items update
 
-            exchangeGlobalFunction("Server getItemsOK, received items:  " + updates.length, this.user);
+            LOG("Server getItemsOK, received items:  " + updates.length, this.user);
             if (updates.length) {
                 setTimeout(function () {
                     var updateMsg = new rtews.UpdateMessage(updates);
@@ -489,7 +466,7 @@ rtews.prototype = {
     },
 
     getAndUpdateItems: function _getAndUpdateItems(aIds) {
-        exchangeGlobalFunction("Received request to update messages,  total items to be requested - " + aIds.length, this.user);
+        LOG("Received request to update messages,  total items to be requested - " + aIds.length, this.user);
         var that = this;
         this.addToQueue(erGetItemsRequest, {
                 user: this.user,
@@ -508,7 +485,6 @@ rtews.prototype = {
     },
 
     getEvents: function _getEvents() {
-        //exchangeGlobalFunction("calling getEvents for user, ", this.user );
         this.Running = true;
         var that = this;
 
@@ -529,7 +505,7 @@ rtews.prototype = {
             null);
 
         function getEventsOK(erGetEventsRequest, response) {
-            exchangeGlobalFunction("Getting events finished..", that.user);
+            LOG("Getting events finished..", that.user);
 
             if (response.length > 0) {
                 var note = response[0].XPath("/m:GetEventsResponseMessage/m:Notification");
@@ -551,10 +527,10 @@ rtews.prototype = {
                     }
                 }
 
-                exchangeGlobalFunction("Received update messages,  total items pending - " + itemIds.length, that.user);
+                LOG("Received update messages,  total items pending - " + itemIds.length, that.user);
 
                 if (itemIds.length == 0) {
-                    exchangeGlobalFunction("No action needed. now going to sleep..", that.user);
+                    LOG("No action needed. now going to sleep..", that.user);
                     return;
                 }
 
@@ -589,7 +565,7 @@ rtews.prototype = {
                         "Id": id,
                         "ChangeKey": changeKey,
                     };
-                }
+                };
 
                 if (newItemIds.length == 0) return;
                 var itemList = [];
@@ -603,13 +579,13 @@ rtews.prototype = {
 
             }
             else {
-                exchangeGlobalFunction("Get events returned with resonse error. going to sleep.. ", that.user);
+                LOG("Get events returned with resonse error. going to sleep.. ", that.user);
                 that.Running = false;
             }
         }
 
         function getEventsError(erGetEventsRequest, aCode, aMsg) {
-            exchangeGlobalFunction("getEventsError aCode:" + aCode + " aMsg: " + aMsg);
+            LOG("getEventsError aCode:" + aCode + " aMsg: " + aMsg);
             that.Running = false;
 
             //If error reset tags syncing 
@@ -619,36 +595,32 @@ rtews.prototype = {
     },
 
     reset: function _reset() {
-        exchangeGlobalFunction("Received error while gettign error", this.user);
+        LOG("Received error while gettign error", this.user);
         this.pollInterval = 0;
-        exchangeGlobalFunction("Stop syncing  now.. " + this.pollInterval, this.user);
+        LOG("Stop syncing  now.. " + this.pollInterval, this.user);
         this.unsubscribe();
-        exchangeGlobalFunction("Going to unsubscribe current subsciption. " + this.session.subscriptionId, this.user);
-        exchangeGlobalFunction("Resume syncing tags for user", this.user);
+        LOG("Going to unsubscribe current subsciption. " + this.session.subscriptionId, this.user);
+        LOG("Resume syncing tags for user", this.user);
         this.processIdentity();
     },
 
     getIdentities: function _getIdentities() {
-        //	exchangeGlobalFunction("getIdentities " , this.user);
-
         var pref = getCalendarPref(this.identity.email);
         if (pref) {
-            this.session.subscriptionId = this.globalFunctions.safeGetCharPref(pref, "subscriptionId");
+            this.session.subscriptionId = this.globalFunctions.safeGetStringPref(pref, "subscriptionId");
         }
     },
 
     saveIdentities: function _saveIdentities() {
-        //	exchangeGlobalFunction("saveIdentities ", this.user);
-
         var pref = getCalendarPref(this.identity.email);
         if (pref) {
-            pref.setCharPref("subscriptionId", this.session.subscriptionId);
+            pref.setStringPref("subscriptionId", this.session.subscriptionId);
         }
 
     },
 
     subscribeError: function _subscribeError(erSubscribeRequest, aCode, aMsg) {
-        exchangeGlobalFunction("subscribeError aCode:" + aCode + " aMsg: " + aMsg);
+        LOG("subscribeError aCode:" + aCode + " aMsg: " + aMsg);
     },
 
     getFoldersByIdentity: function _getFoldersByIdentity(identity) {
@@ -664,7 +636,7 @@ rtews.prototype = {
     },
 
     findFoldersError: function _findFoldersError(erFindInboxFolderRequest, aCode, aMsg) {
-        exchangeGlobalFunction("findFoldersError aCode:" + aCode + " aMsg: " + aMsg);
+        LOG("findFoldersError aCode:" + aCode + " aMsg: " + aMsg);
     },
 
     processFolders: function _processFolders(response) {
@@ -738,7 +710,7 @@ rtews.prototype = {
             var messageId = '<' + msgHdr.messageId + '>';
             var folder = this.gerFolderByImapPath(msgHdr.folder.URI);
 
-            exchangeGlobalFunction("Syncing Tags for message id - " + messageId, this.user);
+            LOG("Syncing Tags for message id - " + messageId, this.user);
 
             if (!folder) {
                 continue;
@@ -754,16 +726,16 @@ rtews.prototype = {
                 },
                 function (erFindItemsRequest, aIds) {
                     //findItemOk Callback 
-                    exchangeGlobalFunction("Syncing tags found items on server returned total - " + aIds.length, that.user);
+                    LOG("Syncing tags found items on server returned total - " + aIds.length, that.user);
                     if (aIds.length > 0) {
                         that.getAndUpdateItems(aIds);
                     }
                     else {
-                        exchangeGlobalFunction("Syncing tags not finding any items in server for Ids. " + JSON.stringify(messageId), that.user);
+                        LOG("Syncing tags not finding any items in server for Ids. " + JSON.stringify(messageId), that.user);
                     }
                 },
                 function (erFindItemsRequest, aCode, aMsg) {
-                    exchangeGlobalFunction("findItemsError:  aCode:" + aCode + " aMsg: " + aMsg);
+                    LOG("findItemsError:  aCode:" + aCode + " aMsg: " + aMsg);
                 },
                 null);
         }
@@ -776,7 +748,7 @@ rtews.prototype = {
         var folder = this.gerFolderByImapPath(msgHdr.folder.URI);
         var messageId = '<' + msgHdr.messageId + '>';
 
-        exchangeGlobalFunction("Toggle tags on message id - " + messageId, this.user);
+        LOG("Toggle tags on message id - " + messageId, this.user);
 
         var that = this;
         if (!folder) {
@@ -784,20 +756,20 @@ rtews.prototype = {
         }
 
         function findItemsOK(erFindItemsRequest, aIds) {
-            exchangeGlobalFunction("Toggle tags found items on server returned total - " + aIds.length, that.user);
+            LOG("Toggle tags found items on server returned total - " + aIds.length, that.user);
             if (aIds.length > 0) {
                 that.updateItem(aIds, msgHdr, identity, toggleType, categories, key, addKey);
             }
             else {
-                exchangeGlobalFunction("Toggle tags not finding any items in server for Ids. " + JSON.stringify(messageId), that.user);
+                LOG("Toggle tags not finding any items in server for Ids. " + JSON.stringify(messageId), that.user);
                 //when no mail item is find toggle tags locally
-                exchangeGlobalFunction("Update tags locally", that.user);
+                LOG("Update tags locally", that.user);
                 rtews.fallBackTagUpdate(msgHdr, identity, toggleType, categories, key, addKey);
             }
         }
 
         function findItemsError(erFindItemsRequest, aCode, aMsg) {
-            exchangeGlobalFunction("findItemsError:  aCode:" + aCode + " aMsg: " + aMsg);
+            LOG("findItemsError:  aCode:" + aCode + " aMsg: " + aMsg);
         }
 
         this.addToQueue(erFindItemsRequest, {
@@ -821,7 +793,7 @@ rtews.prototype = {
      * Update Mail item with category
      */
     updateItem: function _updateItem(aIds, msgHdr, identity, toggleType, categories, key, addKey) {
-        exchangeGlobalFunction("updating Item(s), aIds total -  " + aIds.length + " ,   toggleType " + toggleType, this.user);
+        LOG("updating Item(s), aIds total -  " + aIds.length + " ,   toggleType " + toggleType, this.user);
 
         var that = this;
 
@@ -845,7 +817,7 @@ rtews.prototype = {
         changes += '</nsTypes:Updates>';
         changes += '</nsTypes:ItemChange>';
 
-        exchangeGlobalFunction("UpdateItem with changes " + changes, this.user);
+        LOG("UpdateItem with changes " + changes, this.user);
 
         this.addToQueue(erUpdateItemRequest, {
                 user: this.user,
@@ -865,7 +837,7 @@ rtews.prototype = {
             null);
 
         function updateItemOK(erUpdateItemRequest, aId, aChangeKey) {
-            exchangeGlobalFunction("Updated item with id  = " + aId + " and ChangeKey =  " + aChangeKey, that.user);
+            LOG("Updated item with id  = " + aId + " and ChangeKey =  " + aChangeKey, that.user);
             if (toggleType == "removeAll") {
                 rtews.removeAllMessageTagsPostEwsUpdate(msgHdr);
             }
@@ -875,7 +847,7 @@ rtews.prototype = {
         }
 
         function updateItemError(erUpdateItemRequest, aCode, aMsg) {
-            exchangeGlobalFunction("updateItemError:  aCode:" + aCode + " aMsg: " + aMsg);
+            LOG("updateItemError:  aCode:" + aCode + " aMsg: " + aMsg);
         }
     },
     /*
@@ -1035,10 +1007,10 @@ const identities = getAllAccounts();
  * Initialilize 
  */
 function init() {
-    exchangeGlobalFunction("Initializing Remote tagger.");
-    exchangeGlobalFunction("Total accounts after filtering -  " + identities.length);
+    LOG("Initializing Remote tagger.");
+    LOG("Total accounts after filtering -  " + identities.length);
 
-    exchangeGlobalFunction("debug =  " + debug);
+    LOG("debug =  " + debug);
     for (var account = 0, len = identities.length; account < len; account++) {
         if (identities[account].ewsUrl && identities[account].enabled) {
 
@@ -1046,10 +1018,9 @@ function init() {
             tmp.load();
             ewsTaggerObj[account] = tmp;
             if (tmp) {
-                exchangeGlobalFunction("Initialized {" + (account + 1) + "} - " + identities[account].email);
+                LOG("Initialized {" + (account + 1) + "} - " + identities[account].email);
             }
             tmp = null;
-            // 	             exchangeGlobalFunction("xxxxxxxxxxxxxxxxx account: " + ewsTaggerObj[account].identity.email +  JSON.stringify(identities[account]) );
         }
     }
 }
@@ -1069,7 +1040,7 @@ function rtewsObj(identity) {
 }
 
 function removeDuplicateAccount(identities) {
-    exchangeGlobalFunction("Account available total -  " + identities.length);
+    LOG("Account available total -  " + identities.length);
 
     if (identities.length > 0) {
         var newidentities = [];
@@ -1097,7 +1068,7 @@ function removeDuplicateAccount(identities) {
                     newidentities.push(identities[account]);
                 }
                 else {
-                    exchangeGlobalFunction("Removing duplicate account with email address ,  " + identities[account].email);
+                    LOG("Removing duplicate account with email address ,  " + identities[account].email);
                 }
                 test = null;
             }
@@ -1119,7 +1090,6 @@ function getAllAccounts() {
     var acctMgr = Components.classes["@mozilla.org/messenger/account-manager;1"]
         .getService(Components.interfaces.nsIMsgAccountManager);
     var accounts = acctMgr.accounts;
-    //  exchangeGlobalFunction("rtews:getAllAccounts " + versionChecker.compare(appInfo.version, "20.0") +accounts.length );
     if (accounts) {
         if (versionChecker.compare(appInfo.version, "20.0") >= 0) {
             var _accounts = [];
@@ -1132,7 +1102,7 @@ function getAllAccounts() {
                     var identity = identities.queryElementAt(index, Ci.nsIMsgIdentity);
                     var calAccount = getCalendarPref(identity.email);
                     var enabled = false;
-                    exchangeGlobalFunction("Account exists  for email address -  " + identity.email);
+                    LOG("Account exists  for email address -  " + identity.email);
 
                     var details = null;
 
@@ -1141,12 +1111,12 @@ function getAllAccounts() {
                         details = {
                             "server": account.incomingServer.prettyName,
                             "serverURI": account.incomingServer.serverURI,
-                            "email": mivFunctions.safeGetCharPref(calAccount, "ecMailbox"),
-                            "username": mivFunctions.safeGetCharPref(calAccount, "ecUser"),
+                            "email": mivFunctions.safeGetStringPref(calAccount, "ecMailbox"),
+                            "username": mivFunctions.safeGetStringPref(calAccount, "ecUser"),
                             "name": identity.fullName,
-                            "domain": mivFunctions.safeGetCharPref(calAccount, "ecDomain"),
+                            "domain": mivFunctions.safeGetStringPref(calAccount, "ecDomain"),
                             "enabled": enabled,
-                            "ewsUrl": mivFunctions.safeGetCharPref(calAccount, "ecServer"),
+                            "ewsUrl": mivFunctions.safeGetStringPref(calAccount, "ecServer"),
                             "prefs": calAccount,
                         };
                     }
@@ -1173,7 +1143,7 @@ function getAllAccounts() {
                     let identity = identities.queryElementAt(index, Ci.nsIMsgIdentity);
                     let calAccount = getCalendarPref(identity.email);
                     let enabled = false;
-                    exchangeGlobalFunction("Account exists  for email address -  " + identity.email);
+                    LOG("Account exists  for email address -  " + identity.email);
 
                     let details = null;
 
@@ -1182,12 +1152,12 @@ function getAllAccounts() {
                         details = {
                             "server": account.incomingServer.prettyName,
                             "serverURI": account.incomingServer.serverURI,
-                            "email": mivFunctions.safeGetCharPref(calAccount, "ecMailbox"),
-                            "username": mivFunctions.safeGetCharPref(calAccount, "ecUser"),
+                            "email": mivFunctions.safeGetStringPref(calAccount, "ecMailbox"),
+                            "username": mivFunctions.safeGetStringPref(calAccount, "ecUser"),
                             "name": identity.fullName,
-                            "domain": mivFunctions.safeGetCharPref(calAccount, "ecDomain"),
+                            "domain": mivFunctions.safeGetStringPref(calAccount, "ecDomain"),
                             "enabled": enabled,
-                            "ewsUrl": mivFunctions.safeGetCharPref(calAccount, "ecServer"),
+                            "ewsUrl": mivFunctions.safeGetStringPref(calAccount, "ecServer"),
                             "prefs": calAccount,
                         };
                     }
@@ -1271,13 +1241,13 @@ function getCalendarPref(aEmail) {
                         .getService(Ci.nsIPrefService)
                         .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl." + cal.id + ".");
 
-                    if (calPref.getCharPref("ecFolderbase") == "calendar") {
+                    if (calPref.getStringPref("ecFolderbase") == "calendar") {
                         return calPref;
                     }
 
                 }
                 catch (e) {
-                    exchangeGlobalFunction("rtews: e2 " + e);
+                    LOG("rtews: e2 " + e);
                 }
             }
         }

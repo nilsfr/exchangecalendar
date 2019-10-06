@@ -1,0 +1,56 @@
+<!ENTITY ecautodiscover "Usar o autodescubrimento de Exchange">
+<!ENTITY ecfolderbase.label "Cartafol base:">
+<!ENTITY ecfolderpath.label "Ruta a partir da cartafol base:">
+<!ENTITY ecfolderidofshare.label "ID do Cartafol Compartido:">
+<!ENTITY exchWebServices.SharedFolderID.label "Nome para amosar do cartafol compartido:">
+
+<!ENTITY menuitem.label.ecfolderbase.calendar "Cartafo de calendario">
+<!ENTITY menuitem.label.ecfolderbase.publicfoldersroot "Cartafoles públicos">
+<!ENTITY menuitem.label.ecfolderbase.inbox "Cartafol de entrada de correo">
+<!ENTITY menuitem.label.ecfolderbase.voicemail "Cartafol de entrada de voz">
+<!ENTITY menuitem.label.ecfolderbase.msgfolderroot "Raíz da cartafol de mensaxes">
+<!ENTITY menuitem.label.ecfolderbase.root "Raíz da caixa de correo">
+<!ENTITY menuitem.label.ecfolderbase.tasks "Cartafol de tarefas">
+
+<!ENTITY menuitem.label.ecfolderbase.contacts "Cartafol de contactos">
+<!ENTITY menuitem.label.ecfolderbase.deleteditems "Cartafol de elementos eliminados">
+<!ENTITY menuitem.label.ecfolderbase.drafts "Cartafol de borradores">
+<!ENTITY menuitem.label.ecfolderbase.journal "Cartafol de journal">
+<!ENTITY menuitem.label.ecfolderbase.notes "Cartafol de notas">
+<!ENTITY menuitem.label.ecfolderbase.outbox "Cartafol de correo saínte">
+<!ENTITY menuitem.label.ecfolderbase.sentitems "Cartafol de elementos enviados">
+<!ENTITY menuitem.label.ecfolderbase.junkemail "Cartafol de correo non desexado">
+<!ENTITY menuitem.label.ecfolderbase.searchfolders "Cartafol de buscas de cartafoles">
+<!ENTITY menuitem.label.ecfolderbase.version2010 "— As opcións seguintes son só para Exchange 2010 —">
+<!ENTITY menuitem.label.ecfolderbase.recoverableitemsroot "Cartafol raíz da papeleira">
+<!ENTITY menuitem.label.ecfolderbase.recoverableitemsdeletions "Cartafol de borrados da papeleira">
+<!ENTITY menuitem.label.ecfolderbase.recoverableitemsversion "Cartafol de versións da papeleira">
+<!ENTITY menuitem.label.ecfolderbase.recoverableitemspurges "Cartafol de eliminacións da papeleira">
+<!ENTITY menuitem.label.ecfolderbase.archiveroot "Cartafol raíz do arquivo">
+<!ENTITY menuitem.label.ecfolderbase.archivemsgfolderroot "Cartafol raíz do arquivo de mensaxes">
+<!ENTITY menuitem.label.ecfolderbase.archivedeleteditems "Cartafol de elementos eliminados do arquivo">
+<!ENTITY menuitem.label.ecfolderbase.archiverecoverableitemsroot "Cartafol raíz de elementos recuperables do arquivo">
+<!ENTITY menuitem.label.ecfolderbase.Archiverecoverableitemsdeletions "Cartafol de elementos borrados recuperables do arquivo">
+<!ENTITY menuitem.label.ecfolderbase.Archiverecoverableitemsversions "Cartafol de versións de elementos recuperables do arquivo">
+<!ENTITY menuitem.label.ecfolderbase.Archiverecoverableitemspurges "Cartafol de eliminacións de elementos recuperables do arquivo">
+
+<!ENTITY button.label.autodiscovercheck "Realizar autodescubrimento">
+<!ENTITY button.label.serverandmailboxcheck "Comprobar o servidor e a caixa de correo">
+<!ENTITY button.label.servercheck "Comprobar o servidor e a conta">
+
+<!ENTITY ecmailbox.server_url.label "URL do Servidor:">
+<!ENTITY ecmailbox.label "Enderezo primario de correo:">
+<!ENTITY ecmailbox.tooltip "Se non especificas unha caixa de correo só tenás acceso aos cartafoles públicos.">
+<!ENTITY ecwindowsuser.label "Nome de usuario:">
+<!ENTITY ecwindowsdomain.label "Nome de dominio:">
+<!ENTITY ecwindowspassword.label "Contrasinal:">
+
+<!ENTITY button.label.folderpathcheck "Comprobar">
+<!ENTITY button.label.folderbrowse "Explorar">
+
+<!ENTITY exchWebServices.UserAvailability.label "Só será visible o estado da dispoñibilidade do calendario da caixa de correo.">
+
+<!ENTITY exchWebServices.exchtype.label "Tipo de Exchange">
+<!ENTITY exchWebServices.hostexch.label "Exchange aloxado">
+<!ENTITY exchWebServices.365exch.label "Microsoft Office 365">
+<!ENTITY exchWebServices.detail.label "Detalles">

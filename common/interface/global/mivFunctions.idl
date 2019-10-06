@@ -44,7 +44,7 @@ interface mivFunctions : nsISupports
 
   jsval	getBranch(in AUTF8String aName);
 
-  AUTF8String safeGetCharPref(in jsval aBranch, in AUTF8String aName, [optional] in AUTF8String aDefaultValue, [optional] in boolean aCreateWhenNotAvailable);
+  AUTF8String safeGetStringPref(in jsval aBranch, in AUTF8String aName, [optional] in AUTF8String aDefaultValue, [optional] in boolean aCreateWhenNotAvailable);
 
   boolean safeGetBoolPref(in jsval aBranch, in AUTF8String aName, [optional] in boolean aDefaultValue, [optional] in boolean aCreateWhenNotAvailable);
 
@@ -56,9 +56,13 @@ interface mivFunctions : nsISupports
 
   AUTF8String getUUID();
 
-  boolean shouldLog();
+  void setIsWriteLog(in boolean aIsWriteLog);
+
+  void setDebugLevel(in uint64_t aDebugLevel);
 
   void LOG(in AUTF8String aArg);
+
+  void DEBUG(in AUTF8String aArg);
 
   void writeToLogFile(in AUTF8String aString);
 
@@ -71,8 +75,6 @@ interface mivFunctions : nsISupports
   AUTF8String STACKshort();
 
   void ASSERT(in jsval aCondition, [optional] in AUTF8String aMessage, [optional] in boolean aCritical);
-
-  AUTF8String trim(in AUTF8String str);
 
   uint64_t copyPreferences(in jsval aFromPrefs, in jsval aToPrefs);
 

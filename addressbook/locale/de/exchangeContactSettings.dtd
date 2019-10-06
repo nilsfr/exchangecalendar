@@ -1,4 +1,6 @@
-﻿<!ENTITY label.acceptbutton "Speichern">
+<!ENTITY ecsettings.window.title "ExchangeCalendar Kontakteinstellungen">
+
+<!ENTITY label.acceptbutton "Speichern">
 <!ENTITY label.cancelbutton "Abbrechen">
 
 <!ENTITY ecsettings.tab.adsettings "Exchange/Windows AD">
@@ -7,5 +9,4 @@
 <!ENTITY label.ecExchangeSettings.title "Name in Liste:">
 <!ENTITY exchangeWebService.preference.contacts.pollinterval "Aktualisierungsintervall in Sekunden:">
 
-<!ENTITY exchWebService.add.globaladdresslist.label "Hinzufügen der globalen Adressliste zu den Suchergebnissen.">
-
+<!ENTITY exchWebService.add.globaladdresslist.label "Globale Adressliste zu den Suchergebnissen hinzufügen">

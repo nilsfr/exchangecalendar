@@ -20,12 +20,12 @@
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 const nsSoapStr = "http://schemas.xmlsoap.org/soap/envelope/";
 const nsTypesStr = "http://schemas.microsoft.com/exchange/services/2006/types";
@@ -49,7 +49,6 @@ mivTagNames.prototype = {
     classID: components.ID("{" + mivTagNamesGUID + "}"),
     contractID: "@1st-setup.nl/conversion/tagnames;1",
     flags: Ci.nsIClassInfo.SINGLETON || Ci.nsIClassInfo.THREADSAFE,
-    implementationLanguage: Ci.nsIProgrammingLanguage.JAVASCRIPT,
     getInterfaces: function _getInterfaces(count) {
         var ifaces = [Ci.mivTagNames, Ci.nsIClassInfo, Ci.nsISupports];
         count.value = ifaces.length;

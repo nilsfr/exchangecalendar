@@ -22,16 +22,16 @@
  * ***** BEGIN LICENSE BLOCK *****/
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://exchangecommon/ecExchangeRequest.js");
-Cu.import("resource://exchangecommon/soapFunctions.js");
-Cu.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
+ChromeUtils.import("resource://exchangecommon/soapFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 
 var EXPORTED_SYMBOLS = ["erSyncContactsFolderRequest"];
 
@@ -142,51 +142,79 @@ erSyncContactsFolderRequest.prototype = {
 
             var lastItemInRange = rm[0].getTagValue("m:IncludesLastItemInRange");
 
-            for each(var creation in rm[0].XPath("/m:Changes/t:Create")) {
-                for each(var contact in creation.XPath("/t:Contact")) {
-                    //this.creations.contacts.push(contact);
-                    this.creations.contacts.push({
-                        Id: contact.getAttributeByTag("t:ItemId", "Id"),
-                        ChangeKey: contact.getAttributeByTag("t:ItemId", "ChangeKey"),
-                        name: contact.getTagValue("t:Subject"),
-                        displayName: contact.getTagValue("t:DisplayName")
-                    });
-                }
-                for each(var distlist in creation.XPath("/t:DistributionList")) {
-                    //this.creations.distlists.push(distlist);
-                    this.creations.distlists.push({
-                        Id: distlist.getAttributeByTag("t:ItemId", "Id"),
-                        ChangeKey: distlist.getAttributeByTag("t:ItemId", "ChangeKey"),
-                        name: distlist.getTagValue("t:Subject"),
-                        displayName: distlist.getTagValue("t:DisplayName")
-                    });
+            var create_result = rm[0].XPath("/m:Changes/t:Create");
+            if (create_result) {
+                for (var creation of Object.values(create_result)) {
+                    var contact_result = creation.XPath("/t:Contact");
+                    if (contact_result) {
+                        for (var contact of Object.values(contact_result)) {
+                            //this.creations.contacts.push(contact);
+                            this.creations.contacts.push({
+                                Id: contact.getAttributeByTag("t:ItemId", "Id"),
+                                ChangeKey: contact.getAttributeByTag("t:ItemId", "ChangeKey"),
+                                name: contact.getTagValue("t:Subject"),
+                                displayName: contact.getTagValue("t:DisplayName")
+                            });
+                        }
+                    }
+                    contact_result = null;
+                    var distlist_result = creation.XPath("/t:DistributionList");
+                    if (distlist_result) {
+                        for (var distlist of Object.values(distlist_result)) {
+                            //this.creations.distlists.push(distlist);
+                            this.creations.distlists.push({
+                                Id: distlist.getAttributeByTag("t:ItemId", "Id"),
+                                ChangeKey: distlist.getAttributeByTag("t:ItemId", "ChangeKey"),
+                                name: distlist.getTagValue("t:Subject"),
+                                displayName: distlist.getTagValue("t:DisplayName")
+                            });
+                        }
+                    }
+                    distlist_result = null;
                 }
             }
+            create_result = null;
 
-            for each(var update in rm[0].XPath("/m:Changes/t:Update")) {
-                for each(var contact in update.XPath("/t:Contact")) {
-                    //this.updates.contacts.push(contact);
-                    this.updates.contacts.push({
-                        Id: contact.getAttributeByTag("t:ItemId", "Id"),
-                        ChangeKey: contact.getAttributeByTag("t:ItemId", "ChangeKey"),
-                        name: contact.getTagValue("t:Subject"),
-                        displayName: contact.getTagValue("t:DisplayName")
-                    });
-                }
-                for each(var distlist in update.XPath("/t:DistributionList")) {
-                    //this.updates.distlists.push(distlist);
-                    this.updates.distlists.push({
-                        Id: distlist.getAttributeByTag("t:ItemId", "Id"),
-                        ChangeKey: distlist.getAttributeByTag("t:ItemId", "ChangeKey"),
-                        name: distlist.getTagValue("t:Subject"),
-                        displayName: distlist.getTagValue("t:DisplayName")
-                    });
+            var update_result = rm[0].XPath("/m:Changes/t:Update");
+            if (update_result) {
+                for (var update of Object.values(update_result)) {
+                    var contact_result = update.XPath("/t:Contact");
+                    if (contact_result) {
+                        for (var contact of Object.values(contact_result)) {
+                            //this.updates.contacts.push(contact);
+                            this.updates.contacts.push({
+                                Id: contact.getAttributeByTag("t:ItemId", "Id"),
+                                ChangeKey: contact.getAttributeByTag("t:ItemId", "ChangeKey"),
+                                name: contact.getTagValue("t:Subject"),
+                                displayName: contact.getTagValue("t:DisplayName")
+                            });
+                        }
+                    }
+                    contact_result = null;
+                    var distlist_result = update.XPath("/t:DistributionList");
+                    if (distlist_result) {
+                        for (var distlist of Object.values(distlist_result)) {
+                            //this.updates.distlists.push(distlist);
+                            this.updates.distlists.push({
+                                Id: distlist.getAttributeByTag("t:ItemId", "Id"),
+                                ChangeKey: distlist.getAttributeByTag("t:ItemId", "ChangeKey"),
+                                name: distlist.getTagValue("t:Subject"),
+                                displayName: distlist.getTagValue("t:DisplayName")
+                            });
+                        }
+                    }
+                    distlist_result = null;
                 }
             }
+            update_result = null;
 
-            for each(var deleted in rm[0].XPath("/m:Changes/t:Delete")) {
-                this.deletions.contacts.push(deleted);
+            var delete_result = rm[0].XPath("/m:Changes/t:Delete");
+            if (delete_result) {
+                for (var deleted of Object.values(delete_result)) {
+                    this.deletions.contacts.push(deleted);
+                }
             }
+            delete_result = null;
 
             rm = null;
 

@@ -1,45 +1,45 @@
  
-<!ENTITY  label.delegatefolder.cancelbutton "Cancel">
-<!ENTITY  label.delegatefolder.userEmail "Email">
+<!ENTITY  label.delegatefolder.cancelbutton "Annuler">
+<!ENTITY  label.delegatefolder.userEmail "Courriel">
  
-<!ENTITY  label.delegatefolder.permissionLevel "Permission Level">
-<!ENTITY  label.delegatefolder.userboxcolumn1 "User"> 
+<!ENTITY  label.delegatefolder.permissionLevel "Niveau d’autorisation">
+<!ENTITY  label.delegatefolder.userboxcolumn1 "Utilisateur"> 
 <!ENTITY  label.delegatefolder.userboxcolumn2 "Permissions"> 
 
-<!ENTITY  menuitem.delegatefolder.permission.author "Author">
-<!ENTITY  menuitem.delegatefolder.permission.editor "Editor">
-<!ENTITY  menuitem.delegatefolder.permission.reviewer "Reviewer">
-<!ENTITY  menuitem.delegatefolder.permission.none "None">
-<!ENTITY  menuitem.delegatefolder.permission.owner "Owner" > 
-<!ENTITY  menuitem.delegatefolder.permission.publishingEditor "PublishingEditor" >
-<!ENTITY  menuitem.delegatefolder.permission.publishingAuthor "PublishingAuthor" >
-<!ENTITY  menuitem.delegatefolder.permission.noneditingAuthor "NoneditingAuthor" >
-<!ENTITY  menuitem.delegatefolder.permission.contributor "Contributor" >
-<!ENTITY  menuitem.delegatefolder.permission.custom "Custom" >
+<!ENTITY  menuitem.delegatefolder.permission.author "Auteur">
+<!ENTITY  menuitem.delegatefolder.permission.editor "Éditeur">
+<!ENTITY  menuitem.delegatefolder.permission.reviewer "Correcteur">
+<!ENTITY  menuitem.delegatefolder.permission.none "Aucune">
+<!ENTITY  menuitem.delegatefolder.permission.owner "Propriétaire" > 
+<!ENTITY  menuitem.delegatefolder.permission.publishingEditor "Éditeur de publication" >
+<!ENTITY  menuitem.delegatefolder.permission.publishingAuthor "Auteur de publication" >
+<!ENTITY  menuitem.delegatefolder.permission.noneditingAuthor "Auteur non éditeur" >
+<!ENTITY  menuitem.delegatefolder.permission.contributor "Contributeur" >
+<!ENTITY  menuitem.delegatefolder.permission.custom "Personalisé" >
                             
-<!ENTITY  delegatefolder.permission.description.author "Read and create items in the folder." >
-<!ENTITY  delegatefolder.permission.description.editor "Read, create, and modify items in the folder." >
-<!ENTITY  delegatefolder.permission.description.reviewer "Read items in the folder." >
-<!ENTITY  delegatefolder.permission.description.none "No access permissions to the folder." >
+<!ENTITY  delegatefolder.permission.description.author "Lecture et création d’éléments dans le dossier." >
+<!ENTITY  delegatefolder.permission.description.editor "Lecture, création et modification d’éléments dans le dossier." >
+<!ENTITY  delegatefolder.permission.description.reviewer "Lecture d’éléments dans le dossier." >
+<!ENTITY  delegatefolder.permission.description.none "Aucune permission d’accès au dossier." >
 
  <!ENTITY  delegatefolder.permission.details.caption "Permission "> 
 
-<!ENTITY  delegatefolder.tab.msg.label  "No Calendar or Task found for this mail account.">
-<!ENTITY  delegatefolder.tab.name  "Exchange Folder Sharing">
+<!ENTITY  delegatefolder.tab.msg.label  "Aucun calendrier ni aucune tâche n’a été trouvé pour ce compte de courriel.">
+<!ENTITY  delegatefolder.tab.name  "Partage de dossier Exchange">
 
-<!ENTITY  delegatefolder.permissions.none  "None">
-<!ENTITY  delegatefolder.permissions.own  "Own items">
-<!ENTITY  delegatefolder.permissions.all  "All items">
-<!ENTITY  delegatefolder.permissions.full  "Full details">
+<!ENTITY  delegatefolder.permissions.none  "Aucune">
+<!ENTITY  delegatefolder.permissions.own  "Éléments en propre">
+<!ENTITY  delegatefolder.permissions.all  "Tous les éléments">
+<!ENTITY  delegatefolder.permissions.full  "Tous les détails">
 
-<!ENTITY  delegatefolder.permissions.cancreateitems  "Create Items">
-<!ENTITY  delegatefolder.permissions.cancreatesubfolders  "Create SubFolders">
-<!ENTITY  delegatefolder.permissions.isfolderowner  "Folder Owner">
-<!ENTITY  delegatefolder.permissions.isfoldervisible  "Folder Visible">
-<!ENTITY  delegatefolder.permissions.isfoldercontact  "Folder Contact">
-<!ENTITY  delegatefolder.permissions.edititems  "Edit Items">
-<!ENTITY  delegatefolder.permissions.deleteitems  "Delete Items">
-<!ENTITY  delegatefolder.permissions.readitems  "Read Items">  
+<!ENTITY  delegatefolder.permissions.cancreateitems  "Création d’éléments">
+<!ENTITY  delegatefolder.permissions.cancreatesubfolders  "Création de sous‐éléments">
+<!ENTITY  delegatefolder.permissions.isfolderowner  "Propriétaire du dossier">
+<!ENTITY  delegatefolder.permissions.isfoldervisible  "Visibilité du dossier">
+<!ENTITY  delegatefolder.permissions.isfoldercontact  "Contact du dossier">
+<!ENTITY  delegatefolder.permissions.edititems  "Modification d’éléments">
+<!ENTITY  delegatefolder.permissions.deleteitems  "Suppression d’éléments">
+<!ENTITY  delegatefolder.permissions.readitems  "Lecture d’éléments">  
  
-<!ENTITY  delegatefolder.permissions.true  "True">
-<!ENTITY  delegatefolder.permissions.false  "False">
+<!ENTITY  delegatefolder.permissions.true  "vrai">
+<!ENTITY  delegatefolder.permissions.false  "faux">

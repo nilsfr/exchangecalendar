@@ -1,6 +1,5 @@
 version = $(shell jq -r '.version' manifest.json)
-excludefromxpi = .git/\* .gitignore \*/.gitignore .tx/\* \*.xpi \*.sh update\*.txt Makefile
-releasebranch = ec-4.0
+excludefromxpi = .\* \*/.gitignore \*.xpi \*.sh update\*.txt Makefile
 update = disable
 xpi = exchangecalendar-v$(version).xpi
 
@@ -19,8 +18,8 @@ defaults/preferences/update.js:
 # Target to publish a new release:
 release: build
 	git tag "v$(version)"
-	@echo 'Build done, tag added.'
-	@echo 'Now, if the release is well done, please run one "git push" to publish code and one "git push v$(version)" to publish the new tag.'
+	@echo 'Build done, tag locally added.'
+	@echo 'If the release is well done, please run "git push origin v$(version)" to publish the new tag.'
 
 # Targets to update translations
 # Requires an already configured Transifex client: https://docs.transifex.com/client/introduction
@@ -28,7 +27,6 @@ release: build
 
 # Get translations updates from Transifex
 l10n-get:
-	git checkout $(releasebranch)
 	tx pull -a
 
 l10n-auto-commit: l10n-get
@@ -37,7 +35,6 @@ l10n-auto-commit: l10n-get
 
 # Send new texts to translate to Transifex
 l10n-push:
-	git checkout $(releasebranch)
 	tx push -s
 
 # Target to beautify and build your code while developing it
@@ -60,6 +57,7 @@ beautify-xml:
 		--preserve-entities yes --quote-ampersand no --quote-nbsp no --output-xml yes \
 		--strict-tags-attributes no --write-back yes --wrap 0 \
 		{} \;
+
 beautify-js:
 	find . -name "*.js" -exec \
 		js-beautify --indent-size=4 --indent-char=' ' --jslint-happy \

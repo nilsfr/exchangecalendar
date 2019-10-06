@@ -20,22 +20,22 @@
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://exchangecommon/ecExchangeRequest.js");
+ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
 
-Cu.import("resource://calendar/modules/calProviderUtils.jsm");
+ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
-Cu.import("resource://interfacescalendartask/exchangeAttendee/mivExchangeAttendee.js");
+ChromeUtils.import("resource://interfacescalendartask/exchangeAttendee/mivExchangeAttendee.js");
 
-Cu.import("resource://exchangecommoninterfaces/xml2jxon/mivIxml2jxon.js");
+ChromeUtils.import("resource://exchangecommoninterfaces/xml2jxon/mivIxml2jxon.js");
 
-Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
+ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 const participationMap = {
     "Unknown": "NEEDS-ACTION",
@@ -298,7 +298,6 @@ mivExchangeBaseItem.prototype = {
     classID: components.ID("{" + mivExchangeBaseItemGUID + "}"),
     contractID: "@1st-setup.nl/exchange/calendarbaseitem;1",
     flags: 0,
-    implementationLanguage: Ci.nsIProgrammingLanguage.JAVASCRIPT,
 
     // methods from nsIClassInfo
 
@@ -330,13 +329,17 @@ mivExchangeBaseItem.prototype = {
         //dump("CreateProxy aRecurrenceId:"+aRecurrenceId);
 
         var occurrence;
-        for each(var occurrence in this._occurrences) {
-            if (occurrence.recurrenceId.compare(aRecurrenceId) == 0) break;
+        if (this._occurrences) {
+            for (var occurrence of Object.values(this._occurrences)) {
+                if (occurrence.recurrenceId.compare(aRecurrenceId) == 0) break;
+            }
         }
 
         if (!occurrence) {
-            for each(var occurrence in this._exceptions) {
-                if (occurrence.recurrenceId.compare(aRecurrenceId) == 0) break;
+            if (this._exceptions) {
+                for (var occurrence of Object.values(this._exceptions)) {
+                    if (occurrence.recurrenceId.compare(aRecurrenceId) == 0) break;
+                }
             }
         }
 
@@ -462,7 +465,7 @@ mivExchangeBaseItem.prototype = {
 
             this._occurrences = {};
             if (aItem._occurrences) {
-                for each(var occurrence in aItem._occurrences) {
+                for (var occurrence of Object.values(aItem._occurrences)) {
                     //dump("baseClone: aItem._ocurrences 1");
                     //this.removeOccurrence(occurrence);
                     this.addOccurrence(occurrence.clone());
@@ -471,7 +474,7 @@ mivExchangeBaseItem.prototype = {
 
             this._exceptions = {};
             if (aItem._exceptions) {
-                for each(var exception in aItem._exceptions) {
+                for (var exception of Object.values(aItem._exceptions)) {
                     //this.removeException(exception);
                     this.addException(exception.clone());
                 }
@@ -493,20 +496,20 @@ mivExchangeBaseItem.prototype = {
             if (aItem._organizer) this._organizer = aItem._organizer.clone();
             this._attendees = [];
             if (aItem._attendees) {
-                for each(var attendee in aItem._attendees) {
+                for (var attendee of Object.values(aItem._attendees)) {
                     this._attendees.push(attendee.clone());
                 }
             }
             this._hasAttachments = aItem._hasAttachments;
             this._attachments = [];
             if (aItem._attachments) {
-                for each(var attachment in aItem._attachments) {
+                for (var attachment of Object.values(aItem._attachments)) {
                     this._attachments.push(attachment.clone());
                 }
             }
             this._categories = [];
             if (aItem._categories) {
-                for each(var category in aItem._categories) {
+                for (var category of Object.values(aItem._categories)) {
                     this._categories.push(category);
                 }
             }
@@ -546,8 +549,10 @@ mivExchangeBaseItem.prototype = {
     baseClone: function _baseClone(aItem) {
         try {
             //dump("mivExchangeBaseItem: baseClone 1: title:"+this.title+", contractId:"+this.contractID+"\n");
-            for each(var alias in aItem.mailboxAliases) {
-                this.addMailboxAlias(alias);
+            if (aItem.mailboxAliases) {
+                for (var alias of Object.values(aItem.mailboxAliases)) {
+                    this.addMailboxAlias(alias);
+                }
             }
             this.cloneToCalEvent(aItem._calEvent);
             this.cloneFrom(aItem);
@@ -604,7 +609,7 @@ mivExchangeBaseItem.prototype = {
             if (aItem._newIsInvitation) this.setProperty("X-MOZ-SEND-INVITATIONS", aItem.getProperty("X-MOZ-SEND-INVITATIONS"));
 
             if (aItem._changedProperties) {
-                for each(var change in aItem._changedProperties) {
+                for (var change of Object.values(aItem._changedProperties)) {
                     switch (change.action) {
                     case "set":
                         this.setProperty(change.name, xml2json.getValue(change));
@@ -618,7 +623,7 @@ mivExchangeBaseItem.prototype = {
             if (aItem._newOrganizer) this.organizer = aItem.organizer.clone();
 
             if (aItem._changesAttendees) {
-                for each(var attendee in aItem._changesAttendees) {
+                for (var attendee of Object.values(aItem._changesAttendees)) {
                     switch (attendee.action) {
                     case "add":
                         this.addAttendee(attendee.attendee);
@@ -632,7 +637,7 @@ mivExchangeBaseItem.prototype = {
             }
 
             if (aItem._changesAttachments) {
-                for each(var attachment in aItem._changesAttachments) {
+                for (var attachment of Object.values(aItem._changesAttachments)) {
                     switch (attachment.action) {
                     case "add":
                         this.addAttachment(attachment.attachment);
@@ -1074,17 +1079,21 @@ mivExchangeBaseItem.prototype = {
                     var newRecurrenceItems = aValue.getRecurrenceItems({});
                     // See if the oldReccurrenceItems exists in the new
                     var allOldExist = true;
-                    for each(var oldRecurrenceItem in oldRecurrenceItems) {
-                        var oldExists = false;
-                        for each(var newRecurrenceItem in newRecurrenceItems) {
-                            if (newRecurrenceItem.icalString == oldRecurrenceItem.icalString) {
-                                oldExists = true;
+                    if (oldRecurrenceItems) {
+                        for (var oldRecurrenceItem of Object.values(oldRecurrenceItems)) {
+                            var oldExists = false;
+                            if (newRecurrenceItems) {
+                                for (var newRecurrenceItem of Object.values(newRecurrenceItems)) {
+                                    if (newRecurrenceItem.icalString == oldRecurrenceItem.icalString) {
+                                        oldExists = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (!oldExists) {
+                                allOldExist = false;
                                 break;
                             }
-                        }
-                        if (!oldExists) {
-                            allOldExist = false;
-                            break;
                         }
                     }
                     if (!allOldExist) {
@@ -1524,18 +1533,24 @@ mivExchangeBaseItem.prototype = {
     },
 
     attendeeIsInList: function _attendeeIsInList(attendee) {
-        for each(var tmpAttendee in this.getAttendees({})) {
-            if ((tmpAttendee) && (tmpAttendee.id == attendee.id)) {
-                return tmpAttendee;
+        var attendees = this.getAttendees({});
+        if (attendees) {
+            for (var tmpAttendee of Object.values(attendees)) {
+                if ((tmpAttendee) && (tmpAttendee.id == attendee.id)) {
+                    return tmpAttendee;
+                }
             }
         }
+        attendees = null;
         return null;
     },
 
     attendeeIsInChangesList: function _attendeeIsInChangesList(attendee) {
-        for each(var tmpAttendee in this._changesAttendees) {
-            if ((tmpAttendee.attendee) && (tmpAttendee.attendee.id == attendee.id)) {
-                return tmpAttendee;
+        if (this._changesAttendees) {
+            for (var tmpAttendee of Object.values(this._changesAttendees)) {
+                if ((tmpAttendee.attendee) && (tmpAttendee.attendee.id == attendee.id)) {
+                    return tmpAttendee;
+                }
             }
         }
         return null;
@@ -1544,9 +1559,11 @@ mivExchangeBaseItem.prototype = {
     removeAttendeeFromChangesList: function _removeAttendeeFromChangesList(attendee) {
         var newChangesList = [];
 
-        for each(var tmpAttendee in this._changesAttendees) {
-            if ((tmpAttendee.attendee) && (tmpAttendee.attendee.id != attendee.id)) {
-                newChangesList.push(tmpAttendee);
+        if (this._changesAttendees) {
+            for (var tmpAttendee of Object.values(this._changesAttendees)) {
+                if ((tmpAttendee.attendee) && (tmpAttendee.attendee.id != attendee.id)) {
+                    newChangesList.push(tmpAttendee);
+                }
             }
         }
 
@@ -1628,23 +1645,25 @@ mivExchangeBaseItem.prototype = {
     removeAllAttendees: function _removeAllAttendees() {
         //dump("removeAllAttendees: title:"+this.title+"\n");
         var allAttendees = this.getAttendees({});
-        for each(var attendee in allAttendees) {
+        if (allAttendees) {
+            for (var attendee of Object.values(allAttendees)) {
 
-            var attendeeExists = this.attendeeIsInChangesList(attendee);
-            if (attendeeExists != null) {
-                if (attendeeExists.action == "add") {
-                    // There was already a change for this attendee and it was an addition. We remove this addition
-                    //dump("removeAllAttendees: title:"+this.title+", attendee.id:"+attendee.id+" |  There was already a change for this attendee and it was an addition. We remove this addition\n");
-                    this.removeAttendeeFromChangesList(attendee);
+                var attendeeExists = this.attendeeIsInChangesList(attendee);
+                if (attendeeExists != null) {
+                    if (attendeeExists.action == "add") {
+                        // There was already a change for this attendee and it was an addition. We remove this addition
+                        //dump("removeAllAttendees: title:"+this.title+", attendee.id:"+attendee.id+" |  There was already a change for this attendee and it was an addition. We remove this addition\n");
+                        this.removeAttendeeFromChangesList(attendee);
+                    }
+
+                    // If the action was "remove" we do not do anything as we do not have to duplicate it.
                 }
-
-                // If the action was "remove" we do not do anything as we do not have to duplicate it.
-            }
-            else {
-                this._changesAttendees.push({
-                    action: "remove",
-                    attendee: attendee.clone()
-                });
+                else {
+                    this._changesAttendees.push({
+                        action: "remove",
+                        attendee: attendee.clone()
+                    });
+                }
             }
         }
         allAttendees = null;
@@ -1692,12 +1711,14 @@ mivExchangeBaseItem.prototype = {
         //dump("removeAllAttachments: title:"+this.title);
         //		var allAttachments = this._calEvent.getAttachments({});
         var allAttachments = this.getAttachments({});
-        for each(var attachment in allAttachments) {
-            if (!this._changesAttachments) this._changesAttachments = [];
-            this._changesAttachments.push({
-                action: "remove",
-                attachment: attachment.clone()
-            });
+        if (allAttachments) {
+            for (var attachment of Object.values(allAttachments)) {
+                if (!this._changesAttachments) this._changesAttachments = [];
+                this._changesAttachments.push({
+                    action: "remove",
+                    attachment: attachment.clone()
+                });
+            }
         }
         allAttachments = null;
         this._calEvent.removeAllAttachments();
@@ -1813,20 +1834,24 @@ mivExchangeBaseItem.prototype = {
             }
             break;
         case "RecurringMaster":
-            for each(var exception in this._exceptions) {
-                var tmpStartDate = exception.startDate || exception.entryDate;
-                var tmpEndDate = exception.endDate || exception.entryDate;
-                if (((aStartDate === null) || (!tmpStartDate) || (tmpStartDate.compare(aStartDate) >= 0)) && ((aEndDate === null) || (!tmpEndDate) || (tmpEndDate.compare(aEndDate) < 0))) {
-                    //dump("getOccurrencesBetween 0d: inserting myself into list.");
-                    occurrences.push(exception);
+            if (this._exceptions) {
+                for (var exception of Object.values(this._exceptions)) {
+                    var tmpStartDate = exception.startDate || exception.entryDate;
+                    var tmpEndDate = exception.endDate || exception.entryDate;
+                    if (((aStartDate === null) || (!tmpStartDate) || (tmpStartDate.compare(aStartDate) >= 0)) && ((aEndDate === null) || (!tmpEndDate) || (tmpEndDate.compare(aEndDate) < 0))) {
+                        //dump("getOccurrencesBetween 0d: inserting myself into list.");
+                        occurrences.push(exception);
+                    }
                 }
             }
-            for each(var occurrence in this._occurrences) {
-                var tmpStartDate = occurrence.startDate || occurrence.entryDate;
-                var tmpEndDate = occurrence.endDate || occurrence.entryDate;
-                if (((aStartDate === null) || (!tmpStartDate) || (tmpStartDate.compare(aStartDate) >= 0)) && ((aEndDate === null) || (!tmpEndDate) || (tmpEndDate.compare(aEndDate) < 0))) {
-                    //dump("getOccurrencesBetween 0e: inserting myself into list.");
-                    occurrences.push(occurrence);
+            if (this._occurrences) {
+                for (var occurrence of Object.values( this._occurrences)) {
+                    var tmpStartDate = occurrence.startDate || occurrence.entryDate;
+                    var tmpEndDate = occurrence.endDate || occurrence.entryDate;
+                    if (((aStartDate === null) || (!tmpStartDate) || (tmpStartDate.compare(aStartDate) >= 0)) && ((aEndDate === null) || (!tmpEndDate) || (tmpEndDate.compare(aEndDate) < 0))) {
+                        //dump("getOccurrencesBetween 0e: inserting myself into list.");
+                        occurrences.push(occurrence);
+                    }
                 }
             }
             break;
@@ -2205,8 +2230,10 @@ mivExchangeBaseItem.prototype = {
     //	      [array,size_is(count),retval] out mivExchangeBaseItem aException);
     getExceptions: function _getExceptions(aCount) {
         var result = [];
-        for each(var exception in this._exceptions) {
-            result.push(exception);
+        if (this._exceptions) {
+            for (var exception of Object.values(this._exceptions)) {
+                result.push(exception);
+            }
         }
         aCount.value = result.length;
         return result;
@@ -2239,7 +2266,7 @@ mivExchangeBaseItem.prototype = {
             //dump("addException:"+this.title+"| itemAlarms.length:"+itemAlarms.length+", aItem.reminderSignalTime:"+aItem.reminderSignalTime+"\n");
             var tmpStartDate = aItem.startDate || aItem.entryDate;
             if ((itemAlarms.length > 0) && (aItem.reminderSignalTime) && ((!tmpStartDate) || (tmpStartDate.compare(aItem.reminderSignalTime) >= 0))) {
-                this.setProperty("X-MOZ-SNOOZE-TIME-" + aItem.recurrenceId.nativeTime, aItem.reminderSignalTime.getInTimezone(cal.UTC()).icalString);
+                this.setProperty("X-MOZ-SNOOZE-TIME-" + aItem.recurrenceId.nativeTime, aItem.reminderSignalTime.getInTimezone(cal.dtz.UTC).icalString);
             }
         }
     },
@@ -2270,7 +2297,7 @@ mivExchangeBaseItem.prototype = {
             var itemAlarms = aItem.getAlarms({});
             var tmpStartDate = aItem.startDate || aItem.entryDate;
             if ((itemAlarms.length > 0) && (aItem.reminderSignalTime) && ((!tmpStartDate) || (tmpStartDate.compare(aItem.reminderSignalTime) >= 0))) {
-                this.setProperty("X-MOZ-SNOOZE-TIME-" + aItem.recurrenceId.nativeTime, this.reminderSignalTime.getInTimezone(cal.UTC()).icalString);
+                this.setProperty("X-MOZ-SNOOZE-TIME-" + aItem.recurrenceId.nativeTime, this.reminderSignalTime.getInTimezone(cal.dtz.UTC).icalString);
             }
         }
     },
@@ -2295,10 +2322,12 @@ mivExchangeBaseItem.prototype = {
     removeExceptionAt: function _removeExceptionAt(aRecurrenceId) {
         // Find item.
         var item = null;
-        for each(var exception in this._exceptions) {
-            if (exception.recurrenceId.compare(aRecurrenceId) == 0) {
-                item = exception;
-                break;
+        if (this._exceptions) {
+            for (var exception of Object.values(this._exceptions)) {
+                if (exception.recurrenceId.compare(aRecurrenceId) == 0) {
+                    item = exception;
+                    break;
+                }
             }
         }
 
@@ -2311,9 +2340,11 @@ mivExchangeBaseItem.prototype = {
     //void getOccurrences(out uint32_t count, [array,size_is(count),retval] out mivExchangeBaseItem aOccurrence);
     getOccurrences: function _getOccurrences(aCount) {
         var result = [];
-        for each(var occurrence in this._occurrences) {
-            //dump("getOccurrences: occurrence.title:"+occurrence.title+", startDate:"+occurrence.startDate.toString()+"\n");
-            result.push(occurrence);
+        if (this._occurrences) {
+            for (var occurrence of Object.values(this._occurrences)) {
+                //dump("getOccurrences: occurrence.title:"+occurrence.title+", startDate:"+occurrence.startDate.toString()+"\n");
+                result.push(occurrence);
+            }
         }
         aCount.value = result.length;
         return result;
@@ -2336,7 +2367,7 @@ mivExchangeBaseItem.prototype = {
             //dump("AddOccurrence: itemAlarms.length:"+itemAlarms.length+", X-MOZ-SNOOZE-TIME-"+aItem.recurrenceId.nativeTime);
             var tmpStartDate = aItem.startDate || aItem.entryDate;
             if ((itemAlarms.length > 0) && ((!tmpStartDate) || ((this.reminderDueBy) && (tmpStartDate.compare(this.reminderDueBy) == 0)))) {
-                this.setProperty("X-MOZ-SNOOZE-TIME-" + aItem.recurrenceId.nativeTime, this.reminderSignalTime.getInTimezone(cal.UTC()).icalString);
+                this.setProperty("X-MOZ-SNOOZE-TIME-" + aItem.recurrenceId.nativeTime, this.reminderSignalTime.getInTimezone(cal.dtz.UTC).icalString);
             }
         }
     },
@@ -2362,10 +2393,12 @@ mivExchangeBaseItem.prototype = {
         //dump("removeOccurrenceAt this._cloneCount:"+this._cloneCount+"\n");
         // Find item.
         var item = null;
-        for each(var occurrence in this._occurrences) {
-            if (occurrence.recurrenceId.compare(aRecurrenceId) == 0) {
-                item = occurrence;
-                break;
+        if (this._occurrences) {
+            for (var occurrence of Object.values(this._occurrences)) {
+                if (occurrence.recurrenceId.compare(aRecurrenceId) == 0) {
+                    item = occurrence;
+                    break;
+                }
             }
         }
 
@@ -2795,8 +2828,10 @@ mivExchangeBaseItem.prototype = {
         this._responseObjects = {};
 
         var responseObjects = this.XPath("/t:ResponseObjects/*");
-        for each(var prop in responseObjects) {
-            this._responseObjects[prop.tagName] = true;
+        if (responseObjects) {
+            for (var prop of Object.values(responseObjects)) {
+                this._responseObjects[prop.tagName] = true;
+            }
         }
         responseObjects = null;
 
@@ -2825,21 +2860,25 @@ mivExchangeBaseItem.prototype = {
         this._calEvent.removeAllAttendees();
 
         var attendees = this.XPath("/t:RequiredAttendees/t:Attendee")
-        for each(var at in attendees) {
-            tmpAttendee = this.createAttendee(at, "REQ-PARTICIPANT");
-            this._calEvent.addAttendee(tmpAttendee);
-            //dump("getAttendees: title:"+this.title+", adding required attendee.id:"+tmpAttendee.id+"\n");
-            this._attendees.push(tmpAttendee.clone());
-            this._reqParticipants = true;
+        if (attendees) {
+            for (var at of Object.values(attendees)) {
+                tmpAttendee = this.createAttendee(at, "REQ-PARTICIPANT");
+                this._calEvent.addAttendee(tmpAttendee);
+                //dump("getAttendees: title:"+this.title+", adding required attendee.id:"+tmpAttendee.id+"\n");
+                this._attendees.push(tmpAttendee.clone());
+                this._reqParticipants = true;
+            }
         }
         attendees = null;
         attendees = this.XPath("/t:OptionalAttendees/t:Attendee")
-        for each(var at in attendees) {
-            tmpAttendee = this.createAttendee(at, "OPT-PARTICIPANT");
-            this._calEvent.addAttendee(tmpAttendee);
-            //dump("getAttendees: title:"+this.title+", adding optional attendee.id:"+tmpAttendee.id+"\n");
-            this._attendees.push(tmpAttendee.clone());
-            this._optParticipants = true;
+        if (attendees) {
+            for (var at of Object.values(attendees)) {
+                tmpAttendee = this.createAttendee(at, "OPT-PARTICIPANT");
+                this._calEvent.addAttendee(tmpAttendee);
+                //dump("getAttendees: title:"+this.title+", adding optional attendee.id:"+tmpAttendee.id+"\n");
+                this._attendees.push(tmpAttendee.clone());
+                this._optParticipants = true;
+            }
         }
         attendees = null;
 
@@ -2848,21 +2887,25 @@ mivExchangeBaseItem.prototype = {
         this._attachments = [];
         if (this.hasAttachments) {
             var fileAttachments = this.XPath("/t:Attachments/t:FileAttachment");
-            for each(var fileAttachment in fileAttachments) {
-                var newAttachment = cal.createAttachment();
-                newAttachment.setParameter("X-AttachmentId", xml2json.getAttributeByTag(fileAttachment, "t:AttachmentId", "Id"));
-                newAttachment.uri = cal.makeURL("http://somewhere/?id=" + encodeURIComponent(xml2json.getAttributeByTag(fileAttachment, "t:AttachmentId", "Id")) + "&name=" + encodeURIComponent(xml2json.getTagValue(fileAttachment, "t:Name")) + "&size=" + encodeURIComponent(xml2json.getTagValue(fileAttachment, "t:Size", "")) + "&calendarid=" + encodeURIComponent(this.calendar.id) + "&isinline=" + encodeURIComponent(xml2json.getTagValue(fileAttachment, "t:IsInline", "false")) + "&contentid=" + encodeURIComponent(xml2json.getTagValue(fileAttachment, "t:ContentId", "<NOPE>")));
+            if (fileAttachments) {
+                for (var fileAttachment of Object.values(fileAttachments)) {
+                    var newAttachment = cal.createAttachment();
+                    newAttachment.setParameter("X-AttachmentId", xml2json.getAttributeByTag(fileAttachment, "t:AttachmentId", "Id"));
+                    newAttachment.uri = Services.io.newURI("http://localhost/?id=" + encodeURIComponent(xml2json.getAttributeByTag(fileAttachment, "t:AttachmentId", "Id")) + "&name=" + encodeURIComponent(xml2json.getTagValue(fileAttachment, "t:Name")) + "&size=" + encodeURIComponent(xml2json.getTagValue(fileAttachment, "t:Size", "")) + "&calendarid=" + encodeURIComponent(this.calendar.id) + "&isinline=" + encodeURIComponent(xml2json.getTagValue(fileAttachment, "t:IsInline", "false")) + "&contentid=" + encodeURIComponent(xml2json.getTagValue(fileAttachment, "t:ContentId", "<NOPE>")));
 
-                this._attachments.push(newAttachment.clone());
-                this._calEvent.addAttachment(newAttachment);
+                    this._attachments.push(newAttachment.clone());
+                    this._calEvent.addAttachment(newAttachment);
+                }
             }
             fileAttachments = null;
         }
 
         this._categories = [];
         var strings = this.XPath("/t:Categories/t:String");
-        for each(var cat in strings) {
-            this._categories.push(xml2json.getValue(cat));
+        if (strings) {
+            for (var cat of Object.values(strings)) {
+                this._categories.push(xml2json.getValue(cat));
+            }
         }
         strings = null;
         this._calEvent.setCategories(this._categories.length, this._categories);
@@ -3042,7 +3085,7 @@ mivExchangeBaseItem.prototype = {
             break;
         }
 
-        alarmTime = alarmTime.getInTimezone(cal.UTC());
+        alarmTime = alarmTime.getInTimezone(cal.dtz.UTC);
 
         return alarmTime;
     },
@@ -3060,10 +3103,12 @@ mivExchangeBaseItem.prototype = {
 
             var recurrenceItems = this.recurrenceInfo.getRecurrenceItems({});
             var rrule = null;
-            for each(var ritem in recurrenceItems) {
-                if (ritem instanceof Ci.calIRecurrenceRule) {
-                    rrule = ritem;
-                    break;
+            if (recurrenceItems) {
+                for (var ritem of Object.values(recurrenceItems)) {
+                    if (ritem instanceof Ci.calIRecurrenceRule) {
+                        rrule = ritem;
+                        break;
+                    }
                 }
             }
 
@@ -3079,14 +3124,14 @@ mivExchangeBaseItem.prototype = {
 
             /* can't get parameters of RRULEs... have to do it manually :/ */
             var prop = {};
-            for each(let ps in rrule.icalProperty.value.split(';')) {
+            for (let ps of rrule.icalProperty.value.split(';')) {
                 let m = ps.split('=');
                 prop[m[0]] = m[1];
             }
 
             var startDate;
             var originalDate;
-            if (cal.isEvent(this)) {
+            if (cal.item.isEvent(this)) {
                 //dump(" GoGo 2\n");
                 startDate = this.startDate.clone();
                 originalDate = this.startDate.clone();
@@ -3103,8 +3148,8 @@ mivExchangeBaseItem.prototype = {
                 startDate = startDate.clone();
             }
             else {
-                startDate = cal.now();
-                originalDate = cal.now();
+                startDate = cal.dtz.now();
+                originalDate = cal.dtz.now();
             }
             startDate.isDate = true;
 
@@ -3145,7 +3190,7 @@ mivExchangeBaseItem.prototype = {
                 wr.addChildTag("Interval", "t", rrule.interval);
                 var days = [];
                 var daystr = prop["BYDAY"] || dayIdxMap[startDate.weekday];
-                for each(let day in daystr.split(",")) {
+                for (let day of daystr.split(",")) {
                     days.push(dayRevMap[day]);
                 }
                 wr.addChildTag("DaysOfWeek", "t", days.join(' '));
@@ -3156,16 +3201,16 @@ mivExchangeBaseItem.prototype = {
                 break;
             }
 
-            if (cal.isEvent(this)) {
-                //			var startDateStr = cal.toRFC3339(startDate.getInTimezone(exchGlobalFunctions.ecUTC()))+"Z";
-                var startDateStr = cal.toRFC3339(startDate.getInTimezone(exchGlobalFunctions.ecUTC()));
-                //var startDateStr = cal.toRFC3339(originalDate.getInTimezone(exchGlobalFunctions.ecUTC()));
+            if (cal.item.isEvent(this)) {
+                //			var startDateStr = cal.dtz.toRFC3339(startDate.getInTimezone(exchGlobalFunctions.ecUTC()))+"Z";
+                var startDateStr = cal.dtz.toRFC3339(startDate.getInTimezone(exchGlobalFunctions.ecUTC()));
+                //var startDateStr = cal.dtz.toRFC3339(originalDate.getInTimezone(exchGlobalFunctions.ecUTC()));
             }
             else {
                 // We make a non-UTC datetime value for exchGlobalFunctions.
                 // EWS will use the MeetingTimeZone or StartTimeZone and EndTimeZone to convert.
-                //LOG("  ==== tmpStart:"+cal.toRFC3339(tmpStart));
-                var startDateStr = cal.toRFC3339(startDate).substr(0, 19); //cal.toRFC3339(tmpStart).length-6);
+                //LOG("  ==== tmpStart:"+cal.dtz.toRFC3339(tmpStart));
+                var startDateStr = cal.dtz.toRFC3339(startDate).substr(0, 19); //cal.dtz.toRFC3339(tmpStart).length-6);
             }
 
             if (rrule.isByCount && rrule.count != -1) {
@@ -3176,9 +3221,9 @@ mivExchangeBaseItem.prototype = {
             else if (!rrule.isByCount && rrule.untilDate) {
 
                 var endDate = rrule.untilDate.clone();
-                if (cal.isEvent(this)) {
+                if (cal.item.isEvent(this)) {
                     endDate.isDate = true;
-                    var endDateStr = cal.toRFC3339(endDate.getInTimezone(exchGlobalFunctions.ecUTC()));
+                    var endDateStr = cal.dtz.toRFC3339(endDate.getInTimezone(exchGlobalFunctions.ecUTC()));
                 }
                 else {
                     if (!endDate.isDate) {
@@ -3190,7 +3235,7 @@ mivExchangeBaseItem.prototype = {
 
                         endDate.isDate = true;
                     }
-                    var endDateStr = cal.toRFC3339(endDate).substr(0, 19); //cal.toRFC3339(tmpEnd).length-6);
+                    var endDateStr = cal.dtz.toRFC3339(endDate).substr(0, 19); //cal.dtz.toRFC3339(tmpEnd).length-6);
                 }
                 var edr = r.addChildTag("EndDateRecurrence", "t", null);
                 edr.addChildTag("StartDate", "t", startDateStr);
@@ -3274,7 +3319,7 @@ mivExchangeBaseItem.prototype = {
                         // A Todo always has an alarm.related of ALARM_RELATED_ABSOLUTE
                         // So referenceDate is set there.
                         if (this.className == "mivExchangeEvent") {
-                            var referenceDate = this.startDate.getInTimezone(cal.UTC());
+                            var referenceDate = this.startDate.getInTimezone(cal.dtz.UTC);
                             referenceDate.isDate = false;
                         }
 
@@ -3289,7 +3334,7 @@ mivExchangeBaseItem.prototype = {
                             }
                             else {
                                 //var offset = 0;
-                                referenceDate = newAlarmTime.getInTimezone(cal.UTC());
+                                referenceDate = newAlarmTime.getInTimezone(cal.dtz.UTC);
                             }
                             break;
                         case Ci.calIAlarm.ALARM_RELATED_START:
@@ -3306,7 +3351,7 @@ mivExchangeBaseItem.prototype = {
                             var offset = newAlarmTime.subtractDate(referenceDate);
                             break;
                         }
-                        this.addSetItemField(updates, "ReminderDueBy", cal.toRFC3339(referenceDate));
+                        this.addSetItemField(updates, "ReminderDueBy", cal.dtz.toRFC3339(referenceDate));
 
                         if ((offset) && (offset.inSeconds != 0)) {
                             this.addSetItemField(updates, "ReminderMinutesBeforeStart", String((offset.inSeconds / 60) * -1));
@@ -3351,7 +3396,7 @@ mivExchangeBaseItem.prototype = {
                 // A Todo always has an alarm.related of ALARM_RELATED_ABSOLUTE
                 // So referenceDate is set there.
                 if (this.className == "mivExchangeEvent") {
-                    var referenceDate = this.startDate.getInTimezone(cal.UTC());
+                    var referenceDate = this.startDate.getInTimezone(cal.dtz.UTC);
                     referenceDate.isDate = false;
                 }
 
@@ -3366,7 +3411,7 @@ mivExchangeBaseItem.prototype = {
                     }
                     else {
                         //var offset = 0;
-                        referenceDate = newAlarmTime.getInTimezone(cal.UTC());
+                        referenceDate = newAlarmTime.getInTimezone(cal.dtz.UTC);
                     }
                     break;
                 case Ci.calIAlarm.ALARM_RELATED_START:
@@ -3410,9 +3455,9 @@ mivExchangeBaseItem.prototype = {
         // Alarm snooze or dismiss
         if (typeof this._newXMozSnoozeTime !== undefined) {
             //dump("checkAlarmChange: this._newXMozSnoozeTime was set to:"+this._newXMozSnoozeTime+", newReminderMinutesBeforeStart="+newReminderMinutesBeforeStart+"\n");
-            dump("\ncheckAlarmChange: snoozetime " + this._newXMozSnoozeTime);
+            dump("checkAlarmChange: snoozetime " + this._newXMozSnoozeTime + "\n");
             if ((this._newXMozSnoozeTime === null) && (newReminderMinutesBeforeStart !== true)) {
-                dump("\ncheckAlarmChange: dismissed " + newReminderMinutesBeforeStart + ".\n");
+                dump("checkAlarmChange: dismissed " + newReminderMinutesBeforeStart + ".\n");
                 //dump("checkAlarmChange: We have a change\n");
                 if (this.calendarItemType == "RecurringMaster") {
                     // Find out which occurrence or exception was dismissed
@@ -3529,10 +3574,10 @@ mivExchangeBaseItem.prototype = {
         }
 
         if (newSnoozeTime) {
-            newSnoozeTime = newSnoozeTime.getInTimezone(cal.UTC());
+            newSnoozeTime = newSnoozeTime.getInTimezone(cal.dtz.UTC);
             const MAPI_PidLidReminderSignalTime = "34144";
 
-            this.addSetItemField(updates, "ExtendedFieldURI", cal.toRFC3339(newSnoozeTime), {
+            this.addSetItemField(updates, "ExtendedFieldURI", cal.dtz.toRFC3339(newSnoozeTime), {
                 DistinguishedPropertySetId: "Common",
                 PropertyId: MAPI_PidLidReminderSignalTime,
                 PropertyType: "SystemTime"
@@ -3582,82 +3627,88 @@ mivExchangeBaseItem.prototype = {
 
         var comps = {};
 
-        for each(var rec in aElement) {
-            switch (rec.tagName) {
-            case "RelativeYearlyRecurrence":
-            case "AbsoluteYearlyRecurrence":
-                comps['FREQ'] = "YEARLY";
-                break;
-            case "RelativeMonthlyRecurrence":
-            case "AbsoluteMonthlyRecurrence":
-                comps['FREQ'] = "MONTHLY";
-                break;
-            case "WeeklyRecurrence":
-                comps['FREQ'] = "WEEKLY";
-                break;
-            case "DailyRecurrence":
-            case "DailyRegeneration":
-                comps['FREQ'] = "DAILY";
-                break;
-            case "NoEndRecurrence":
-            case "NumberedRecurrence":
-                break;
-            case "EndDateRecurrence":
-                break;
-            default:
-                //dump("skipping " + rec.tagName);
-                continue;
-            }
-
-            var weekdays = [];
-            var week = [];
-            var comps2 = xml2json.XPath(rec, "/*");
-            for each(var comp in comps2) {
-                switch (comp.tagName) {
-                case 'DaysOfWeek':
-                    for each(let day in xml2json.getValue(comp).split(" ")) {
-                        weekdays = weekdays.concat(dayMap[day]);
-                    }
+        if (aElement) {
+            for (var rec of Object.values(aElement)) {
+                switch (rec.tagName) {
+                case "RelativeYearlyRecurrence":
+                case "AbsoluteYearlyRecurrence":
+                    comps['FREQ'] = "YEARLY";
                     break;
-                case 'DayOfWeekIndex':
-                    week = weekMap[xml2json.getValue(comp)];
+                case "RelativeMonthlyRecurrence":
+                case "AbsoluteMonthlyRecurrence":
+                    comps['FREQ'] = "MONTHLY";
                     break;
-                case 'Month':
-                    comps['BYMONTH'] = monthMap[xml2json.getValue(comp)];
+                case "WeeklyRecurrence":
+                    comps['FREQ'] = "WEEKLY";
                     break;
-                case 'DayOfMonth':
-                    comps['BYMONTHDAY'] = xml2json.getValue(comp);
+                case "DailyRecurrence":
+                case "DailyRegeneration":
+                    comps['FREQ'] = "DAILY";
                     break;
-                case 'FirstDayOfWeek':
-                    comps['WKST'] = dayMap[xml2json.getValue(comp)];
+                case "NoEndRecurrence":
+                case "NumberedRecurrence":
                     break;
-                case 'Interval':
-                    comps['INTERVAL'] = xml2json.getValue(comp);
+                case "EndDateRecurrence":
                     break;
-                case 'StartDate':
-                    /* Dunno what to do with this for iCal; no place to set */
-                    this._recurrenceStartDate = cal.fromRFC3339(xml2json.getValue(comp).substr(0, 10) + "T00:00:00Z", exchGlobalFunctions.ecTZService().UTC);
-                    this._recurrenceStartDate.isDate = true;
-                    break;
-                case 'EndDate':
-                    //					comps['UNTIL'] = comp.value.replace(/Z$/, '');
-                    // As we only get the date + timezonediff we make a nice date+time from it.
-                    comps['UNTIL'] = xml2json.getValue(comp).substr(0, 10) + "T00:00:00Z";
-                    break;
-                case 'NumberOfOccurrences':
-                    comps['COUNT'] = xml2json.getValue(comp);
-                    break;
+                default:
+                    //dump("skipping " + rec.tagName);
+                    continue;
                 }
-            }
-            comps2 = null;
 
-            let wdtemp = weekdays;
-            weekdays = [];
-            for each(let day in wdtemp) {
-                weekdays.push(week + day);
-            }
-            if (weekdays.length > 0) {
-                comps['BYDAY'] = weekdays.join(',');
+                var weekdays = [];
+                var week = [];
+                var comps2 = xml2json.XPath(rec, "/*");
+                if (comps2) {
+                    for (var comp of Object.values(comps2)) {
+                        switch (comp.tagName) {
+                        case 'DaysOfWeek':
+                            for (let day of xml2json.getValue(comp).split(" ")) {
+                                weekdays = weekdays.concat(dayMap[day]);
+                            }
+                            break;
+                        case 'DayOfWeekIndex':
+                            week = weekMap[xml2json.getValue(comp)];
+                            break;
+                        case 'Month':
+                            comps['BYMONTH'] = monthMap[xml2json.getValue(comp)];
+                            break;
+                        case 'DayOfMonth':
+                            comps['BYMONTHDAY'] = xml2json.getValue(comp);
+                            break;
+                        case 'FirstDayOfWeek':
+                            comps['WKST'] = dayMap[xml2json.getValue(comp)];
+                            break;
+                        case 'Interval':
+                            comps['INTERVAL'] = xml2json.getValue(comp);
+                            break;
+                        case 'StartDate':
+                            /* Dunno what to do with this for iCal; no place to set */
+                            this._recurrenceStartDate = cal.dtz.fromRFC3339(xml2json.getValue(comp).substr(0, 10) + "T00:00:00Z", exchGlobalFunctions.ecTZService().UTC);
+                            this._recurrenceStartDate.isDate = true;
+                            break;
+                        case 'EndDate':
+                            //					comps['UNTIL'] = comp.value.replace(/Z$/, '');
+                            // As we only get the date + timezonediff we make a nice date+time from it.
+                            comps['UNTIL'] = xml2json.getValue(comp).substr(0, 10) + "T00:00:00Z";
+                            break;
+                        case 'NumberOfOccurrences':
+                            comps['COUNT'] = xml2json.getValue(comp);
+                            break;
+                        }
+                    }
+                }
+                comps2 = null;
+
+                let wdtemp = weekdays;
+                weekdays = [];
+                if (wdtemp) {
+                    for (let day of Object.values(wdtemp)) {
+                        weekdays.push(week + day);
+                    }
+                }
+                if (weekdays.length > 0) {
+                    comps['BYDAY'] = weekdays.join(',');
+                }
             }
         }
 
@@ -3751,10 +3802,10 @@ mivExchangeBaseItem.prototype = {
     tryToSetDateValueUTC: function _tryToSetDateValueUTC(ewsvalue, aDefault) {
         if ((ewsvalue) && (ewsvalue.toString().length)) {
             if (ewsvalue.indexOf("Z") > -1) {
-                return cal.fromRFC3339(ewsvalue, exchGlobalFunctions.ecTZService().UTC);
+                return cal.dtz.fromRFC3339(ewsvalue, exchGlobalFunctions.ecTZService().UTC);
             }
             else {
-                return cal.fromRFC3339(ewsvalue, exchGlobalFunctions.ecDefaultTimeZone()).getInTimezone(exchGlobalFunctions.ecTZService().UTC);
+                return cal.dtz.fromRFC3339(ewsvalue, exchGlobalFunctions.ecDefaultTimeZone()).getInTimezone(exchGlobalFunctions.ecTZService().UTC);
             }
         }
 
@@ -3763,7 +3814,7 @@ mivExchangeBaseItem.prototype = {
 
     tryToSetDateValueDefaultTZ: function _tryToSetDateValueDefaultTZ(ewsvalue, aDefault) {
         if ((ewsvalue) && (ewsvalue.toString().length)) {
-            return cal.fromRFC3339(ewsvalue, exchGlobalFunctions.ecDefaultTimeZone());
+            return cal.dtz.fromRFC3339(ewsvalue, exchGlobalFunctions.ecDefaultTimeZone());
         }
 
         return aDefault;
@@ -3771,7 +3822,7 @@ mivExchangeBaseItem.prototype = {
 
     tryToSetDateValue: function _TryToSetDateValue(ewsvalue, aDefault) {
         if ((ewsvalue) && (ewsvalue.toString().length)) {
-            return cal.fromRFC3339(ewsvalue, exchGlobalFunctions.ecTZService().UTC).getInTimezone(exchGlobalFunctions.ecDefaultTimeZone());
+            return cal.dtz.fromRFC3339(ewsvalue, exchGlobalFunctions.ecTZService().UTC).getInTimezone(exchGlobalFunctions.ecDefaultTimeZone());
         }
 
         return aDefault;

@@ -1,0 +1,12 @@
+<!ENTITY ecsettings.window.title "Exchange-naptár névjegyzék beállításait">
+
+<!ENTITY label.acceptbutton "Mentés">
+<!ENTITY label.cancelbutton "Mégse">
+
+<!ENTITY ecsettings.tab.adsettings "Exchange/Windows AD (Active Directory – Működő könyvtár)">
+<!ENTITY ecsettings.tab.meetingrequestsettings "Találkozó felkérése">
+
+<!ENTITY label.ecExchangeSettings.title "Név a listában:">
+<!ENTITY exchangeWebService.preference.contacts.pollinterval "Frissítés időköz (másodperc):">
+
+<!ENTITY exchWebService.add.globaladdresslist.label "Adjon globális címlistát a keresési eredményekhez">

@@ -36,21 +36,18 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 
-var Cu = Components.utils;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://calendar/modules/calUtils.jsm");
-Cu.import("resource://calendar/modules/calAlarmUtils.jsm");
-Cu.import("resource://calendar/modules/calProviderUtils.jsm");
-Cu.import("resource://calendar/modules/calAuthUtils.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://exchangecommon/ecFunctions.js");
-Cu.import("resource://exchangecommon/ecExchangeRequest.js");
-Cu.import("resource://exchangecommon/soapFunctions.js");
+ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
-Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
+ChromeUtils.import("resource://exchangecommon/soapFunctions.js");
+
+ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 var EXPORTED_SYMBOLS = ["erSyncFolderItemsRequest"];
 
@@ -146,74 +143,88 @@ erSyncFolderItemsRequest.prototype = {
 
                 if (this.getSyncState === false) {
                     var createItems = xml2json.XPath(rm[0], "/m:Changes/t:Create");
-                    for each(var creation in createItems) {
-                        var calendarItems = xml2json.XPath(creation, "/t:CalendarItem/t:ItemId");
-                        for each(var calendarItem in calendarItems) {
-                            this.creations.push({
-                                Id: xml2json.getAttribute(calendarItem, "Id").toString(),
-                                ChangeKey: xml2json.getAttribute(calendarItem, "ChangeKey").toString()
-                            });
-                        }
-                        calendarItems = null;
+                    if (createItems) {
+                        for (var creation of Object.values(createItems)) {
+                            var calendarItems = xml2json.XPath(creation, "/t:CalendarItem/t:ItemId");
+                            if (calendarItems) {
+                                for (var calendarItem of Object.values(calendarItems)) {
+                                    this.creations.push({
+                                        Id: xml2json.getAttribute(calendarItem, "Id").toString(),
+                                        ChangeKey: xml2json.getAttribute(calendarItem, "ChangeKey").toString()
+                                    });
+                                }
+                            }
+                            calendarItems = null;
 
-                        var tasks;
-                        switch (this.folderBase) {
-                        case "tasks":
-                            tasks = xml2json.XPath(creation, "/t:Task/t:ItemId");
-                            break;
-                        case "inbox":
-                            tasks = xml2json.XPath(creation, "/t:Message/t:ItemId");
-                            break;
-                        default:
-                        }
+                            var tasks;
+                            switch (this.folderBase) {
+                            case "tasks":
+                                tasks = xml2json.XPath(creation, "/t:Task/t:ItemId");
+                                break;
+                            case "inbox":
+                                tasks = xml2json.XPath(creation, "/t:Message/t:ItemId");
+                                break;
+                            default:
+                            }
 
-                        for each(var task in tasks) {
-                            this.creations.push({
-                                Id: xml2json.getAttribute(task, "Id").toString(),
-                                ChangeKey: xml2json.getAttribute(task, "ChangeKey").toString()
-                            });
+                            if (tasks) {
+                                for (var task of Object.values(tasks)) {
+                                    this.creations.push({
+                                        Id: xml2json.getAttribute(task, "Id").toString(),
+                                        ChangeKey: xml2json.getAttribute(task, "ChangeKey").toString()
+                                    });
+                                }
+                            }
+                            tasks = null;
                         }
-                        tasks = null;
                     }
                     createItems = null;
 
                     var updateItems = xml2json.XPath(rm[0], "/m:Changes/t:Update");
-                    for each(var update in updateItems) {
-                        var calendarItems = xml2json.XPath(update, "/t:CalendarItem/t:ItemId");
-                        for each(var calendarItem in calendarItems) {
-                            this.updates.push({
-                                Id: xml2json.getAttribute(calendarItem, "Id").toString(),
-                                ChangeKey: xml2json.getAttribute(calendarItem, "ChangeKey").toString()
-                            });
-                        }
-                        calendarItems = null;
+                    if (updateItems) {
+                        for (var update of Object.values(updateItems)) {
+                            var calendarItems = xml2json.XPath(update, "/t:CalendarItem/t:ItemId");
+                            if (calendarItems) {
+                                for (var calendarItem of Object.values(calendarItems)) {
+                                    this.updates.push({
+                                        Id: xml2json.getAttribute(calendarItem, "Id").toString(),
+                                        ChangeKey: xml2json.getAttribute(calendarItem, "ChangeKey").toString()
+                                    });
+                                }
+                            }
+                            calendarItems = null;
 
-                        var tasks;
-                        switch (this.folderBase) {
-                        case "tasks":
-                            tasks = xml2json.XPath(update, "/t:Task/t:ItemId");
-                            break;
-                        case "inbox":
-                            tasks = xml2json.XPath(update, "/t:Message/t:ItemId");
-                            break;
-                        default:
+                            var tasks;
+                            switch (this.folderBase) {
+                            case "tasks":
+                                tasks = xml2json.XPath(update, "/t:Task/t:ItemId");
+                                break;
+                            case "inbox":
+                                tasks = xml2json.XPath(update, "/t:Message/t:ItemId");
+                                break;
+                            default:
+                            }
+                            if (tasks) {
+                                for (var task of Object.values(tasks)) {
+                                    this.updates.push({
+                                        Id: xml2json.getAttribute(task, "Id").toString(),
+                                        ChangeKey: xml2json.getAttribute(task, "ChangeKey").toString()
+                                    });
+                                }
+                            }
+                            tasks = null;
                         }
-                        for each(var task in tasks) {
-                            this.updates.push({
-                                Id: xml2json.getAttribute(task, "Id").toString(),
-                                ChangeKey: xml2json.getAttribute(task, "ChangeKey").toString()
-                            });
-                        }
-                        tasks = null;
                     }
                     updateItems = null;
 
                     var deleteItems = xml2json.XPath(rm[0], "/m:Changes/t:Delete/t:ItemId");
-                    for each(var deleted in deleteItems) {
-                        this.deletions.push({
-                            Id: xml2json.getAttribute(deleted, "Id").toString(),
-                            ChangeKey: xml2json.getAttribute(deleted, "ChangeKey").toString()
-                        });
+                    if (deleteItems) {
+                        for (var deleted of Object.values(deleteItems)) {
+                            this.deletions.push({
+                                Id: xml2json.getAttribute(deleted, "Id").toString(),
+                                ChangeKey: xml2json.getAttribute(deleted, "ChangeKey").toString()
+                            });
+                        }
                     }
                     deleteItems = null;
 

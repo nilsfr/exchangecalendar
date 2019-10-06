@@ -5,7 +5,7 @@
 <!ENTITY exchangeWebService.preferences.tab.debug "Registrazione eventi">
 <!ENTITY exchangeWebService.preference.debug.file "Percorso file di log:">
 <!ENTITY exchangeWebService.preference.network.debug.caption "Comunicazioni con il server Exchange:">
-<!ENTITY exchangeWebService.preference.debug.log.label "Registra informazioni sulla console e/o su un file">
+<!ENTITY exchangeWebService.preference.debug.log.label "Log information to the console and a file">
 <!ENTITY exchangeWebService.preference.debug.file.button "Sfoglia">
 <!ENTITY exchangeWebService.preference.network.debug.label "Registra comunicazioni con il server Exchange">
 <!ENTITY exchangeWebService.preference.network.debuglevel.label1 "Livello di log">
@@ -21,7 +21,7 @@
 <!ENTITY exchangeWebService.preferences.titleWin "Opzioni Exchange (EWS)">
 
 <!ENTITY exchangeWebService.preference.core.debug.caption "Oggetto core provider:">
-<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "0 = nessuna informazione, 1 = informazioni di base, 2 = comunicazioni integrali">
+<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "1 = Basic information, 2 = Extended information">
 
 <!ENTITY exchangeWebService.preferences.tab.cache "Caching">
 <!ENTITY exchangeWebService.preference.cache.memory.label "Cache minimale temporanea in memoria">
@@ -43,9 +43,9 @@
 <!ENTITY exchangeWebService.preference.loadbalancer.prefs.sleepBetweenJobs.label "Tempo minimo di attesa fra richieste al server Exchange:">
 <!ENTITY exchangeWebService.preference.userAgent.label "Agente utente HTTP:">
 
-<!ENTITY exchangeWebService.preference.globalsearch.caption "Thunderbird Global Search Index">
-<!ENTITY exchangeWebService.preference.globalsearch.label "Enable the Thunderbird Global Search Index">
-<!ENTITY exchangeWebService.preference.globalsearch.explain "If you enable this Thunderbird feature, exchangecalendar would be able to enable the email remote tagging and the invitation column in the mail tree view.">
+<!ENTITY exchangeWebService.preference.globalsearch.caption "Indice globale di ricerca di Thunderbird.">
+<!ENTITY exchangeWebService.preference.globalsearch.label "Abilitare l'Indice globale di ricerca di Thunderbird.">
+<!ENTITY exchangeWebService.preference.globalsearch.explain "Abilitando questa funzionalità, exchangecalendar potrà utilizzare i tag remoti e visualizzare la colonna degli inviti nell'elenco dei messaggi di posta.">
 
 <!ENTITY exchangeWebService.preference.ntlmv1.label "Opzioni NTLM-v1:">
 <!ENTITY exchangeWebService.preference.ntlmv1.true.label "Abilita">

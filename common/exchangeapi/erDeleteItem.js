@@ -34,19 +34,16 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 
-var Cu = Components.utils;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://calendar/modules/calUtils.jsm");
-Cu.import("resource://calendar/modules/calAlarmUtils.jsm");
-Cu.import("resource://calendar/modules/calProviderUtils.jsm");
-Cu.import("resource://calendar/modules/calAuthUtils.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://exchangecommon/ecFunctions.js");
-Cu.import("resource://exchangecommon/ecExchangeRequest.js");
-Cu.import("resource://exchangecommon/soapFunctions.js");
+ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
+
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
+ChromeUtils.import("resource://exchangecommon/soapFunctions.js");
 
 var EXPORTED_SYMBOLS = ["erDeleteItemRequest"];
 
@@ -109,7 +106,7 @@ erDeleteItemRequest.prototype = {
             itemId.setAttribute("Id", this.id);
             itemId.setAttribute("ChangeKey", this.changeKey);
 
-            if (cal.isToDo(this.argument.item)) {
+            if (cal.item.isToDo(this.argument.item)) {
                 affectedTaskOccurrences = 'AllOccurrences';
             }
             break;
@@ -149,7 +146,7 @@ erDeleteItemRequest.prototype = {
 
         var req = exchWebService.commonFunctions.xmlToJxon('<nsMessages:DeleteItem DeleteType="HardDelete" xmlns:nsMessages="' + nsMessagesStr + '" xmlns:nsTypes="' + nsTypesStr + '"/>');
 
-        if ((this.itemType != "meeting") && (cal.isEvent(this.argument.item))) {
+        if ((this.itemType != "meeting") && (cal.item.isEvent(this.argument.item))) {
             req.setAttribute("SendMeetingCancellations", sendMeetingCancellations);
         }
 

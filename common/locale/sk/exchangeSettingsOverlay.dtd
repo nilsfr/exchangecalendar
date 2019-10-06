@@ -1,27 +1,27 @@
-<!ENTITY ecautodiscover "Use Exchange's autodiscovery function.">
-<!ENTITY ecfolderbase.label "Folder base:">
-<!ENTITY ecfolderpath.label "Path below folder base:">
-<!ENTITY ecfolderidofshare.label "Share Folder ID:">
-<!ENTITY exchWebServices.SharedFolderID.label "Shared display name:">
+<!ENTITY ecautodiscover "Use Exchange autodiscovery">
+<!ENTITY ecfolderbase.label "Koreň priečinka:">
+<!ENTITY ecfolderpath.label "Cesta pod koreňom priečinka:">
+<!ENTITY ecfolderidofshare.label "ID zdieľaného priečinka:">
+<!ENTITY exchWebServices.SharedFolderID.label "Zobrazený názov zdieľaného priečinka:">
 
-<!ENTITY menuitem.label.ecfolderbase.calendar "Calendar folder">
-<!ENTITY menuitem.label.ecfolderbase.publicfoldersroot "Public folders">
-<!ENTITY menuitem.label.ecfolderbase.inbox "Mail inbox folder">
-<!ENTITY menuitem.label.ecfolderbase.voicemail "Voice mail folder">
-<!ENTITY menuitem.label.ecfolderbase.msgfolderroot "Message folder root">
-<!ENTITY menuitem.label.ecfolderbase.root "Root of the mailbox">
-<!ENTITY menuitem.label.ecfolderbase.tasks "Tasks folder">
+<!ENTITY menuitem.label.ecfolderbase.calendar "Priečinok kalendára">
+<!ENTITY menuitem.label.ecfolderbase.publicfoldersroot "Verejné priečinky">
+<!ENTITY menuitem.label.ecfolderbase.inbox "Priečinok inbox pre e-mail">
+<!ENTITY menuitem.label.ecfolderbase.voicemail "Priečinok hlasových správ">
+<!ENTITY menuitem.label.ecfolderbase.msgfolderroot "Koreň priečinka správy">
+<!ENTITY menuitem.label.ecfolderbase.root "Koreň e-mailového účtu">
+<!ENTITY menuitem.label.ecfolderbase.tasks "Priečinok úloh">
 
-<!ENTITY menuitem.label.ecfolderbase.contacts "Contacts folder">
-<!ENTITY menuitem.label.ecfolderbase.deleteditems "Deleted items folder">
-<!ENTITY menuitem.label.ecfolderbase.drafts "Drafts folder">
-<!ENTITY menuitem.label.ecfolderbase.journal "Journal folder">
-<!ENTITY menuitem.label.ecfolderbase.notes "Notes folder">
-<!ENTITY menuitem.label.ecfolderbase.outbox "Mail outbox folder">
-<!ENTITY menuitem.label.ecfolderbase.sentitems "Sent items folder">
-<!ENTITY menuitem.label.ecfolderbase.junkemail "Junk email folder">
-<!ENTITY menuitem.label.ecfolderbase.searchfolders "Search folders folder">
-<!ENTITY menuitem.label.ecfolderbase.version2010 "-- Options below are only for Exchange 2010 --">
+<!ENTITY menuitem.label.ecfolderbase.contacts "Priečinok kontaktov">
+<!ENTITY menuitem.label.ecfolderbase.deleteditems "Priečinok odstránených položiek">
+<!ENTITY menuitem.label.ecfolderbase.drafts "Priečinok konceptov">
+<!ENTITY menuitem.label.ecfolderbase.journal "Priečinok denníka">
+<!ENTITY menuitem.label.ecfolderbase.notes "Priečinok poznámok">
+<!ENTITY menuitem.label.ecfolderbase.outbox "Priečinok odchádzajúcich e-maiov">
+<!ENTITY menuitem.label.ecfolderbase.sentitems "Priečinok odoslaných položiek">
+<!ENTITY menuitem.label.ecfolderbase.junkemail "Priečinok nevyžiadanej pošty">
+<!ENTITY menuitem.label.ecfolderbase.searchfolders "Priečinok uložených vyhľadávaní">
+<!ENTITY menuitem.label.ecfolderbase.version2010 "-- Voľby nižšie platia len pre Exchange 2010 --">
 <!ENTITY menuitem.label.ecfolderbase.recoverableitemsroot "Dumpster root folder">
 <!ENTITY menuitem.label.ecfolderbase.recoverableitemsdeletions "Dumpster deletions folder">
 <!ENTITY menuitem.label.ecfolderbase.recoverableitemsversion "Dumpster versions folder">
@@ -34,23 +34,23 @@
 <!ENTITY menuitem.label.ecfolderbase.Archiverecoverableitemsversions "Archive recoverable items versions folder">
 <!ENTITY menuitem.label.ecfolderbase.Archiverecoverableitemspurges "Archive recoverable items purges folder">
 
-<!ENTITY button.label.autodiscovercheck "Perform autodiscovery">
-<!ENTITY button.label.serverandmailboxcheck "Check server and mailbox">
-<!ENTITY button.label.servercheck "Check server and account">
+<!ENTITY button.label.autodiscovercheck "Vykonať automatické zistenie">
+<!ENTITY button.label.serverandmailboxcheck "Skontrolovať server a e-mailový účet">
+<!ENTITY button.label.servercheck "Overiť server a účet">
 
-<!ENTITY ecmailbox.label "Primary email address:">
-<!ENTITY ecmailbox.tooltip "If you do not specify a mailbox you will only have access to public folders.">
-<!ENTITY ecwindowsuser.label "Username:">
-<!ENTITY ecwindowsdomain.label "Domain name:">
-<!ENTITY ecwindowspassword.label "Password:">
+<!ENTITY ecmailbox.server_url.label "Server URL:">
+<!ENTITY ecmailbox.label "Primárna e-mailová adresa:">
+<!ENTITY ecmailbox.tooltip "Ak neurčíte e-mailový účet, budete mať prístup len k verejným priečinkom.">
+<!ENTITY ecwindowsuser.label "Používateľské meno:">
+<!ENTITY ecwindowsdomain.label "Názov domény:">
+<!ENTITY ecwindowspassword.label "Heslo:">
 
-<!ENTITY button.label.folderpathcheck "Check">
-<!ENTITY button.label.folderbrowse "Browse">
+<!ENTITY button.label.folderpathcheck "Overiť">
+<!ENTITY button.label.folderbrowse "Prechádzať">
 
-<!ENTITY exchWebServices.UserAvailability.label "Only user availability status for the mailbox's calendar will be visible.">
+<!ENTITY exchWebServices.UserAvailability.label "Viditeľný bude len stav používateľovej dostupnosti pre kalendár e-mailového účtu.">
 
-<!ENTITY exchWebServices.exchtype.label "Exchange type">
-<!ENTITY exchWebServices.hostexch.label "Hosted Exchange">
+<!ENTITY exchWebServices.exchtype.label "Typ Exchange">
+<!ENTITY exchWebServices.hostexch.label "Hosťovaný Exchange">
 <!ENTITY exchWebServices.365exch.label "Microsoft Office 365">
-<!ENTITY exchWebServices.detail.label "Details">
- 
+<!ENTITY exchWebServices.detail.label "Podrobnosti">

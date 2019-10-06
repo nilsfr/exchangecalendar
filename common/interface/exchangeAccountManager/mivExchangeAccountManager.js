@@ -20,12 +20,12 @@
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 function mivExchangeAccountManager() {
 
@@ -58,11 +58,10 @@ mivExchangeAccountManager.prototype = {
     classID: components.ID("{" + mivExchangeAccountManagerGUID + "}"),
     contractID: "@1st-setup.nl/exchange/accountmanager;1",
     flags: Ci.nsIClassInfo.SINGLETON || Ci.nsIClassInfo.THREADSAFE,
-    implementationLanguage: Ci.nsIProgrammingLanguage.JAVASCRIPT,
 
     // External methods 
     getAccountIds: function _getAccountIds() {
-        var ids = this.globalFunctions.safeGetCharPref(this.prefs, "ids", "");
+        var ids = this.globalFunctions.safeGetStringPref(this.prefs, "ids", "");
         this.logInfo("ids:" + ids);
         return ids.split(",");
     },
@@ -70,13 +69,15 @@ mivExchangeAccountManager.prototype = {
     getAccounts: function _getAccounts() {
         var result = {};
         var ids = this.getAccountIds()
-        for each(var id in ids) {
+        if (ids) {
+            for (var id of Object.values(ids)) {
 
-            if (id != "") {
-                this.logInfo("id:" + id);
-                var tmpResult = this.getAccountById(id);
-                if (tmpResult.result) {
-                    result[id] = tmpResult.account;
+                if (id != "") {
+                    this.logInfo("id:" + id);
+                    var tmpResult = this.getAccountById(id);
+                    if (tmpResult.result) {
+                        result[id] = tmpResult.account;
+                    }
                 }
             }
         }
@@ -93,27 +94,29 @@ mivExchangeAccountManager.prototype = {
         if (children.length > 0) {
             result = true;
             account["id"] = aId;
-            for (var index in children) {
-                var attribute = children[index].substr(children[index].indexOf(".") + 1);
-                switch (this.prefs.getPrefType(children[index])) {
-                case this.prefs.PREF_STRING:
-                    account[attribute] = {
-                        type: "string",
-                        value: this.prefs.getCharPref(children[index])
-                    };
-                    break;
-                case this.prefs.PREF_INT:
-                    account[attribute] = {
-                        type: "int",
-                        value: this.prefs.getIntPref(children[index])
-                    };
-                    break;
-                case this.prefs.PREF_BOOL:
-                    account[attribute] = {
-                        type: "bool",
-                        value: this.prefs.getBoolPref(children[index])
-                    };
-                    break;
+            if (children) {
+                for (var index of Object.values(children)) {
+                    var attribute = children[index].substr(children[index].indexOf(".") + 1);
+                    switch (this.prefs.getPrefType(children[index])) {
+                    case this.prefs.PREF_STRING:
+                        account[attribute] = {
+                            type: "string",
+                            value: this.prefs.getStringPref(children[index])
+                        };
+                        break;
+                    case this.prefs.PREF_INT:
+                        account[attribute] = {
+                            type: "int",
+                            value: this.prefs.getIntPref(children[index])
+                        };
+                        break;
+                    case this.prefs.PREF_BOOL:
+                        account[attribute] = {
+                            type: "bool",
+                            value: this.prefs.getBoolPref(children[index])
+                        };
+                        break;
+                    }
                 }
             }
         }
@@ -126,9 +129,11 @@ mivExchangeAccountManager.prototype = {
 
     getAccountByServer: function _getAccountByServer(aServer) {
         var accounts = this.getAccounts();
-        for each(var account in accounts) {
-            if ((account.server) && (account.server.value) && (account.server.value.toLowerCase() == aServer.toLowerCase())) {
-                return account;
+        if (accounts) {
+            for (var account of Object.values(accounts)) {
+                if ((account.server) && (account.server.value) && (account.server.value.toLowerCase() == aServer.toLowerCase())) {
+                    return account;
+                }
             }
         }
         return null;
@@ -139,7 +144,7 @@ mivExchangeAccountManager.prototype = {
             if (index != "id") {
                 switch (aAccount[index].type) {
                 case "string":
-                    this.prefs.setCharPref(aAccount.id + "." + index, aAccount[index].value);
+                    this.prefs.setStringPref(aAccount.id + "." + index, aAccount[index].value);
                     break;
                 case "int":
                     this.prefs.setIntPref(aAccount.id + "." + index, aAccount[index].value);
@@ -165,7 +170,7 @@ mivExchangeAccountManager.prototype = {
         if (!idExists) {
             ids.push(aAccount.id);
             ids = ids.join(",");
-            this.prefs.setCharPref("ids", ids);
+            this.prefs.setStringPref("ids", ids);
         }
     },
 
@@ -192,7 +197,7 @@ mivExchangeAccountManager.prototype = {
         else {
             newIds = "";
         }
-        this.prefs.setCharPref("ids", newIds);
+        this.prefs.setStringPref("ids", newIds);
     },
 
     // Internal methods 

@@ -1,54 +1,54 @@
-<!ENTITY label.acceptbutton "Sauvegarder et Reset">
+<!ENTITY label.acceptbutton "Sauvegarder et réinitialiser">
 <!ENTITY label.cancelbutton "Annuler">
+<!ENTITY ecsettings.title "Paramètres de messagerie et de calendrier EWS">
+<!ENTITY ecsettings.tab.adsettings "Annuaire AD Windows / Exchange">
+<!ENTITY ecsettings.tab.meetingrequestsettings "Demandes de rendez‐vous">
+<!ENTITY ecsettings.tab.calendarfolderproperties "Propriétés du dossier">
 
-<!ENTITY ecsettings.title "Réglage Calendrier EWS et Email">
-<!ENTITY ecsettings.tab.adsettings "Annuaire Windows/Exchange">
-<!ENTITY ecsettings.tab.meetingrequestsettings "Demandes de rendez-vous">
-<!ENTITY ecsettings.tab.calendarfolderproperties "Propriété du dossier">
+<!ENTITY label.ecExchangeSettings.title "Paramètres du calendrier :">
 
-<!ENTITY label.ecExchangeSettings.title "Paramètres du calendrier:">
+<!ENTITY label.poll.inbox "Consulter la boîte de réception pour les invitations, modifications et annulations.">
+<!ENTITY label.poll.inbox.interval "Fréquence d’interrogation de la boîte, en secondes :">
+<!ENTITY label.poll.calendar.interval "Fréquence d’interrogation du calendrier, en secondes :">
 
-<!ENTITY label.poll.inbox "Interrogation de la boite pour invitations, modifications et annulations.">
-<!ENTITY label.poll.inbox.interval "Frequence d'interrogation de la boite, en secondes:">
-<!ENTITY label.poll.calendar.interval "Frequence d'interrogation du calendrier, en secondes:">
-
-<!ENTITY label.nomeetingrequestsettings "Vous ne pouvez envoyer d'invitation car vous n'avez pas selectionné la bonne boite aux lettres">
+<!ENTITY label.nomeetingrequestsettings "Vous ne pouvez pas envoyer d’invitation car vous n’avez pas sélectionné le calendrier principal de cette boîte aux lettres">
 
 <!ENTITY label.autorespond.meetingrequest "Répondre automatiquement à une nouvelle invitation avec ">
 
-<!ENTITY menuitem.label.ec-autorespond-answer.tentative "Je participerai peut-être">
-<!ENTITY menuitem.label.ec-autorespond-answer.accepted "j'accepte">
-<!ENTITY menuitem.label.ec-autorespond-answer.declined "Je n'accepte pas">
+<!ENTITY menuitem.label.ec-autorespond-answer.tentative "J’y participerai probablement">
+<!ENTITY menuitem.label.ec-autorespond-answer.accepted "Je serai présent">
+<!ENTITY menuitem.label.ec-autorespond-answer.declined "Je n’y participerai pas">
 
-<!ENTITY label.autoremove.invitation_cancellation1 "Supprimer automatiquement l'invitation et le message d'annulation sans réponse de votre part.">
-<!ENTITY label.autoremove.invitation_cancellation2 "Supprimer automatiquement une invitation confirmée à la réception d'un message d'annulation.">
+<!ENTITY label.autoremove.invitation_cancellation1 "Supprimer automatiquement l’invitation et le message d’annulation sans réponse de votre part.">
+<!ENTITY label.autoremove.invitation_cancellation2 "Supprimer automatiquement une invitation confirmée à la réception d’un message d’annulation.">
 
-<!ENTITY label.autoremove.invitation_response1 "Supprimer automatiquement la réponse de tous si vous n'êtes pas l'organisateur de l'invitation.">
+<!ENTITY label.autoremove.invitation_response1 "Supprimer automatiquement les réponses des invités à une réunion dont vous n’êtes pas l’organisateur.">
 
-<!ENTITY label.doautorespond.meetingrequest.message "Envoyer le message suivant avec la réponse au lieu demander une réponse.">
-<!ENTITY label.autorespond.meetingrequest.message "Votre message:">
+<!ENTITY label.doautorespond.meetingrequest.message "Envoyer le message suivant en guise de réponse au lieu demander la rédaction d’une réponse.">
+<!ENTITY label.autorespond.meetingrequest.message "Votre message :">
 
-<!ENTITY treecol.label.userid "Utilisateur">
-<!ENTITY treecol.label.email "Email">
+<!ENTITY treecol.label.userid "Nom d’utilisateur">
+<!ENTITY treecol.label.email "Courriel">
 
 
-<!ENTITY ecsettings.tab.offlineCachingproperties "Cache hors connection">
+<!ENTITY ecsettings.tab.offlineCachingproperties "Cache hors connexion">
 
-<!ENTITY label.offlineCacheproperties.cachingStartDate "Date de début du cache:">
-<!ENTITY label.offlineCacheproperties.cachingEndDate "Date de fin du cache:">
-<!ENTITY label.offlineCacheproperties.totalEvents "Nombre total d'évènements dans le cache:">
-<!ENTITY label.offlineCacheproperties.totalTasks "Nombre total de tâches dans le cache:">
+<!ENTITY label.offlineCacheproperties.cachingStartDate "Date de début du cache :">
+<!ENTITY label.offlineCacheproperties.cachingEndDate "Date de fin du cache :">
+<!ENTITY label.offlineCacheproperties.totalEvents "Nombre total d’évènements en cache :">
+<!ENTITY label.offlineCacheproperties.totalTasks "Nombre total de tâches en cache :">
 
-<!ENTITY label.offlineCacheproperties.monthsBeforeStartDate "Nombre de mois en cache avant aujourd'hui:">
-<!ENTITY label.offlineCacheproperties.monthsBeforeEndDate "Nombre de mois en cache après aujourd'hui:">
+<!ENTITY label.offlineCacheproperties.monthsBeforeStartDate "Nombre de mois en cache avant aujourd’hui :">
+<!ENTITY label.offlineCacheproperties.monthsBeforeEndDate "Nombre de mois en cache à partir d’aujourd’hui :">
 
-<!ENTITY button.offlineCacheproperties.clearCache "Supprimer les données hors connection (cache)">
+<!ENTITY button.offlineCacheproperties.clearCache "Supprimer les données en cache hors connexion">
 <!ENTITY ecsettings.tab.autoprocessingproperties "Traitement automatique">
-<!ENTITY ecsettings.tab.mailitemsProperties "Réglages EWS (Email)">
+<!ENTITY ecsettings.tab.mailitemsProperties "Réglages EWS (messagerie)">
 
-<!ENTITY label.syncmailitems.interval "Delai de synchronisation des éléments Email (Tags, etc.)">
+<!ENTITY label.syncmailitems.interval "Différer la synchronisation des éléments de courriel (étiquettes, etc.)">
 <!ENTITY label.autoprocessingproperties.deletecancelleditems "Suppression automatique des évènements annulés">
-<!ENTITY label.autoprocessingproperties.markeventtentative "Marquer automatiquement les invitations comme possible et copier l'organisateur">
+<!ENTITY label.autoprocessingproperties.markeventtentative "Marquer automatiquement les invitations comme provisoires et envoyer une réponse à l’organisateur">
+<!ENTITY label.syncmailitems.active "Conserver la synchronisation des éléments de courriel activée (étiquettes, etc.)">
 
-<!ENTITY label.syncmailitems.active "Garder active la synchronisation des attributs d'Email (Tags,etc.)">
 <!ENTITY label.syncfollowup.deactivtate "Désactiver le suivi de tâche">
+ 

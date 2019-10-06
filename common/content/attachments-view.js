@@ -27,12 +27,12 @@
  * the Initial Developer. All Rights Reserved.
  *
  * ***** BEGIN LICENSE BLOCK *****/
-var Cu = Components.utils;
+
 var Ci = Components.interfaces;
 var Cc = Components.classes;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://exchangecommon/erGetAttachments.js");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://exchangecommon/erGetAttachments.js");
 
 function exchAttachments(aDocument, aWindow) {
     this._document = aDocument;
@@ -54,16 +54,18 @@ exchAttachments.prototype = {
 
         fp.init(this._window, title, nsIFilePicker.modeOpen);
 
-        var ret = fp.show();
+        fp.open(rv => {
+            if (rv != Components.interfaces.nsIFilePicker.returnOK || !fp.file) {
+                return;
+            }
 
-        if (ret == nsIFilePicker.returnOK) {
             this.globalFunctions.LOG("[[" + fp.fileURL.spec + "]]");
 
             // Create attachment for item.
             var newAttachment = createAttachment();
             newAttachment.uri = fp.fileURL.clone();
             this.addAttachment(newAttachment);
-        }
+        });
 
     },
 
@@ -142,8 +144,8 @@ exchAttachments.prototype = {
                 if (aAttachment.uri.spec.indexOf("file://") > -1) {
                     this.globalFunctions.LOG("Attachment is a local file:" + aAttachment.uri.spec);
                     // We have a local file url
-                    item.setAttribute("label", decodeURIComponent(aAttachment.uri.path));
-                    stringForExtension = decodeURIComponent(aAttachment.uri.path);
+                    item.setAttribute("label", decodeURIComponent(aAttachment.uri.pathQueryRef));
+                    stringForExtension = decodeURIComponent(aAttachment.uri.pathQueryRef);
                 }
                 else {
                     this.globalFunctions.LOG("It is not a valid local file spec");
@@ -504,15 +506,15 @@ exchAttachments.prototype = {
             return;
         }
 
-        var URL = aAttachment.uri;
+        var URI = aAttachment.uri;
 
-        this.globalFunctions.LOG(" == Going to open:" + URL.prePath + URL.path);
+        this.globalFunctions.LOG(" == Going to open:" + URI.prePath + URI.path);
 
         var externalLoader = Cc["@mozilla.org/uriloader/external-protocol-service;1"]
             .getService(Ci.nsIExternalProtocolService);
 
         try {
-            externalLoader.loadUrl(URL);
+            externalLoader.URI(URI);
         }
         catch (ex) {
             this.globalFunctions.LOG(" == ERROR:" + ex);
@@ -531,9 +533,9 @@ exchAttachments.prototype = {
 
         var prefs = "extensions.exchangecalendar@extensions.1st-setup.nl." + getParams.calendarid + ".";
 
-        var serverUrl = this.globalFunctions.safeGetCharPref(null, prefs + "ecServer", "");
-        var username = this.globalFunctions.safeGetCharPref(null, prefs + "ecUser", "");
-        var domain = this.globalFunctions.safeGetCharPref(null, prefs + "ecDomain", "");
+        var serverUrl = this.globalFunctions.safeGetStringPref(null, prefs + "ecServer", "");
+        var username = this.globalFunctions.safeGetStringPref(null, prefs + "ecUser", "");
+        var domain = this.globalFunctions.safeGetStringPref(null, prefs + "ecDomain", "");
         if (username.indexOf("@") == -1) {
             if (domain != "") {
                 username = domain + "\\" + username;
@@ -562,61 +564,63 @@ exchAttachments.prototype = {
                 var fileData = window.atob(aAttachments[index].content);
                 globalFunctions.LOG(" == Decoded:" + aAttachments[index].name);
 
+                var save_file = function _save_file(file) {
+                    //file.createUnique(Components.interfaces.nsIFile.NORMAL_FILE_TYPE, 0666);
+                    // do whatever you need to the created file
+                    globalFunctions.LOG(" == new tmp filename:" + file.path);
+
+                    var stream = Cc["@mozilla.org/network/safe-file-output-stream;1"].
+                    createInstance(Ci.nsIFileOutputStream);
+                    stream.init(file, 0x04 | 0x08 | 0x20, 384, 0); // readwrite, create, truncate
+
+                    globalFunctions.LOG(" == writing file:" + file.path);
+                    globalFunctions.LOG(" == writing:" + fileData.length + " bytes");
+                    stream.write(fileData, fileData.length);
+                    if (stream instanceof Ci.nsISafeOutputStream) {
+                        stream.finish();
+                    }
+                    else {
+                        stream.close();
+                    }
+
+                    // Dispose of the converted data in memory;
+                    //delete fileData;
+
+                    globalFunctions.LOG(" == written file:" + file.path);
+                    globalFunctions.LOG(" == written:" + fileData.length + " bytes");
+                }
+
                 if (aExchangeRequest.argument.doSave) {
                     var fp = Cc["@mozilla.org/filepicker;1"].createInstance(Ci.nsIFilePicker);
                     fp.init(window, "Save", Ci.nsIFilePicker.modeSave);
                     fp.defaultString = aAttachments[index].name;
-                    var result = fp.show();
-                    if (result == Ci.nsIFilePicker.returnCancel) {
-                        // User canceled. // Maybe we should have an option for only this attachment or all. Now for all.
-
-                        return;
-                    }
-                    var file = fp.file;
+                    fp.open(rv => {
+                        if (rv != Components.interfaces.nsIFilePicker.returnOK || !fp.file) {
+                            return;
+                        }
+                        save_file(fp.file);
+                    });
                 }
                 else {
                     var file = Cc["@mozilla.org/file/directory_service;1"].
                     getService(Ci.nsIProperties).
                     get("TmpD", Ci.nsIFile);
                     file.append(aAttachments[index].name);
-                }
-                //file.createUnique(Components.interfaces.nsIFile.NORMAL_FILE_TYPE, 0666);  
-                // do whatever you need to the created file  
-                globalFunctions.LOG(" == new tmp filename:" + file.path);
 
-                var stream = Cc["@mozilla.org/network/safe-file-output-stream;1"].
-                createInstance(Ci.nsIFileOutputStream);
-                stream.init(file, 0x04 | 0x08 | 0x20, 384, 0); // readwrite, create, truncate  
+                    save_file(file);
 
-                globalFunctions.LOG(" == writing file:" + file.path);
-                globalFunctions.LOG(" == writing:" + fileData.length + " bytes");
-                stream.write(fileData, fileData.length);
-                if (stream instanceof Ci.nsISafeOutputStream) {
-                    stream.finish();
-                }
-                else {
-                    stream.close();
-                }
-
-                // Dispose of the converted data in memory;
-                //delete fileData;
-
-                globalFunctions.LOG(" == written file:" + file.path);
-                globalFunctions.LOG(" == written:" + fileData.length + " bytes");
-
-                if (!aExchangeRequest.argument.doSave) {
                     // file is nsIFile  
                     var ios = Cc["@mozilla.org/network/io-service;1"].
                     getService(Ci.nsIIOService);
-                    var URL = ios.newFileURI(file);
+                    var URI = ios.newFileURI(file);
 
-                    globalFunctions.LOG(" == Going to open:" + URL.prePath + URL.path);
+                    globalFunctions.LOG(" == Going to open:" + URI.prePath + URI.path);
 
                     var externalLoader = Cc["@mozilla.org/uriloader/external-protocol-service;1"]
                         .getService(Ci.nsIExternalProtocolService);
 
                     try {
-                        externalLoader.loadUrl(URL);
+                        externalLoader.loadURI(URI);
                     }
                     catch (ex) {
                         globalFunctions.LOG(" == ERROR:" + ex);

@@ -39,10 +39,20 @@
         onload="tmpExchangeCloneSettings.onLoad();">
     <script type="application/javascript"
             src="chrome://exchangecommon/content/exchangeCloneSettings.js" />
-    <hbox>
-        <label value="&label.ecExchangeSettings.title;" />
-        <textbox id="exchWebService_clone_description" />
-    </hbox>
+    <grid flex="1">
+        <columns>
+            <column />
+            <column flex="1" />
+        </columns>
+        <rows>
+            <row align="center">
+                <label value="&label.ecExchangeSettings.title;" />
+                <vbox>
+                    <textbox id="exchWebService_clone_description" />
+                </vbox>
+            </row>
+        </rows>
+    </grid>
     <vbox id="exchWebService-exchange-settings"
           flex="1"></vbox>
 </dialog>

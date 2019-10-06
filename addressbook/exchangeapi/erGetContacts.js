@@ -22,16 +22,16 @@
  * ***** BEGIN LICENSE BLOCK *****/
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://exchangecommon/ecExchangeRequest.js");
-Cu.import("resource://exchangecommon/soapFunctions.js");
-Cu.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
+ChromeUtils.import("resource://exchangecommon/soapFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 
 var EXPORTED_SYMBOLS = ["erGetContactsRequest"];
 
@@ -103,13 +103,15 @@ erGetContactsRequest.prototype = {
         itemids = null;
 
         var itemids = req.addChildTag("ItemIds", "nsMessages", null);
-        for each(var item in this.ids) {
-            var itemId = itemids.addChildTag("ItemId", "nsTypes", null);
-            itemId.setAttribute("Id", item.Id);
-            if (item.ChangeKey) {
-                itemId.setAttribute("ChangeKey", item.ChangeKey);
+        if (this.ids) {
+            for (var item of Object.values(this.ids)) {
+                var itemId = itemids.addChildTag("ItemId", "nsTypes", null);
+                itemId.setAttribute("Id", item.Id);
+                if (item.ChangeKey) {
+                    itemId.setAttribute("ChangeKey", item.ChangeKey);
+                }
+                itemId = null;
             }
-            itemId = null;
         }
         itemids = null;
 

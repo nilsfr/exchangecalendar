@@ -36,7 +36,7 @@
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 
 function exchCalendarCreation(aDocument, aWindow) {
     this._document = aDocument;
@@ -125,9 +125,13 @@ exchCalendarCreation.prototype = {
                     .getService(Ci.nsIPrefService)
                     .getBranch("mail.identity." + identity + ".");
 
-                this._document.getElementById("exchWebService_mailbox").value = identityPrefs.getCharPref("useremail");
+                this._document.getElementById("exchWebService_mailbox").value =
+                    identityPrefs.getStringPref("useremail");
                 tmpSettingsOverlay.exchWebServicesInitMailbox(this._document.getElementById("exchWebService_mailbox").value);
-                this.createPrefs.setCharPref("mailbox", this._document.getElementById("exchWebService_mailbox").value);
+                this.createPrefs.setStringPref(
+                    "mailbox",
+                    this._document.getElementById("exchWebService_mailbox").value
+                );
             }
             else {
                 this._document.getElementById("exchWebService_mailbox").value = "";
@@ -177,7 +181,7 @@ exchCalendarCreation.prototype = {
         var calPrefs = Cc["@mozilla.org/preferences-service;1"]
             .getService(Ci.nsIPrefService)
             .getBranch("calendar.registry." + newCalId + ".");
-        calPrefs.setCharPref("name", newCalName);
+        calPrefs.setStringPref("name", newCalName);
 
         // Create the new calendar object
         // Should be synced with Lightning doCreateCalendar() code

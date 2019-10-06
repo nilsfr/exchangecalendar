@@ -22,16 +22,16 @@
  * ***** BEGIN LICENSE BLOCK *****/
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://exchangecommon/ecExchangeRequest.js");
-Cu.import("resource://exchangecommon/soapFunctions.js");
-Cu.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
+ChromeUtils.import("resource://exchangecommon/soapFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 
 var EXPORTED_SYMBOLS = ["erResolveNames"];
 
@@ -127,16 +127,20 @@ erResolveNames.prototype = {
         else {
             var resolutionsSets = rm[0].getTags("m:ResolutionSet");
 
-            for each(var resolutionsSet in resolutionsSets) {
+            if (resolutionsSets) {
+                for (var resolutionsSet of Object.values(resolutionsSets)) {
 
-                var totalItemsInView = resolutionsSet.getAttribute("TotalItemsInView", 0);
-                var includesLastItem = resolutionsSet.getAttribute("IncludesLastItemInRange", "false");
+                    var totalItemsInView = resolutionsSet.getAttribute("TotalItemsInView", 0);
+                    var includesLastItem = resolutionsSet.getAttribute("IncludesLastItemInRange", "false");
 
-                var resList = resolutionsSet.XPath("/t:Resolution");
-                for each(var resolution in resList) {
-                    allResolutions.push(resolution);
+                    var resList = resolutionsSet.XPath("/t:Resolution");
+                    if (resList) {
+                        for (var resolution of Object.values(resList)) {
+                            allResolutions.push(resolution);
+                        }
+                    }
+
                 }
-
             }
             resolutionsSets = null;
         }

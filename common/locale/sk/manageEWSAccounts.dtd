@@ -1,16 +1,16 @@
-<!ENTITY label.acceptbutton "Close">
+<!ENTITY label.acceptbutton "Zatvoriť">
 
-<!ENTITY exchWebService.manageEWSAccounts.newAccount.button "Add account">
-<!ENTITY exchWebService.manageEWSAccounts.removeAccount.button "Remove account">
-<!ENTITY exchWebService.manageEWSAccounts.saveAccount.button "Save settings">
+<!ENTITY exchWebService.manageEWSAccounts.newAccount.button "Pridať účet">
+<!ENTITY exchWebService.manageEWSAccounts.removeAccount.button "Odobrať účet">
+<!ENTITY exchWebService.manageEWSAccounts.saveAccount.button "Uložiť nastavenia">
 
-<!ENTITY exchWebService.manageEWSAccounts.autodiscover.label "Use Exchange's autodiscovery function.">
-<!ENTITY exchWebService.manageEWSAccounts.mailbox.label "Mailbox name:">
-<!ENTITY exchWebService.manageEWSAccounts.windowsuser.label "Username:">
-<!ENTITY exchWebService.manageEWSAccounts.windowsdomain.label "Domain name:">
-<!ENTITY exchWebService.manageEWSAccounts.autodiscover.button "Perform autodiscovery">
-<!ENTITY exchWebService.manageEWSAccounts.servercheck.button "Check server and account">
-<!ENTITY exchWebService.manageEWSAccounts.name.label "Name:">
+<!ENTITY exchWebService.manageEWSAccounts.autodiscover.label "Použiť funkciu Exchange na automatické zisťovanie.">
+<!ENTITY exchWebService.manageEWSAccounts.mailbox.label "Názov účtu:">
+<!ENTITY exchWebService.manageEWSAccounts.windowsuser.label "Používateľské meno:">
+<!ENTITY exchWebService.manageEWSAccounts.windowsdomain.label "Názov domény:">
+<!ENTITY exchWebService.manageEWSAccounts.autodiscover.button "Vykonať automatické zistenie">
+<!ENTITY exchWebService.manageEWSAccounts.servercheck.button "Overiť server a účet">
+<!ENTITY exchWebService.manageEWSAccounts.name.label "Názov:">
 
-<!ENTITY exchWebService.manageEWSAccounts.menuitem "Exchange Web Services accounts">
+<!ENTITY exchWebService.manageEWSAccounts.menuitem "Účty Exchange Webových Služieb">
 

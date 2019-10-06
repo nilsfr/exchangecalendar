@@ -27,11 +27,12 @@
  * the Initial Developer. All Rights Reserved.
  *
  * ***** BEGIN LICENSE BLOCK *****/
-var Cu = Components.utils;
+
 var Ci = Components.interfaces;
 var Cc = Components.classes;
 
-Cu.import("resource://calendar/modules/calUtils.jsm");
+ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Preferences.jsm");
 
 if (!exchWebService) var exchWebService = {};
 
@@ -47,7 +48,7 @@ function exchChangeCalendarPropertiesReminder(aDocument, aWindow, aArgument) {
 exchChangeCalendarPropertiesReminder.prototype = {
     onLoad: function _onLoad() {
 
-        if ((!cal.isEvent(this._argument.item)) && (this._argument.calendar.type == "exchangecalendar")) {
+        if ((!cal.item.isEvent(this._argument.item)) && (this._argument.calendar.type == "exchangecalendar")) {
             this._document.getElementById("reminder-relative-box").hidden = true;
 
             //this._document.getElementById("reminder-relative-radio").checked = false;
@@ -60,7 +61,7 @@ exchChangeCalendarPropertiesReminder.prototype = {
 
         dump(" WHAT is this:" + this._argument.calendar.type + "\n");
 
-        if ((cal.isEvent(this._argument.item)) && (this._argument.calendar.type == "exchangecalendar")) {
+        if ((cal.item.isEvent(this._argument.item)) && (this._argument.calendar.type == "exchangecalendar")) {
             this._document.getElementById("reminder-relation-origin").hidden = true;
             this._document.getElementById("exchWebService-reminder-relation-origin").hidden = false;
         }
@@ -72,19 +73,19 @@ exchChangeCalendarPropertiesReminder.prototype = {
     },
 
     onNewReminder: function _onNewReminder() {
-        if ((!cal.isEvent(this._argument.item)) && (this._argument.calendar.type == "exchangecalendar")) {
-            let itemType = (isEvent(this._argument.item) ? "event" : "todo");
+        if ((!cal.item.isEvent(this._argument.item)) && (this._argument.calendar.type == "exchangecalendar")) {
+            let itemType = (cal.item.isEvent(this._argument.item) ? "event" : "todo");
             let listbox = this._document.getElementById("reminder-listbox");
 
             let reminder = cal.createAlarm();
-            let alarmlen = getPrefSafe("calendar.alarms." + itemType + "alarmlen", 15);
+            let alarmlen = Preferences.get("calendar.alarms." + itemType + "alarmlen", 15);
 
             // Default is an absolute DISPLAY alarm, |alarmlen| minutes before the event.
             // If DISPLAY is not supported by the provider, then pick the provider's
             // first alarm type.
             var absDate = this._document.getElementById("reminder-absolute-date");
             reminder.related = reminder.ALARM_RELATED_ABSOLUTE;
-            reminder.alarmDate = cal.jsDateToDateTime(absDate.value,
+            reminder.alarmDate = cal.dtz.jsDateToDateTime(absDate.value,
                 this._argument.timezone);
             //reminder.offset = 0;
             if ("DISPLAY" in allowedActionsMap) {

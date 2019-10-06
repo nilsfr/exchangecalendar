@@ -1,0 +1,9 @@
+<!ENTITY toolbar.button.label.addaccount "Új Exchange névjegyzék mappa hozzáadása">
+<!ENTITY toolbar.button.tooltip.addaccount "Hozzáad egy új Exchange névjegyzék mappát">
+
+<!ENTITY toolbar.button.label.deleteaccount "Exchange névjegyzék mappa eltávolítása">
+<!ENTITY toolbar.button.tooltip.deleteaccount "Ez eltávolítja a meglévő Exchange névjegyzék mappát">
+
+<!ENTITY deleteExchangeCmd.label "Exchange névjegyzék mappa eltávolítása">
+
+

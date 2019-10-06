@@ -22,7 +22,7 @@
  * ***** BEGIN LICENSE BLOCK *****/
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 
 function exchExchangeCloneSettings(aDocument, aWindow) {
     this._document = aDocument;
@@ -40,7 +40,7 @@ exchExchangeCloneSettings.prototype = {
         if (vbox) {
             let eList = vbox.getElementsByAttribute('required', 'true');
             for (let i = 0; i < eList.length && canAdvance; ++i) {
-                canAdvance = (eList[i].value != "");
+                canAdvance = (eList[i].value !== "");
             }
 
             if (canAdvance) {
@@ -60,21 +60,21 @@ exchExchangeCloneSettings.prototype = {
     },
 
     onSave: function _onSave() {
-        var oldCalId = this._window.arguments[0].calendar.id;
+        let oldCalId = this._window.arguments[0].calendar.id;
 
         // Clone the Calendar settings to a new cal id.
-        var newCalId = this.globalFunctions.copyCalendarSettings(oldCalId);
+        let newCalId = this.globalFunctions.copyCalendarSettings(oldCalId);
 
         // Save settings in dialog to new cal id.
         tmpSettingsOverlay.exchWebServicesSaveExchangeSettingsByCalId(newCalId);
 
         // Save the description/name for the calendar and create a new unique uri.
-        var toCalPrefs = Cc["@mozilla.org/preferences-service;1"]
+        let toCalPrefs = Cc["@mozilla.org/preferences-service;1"]
             .getService(Ci.nsIPrefService)
             .getBranch("calendar.registry." + newCalId + ".");
 
-        toCalPrefs.setCharPref("name", this._document.getElementById("exchWebService_clone_description").value);
-        toCalPrefs.setCharPref("uri", "https://auto/" + newCalId);
+        toCalPrefs.setStringPref("name", this._document.getElementById("exchWebService_clone_description").value);
+        toCalPrefs.setStringPref("uri", "https://auto/" + newCalId);
 
         // Store the new cal id for the calling process of this dialog.
         this._window.arguments[0].newCalId = newCalId;
@@ -85,7 +85,6 @@ exchExchangeCloneSettings.prototype = {
             .getService(Ci.nsIPrefService).savePrefFile(null);
         return true;
     },
-
-}
+};
 
 var tmpExchangeCloneSettings = new exchExchangeCloneSettings(document, window);

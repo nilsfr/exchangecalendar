@@ -1,18 +1,18 @@
-<!ENTITY prefwindow.title "Extras">
-<!ENTITY general.label  "General"> 
-<!ENTITY about.label "About"> 
+<!ENTITY prefwindow.title "Prídavky">
+<!ENTITY general.label  "Všeobecné"> 
+<!ENTITY about.label "O aplikácii"> 
  
-<!ENTITY about.description.label "Enhanced Features for Thunderbird and SeaMonkey applications">
-<!ENTITY iconify.label "Display priority icons only"> 
-<!ENTITY shadeHigh.label "Color background for high-priority messages">
-<!ENTITY shadeLow.label "Color background for low-priority messages">
-<!ENTITY tagImportant.label "Automatically tag high-priority mail as important">
+<!ENTITY about.description.label "Rozšírené funkcie pre aplikácie Thunderbird a Seamonkey">
+<!ENTITY iconify.label "Zobraziť len prioritné ikonky"> 
+<!ENTITY shadeHigh.label "Farba pozadia pre správy s vysokou prioritou">
+<!ENTITY shadeLow.label "Farba pozadia pre správy s nízkou prioritou">
+<!ENTITY tagImportant.label "Automaticky označiť e-mail s vysokou prioritou ako dôležitý">
  
-<!ENTITY highestColor.label "Highest">
+<!ENTITY highestColor.label "Najvyššia">
 
-<!ENTITY highColor.label "High">
-<!ENTITY lowColor.label "Low">
-<!ENTITY lowestColor.label "Lowest">
+<!ENTITY highColor.label "Vysoká">
+<!ENTITY lowColor.label "Nízka">
+<!ENTITY lowestColor.label "Najnižšia">
  
-<!ENTITY prioritycolor  "Custom Color">
-<!ENTITY pref.color "Color preferences:">
+<!ENTITY prioritycolor  "Vlastná farba">
+<!ENTITY pref.color "Nastavenia farieb:">

@@ -9,6 +9,7 @@
 <!ENTITY tagImportant.label "Automatisch sehr dringliche Nachrichten als wichtig markieren">
  
 <!ENTITY highestColor.label "Am höchsten">
+
 <!ENTITY highColor.label "Hoch">
 <!ENTITY lowColor.label "Niedrig">
 <!ENTITY lowestColor.label "Am niedrigsten">

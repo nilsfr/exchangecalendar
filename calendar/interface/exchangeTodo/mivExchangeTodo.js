@@ -20,20 +20,20 @@
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://exchangecommon/ecExchangeRequest.js");
+ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
 
-Cu.import("resource://calendar/modules/calProviderUtils.jsm");
+ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
-Cu.import("resource://exchangecommoninterfaces/exchangeBaseItem/mivExchangeBaseItem.js");
+ChromeUtils.import("resource://exchangecommoninterfaces/exchangeBaseItem/mivExchangeBaseItem.js");
 
-Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
+ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 var exchGlobalFunctions = Cc["@1st-setup.nl/global/functions;1"]
     .getService(Ci.mivFunctions);
@@ -76,7 +76,6 @@ mivExchangeTodo.prototype = {
     classID: components.ID("{" + mivExchangeTodoGUID + "}"),
     contractID: "@1st-setup.nl/exchange/calendartodo;1",
     flags: 0,
-    implementationLanguage: Ci.nsIProgrammingLanguage.JAVASCRIPT,
 
     getInterfaces: function _getInterfaces(count) {
         var ifaces = [Ci.mivExchangeTodo,
@@ -116,7 +115,7 @@ mivExchangeTodo.prototype = {
             this._billingInformation = aItem._billingInformation;
             this._companies = [];
             if (aItem._companies) {
-                for each(var company in aItem._companies) {
+                for (var company of Object.values(aItem._companies)) {
                     this._companies.push(company);
                 }
             }
@@ -734,13 +733,15 @@ mivExchangeTodo.prototype = {
                 .createInstance(Ci.mivIxml2jxon);
             var categories = this.getCategories({});
             var first = true;
-            for each(var category in categories) {
-                if (first) {
-                    first = false;
-                    categoriesXML.processXMLString("<t:String>" + category + "</t:String>", 0, null);
-                }
-                else {
-                    categoriesXML.addSibblingTag("String", "t", category);
+            if (categories) {
+                for (var category of Object.values(categories)) {
+                    if (first) {
+                        first = false;
+                        categoriesXML.processXMLString("<t:String>" + category + "</t:String>", 0, null);
+                    }
+                    else {
+                        categoriesXML.addSibblingTag("String", "t", category);
+                    }
                 }
             }
             if (categories.length > 0) {
@@ -760,13 +761,15 @@ mivExchangeTodo.prototype = {
             var companies = this.getCompanies({});
             //var companies = this.companies;
             var first = true;
-            for each(var company in companies) {
-                if (first) {
-                    first = false;
-                    companiesXML.processXMLString("<t:String>" + company + "</t:String>", 0, null);
-                }
-                else {
-                    companiesXML.addSibblingTag("String", "t", company);
+            if (companies) {
+                for (var company of Object.values(companies)) {
+                    if (first) {
+                        first = false;
+                        companiesXML.processXMLString("<t:String>" + company + "</t:String>", 0, null);
+                    }
+                    else {
+                        companiesXML.addSibblingTag("String", "t", company);
+                    }
                 }
             }
             if (companies.length > 0) {
@@ -843,13 +846,13 @@ mivExchangeTodo.prototype = {
 
                 // We make a non-UTC datetime value for exchGlobalFunctions.
                 // EWS will use the MeetingTimeZone or StartTimeZone and EndTimeZone to convert.
-                //				var exchStart = cal.toRFC3339(tmpStart).substr(0, 19)+"Z"; //cal.toRFC3339(tmpStart).length-6);
-                var exchStart = cal.toRFC3339(tmpStart).substr(0, 19); //cal.toRFC3339(tmpStart).length-6);
+                //				var exchStart = cal.dtz.toRFC3339(tmpStart).substr(0, 19)+"Z"; //cal.dtz.toRFC3339(tmpStart).length-6);
+                var exchStart = cal.dtz.toRFC3339(tmpStart).substr(0, 19); //cal.dtz.toRFC3339(tmpStart).length-6);
             }
             else {
                 // We set in bias advanced to UCT datetime values for exchGlobalFunctions.
-                //				var exchStart = cal.toRFC3339(tmpStart).substr(0, 19)+"Z";
-                var exchStart = cal.toRFC3339(tmpStart).substr(0, 19);
+                //				var exchStart = cal.dtz.toRFC3339(tmpStart).substr(0, 19)+"Z";
+                var exchStart = cal.dtz.toRFC3339(tmpStart).substr(0, 19);
             }
             this._nonPersonalDataChanged = true;
             switch (this.itemClass) {
@@ -890,13 +893,13 @@ mivExchangeTodo.prototype = {
 
                 // We make a non-UTC datetime value for exchGlobalFunctions.
                 // EWS will use the MeetingTimeZone or StartTimeZone and EndTimeZone to convert.
-                //				var exchEnd = cal.toRFC3339(tmpEnd).substr(0, 19)+"Z"; //cal.toRFC3339(tmpEnd).length-6);
-                var exchEnd = cal.toRFC3339(tmpEnd).substr(0, 19);
+                //				var exchEnd = cal.dtz.toRFC3339(tmpEnd).substr(0, 19)+"Z"; //cal.dtz.toRFC3339(tmpEnd).length-6);
+                var exchEnd = cal.dtz.toRFC3339(tmpEnd).substr(0, 19);
             }
             else {
                 // We set in bias advanced to UCT datetime values for exchGlobalFunctions.
-                //				var exchEnd = cal.toRFC3339(tmpEnd).substr(0, 19)+"Z";
-                var exchEnd = cal.toRFC3339(tmpEnd).substr(0, 19);
+                //				var exchEnd = cal.dtz.toRFC3339(tmpEnd).substr(0, 19)+"Z";
+                var exchEnd = cal.dtz.toRFC3339(tmpEnd).substr(0, 19);
             }
             this._nonPersonalDataChanged = true;
             switch (this.itemClass) {
@@ -938,13 +941,13 @@ mivExchangeTodo.prototype = {
 
                 // We make a non-UTC datetime value for exchGlobalFunctions.
                 // EWS will use the MeetingTimeZone or StartTimeZone and EndTimeZone to convert.
-                //				var exchEnd = cal.toRFC3339(tmpEnd).substr(0, 19)+"Z"; //cal.toRFC3339(tmpEnd).length-6);
-                var exchEnd = cal.toRFC3339(tmpEnd).substr(0, 19);
+                //				var exchEnd = cal.dtz.toRFC3339(tmpEnd).substr(0, 19)+"Z"; //cal.dtz.toRFC3339(tmpEnd).length-6);
+                var exchEnd = cal.dtz.toRFC3339(tmpEnd).substr(0, 19);
             }
             else {
                 // We set in bias advanced to UCT datetime values for exchGlobalFunctions.
-                //				var exchEnd = cal.toRFC3339(tmpEnd).substr(0, 19)+"Z";
-                var exchEnd = cal.toRFC3339(tmpEnd).substr(0, 19);
+                //				var exchEnd = cal.dtz.toRFC3339(tmpEnd).substr(0, 19)+"Z";
+                var exchEnd = cal.dtz.toRFC3339(tmpEnd).substr(0, 19);
             }
             this._nonPersonalDataChanged = true;
             switch (this.itemClass) {
@@ -1148,8 +1151,10 @@ mivExchangeTodo.prototype = {
         this._companies = [];
         if (this._exchangeData) {
             var tmpStr = xml2json.XPath(this.exchangeData, "/t:Companies/t:String");
-            for each(var string in tmpStr) {
-                this._companies.push(xml2json.getValue(string));
+            if (tmpStr) {
+                for (var string of Object.values(tmpStr)) {
+                    this._companies.push(xml2json.getValue(string));
+                }
             }
             tmpStr = null;
         }

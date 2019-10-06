@@ -29,10 +29,10 @@
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
 
-//Cu.import("resource://exchangecommon/ecFunctions.js");
-Cu.import("resource://calendar/modules/calUtils.jsm");
+
+//ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
 //if (! exchWebService) var exchWebService = {};
 
@@ -109,27 +109,27 @@ exchTaskDelegation.prototype = {
                 let dtFormat = Cc["@mozilla.org/calendar/datetime-formatter;1"]
                     .getService(Ci.calIDateTimeFormatter);
 
-                var tmpDate = cal.fromRFC3339(task.getProperty("exchWebService-PidLidTaskLastUpdate"), this.globalFunctions.ecTZService().UTC).getInTimezone(this.globalFunctions.ecDefaultTimeZone());
+                var tmpDate = cal.dtz.fromRFC3339(task.getProperty("exchWebService-PidLidTaskLastUpdate"), this.globalFunctions.ecTZService().UTC).getInTimezone(this.globalFunctions.ecDefaultTimeZone());
 
                 var lastChange = task.getProperty("exchWebService-PidLidTaskHistory");
                 switch (lastChange) {
                 case "4":
-                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.duedate.changed", [], "exchangecalendar");
+                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.duedate.changed", [], "exchangecommon");
                     break;
                 case "3":
-                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.some.property.changed", [], "exchangecalendar");
+                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.some.property.changed", [], "exchangecommon");
                     break;
                 case "1":
-                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.accepted", [task.getProperty("exchWebService-Owner")], "exchangecalendar");
+                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.accepted", [task.getProperty("exchWebService-Owner")], "exchangecommon");
                     break;
                 case "2":
-                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.rejected", [task.getProperty("exchWebService-Owner")], "exchangecalendar");
+                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.rejected", [task.getProperty("exchWebService-Owner")], "exchangecommon");
                     break;
                 case "5":
-                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.assigned", [task.getProperty("exchWebService-Owner")], "exchangecalendar");
+                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.assigned", [task.getProperty("exchWebService-Owner")], "exchangecommon");
                     break;
                 case "0":
-                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.no.changes", [], "exchangecalendar");
+                    lastChange = this.globalFunctions.getString("calExchangeCalendar", "exchWebService.PidLidTaskHistory.no.changes", [], "exchangecommon");
                     break;
                 }
 
@@ -147,7 +147,7 @@ exchTaskDelegation.prototype = {
         var task = this._document.getElementById("calendar-task-tree").currentTask;
         if (task) {
             var newTask = task.clone();
-            newTask.setProperty("exchWebService-PidLidTaskLastUpdate", cal.toRFC3339(cal.now()));
+            newTask.setProperty("exchWebService-PidLidTaskLastUpdate", cal.dtz.toRFC3339(cal.dtz.now()));
             newTask.setProperty("exchWebService-PidLidTaskHistory", "1")
             newTask.setProperty("exchWebService-PidLidTaskAccepted", "true")
             task.calendar.modifyItem(newTask, task, null);
@@ -159,7 +159,7 @@ exchTaskDelegation.prototype = {
         var task = this._document.getElementById("calendar-task-tree").currentTask;
         if (task) {
             var newTask = task.clone();
-            newTask.setProperty("exchWebService-PidLidTaskLastUpdate", cal.toRFC3339(cal.now()));
+            newTask.setProperty("exchWebService-PidLidTaskLastUpdate", cal.dtz.toRFC3339(cal.dtz.now()));
             newTask.setProperty("exchWebService-PidLidTaskHistory", "2")
             newTask.setProperty("exchWebService-PidLidTaskAccepted", "true")
             task.calendar.modifyItem(newTask, task, null);

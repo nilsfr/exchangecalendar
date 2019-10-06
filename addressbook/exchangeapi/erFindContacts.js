@@ -20,14 +20,14 @@
  *
  *
  * ***** BEGIN LICENSE BLOCK *****/
-var Cu = Components.utils;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://exchangecommon/ecExchangeRequest.js");
-Cu.import("resource://exchangecommon/soapFunctions.js");
-Cu.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
+
+ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
+ChromeUtils.import("resource://exchangecommon/soapFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 
 var EXPORTED_SYMBOLS = ["erFindContactsRequest"];
 
@@ -132,24 +132,32 @@ erFindContactsRequest.prototype = {
                 return;
             }
 
-            for each(var contact in rootFolder[0].XPath("/t:Items/t:Contact")) {
-                exchWebService.commonAbFunctions.logInfo("erFindContactsRequest.contacts: id:" + contact.getAttributeByTag("t:ItemId", "Id") + ", changekey:" + contact.getAttributeByTag("t:ItemId", "ChangeKey"));
-                this.contacts.push({
-                    Id: contact.getAttributeByTag("t:ItemId", "Id"),
-                    ChangeKey: contact.getAttributeByTag("t:ItemId", "ChangeKey"),
-                    name: contact.getTagValue("t:Subject"),
-                    displayName: contact.getTagValue("t:DisplayName")
-                });
+            var contact_result = rootFolder[0].XPath("/t:Items/t:Contact");
+            if (contact_result) {
+                for (var contact of Object.values(contact_result)) {
+                    exchWebService.commonAbFunctions.logInfo("erFindContactsRequest.contacts: id:" + contact.getAttributeByTag("t:ItemId", "Id") + ", changekey:" + contact.getAttributeByTag("t:ItemId", "ChangeKey"));
+                    this.contacts.push({
+                        Id: contact.getAttributeByTag("t:ItemId", "Id"),
+                        ChangeKey: contact.getAttributeByTag("t:ItemId", "ChangeKey"),
+                        name: contact.getTagValue("t:Subject"),
+                        displayName: contact.getTagValue("t:DisplayName")
+                    });
+                }
             }
+            contact_result = null;
 
-            for each(var distlist in rootFolder[0].XPath("/t:Items/t:DistributionList")) {
-                this.distlists.push({
-                    Id: distlist.getAttributeByTag("t:ItemId", "Id"),
-                    ChangeKey: distlist.getAttributeByTag("t:ItemId", "ChangeKey"),
-                    name: distlist.getTagValue("t:Subject"),
-                    displayName: distlist.getTagValue("t:DisplayName")
-                });
+            var distributionlist_result = rootFolder[0].XPath("/t:Items/t:DistributionList");
+            if (distributionlist_result) {
+                for (var distlist of Object.values(distributionlist_result)) {
+                    this.distlists.push({
+                        Id: distlist.getAttributeByTag("t:ItemId", "Id"),
+                        ChangeKey: distlist.getAttributeByTag("t:ItemId", "ChangeKey"),
+                        name: distlist.getTagValue("t:Subject"),
+                        displayName: distlist.getTagValue("t:DisplayName")
+                    });
+                }
             }
+            distributionlist_result = null;
 
             // RootFolder attributes received after a FindItem request:
             // https://msdn.microsoft.com/EN-US/library/office/aa493859%28v=exchg.150%29.aspx

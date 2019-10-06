@@ -35,14 +35,14 @@
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
 
-Cu.import("resource://gre/modules/Services.jsm");
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
-//Cu.import("resource://exchangecommon/ecFunctions.js");
-Cu.import("resource://exchangecommon/ecExchangeRequest.js");
-Cu.import("resource://exchangecommon/erForewardItem.js");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+
+//ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
+ChromeUtils.import("resource://exchangecommon/erForewardItem.js");
 
 
 //if (! exchWebService) var exchWebService = {};
@@ -89,9 +89,10 @@ exchForewardEvent.prototype = {
             .getService(Ci.nsIPrefService)
             .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl." + calId + ".");
         var tmpObject = new erForewardItemRequest({
-                user: tmpForewardEvent.globalFunctions.safeGetCharPref(calPrefs, "ecDomain") + "\\" + tmpForewardEvent.globalFunctions.safeGetCharPref(calPrefs, "ecUser"),
-                mailbox: tmpForewardEvent.globalFunctions.safeGetCharPref(calPrefs, "ecMailbox"),
-                serverUrl: tmpForewardEvent.globalFunctions.safeGetCharPref(calPrefs, "ecServer"),
+                user: tmpForewardEvent.globalFunctions.safeGetStringPref(calPrefs, "ecDomain") + "\\" +
+                    tmpForewardEvent.globalFunctions.safeGetStringPref(calPrefs, "ecUser"),
+                mailbox: tmpForewardEvent.globalFunctions.safeGetStringPref(calPrefs, "ecMailbox"),
+                serverUrl: tmpForewardEvent.globalFunctions.safeGetStringPref(calPrefs, "ecServer"),
                 item: item,
                 attendees: attendee,
                 changeKey: item.changeKey,

@@ -15,8 +15,6 @@
 <!ENTITY menuitem.label.ec-autorespond-answer.accepted "Katılacağım">
 <!ENTITY menuitem.label.ec-autorespond-answer.declined "Katılmayacağım">
 
-
-
-<!ENTITY label.proposenewtime.title "Yeni bir zaman öner (>= Exchange2013)">
+<!ENTITY label.proposenewtime.title "Yeni bir zaman öner (&gt;= Exchange2013)">
 <!ENTITY label.proposenewtime.start "Başlama zamanı">
 <!ENTITY label.proposenewtime.end "Sona erme zamanı">

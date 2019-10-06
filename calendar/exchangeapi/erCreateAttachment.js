@@ -36,21 +36,18 @@
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://calendar/modules/calUtils.jsm");
-Cu.import("resource://calendar/modules/calAlarmUtils.jsm");
-Cu.import("resource://calendar/modules/calProviderUtils.jsm");
-Cu.import("resource://calendar/modules/calAuthUtils.jsm");
+ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
-Cu.import("resource://exchangecommon/ecFunctions.js");
-Cu.import("resource://exchangecommon/ecExchangeRequest.js");
-Cu.import("resource://exchangecommon/soapFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
+ChromeUtils.import("resource://exchangecommon/soapFunctions.js");
 
 var EXPORTED_SYMBOLS = ["erCreateAttachmentRequest"];
 
@@ -159,13 +156,15 @@ erCreateAttachmentRequest.prototype = {
         var errorCount = 0;
         var okCount = 0;
 
-        for each(var createAttachmentResponseMessage in createAttachmentResponseMessages) {
-            if (createAttachmentResponseMessage.getAttribute("ResponseClass") != "Success") {
-                weHaveAnError = true;
-                errorCount++;
-            }
-            else {
-                okCount++;
+        if (createAttachmentResponseMessages) {
+            for (var createAttachmentResponseMessage of Object.values(createAttachmentResponseMessages)) {
+                if (createAttachmentResponseMessage.getAttribute("ResponseClass") != "Success") {
+                    weHaveAnError = true;
+                    errorCount++;
+                }
+                else {
+                    okCount++;
+                }
             }
         }
         oofSettingsResponse = null;

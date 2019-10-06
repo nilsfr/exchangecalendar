@@ -1,3 +1,5 @@
+<!ENTITY ecsettings.window.title "ExchangeCalendar Contact Settings">
+
 <!ENTITY label.acceptbutton "Opslaan">
 <!ENTITY label.cancelbutton "Annuleer">
 
@@ -7,5 +9,4 @@
 <!ENTITY label.ecExchangeSettings.title "Naam in lijst:">
 <!ENTITY exchangeWebService.preference.contacts.pollinterval "Ververs interval in seconden:">
 
-<!ENTITY exchWebService.add.globaladdresslist.label "Voeg de globale adres lijst toe aan de zoek resultaten.">
-
+<!ENTITY exchWebService.add.globaladdresslist.label "Add global address list to search results">

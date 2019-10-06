@@ -1,10 +1,10 @@
 <!ENTITY label.acceptbutton "Accepter">
 <!ENTITY label.cancelbutton "Annuler">
 
-<!ENTITY browsefolder.title "Parcourir">
+<!ENTITY browsefolder.title "Parcourir les dossiers">
 
-<!ENTITY treecol.label.foldername "Dossier">
-<!ENTITY treecol.label.folderclass "Type">
+<!ENTITY treecol.label.foldername "Nom de dossier">
+<!ENTITY treecol.label.folderclass "Type de dossier">
 
 
 

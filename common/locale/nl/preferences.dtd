@@ -5,7 +5,7 @@
 <!ENTITY exchangeWebService.preferences.tab.debug "Logging">
 <!ENTITY exchangeWebService.preference.debug.file "Logfile locatie:">
 <!ENTITY exchangeWebService.preference.network.debug.caption "Communicatie met Exchange server:">
-<!ENTITY exchangeWebService.preference.debug.log.label "Log informatie naar console en/of bestand">
+<!ENTITY exchangeWebService.preference.debug.log.label "Log information to the console and a file">
 <!ENTITY exchangeWebService.preference.debug.file.button "Browse">
 <!ENTITY exchangeWebService.preference.network.debug.label "Log communicatie met Exchange server">
 <!ENTITY exchangeWebService.preference.network.debuglevel.label1 "Log detail niveau">
@@ -21,7 +21,7 @@
 <!ENTITY exchangeWebService.preferences.titleWin "Exchange (EWS) Voorkeuren">
 
 <!ENTITY exchangeWebService.preference.core.debug.caption "Core provider object:">
-<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "0 = Geen/Uit, 1 = Basale informatie, 2 = Uitgebreide informatie">
+<!ENTITY exchangeWebService.preference.core.debuglevel.label2 "1 = Basic information, 2 = Extended information">
 
 <!ENTITY exchangeWebService.preferences.tab.cache "Opslag">
 <!ENTITY exchangeWebService.preference.cache.memory.label "Minimale tijdelijke geheugen opslag">

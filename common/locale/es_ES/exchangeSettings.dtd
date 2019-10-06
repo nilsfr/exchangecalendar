@@ -1,0 +1,54 @@
+<!ENTITY label.acceptbutton "Guardar y restablecer">
+<!ENTITY label.cancelbutton "Cancelar">
+<!ENTITY ecsettings.title "Ajustes de calendario y correo EWS">
+<!ENTITY ecsettings.tab.adsettings "Exchange/DA de Windows">
+<!ENTITY ecsettings.tab.meetingrequestsettings "Solicitudes de reunión">
+<!ENTITY ecsettings.tab.calendarfolderproperties "Propiedades de la carpeta">
+
+<!ENTITY label.ecExchangeSettings.title "Ajustes para el calendario:">
+
+<!ENTITY label.poll.inbox "Busca en el buzón solicitudes, cambios y cancelaciones.">
+<!ENTITY label.poll.inbox.interval "Frecuencia (en segundos) con la que buscar en el buzón:">
+<!ENTITY label.poll.calendar.interval "Frecuencia (en segundos) con la que buscar en el calendario:">
+
+<!ENTITY label.nomeetingrequestsettings "No puedes crear una solicitud de reunión porque no seleccionaste el calendario principal del buzón">
+
+<!ENTITY label.autorespond.meetingrequest "Responder automáticamente a una nueva invitación con">
+
+<!ENTITY menuitem.label.ec-autorespond-answer.tentative "Podría asistir">
+<!ENTITY menuitem.label.ec-autorespond-answer.accepted "Asistiré">
+<!ENTITY menuitem.label.ec-autorespond-answer.declined "No asistiré">
+
+<!ENTITY label.autoremove.invitation_cancellation1 "Eliminar automáticamente la invitación y el mensaje de cancelación que lo acompaña si no llegas a responder a la solicitud de invitación.">
+<!ENTITY label.autoremove.invitation_cancellation2 "Eliminar automáticamente una invitación confirmada cuando recibes un mensaje de cancelación.">
+
+<!ENTITY label.autoremove.invitation_response1 "Eliminar automáticamente las respuestas de los demás en las invitaciones a las reuniones en las que no eres el organizador.">
+
+<!ENTITY label.doautorespond.meetingrequest.message "Enviar el siguiente mensaje de respuesta en vez de solicitar un mensaje.">
+<!ENTITY label.autorespond.meetingrequest.message "Tu mensaje:">
+
+<!ENTITY treecol.label.userid "ID de usuario">
+<!ENTITY treecol.label.email "Correo electrónico">
+
+
+<!ENTITY ecsettings.tab.offlineCachingproperties "Caché offline">
+
+<!ENTITY label.offlineCacheproperties.cachingStartDate "Fecha de inicio del caché:">
+<!ENTITY label.offlineCacheproperties.cachingEndDate "Fecha de finalización del caché:">
+<!ENTITY label.offlineCacheproperties.totalEvents "Número total de eventos cacheados:">
+<!ENTITY label.offlineCacheproperties.totalTasks "Número total de tareas cacheadas:">
+
+<!ENTITY label.offlineCacheproperties.monthsBeforeStartDate "Número de meses anteriores a hoy para guardar en caché:">
+<!ENTITY label.offlineCacheproperties.monthsBeforeEndDate "Número de meses posteriores a hoy para guardar en caché:">
+
+<!ENTITY button.offlineCacheproperties.clearCache "Limpiar los datos de caché offline">
+<!ENTITY ecsettings.tab.autoprocessingproperties "Procesamiento automático">
+<!ENTITY ecsettings.tab.mailitemsProperties "Ajustes de EWS (correo electrónico)">
+
+<!ENTITY label.syncmailitems.interval "Retrasar la sincronización de elementos de correo (etiquetas, etc.)">
+<!ENTITY label.autoprocessingproperties.deletecancelleditems "Eliminar automáticamente los eventos cancelados">
+<!ENTITY label.autoprocessingproperties.markeventtentative "Marcar automáticamente el evento como provisional y enviar respuesta al organizador">
+<!ENTITY label.syncmailitems.active "Mantener habilitada la sincronización de elementos de correo (etiquetas, etc.)">
+
+<!ENTITY label.syncfollowup.deactivtate "Deshabilitar la tarea de seguimiento">
+ 

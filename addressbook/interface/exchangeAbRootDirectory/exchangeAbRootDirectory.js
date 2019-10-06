@@ -20,22 +20,21 @@
  *
  *
  * ***** BEGIN LICENSE BLOCK *****/
-var Cc = Components.classes;
+
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
-var components = Components;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://exchangecommon/ecFunctions.js");
-Cu.import("resource://exchangecommon/ecExchangeRequest.js");
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
 
-Cu.import("resource:///modules/mailServices.js");
-Cu.import("resource:///modules/iteratorUtils.jsm");
+ChromeUtils.import("resource:///modules/mailServices.js");
+ChromeUtils.import("resource:///modules/iteratorUtils.jsm");
 
-Cu.import("resource://exchangeaddress/exchangeAbFunctions.js");
+ChromeUtils.import("resource://exchangeaddress/exchangeAbFunctions.js");
 
 //
 // exchangeAbRootDirectory
@@ -83,8 +82,8 @@ function exchangeAbRootDirectory() {
 
 exchangeAbRootDirectory.prototype = {
 
-    classID: components.ID("{227664eb-cce6-4b7a-8d57-0bb0c6c9b362}"),
-    contractID: "@mozilla.org/addressbook/directory;1?type=exchWebService-contactRoot-directory",
+    classID: Components.ID("{227664eb-cce6-4b7a-8d57-0bb0c6c9b362}"),
+    contractID: "@mozilla.org/addressbook/directory;1?type=exchangecalendar-addressbook",
     classDescription: "Exchange 2007/2010 Contacts Root Directory",
 
     // void getInterfaces(out PRUint32 count, [array, size_is(count), retval] out nsIIDPtr array);
@@ -380,7 +379,7 @@ exchangeAbRootDirectory.prototype = {
         var results = [];
         if (accounts.length > 0) {
             var dir;
-            for each(var account in accounts) {
+            for (var account of accounts) {
                 if (account != "") {
                     var dirName = this.childNodeURI + "id=" + encodeURI(account) + "&type=basefolder";
                     try {

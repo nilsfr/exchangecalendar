@@ -1,5 +1,5 @@
-<!ENTITY calendar.context.exchange.convert.label "Convert to Exchange 2007/2010 Calendar and Tasks Add-on">
-<!ENTITY calendar.context.exchange.properties.label "Exchange (EWS) properties">
-<!ENTITY calendar.context.exchange.oof.settings.label "Out of office settings">
-<!ENTITY calendar.context.exchange.clone.settings.label "Clone settings to new calendar">
-<!ENTITY calendar.context.exchange.delegate.calendar.settings.label "Delegate calendar">
+<!ENTITY calendar.context.exchange.convert.label "Skonvertovať na kalendár Exchange 2007/2010 a doplnok Úlohy">
+<!ENTITY calendar.context.exchange.properties.label "Nastavenia Exchange (EWS)">
+<!ENTITY calendar.context.exchange.oof.settings.label "Nastavenia neprítomnosti">
+<!ENTITY calendar.context.exchange.clone.settings.label "Skopírovať nastavenia do nového kalendára">
+<!ENTITY calendar.context.exchange.delegate.calendar.settings.label "Delegovať kalendár">

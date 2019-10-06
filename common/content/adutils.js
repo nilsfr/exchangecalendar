@@ -19,7 +19,7 @@ var managersignum;
 var searchemail;
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var calWinId = window.arguments[0].calendar.id;
 
 var calPreferences = Cc["@mozilla.org/preferences-service;1"]
@@ -27,7 +27,7 @@ var calPreferences = Cc["@mozilla.org/preferences-service;1"]
     .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl." + calWinId + ".");
 var globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
     .getService(Ci.mivFunctions);
-searchemail = globalFunctions.safeGetCharPref(calPreferences, "ecMailbox");
+searchemail = globalFunctions.safeGetStringPref(calPreferences, "ecMailbox");
 var calendarEmail = searchemail;
 
 //mapping of AD attributes to address book elements
@@ -79,15 +79,15 @@ function ldapInit() {
     var adServer;
     var container = document.getElementById("teamcontainer");
     try {
-        adServer = gPrefs.getCharPref("mail.identity.id1.directoryServer");
+        adServer = gPrefs.getStringPref("mail.identity.id1.directoryServer");
     }
     catch (e) {
         container.hidden = true;
     }
     finally {}
 
-    var adURL = gPrefs.getCharPref(adServer + ".uri");
-    var adBindDN = gPrefs.getCharPref(adServer + ".auth.dn");
+    var adURL = gPrefs.getStringPref(adServer + ".uri");
+    var adBindDN = gPrefs.getStringPref(adServer + ".auth.dn");
     //gConsole.logStringMessage("AD URL: " + adURL + " Bind DN: " + adBindDN);
 
     gLdapServerURL = Components.classes["@mozilla.org/network/io-service;1"].getService(Components.interfaces.nsIIOService).newURI(adURL, null, null).QueryInterface(Components.interfaces.nsILDAPURL);

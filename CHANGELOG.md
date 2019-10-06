@@ -1,6 +1,61 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [5.0.0-beta1] - 2019-09-01
+### Changed
+- Improved settings window usability (#241)
+- Updated translations (#274)
+- Improved calender clone window (#280)
+
+### Fixed
+- Fixed calendars from public calendars not working (#161)
+- Fixed adding calendar when name contains special character (#262)
+- Fixed missing Out of Office date and time pickers (#215)
+- Fixed saving of start and end time when an event is no longer full day (#286)
+
+## [5.0.0-alpha3] - 2019-02-25
+### Added
+- Hungarian translation (#234)
+- Galician translation (#235)
+- Spanish translation (#254)
+- Portuguese translation (#254)
+- Romanian translation (#254)
+
+### Changed
+- Improve contact auto complete search results (#223)
+- Improve password request dialog title (#229)
+
+### Fixed
+- ToDo item method call deprecation (#221)
+- Deprecated JavaScript definition (#227)
+- Deprecated calls to internal `Component.utils` functions (#228)
+- Exchange address books not shown in Directory/Contact panes (#209)
+- Settings window not properly localized (#240)
+
+## [5.0.0-alpha2] - 2018-11-25
+### Changed
+- Improved logging (#201)
+- Replaced dummy domain `somewhere` with `localhost` (#220)
+
+### Fixed
+- Date function calls changed to new interface (#205)
+- Synchronization issues (#206)
+- Meeting link references (#214)
+- Logging issues introduced by #201 (#213)
+- Calls to build URIs changed to new interface (#219)
+
+## [5.0.0-alpha1] - 2018-10-16
+### Added
+- Initial support for Thunderbird 60
+
+### Removed
+- Support for Thunderbird 59 and lower
+
+## [4.0.0] - 2018-09-30
+### Changed
+- Pull latest localization from Transifex
+- Set maximum version restriction to Thunderbird 59
+
 ## [4.0.0-beta5] - 2018-01-28
 ### Added
 - Code beautifiers are available for JavaScript, XML, XUL and RDF files

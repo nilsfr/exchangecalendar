@@ -22,12 +22,12 @@
  * ***** BEGIN LICENSE BLOCK *****/
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
 
-Cu.import("resource://exchangecommon/ecFunctions.js");
-Cu.import("resource://exchangecommon/erAutoDiscover.js");
-Cu.import("resource://exchangecommon/erPrimarySMTPCheck.js");
-Cu.import("resource://exchangecommon/erGetFolder.js");
+
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://exchangecommon/erAutoDiscover.js");
+ChromeUtils.import("resource://exchangecommon/erPrimarySMTPCheck.js");
+ChromeUtils.import("resource://exchangecommon/erGetFolder.js");
 
 if (!exchWebService) var exchWebService = {};
 
@@ -363,10 +363,10 @@ exchWebService.manageEWSAccounts = {
         case -16:
         case -17:
         case -18:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorAutodiscoveryURLInvalid", [document.getElementById("exchWebService_mailbox").value], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorAutodiscoveryURLInvalid", [document.getElementById("exchWebService_mailbox").value], "exchangecommon"));
             break;
         default:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorAutodiscovery", [aMsg, aCode], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorAutodiscovery", [aMsg, aCode], "exchangecommon"));
         }
 
         document.getElementById("exchWebService_autodiscovercheckbutton").disabled = false;
@@ -388,7 +388,7 @@ exchWebService.manageEWSAccounts = {
                 folderBase: "publicfoldersroot",
                 folderPath: "/",
                 serverUrl: document.getElementById("exchWebService_server").value
-            }, this.checkServerOK, this.checkServerError)
+            }, this.checkServerOK, this.checkServerError);
         }
         catch (err) {
             window.setCursor("auto");
@@ -411,10 +411,10 @@ exchWebService.manageEWSAccounts = {
         case -30:
             break;
         case -6:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [document.getElementById("exchWebService_server").value], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [document.getElementById("exchWebService_server").value], "exchangecommon"));
             break;
         default:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheck", [aMsg, aCode], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheck", [aMsg, aCode], "exchangecommon"));
         }
         document.getElementById("exchWebService_servercheckbutton").disabled = false;
 

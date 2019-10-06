@@ -189,7 +189,7 @@
                         </xul:toolbaritem>
                     </xul:toolbar>
                 </xul:toolbox>
-                <xul:editor type="content-primary"
+                <xul:editor type="content"
                             anonid="editor"
                             class="exchWebService-editor"
                             src="about:blank"
@@ -228,8 +228,11 @@
                                 this.editorElement.contentDocument.documentElement.innerHTML = this.globalFunctions.fromText2HTML(null);
                         }
 
-                        this.atomService = Components.classes["@mozilla.org/atom-service;1"]
-                                .getService(Components.interfaces.nsIAtomService);
+                        this.atomService = null;
+                        var atomService_class = Components.classes["@mozilla.org/atom-service;1"];
+                        if (atomService_class) {
+                            this.atomService = atomService_class.getService(Components.interfaces.nsIAtomService);
+                        }
 
                         this.connectAllCommandListenerToolbar("FormatToolbar");
 
@@ -488,7 +491,7 @@
                                                         if (extProtService.isExposedProtocol(scheme)) {
                                                                 var ioService = Components.classes["@mozilla.org/network/io-service;1"]
                                                                           .getService(Components.interfaces.nsIIOService);
-                                                                extProtService.loadUrl(ioService.newURI(this.ceParams.href, null, null));
+                                                                extProtService.loadURI(ioService.newURI(this.ceParams.href, null, null));
                                                         }
                                                 } 
                                                 catch (ex) {
@@ -521,11 +524,13 @@
                         var aFirst = { value: false };
                         var aAny = { value: false };
                         var aAll = { value: false };
-                        var propAtom = this.atomService.getAtom("font");
-                        var edElement = this.editorElement.getHTMLEditor(this.editorElement.contentWindow);
-                        color = edElement.getInlinePropertyWithAttrValue(propAtom, "bgcolor", null, aFirst, aAny, aAll);
+                        if (this.atomService) {
+                            var propAtom = this.atomService.getAtom("font");
+                            var edElement = this.editorElement.getHTMLEditor(this.editorElement.contentWindow);
+                            color = edElement.getInlinePropertyWithAttrValue(propAtom, "bgcolor", null, aFirst, aAny, aAll);
 
-                        document.getAnonymousElementByAttribute(this, "anonid", "cmd_backgroundColor").setAttribute("style","background-color:"+color);
+                            document.getAnonymousElementByAttribute(this, "anonid", "cmd_backgroundColor").setAttribute("style","background-color:"+color);
+                        }
                         
                         var font = this.getCStringCommandState("cmd_fontFace", this.commandManager, this.editorElement.contentWindow, "state_attribute");
                         font = font.replace(/"/g, "");
@@ -633,9 +638,11 @@
                                 this.commandManager.doCommand(aAnonId, state, null);
                         }
                         else {
-                                var propAtom = this.atomService.getAtom("font");
-                                var edElement = this.editorElement.getHTMLEditor(this.editorElement.contentWindow);
-                                edElement.setInlineProperty(propAtom, "bgcolor", colorObj.TextColor);                   
+                                if (this.atomService) {
+                                    var propAtom = this.atomService.getAtom("font");
+                                    var edElement = this.editorElement.getHTMLEditor(this.editorElement.contentWindow);
+                                    edElement.setInlineProperty(propAtom, "bgcolor", colorObj.TextColor);
+                                }
                         }
 
                 ]]>

@@ -22,7 +22,7 @@
  * ***** BEGIN LICENSE BLOCK *****/
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
 var components = Components;
 
@@ -32,8 +32,8 @@ function initPreferences() {
         .getService(Ci.nsIPrefService)
         .getBranch("ldap_2.servers.exchangecontacts.");
 
-    exchangeContactsInitPrefs.setCharPref("description", "Exchange Contacts");
-    exchangeContactsInitPrefs.setCharPref("uri", "exchWebService-contactRoot-directory://");
+    exchangeContactsInitPrefs.setStringPref("description", "Exchange Contacts");
+    exchangeContactsInitPrefs.setStringPref("uri", "exchangecalendar-addressbook://");
 
     Cc["@mozilla.org/preferences-service;1"]
         .getService(Ci.nsIPrefService).savePrefFile(null);

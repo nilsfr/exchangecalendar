@@ -22,18 +22,18 @@
  * ***** BEGIN LICENSE BLOCK *****/
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource:///modules/mailServices.js");
+ChromeUtils.import("resource:///modules/mailServices.js");
 
-Cu.import("resource://exchangecommon/ecFunctions.js");
-Cu.import("resource://exchangeaddress/exchangeAbFunctions.js");
-Cu.import("resource://exchangecommon/erGetAttachments.js");
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://exchangeaddress/exchangeAbFunctions.js");
+ChromeUtils.import("resource://exchangecommon/erGetAttachments.js");
 
 function exchAddressbookOverlay(aDocument, aWindow) {
     this._document = aDocument;
@@ -73,10 +73,10 @@ exchAddressbookOverlay.prototype = {
             this.prefs.setBoolPref("globalAddressList", input.newAccountObject.addGlobalAddressList);
 
 
-            var theParentDirectory = MailServices.ab.getDirectory("exchWebService-contactRoot-directory://")
+            var theParentDirectory = MailServices.ab.getDirectory("exchangecalendar-addressbook://")
                 .QueryInterface(Ci.nsIAbDirectory);
 
-            var targetURI = "exchWebService-contactRoot-directory://" + newUUID;
+            var targetURI = "exchangecalendar-addressbook://" + newUUID;
             var theChildDirectory = MailServices.ab.getDirectory(targetURI)
                 .QueryInterface(Ci.nsIAbDirectory);
 
@@ -87,7 +87,7 @@ exchAddressbookOverlay.prototype = {
     doDeleteExchangeAccount: function _doDeleteExchangeAccount() {
         exchWebService.commonAbFunctions.logInfo("1. doDeleteExchangeAccount\n");
 
-        var theParentDirectory = MailServices.ab.getDirectory("exchWebService-contactRoot-directory://")
+        var theParentDirectory = MailServices.ab.getDirectory("exchangecalendar-addressbook://")
             .QueryInterface(Ci.nsIAbDirectory);
 
         var theChildDirectory = MailServices.ab.getDirectory(GetSelectedDirectory())
@@ -108,7 +108,7 @@ exchAddressbookOverlay.prototype = {
     onDirTreeSelect: function _onDirTreeSelect() {
         var selectedDir = GetSelectedDirectory();
 
-        if ((selectedDir) && (selectedDir == "exchWebService-contactRoot-directory://")) {
+        if ((selectedDir) && (selectedDir == "exchangecalendar-addressbook://")) {
 
             this._document.getElementById("button-deleteexchangeaccount").hidden = true;
             this._document.getElementById("button-addexchangeaccount").hidden = false;
@@ -167,7 +167,7 @@ exchAddressbookOverlay.prototype = {
     onRightClick: function _onRightClick() {
         var selectedDir = GetSelectedDirectory();
 
-        if ((selectedDir) && (selectedDir == "exchWebService-contactRoot-directory://")) {
+        if ((selectedDir) && (selectedDir == "exchangecalendar-addressbook://")) {
             this._document.getElementById("dirTreeContext-properties").disabled = true;
             this._document.getElementById("dirTreeContext-newcard").hidden = true;
             this._document.getElementById("dirTreeContext-newlist").hidden = true;
@@ -210,7 +210,7 @@ exchAddressbookOverlay.prototype = {
     photoDisplayHandlerExternal: function _photoDisplayHandlerExternal(aCard, aImg) {
         if ((aCard) && (aCard.getProperty("PhotoData"))) {
             this.downloadAttachment(aImg, aCard);
-            aImg.setAttribute("src", "chrome://exchangecontacts/content/loading-from-server.png");
+            aImg.setAttribute("src", "chrome://exchangecommon-common/skin/images/loading-from-server.png");
             return true;
         }
         else {
@@ -291,7 +291,7 @@ exchAddressbookOverlay.prototype = {
 
     onDownloadAttachmentError: function _onDownloadAttachmentError(aExchangeRequest, aCode, aMsg) {
         this.globalFunctions.LOG("exchAddressbookOverlay.onDownloadAttachmentError: aCode:" + aCode + ", aMsg:" + aMsg);
-        aExchangeRequest.argument.img.setAttribute("src", "chrome://exchangecontacts/content/error-loading-from-server.png");
+        aExchangeRequest.argument.img.setAttribute("src", "chrome://exchangecommon-common/skin/images/error-loading-from-server.png");
     },
 
 }

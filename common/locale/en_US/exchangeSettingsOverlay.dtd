@@ -1,4 +1,4 @@
-<!ENTITY ecautodiscover "Use Exchange's autodiscovery function.">
+<!ENTITY ecautodiscover "Use Exchange autodiscovery">
 <!ENTITY ecfolderbase.label "Folder base:">
 <!ENTITY ecfolderpath.label "Path below folder base:">
 <!ENTITY ecfolderidofshare.label "Share Folder ID:">
@@ -38,6 +38,7 @@
 <!ENTITY button.label.serverandmailboxcheck "Check server and mailbox">
 <!ENTITY button.label.servercheck "Check server and account">
 
+<!ENTITY ecmailbox.server_url.label "Server URL:">
 <!ENTITY ecmailbox.label "Primary email address:">
 <!ENTITY ecmailbox.tooltip "If you do not specify a mailbox you will only have access to public folders.">
 <!ENTITY ecwindowsuser.label "Username:">
@@ -53,4 +54,3 @@
 <!ENTITY exchWebServices.hostexch.label "Hosted Exchange">
 <!ENTITY exchWebServices.365exch.label "Microsoft Office 365">
 <!ENTITY exchWebServices.detail.label "Details">
- 

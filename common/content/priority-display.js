@@ -1,10 +1,8 @@
 /* Enhanced priority display */
 
-var Cu = Components.utils;
+
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-Components.utils.import("resource://app/modules/gloda/public.js");
-Components.utils.import("resource://app/modules/gloda/explattr.js");
 Components.utils.import("resource:///modules/iteratorUtils.jsm");
 
 var importantTag;
@@ -31,13 +29,13 @@ function tag(hdr) {
 function gCP(pref) {
     var prefService = Cc["@mozilla.org/preferences-service;1"]
         .getService(Ci.nsIPrefService);
-    return prefService.getCharPref("extensions.extras." + pref);
+    return prefService.getBranch("extensions.extras.").getStringPref(pref);
 }
 
 function gBP(pref) {
     var prefService = Cc["@mozilla.org/preferences-service;1"]
         .getService(Ci.nsIPrefService);
-    return prefService.getBoolPref("extensions.extras." + pref);
+    return prefService.getBranch("extensions.extras.").getBoolPref(pref);
 }
 
 function toggleMessageTagPostEwsUpdate(key, addKey, hdr) {

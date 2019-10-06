@@ -36,16 +36,16 @@
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 
-Cu.import("resource://exchangecommon/ecExchangeRequest.js");
+ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
 
 var EXPORTED_SYMBOLS = ["erAutoDiscoverySOAPRequest"];
 
@@ -159,7 +159,7 @@ erAutoDiscoverySOAPRequest.prototype = {
         var rm = aResp.XPath("/s:Envelope/s:Body/_default_:GetUserSettingsResponseMessage/_default_:Response[_default_:ErrorCode='NoError']/_default_:UserResponses/_default_:UserResponse[_default_:ErrorCode='NoError']/_default_:UserSettings/_default_:UserSetting");
 
         if (rm.length > 0) {
-            for each(var userSetting in rm) {
+            for (var userSetting of Object.values(rm)) {
                 var name = userSetting.getTagValue("_default_:Name", "");
                 switch (name) {
                 case "UserDisplayName":

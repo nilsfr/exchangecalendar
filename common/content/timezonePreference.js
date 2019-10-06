@@ -1,6 +1,6 @@
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 
 var prefs = Cc["@mozilla.org/preferences-service;1"]
     .getService(Ci.nsIPrefService);
@@ -10,7 +10,7 @@ var globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
 function autoTimezone(aState) {
 
     if (aState == true) {
-        prefs.setCharPref("calendar.timezone.local", "");
+        prefs.setStringPref("calendar.timezone.local", "");
         infoPopup(document.title, "Timezone is changed to to system.");
         document.getElementById("calendar-timezone-menulist").setAttribute("disabled", "true");
     }

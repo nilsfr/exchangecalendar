@@ -22,16 +22,16 @@
  * ***** BEGIN LICENSE BLOCK *****/
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://exchangecommon/ecExchangeRequest.js");
-Cu.import("resource://exchangecommon/soapFunctions.js");
-Cu.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
+ChromeUtils.import("resource://exchangecommon/soapFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 
 var EXPORTED_SYMBOLS = ["erExpandDLRequest"];
 
@@ -107,17 +107,21 @@ erExpandDLRequest.prototype = {
         rm = null;
 
         var allMailboxes = new Array();
-        for each(var expansion in dlExpansion) {
+        if (dlExpansion) {
+            for (var expansion of Object.values(dlExpansion)) {
 
-            var totalItemsInView = expansion.getAttribute("TotalItemsInView", 0);
-            var includesLastItem = expansion.getAttribute("IncludesLastItemInRange", "false");
+                var totalItemsInView = expansion.getAttribute("TotalItemsInView", 0);
+                var includesLastItem = expansion.getAttribute("IncludesLastItemInRange", "false");
 
-            var mailboxes = expansion.getTags("t:Mailbox");
-            for each(var mailbox in mailboxes) {
-                allMailboxes.push(mailbox);
+                var mailboxes = expansion.getTags("t:Mailbox");
+                if (mailboxes) {
+                    for (var mailbox of Object.values(mailboxes)) {
+                        allMailboxes.push(mailbox);
+                    }
+                }
+                mailboxes = null;
+
             }
-            mailboxes = null;
-
         }
         dlExpansion = null;
 

@@ -36,9 +36,9 @@
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
 
-Cu.import("resource://exchangecommon/ecFunctions.js");
+
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 
 if (!exchWebService) var exchWebService = {};
 
@@ -54,15 +54,16 @@ exchWebService.debugPreferences = {
 
         fp.init(window, title, nsIFilePicker.modeSave);
 
-        var ret = fp.show();
-
-        if (ret == nsIFilePicker.returnOK) {
+        fp.open(rv => {
+            if (rv != Components.interfaces.nsIFilePicker.returnOK || !fp.file) {
+                return;
+            }
             exchWebService.commonFunctions.LOG("[[" + fp.file.path + "]]");
             document.getElementById("extensions.1st-setup.debug.file").value = fp.file.path;
             //		exchWebService.commonFunctions.LOG("[["+fp.fileURL.spec.replace("file://", "")+"]]");
             //            document.getElementById("extensions.1st-setup.debug.file").value = fp.fileURL.spec.replace("file://", "");
             this.readLogLocation();
-        }
+        });
 
     },
 
@@ -83,10 +84,12 @@ exchWebService.debugPreferences = {
         if (aCheckBox.checked) {
             this.disableChildren(document.getElementById("exchangeWebService_debug_groupbox1"), false);
             this.disableChildren(document.getElementById("exchangeWebService_debug_groupbox2"), false);
+            this.disableChildren(document.getElementById("exchangeWebService_debug_groupbox3"), false);
         }
         else {
             this.disableChildren(document.getElementById("exchangeWebService_debug_groupbox1"), true);
             this.disableChildren(document.getElementById("exchangeWebService_debug_groupbox2"), true);
+            this.disableChildren(document.getElementById("exchangeWebService_debug_groupbox3"), true);
         }
     },
 
@@ -95,5 +98,4 @@ exchWebService.debugPreferences = {
         logUrl.value = document.getElementById("extensions.1st-setup.debug.file").value;
         return undefined;
     },
-
-}
+};

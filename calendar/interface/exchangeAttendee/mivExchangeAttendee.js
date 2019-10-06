@@ -20,14 +20,14 @@
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
+ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 const participationMap = {
     "Unknown": "NEEDS-ACTION",
@@ -68,7 +68,6 @@ mivExchangeAttendee.prototype = {
     classID: components.ID("{" + mivExchangeAttendeeGUID + "}"),
     contractID: "@1st-setup.nl/exchange/attendee;1",
     flags: 0,
-    implementationLanguage: Ci.nsIProgrammingLanguage.JAVASCRIPT,
 
     // methods from nsIClassInfo
 
@@ -278,11 +277,13 @@ mivExchangeAttendee.prototype = {
 
         var me = false;
 
-        for each(var alias in aParent.mailboxAliases) {
-            if (xml2json.getTagValue(mbox, "t:EmailAddress", "unknown").toLowerCase() == alias.toLowerCase()) {
-                me = true;
-                //dump("convertFromExchange: Title:"+aParent.title+", email:"+xml2json.getTagValue(mbox, "t:EmailAddress","unknown")+". This address is mine ("+alias+").\n");
-                break;
+        if (aParent.mailboxAliases) {
+            for (var alias of Object.values(aParent.mailboxAliases)) {
+                if (xml2json.getTagValue(mbox, "t:EmailAddress", "unknown").toLowerCase() == alias.toLowerCase()) {
+                    me = true;
+                    //dump("convertFromExchange: Title:"+aParent.title+", email:"+xml2json.getTagValue(mbox, "t:EmailAddress","unknown")+". This address is mine ("+alias+").\n");
+                    break;
+                }
             }
         }
 

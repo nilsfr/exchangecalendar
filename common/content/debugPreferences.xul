@@ -45,7 +45,7 @@
     %preferencesDTD;
     %dtd1;
 ]>
-<?xml-stylesheet type="text/css" href="chrome://exchangecommon/skin/preferences.css"?>
+<?xml-stylesheet type="text/css" href="chrome://exchangecommon/preferences.css"?>
 <overlay id="exchangeWebService_debug_preferences_overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
@@ -113,7 +113,7 @@
                 <textbox id="exchangeWebService_preference_core_debuglevel_textbox"
                          preference="extensions.1st-setup.core.debuglevel"
                          increment="1"
-                         min="0"
+                         min="1"
                          max="2"
                          type="number" />
             </hbox>

@@ -1,0 +1,25 @@
+ 
+<!ENTITY  label.delegateCalendar.cancelbutton "Cancelar">
+<!ENTITY  label.delegateCalendar.userEmail "Correo electrónico">
+<!ENTITY  label.delegateCalendar.deliveryMeetingRerquestControl "Entregar solicitudes de reunión">
+
+<!ENTITY  menuitem.delegateCalendar.deliverMeetingRequestslist.delegateOnly "Sólo Delegados">
+<!ENTITY  menuitem.delegateCalendar.deliverMeetingRequestslist.delegateAndMe "Delegados e máis Eu">
+<!ENTITY  menuitem.delegateCalendar.deliverMeetingRequestslist.delegateAndInfo "Delegados e Enviarme Notificacións">
+
+<!ENTITY  label.delegateCalendar.permission "Permiso">
+<!ENTITY  menuitem.delegateCalendar.permission.author "Autor">
+<!ENTITY  menuitem.delegateCalendar.permission.editor "Editor">
+<!ENTITY  menuitem.delegateCalendar.permission.reviewer "Revisor">
+<!ENTITY  menuitem.delegateCalendar.permission.none "Ningún">
+
+<!ENTITY  label.delegateCalendar.permission.receiveInvitationCopy "Recibir copias das mensaxes de reunións" >
+<!ENTITY  label.delegateCalendar.permission.viewPrivateItems "Ver os elementos privados" >
+
+
+<!ENTITY  delegateCalendar.permission.description.author "Ler e crear elementos no cartafol do calendario" >
+<!ENTITY  delegateCalendar.permission.description.editor "Ler, crear e modificar elementos no cartafol do calendario." >
+<!ENTITY  delegateCalendar.permission.description.reviewer "Ler elementos no cartafol do calendario." >
+<!ENTITY  delegateCalendar.permission.description.none "Sen permisos de acceso ao cartafol do calendario." >
+
+<!ENTITY  delegateCalendar.permission.details.label "Detalles dos permisos:" >

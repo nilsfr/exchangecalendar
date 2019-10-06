@@ -17,15 +17,15 @@
 <!ENTITY  menuitem.delegatefolder.permission.contributor "Yardımcı" >
 <!ENTITY  menuitem.delegatefolder.permission.custom "Özel" >
                             
-<!ENTITY  delegatefolder.permission.description.author "Dizindeki maddeleri okuyabilir ve yaratabilir." >
-<!ENTITY  delegatefolder.permission.description.editor "Dizindeki maddeleri okuyabilir, yaratabilir ve değiştirebilir." >
-<!ENTITY  delegatefolder.permission.description.reviewer "Dizindeki maddeleri okuyabilir." >
-<!ENTITY  delegatefolder.permission.description.none "Bu dizine erişim izni yok." >
+<!ENTITY  delegatefolder.permission.description.author "Klasördeki maddeleri okuyabilir ve yaratabilir." >
+<!ENTITY  delegatefolder.permission.description.editor "Klasördeki maddeleri okuyabilir, yaratabilir ve değiştirebilir." >
+<!ENTITY  delegatefolder.permission.description.reviewer "Klasördeki maddeleri okuyabilir." >
+<!ENTITY  delegatefolder.permission.description.none "Bu klasöre erişim izni yok." >
 
  <!ENTITY  delegatefolder.permission.details.caption "İzin "> 
 
 <!ENTITY  delegatefolder.tab.msg.label  "Bu posta hesabı için bir Takvim ya da Görev Listesi bulunamadı.">
-<!ENTITY  delegatefolder.tab.name  "Exchange Dizin Paylaşımı">
+<!ENTITY  delegatefolder.tab.name  "Exchange Klasör Paylaşımı">
 
 <!ENTITY  delegatefolder.permissions.none  "Yok">
 <!ENTITY  delegatefolder.permissions.own  "Kendi maddeleri">
@@ -33,10 +33,10 @@
 <!ENTITY  delegatefolder.permissions.full  "Tüm detaylar">
 
 <!ENTITY  delegatefolder.permissions.cancreateitems  "Madde Yarat">
-<!ENTITY  delegatefolder.permissions.cancreatesubfolders  "Altdizinler Yarat">
-<!ENTITY  delegatefolder.permissions.isfolderowner  "Dizin Sahibi">
-<!ENTITY  delegatefolder.permissions.isfoldervisible  "Dizin Görülebiliyor">
-<!ENTITY  delegatefolder.permissions.isfoldercontact  "Dizinle İlişkili Kişi">
+<!ENTITY  delegatefolder.permissions.cancreatesubfolders  "Altklasörler Yarat">
+<!ENTITY  delegatefolder.permissions.isfolderowner  "Klasör Sahibi">
+<!ENTITY  delegatefolder.permissions.isfoldervisible  "Klasör Görülebiliyor">
+<!ENTITY  delegatefolder.permissions.isfoldercontact  "Klasörle İlişkili Kişi">
 <!ENTITY  delegatefolder.permissions.edititems  "Maddeleri Düzenleyebilir">
 <!ENTITY  delegatefolder.permissions.deleteitems  "Maddeleri Silebilir">
 <!ENTITY  delegatefolder.permissions.readitems  "Maddeleri Okuyabilir">  

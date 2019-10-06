@@ -48,6 +48,7 @@
 <!ENTITY label.syncmailitems.interval "Postayla ilişkili öğeleri (etiketler vs.) eşitlemeyi geciktir">
 <!ENTITY label.autoprocessingproperties.deletecancelleditems "İptal edilmiş olayları otomatik olarak sil">
 <!ENTITY label.autoprocessingproperties.markeventtentative "Olayları otomatikman Kesin değil olarak işaretle ve düzenleyene yanıt gönder">
- 
 <!ENTITY label.syncmailitems.active "Postayla ilişkili öğeleri (etiketler vs.) eşitlemeyi aktif tut">
+
 <!ENTITY label.syncfollowup.deactivtate "Görev takip edilmesini devredışı bırak">
+ 

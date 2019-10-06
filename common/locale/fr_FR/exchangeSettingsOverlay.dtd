@@ -1,56 +1,56 @@
-<!ENTITY ecautodiscover "Utiliser la fonction de découverte automatique d'Exchange.">
-<!ENTITY ecfolderbase.label "Dossier racine:">
-<!ENTITY ecfolderpath.label "Chemin sous le dossier racine:">
-<!ENTITY ecfolderidofshare.label "Dossier partagé:">
-<!ENTITY exchWebServices.SharedFolderID.label "Nom de dossier partagé:">
+<!ENTITY ecautodiscover "Utiliser la découverte automatique d’Exchange">
+<!ENTITY ecfolderbase.label "Dossier racine :">
+<!ENTITY ecfolderpath.label "Chemin sous le dossier racine :">
+<!ENTITY ecfolderidofshare.label "Identifiant du dossier partagé :">
+<!ENTITY exchWebServices.SharedFolderID.label "Nom de partage affiché :">
 
-<!ENTITY menuitem.label.ecfolderbase.calendar "Dossier Calendrier">
-<!ENTITY menuitem.label.ecfolderbase.publicfoldersroot "Dossier Public">
-<!ENTITY menuitem.label.ecfolderbase.inbox "Dossier Messagerie Arrivée">
-<!ENTITY menuitem.label.ecfolderbase.voicemail "Dossier Messagerie Audio">
+<!ENTITY menuitem.label.ecfolderbase.calendar "Dossier calendrier">
+<!ENTITY menuitem.label.ecfolderbase.publicfoldersroot "Dossier public">
+<!ENTITY menuitem.label.ecfolderbase.inbox "Dossier boîte de réception">
+<!ENTITY menuitem.label.ecfolderbase.voicemail "Dossier messagerie vocale">
 <!ENTITY menuitem.label.ecfolderbase.msgfolderroot "Dossier racine de la messagerie">
-<!ENTITY menuitem.label.ecfolderbase.root "Racine de la boite aux lettres">
-<!ENTITY menuitem.label.ecfolderbase.tasks "Dossier Tâches">
+<!ENTITY menuitem.label.ecfolderbase.root "Racine de la boîte aux lettres">
+<!ENTITY menuitem.label.ecfolderbase.tasks "Dossier tâches">
 
-<!ENTITY menuitem.label.ecfolderbase.contacts "Dossier Contacts">
-<!ENTITY menuitem.label.ecfolderbase.deleteditems "Dossier Messages Supprimés">
-<!ENTITY menuitem.label.ecfolderbase.drafts "Dossier Brouillons">
-<!ENTITY menuitem.label.ecfolderbase.journal "Dossier Journal">
-<!ENTITY menuitem.label.ecfolderbase.notes "Dossier Notes">
-<!ENTITY menuitem.label.ecfolderbase.outbox "Dossier Envoi Messagerie">
-<!ENTITY menuitem.label.ecfolderbase.sentitems "Dossier Messages Envoyés">
-<!ENTITY menuitem.label.ecfolderbase.junkemail "Dossier Messages Indésirables">
-<!ENTITY menuitem.label.ecfolderbase.searchfolders "Dossier Recherche Messages">
-<!ENTITY menuitem.label.ecfolderbase.version2010 "-- Les options ci-dessous s'appliquent seulement à Exchange 2010 --">
-<!ENTITY menuitem.label.ecfolderbase.recoverableitemsroot "Dossier racine poubelle">
-<!ENTITY menuitem.label.ecfolderbase.recoverableitemsdeletions "Dossier Suppression">
-<!ENTITY menuitem.label.ecfolderbase.recoverableitemsversion "Dossier Suppression versions">
-<!ENTITY menuitem.label.ecfolderbase.recoverableitemspurges "Dossier Suppression A Vider">
-<!ENTITY menuitem.label.ecfolderbase.archiveroot "Dossier racine Archive">
-<!ENTITY menuitem.label.ecfolderbase.archivemsgfolderroot "Dossier racine Messages Archivés">
-<!ENTITY menuitem.label.ecfolderbase.archivedeleteditems "Dossier Archives Messages Supprimés">
-<!ENTITY menuitem.label.ecfolderbase.archiverecoverableitemsroot "Archives récupérables, dossier racine">
-<!ENTITY menuitem.label.ecfolderbase.Archiverecoverableitemsdeletions "Archives récupérables, dossier Suppression">
-<!ENTITY menuitem.label.ecfolderbase.Archiverecoverableitemsversions "Archives récupérables, dossier Versions">
-<!ENTITY menuitem.label.ecfolderbase.Archiverecoverableitemspurges "Archives récupérables, dossier A Vider">
+<!ENTITY menuitem.label.ecfolderbase.contacts "Dossier contacts">
+<!ENTITY menuitem.label.ecfolderbase.deleteditems "Dossier éléments supprimés">
+<!ENTITY menuitem.label.ecfolderbase.drafts "Dossier brouillons">
+<!ENTITY menuitem.label.ecfolderbase.journal "Dossier journal">
+<!ENTITY menuitem.label.ecfolderbase.notes "Dossier notes">
+<!ENTITY menuitem.label.ecfolderbase.outbox "Dossier boîte d’envoi">
+<!ENTITY menuitem.label.ecfolderbase.sentitems "Dossier éléments envoyés">
+<!ENTITY menuitem.label.ecfolderbase.junkemail "Dossier courrier indésirable">
+<!ENTITY menuitem.label.ecfolderbase.searchfolders "Dossier « dossiers de recherche »">
+<!ENTITY menuitem.label.ecfolderbase.version2010 "-- Les options ci‐dessous ne s’appliquent seulement qu’à Exchange 2010 --">
+<!ENTITY menuitem.label.ecfolderbase.recoverableitemsroot "Dossier racine de la corbeille">
+<!ENTITY menuitem.label.ecfolderbase.recoverableitemsdeletions "Dossier « suppressions  » de la corbeille">
+<!ENTITY menuitem.label.ecfolderbase.recoverableitemsversion "Dossier « versions » de la corbeille">
+<!ENTITY menuitem.label.ecfolderbase.recoverableitemspurges "Dossier «  purges » de la corbeille">
+<!ENTITY menuitem.label.ecfolderbase.archiveroot "Dossier racine des archives">
+<!ENTITY menuitem.label.ecfolderbase.archivemsgfolderroot "Dossier racine des messages archivés">
+<!ENTITY menuitem.label.ecfolderbase.archivedeleteditems "Dossier « éléments supprimés » des archives">
+<!ENTITY menuitem.label.ecfolderbase.archiverecoverableitemsroot "Dossier racine des éléments récupérables archivés">
+<!ENTITY menuitem.label.ecfolderbase.Archiverecoverableitemsdeletions "Dossier « suppressions » des éléments récupérables archivés ">
+<!ENTITY menuitem.label.ecfolderbase.Archiverecoverableitemsversions "Dossier « versions » des éléments récupérables archivés ">
+<!ENTITY menuitem.label.ecfolderbase.Archiverecoverableitemspurges "Dossier « purges » des éléments récupérables archivés ">
 
 <!ENTITY button.label.autodiscovercheck "Lancer la découverte automatique">
-<!ENTITY button.label.serverandmailboxcheck "Vérifier le serveur et la boite aux lettres">
+<!ENTITY button.label.serverandmailboxcheck "Vérifier le serveur et la boîte aux lettres">
 <!ENTITY button.label.servercheck "Vérifier le serveur et le compte">
 
-<!ENTITY ecmailbox.label "Nom de la boite aux lettres:">
-<!ENTITY ecmailbox.tooltip "Si vous ne précisez pas un nom de boite aux lettres, vous n'aurez accès qu'aux dossiers publics.">
-<!ENTITY ecwindowsuser.label "Utilisateur:">
-<!ENTITY ecwindowsdomain.label "Nom de Domaine:">
-<!ENTITY ecwindowspassword.label "Mot de passe:">
+<!ENTITY ecmailbox.server_url.label "Adresse URL du serveur :">
+<!ENTITY ecmailbox.label "Adresse de courriel principale :">
+<!ENTITY ecmailbox.tooltip "Si vous ne précisez pas un nom de boîte aux lettres, vous n’aurez accès qu’aux dossiers publics.">
+<!ENTITY ecwindowsuser.label "Nom d’utilisateur :">
+<!ENTITY ecwindowsdomain.label "Domaine Windows :">
+<!ENTITY ecwindowspassword.label "Mot de passe :">
 
 <!ENTITY button.label.folderpathcheck "Vérifier">
 <!ENTITY button.label.folderbrowse "Parcourir">
 
-<!ENTITY exchWebServices.UserAvailability.label "Seul le status de disponibilité de l'utilsateur du calendrier de cette BAL sera visible.">
-
+<!ENTITY exchWebServices.UserAvailability.label "Seule la disponibilité de l’utilisateur du calendrier de cette boîte aux lettres sera visible.">
 
 <!ENTITY exchWebServices.exchtype.label "Infrastructure Exchange">
-<!ENTITY exchWebServices.hostexch.label "Infrastructure Exchange dédiée">
-<!ENTITY exchWebServices.365exch.label "Microsoft Office365">
+<!ENTITY exchWebServices.hostexch.label "Exchange en hébergement">
+<!ENTITY exchWebServices.365exch.label "Microsoft Office 365">
 <!ENTITY exchWebServices.detail.label "Détails">

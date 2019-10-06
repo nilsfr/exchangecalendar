@@ -35,20 +35,20 @@
  * ***** BEGIN LICENSE BLOCK *****/
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://exchangecommon/erAutoDiscover.js");
-Cu.import("resource://exchangecommon/erAutoDiscoverySOAP.js");
-Cu.import("resource://exchangecommon/erPrimarySMTPCheck.js");
-Cu.import("resource://exchangecommon/erConvertID.js");
-Cu.import("resource://exchangecommon/erFindFolder.js");
-Cu.import("resource://exchangecommon/erGetFolder.js");
-Cu.import("resource://exchangecommon/erGetUserAvailability.js");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://calendar/modules/calUtils.jsm");
+ChromeUtils.import("resource://exchangecommon/erAutoDiscover.js");
+ChromeUtils.import("resource://exchangecommon/erAutoDiscoverySOAP.js");
+ChromeUtils.import("resource://exchangecommon/erPrimarySMTPCheck.js");
+ChromeUtils.import("resource://exchangecommon/erConvertID.js");
+ChromeUtils.import("resource://exchangecommon/erFindFolder.js");
+ChromeUtils.import("resource://exchangecommon/erGetFolder.js");
+ChromeUtils.import("resource://exchangecommon/erGetUserAvailability.js");
+
+ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
 function exchSettingsOverlay(aDocument, aWindow) {
     this._document = aDocument;
@@ -416,10 +416,10 @@ exchSettingsOverlay.prototype = {
         case -30:
             break;
         case -6:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [this.exchWebServicesgServer], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [this.exchWebServicesgServer], "exchangecommon"));
             break;
         default:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecommon"));
         }
         this._document.getElementById("exchWebService_serverandmailboxcheckbutton").disabled = false;
         this.exchWebServicesCheckRequired();
@@ -437,7 +437,7 @@ exchSettingsOverlay.prototype = {
             this._document.getElementById("exchWebServices-SharedFolderID-label").value = aExchangeRequest.displayName;
         }
         else {
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecommon"));
         }
 
         this._document.getElementById("exchWebService_serverandmailboxcheckbutton").disabled = false;
@@ -453,10 +453,10 @@ exchSettingsOverlay.prototype = {
         case -30:
             break;
         case -6:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [this.exchWebServicesgServer], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [this.exchWebServicesgServer], "exchangecommon"));
             break;
         default:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecommon"));
         }
         this._document.getElementById("exchWebService_serverandmailboxcheckbutton").disabled = false;
         this.exchWebServicesCheckRequired();
@@ -485,7 +485,7 @@ exchSettingsOverlay.prototype = {
         case -30:
             break;
         case -6:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [this.exchWebServicesgServer], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [this.exchWebServicesgServer], "exchangecommon"));
             break;
         case -7:
         case -208: // folderNotFound. 
@@ -494,7 +494,7 @@ exchSettingsOverlay.prototype = {
         case -212:
             aMsg = aMsg + "(" + this.exchWebServicesgMailbox + ")";
         default:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecommon"));
         }
         this._document.getElementById("exchWebService_serverandmailboxcheckbutton").disabled = false;
         this.exchWebServicesCheckRequired();
@@ -506,7 +506,7 @@ exchSettingsOverlay.prototype = {
         this.globalFunctions.LOG("checkUserAvailability");
         var self = this;
 
-        var start = cal.now();
+        var start = cal.dtz.now();
         var offset = cal.createDuration();
         offset.hours = 10;
         var end = start.clone();
@@ -519,8 +519,8 @@ exchSettingsOverlay.prototype = {
                 folderBase: "calendar",
                 email: this.exchWebServicesgMailbox,
                 attendeeType: 'Required',
-                start: cal.toRFC3339(start),
-                end: cal.toRFC3339(end)
+                start: cal.dtz.toRFC3339(start),
+                end: cal.dtz.toRFC3339(end)
             },
             function (erGetUserAvailabilityRequest, aEvents) {
                 self.checkUserAvailabilityOk(erGetUserAvailabilityRequest, aEvents);
@@ -543,7 +543,7 @@ exchSettingsOverlay.prototype = {
         this.globalFunctions.LOG("checkUserAvailabilityError");
         this.gexchWebServicesDetailsChecked = false;
 
-        alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecalendar"));
+        alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerAndMailboxCheck", [aMsg, aCode], "exchangecommon"));
 
         this._document.getElementById("exchWebService_serverandmailboxcheckbutton").disabled = false;
         this.exchWebServicesCheckRequired();
@@ -602,10 +602,10 @@ exchSettingsOverlay.prototype = {
         case -30:
             break;
         case -6:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [this.exchWebServicesgServer], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheckURLInvalid", [this.exchWebServicesgServer], "exchangecommon"));
             break;
         default:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheck", [aMsg, aCode], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorServerCheck", [aMsg, aCode], "exchangecommon"));
         }
         this._document.getElementById("exchWebService_servercheckbutton").disabled = false;
 
@@ -674,10 +674,8 @@ exchSettingsOverlay.prototype = {
             }
             else {
                 // We only have one url. Use it.
-                //			selectedEWSUrl.value = ewsUrls.text();
                 selectedEWSUrl.value = ewsUrls[0].value;
             }
-
         }
 
         if (!userCancel) {
@@ -749,10 +747,10 @@ exchSettingsOverlay.prototype = {
         case -16:
         case -17:
         case -18:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorAutodiscoveryURLInvalid", [this.exchWebServicesgMailbox], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorAutodiscoveryURLInvalid", [this.exchWebServicesgMailbox], "exchangecommon"));
             break;
         default:
-            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorAutodiscovery", [aMsg, aCode], "exchangecalendar"));
+            alert(this.globalFunctions.getString("calExchangeCalendar", "ecErrorAutodiscovery", [aMsg, aCode], "exchangecommon"));
         }
 
         this._document.getElementById("exchWebService_autodiscovercheckbutton").disabled = false;
@@ -766,21 +764,27 @@ exchSettingsOverlay.prototype = {
             .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl." + aCalId + ".");
 
         if (exchWebServicesCalPrefs) {
-            this._document.getElementById("exchWebService_server").value = exchWebServicesCalPrefs.getCharPref("ecServer");
-            this._document.getElementById("exchWebService_windowsuser").value = exchWebServicesCalPrefs.getCharPref("ecUser");
+            this._document.getElementById("exchWebService_server").value =
+                exchWebServicesCalPrefs.getStringPref("ecServer");
+            this._document.getElementById("exchWebService_windowsuser").value =
+                exchWebServicesCalPrefs.getStringPref("ecUser");
             if (this._document.getElementById("exchWebService_windowsuser").value.indexOf("@") > -1) {
                 //this._document.getElementById("exchWebService_windowsdomain").setAttribute("required", false);
                 this._document.getElementById("exchWebService_windowsdomain").disabled = true;
             }
-            this._document.getElementById("exchWebService_windowsdomain").value = exchWebServicesCalPrefs.getCharPref("ecDomain");
-            this._document.getElementById("exchWebService_folderpath").value = exchWebServicesCalPrefs.getCharPref("ecFolderpath");
+            this._document.getElementById("exchWebService_windowsdomain").value =
+                exchWebServicesCalPrefs.getStringPref("ecDomain");
+            this._document.getElementById("exchWebService_folderpath").value =
+                exchWebServicesCalPrefs.getStringPref("ecFolderpath");
 
             for (var i = 0; i < this._document.getElementById("exchWebService_folderbase").itemCount; i++) {
-                if (this._document.getElementById("exchWebService_folderbase").getItemAtIndex(i).value == exchWebServicesCalPrefs.getCharPref("ecFolderbase")) {
+                if (this._document.getElementById("exchWebService_folderbase").getItemAtIndex(i).value ==
+                    exchWebServicesCalPrefs.getStringPref("ecFolderbase")) {
                     this._document.getElementById("exchWebService_folderbase").selectedIndex = i;
                 }
             }
-            this._document.getElementById("exchWebService_mailbox").value = exchWebServicesCalPrefs.getCharPref("ecMailbox");
+            this._document.getElementById("exchWebService_mailbox").value =
+                exchWebServicesCalPrefs.getStringPref("ecMailbox");
             if (this._document.getElementById("exchWebService_mailbox").value == "") {
                 this.exchWebServicesChangeFolderbaseMenuItemAvailability(true);
                 this._document.getElementById("menuitem.label.ecfolderbase.publicfoldersroot").disabled = false;
@@ -788,27 +792,27 @@ exchSettingsOverlay.prototype = {
 
 
 
-            this.exchWebServicesgServer = exchWebServicesCalPrefs.getCharPref("ecServer");
-            this.exchWebServicesgUser = exchWebServicesCalPrefs.getCharPref("ecUser");
-            this.exchWebServicesgDomain = exchWebServicesCalPrefs.getCharPref("ecDomain");
+            this.exchWebServicesgServer = exchWebServicesCalPrefs.getStringPref("ecServer");
+            this.exchWebServicesgUser = exchWebServicesCalPrefs.getStringPref("ecUser");
+            this.exchWebServicesgDomain = exchWebServicesCalPrefs.getStringPref("ecDomain");
 
-            this.exchWebServicesgFolderBase = exchWebServicesCalPrefs.getCharPref("ecFolderbase");
-            this.exchWebServicesgFolderPath = exchWebServicesCalPrefs.getCharPref("ecFolderpath");
-            this.exchWebServicesgMailbox = exchWebServicesCalPrefs.getCharPref("ecMailbox");
+            this.exchWebServicesgFolderBase = exchWebServicesCalPrefs.getStringPref("ecFolderbase");
+            this.exchWebServicesgFolderPath = exchWebServicesCalPrefs.getStringPref("ecFolderpath");
+            this.exchWebServicesgMailbox = exchWebServicesCalPrefs.getStringPref("ecMailbox");
             try {
-                this.exchWebServicesgFolderID = exchWebServicesCalPrefs.getCharPref("ecFolderID");
+                this.exchWebServicesgFolderID = exchWebServicesCalPrefs.getStringPref("ecFolderID");
             }
             catch (err) {
                 this.exchWebServicesgFolderID = "";
             }
             try {
-                this.exchWebServicesgChangeKey = exchWebServicesCalPrefs.getCharPref("ecChangeKey");
+                this.exchWebServicesgChangeKey = exchWebServicesCalPrefs.getStringPref("ecChangeKey");
             }
             catch (err) {
                 this.exchWebServicesgChangeKey = "";
             }
             try {
-                this.exchWebServicesgFolderIdOfShare = exchWebServicesCalPrefs.getCharPref("ecFolderIDOfShare");
+                this.exchWebServicesgFolderIdOfShare = exchWebServicesCalPrefs.getStringPref("ecFolderIDOfShare");
                 this._document.getElementById("exchWebService_folderidofshare").value = this.exchWebServicesgFolderIdOfShare;
             }
             catch (err) {
@@ -828,22 +832,22 @@ exchSettingsOverlay.prototype = {
             .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl." + aCalId + ".");
 
         if (exchWebServicesCalPrefs) {
-            exchWebServicesCalPrefs.setCharPref("ecServer", this.exchWebServicesgServer);
-            exchWebServicesCalPrefs.setCharPref("ecUser", this.exchWebServicesgUser);
-            exchWebServicesCalPrefs.setCharPref("ecDomain", this.exchWebServicesgDomain);
-            exchWebServicesCalPrefs.setCharPref("ecFolderpath", this.exchWebServicesgFolderPath);
-            exchWebServicesCalPrefs.setCharPref("ecFolderbase", this.exchWebServicesgFolderBase);
-            exchWebServicesCalPrefs.setCharPref("ecMailbox", this.exchWebServicesgMailbox);
+            exchWebServicesCalPrefs.setStringPref("ecServer", this.exchWebServicesgServer);
+            exchWebServicesCalPrefs.setStringPref("ecUser", this.exchWebServicesgUser);
+            exchWebServicesCalPrefs.setStringPref("ecDomain", this.exchWebServicesgDomain);
+            exchWebServicesCalPrefs.setStringPref("ecFolderpath", this.exchWebServicesgFolderPath);
+            exchWebServicesCalPrefs.setStringPref("ecFolderbase", this.exchWebServicesgFolderBase);
+            exchWebServicesCalPrefs.setStringPref("ecMailbox", this.exchWebServicesgMailbox);
         }
 
         if ((this.exchWebServicesgFolderPath == "/") && (this.exchWebServicesgFolderIdOfShare == "")) {
             this.exchWebServicesgFolderID = "";
             this.exchWebServicesgChangeKey = "";
         }
-        exchWebServicesCalPrefs.setCharPref("ecFolderID", this.exchWebServicesgFolderID);
-        exchWebServicesCalPrefs.setCharPref("ecChangeKey", this.exchWebServicesgChangeKey);
+        exchWebServicesCalPrefs.setStringPref("ecFolderID", this.exchWebServicesgFolderID);
+        exchWebServicesCalPrefs.setStringPref("ecChangeKey", this.exchWebServicesgChangeKey);
 
-        exchWebServicesCalPrefs.setCharPref("ecFolderIDOfShare", this.exchWebServicesgFolderIdOfShare);
+        exchWebServicesCalPrefs.setStringPref("ecFolderIDOfShare", this.exchWebServicesgFolderIdOfShare);
 
     },
 
@@ -890,51 +894,58 @@ exchSettingsOverlay.prototype = {
 
         if (exchWebServicesCalPrefs) {
 
-            this._document.getElementById("exchWebService_contact_description").value = exchWebServicesCalPrefs.getCharPref("description");
-            this._document.getElementById("exchWebService_mailbox").value = exchWebServicesCalPrefs.getCharPref("mailbox");
+            this._document.getElementById("exchWebService_contact_description").value =
+                exchWebServicesCalPrefs.getStringPref("description");
+            this._document.getElementById("exchWebService_mailbox").value =
+                exchWebServicesCalPrefs.getStringPref("mailbox");
             if (this._document.getElementById("exchWebService_mailbox").value == "") {
                 this.exchWebServicesChangeFolderbaseMenuItemAvailability(true);
                 this._document.getElementById("menuitem.label.ecfolderbase.publicfoldersroot").disabled = false;
             }
 
-            this._document.getElementById("exchWebService_server").value = exchWebServicesCalPrefs.getCharPref("server");
-            this._document.getElementById("exchWebService_windowsuser").value = exchWebServicesCalPrefs.getCharPref("user");
+            this._document.getElementById("exchWebService_server").value =
+                exchWebServicesCalPrefs.getStringPref("server");
+            this._document.getElementById("exchWebService_windowsuser").value =
+                exchWebServicesCalPrefs.getStringPref("user");
             if (this._document.getElementById("exchWebService_windowsuser").value.indexOf("@") > -1) {
                 //this._document.getElementById("exchWebService_windowsdomain").setAttribute("required", false);
                 this._document.getElementById("exchWebService_windowsdomain").disabled = true;
             }
-            this._document.getElementById("exchWebService_windowsdomain").value = exchWebServicesCalPrefs.getCharPref("domain");
+            this._document.getElementById("exchWebService_windowsdomain").value =
+                exchWebServicesCalPrefs.getStringPref("domain");
 
-            this._document.getElementById("exchWebService_folderpath").value = exchWebServicesCalPrefs.getCharPref("folderpath");
+            this._document.getElementById("exchWebService_folderpath").value =
+                exchWebServicesCalPrefs.getStringPref("folderpath");
 
             for (var i = 0; i < this._document.getElementById("exchWebService_folderbase").itemCount; i++) {
-                if (this._document.getElementById("exchWebService_folderbase").getItemAtIndex(i).value == exchWebServicesCalPrefs.getCharPref("folderbase")) {
+                if (this._document.getElementById("exchWebService_folderbase").getItemAtIndex(i).value ==
+                    exchWebServicesCalPrefs.getStringPref("folderbase")) {
                     this._document.getElementById("exchWebService_folderbase").selectedIndex = i;
                     break;
                 }
             }
 
-            this.exchWebServicesgServer = exchWebServicesCalPrefs.getCharPref("server");
-            this.exchWebServicesgUser = exchWebServicesCalPrefs.getCharPref("user");
-            this.exchWebServicesgDomain = exchWebServicesCalPrefs.getCharPref("domain");
+            this.exchWebServicesgServer = exchWebServicesCalPrefs.getStringPref("server");
+            this.exchWebServicesgUser = exchWebServicesCalPrefs.getStringPref("user");
+            this.exchWebServicesgDomain = exchWebServicesCalPrefs.getStringPref("domain");
 
-            this.exchWebServicesgFolderBase = exchWebServicesCalPrefs.getCharPref("folderbase");
-            this.exchWebServicesgFolderPath = exchWebServicesCalPrefs.getCharPref("folderpath");
-            this.exchWebServicesgMailbox = exchWebServicesCalPrefs.getCharPref("mailbox");
+            this.exchWebServicesgFolderBase = exchWebServicesCalPrefs.getStringPref("folderbase");
+            this.exchWebServicesgFolderPath = exchWebServicesCalPrefs.getStringPref("folderpath");
+            this.exchWebServicesgMailbox = exchWebServicesCalPrefs.getStringPref("mailbox");
             try {
-                this.exchWebServicesgFolderID = exchWebServicesCalPrefs.getCharPref("folderid");
+                this.exchWebServicesgFolderID = exchWebServicesCalPrefs.getStringPref("folderid");
             }
             catch (err) {
                 this.exchWebServicesgFolderID = "";
             }
             try {
-                this.exchWebServicesgChangeKey = exchWebServicesCalPrefs.getCharPref("changekey");
+                this.exchWebServicesgChangeKey = exchWebServicesCalPrefs.getStringPref("changekey");
             }
             catch (err) {
                 this.exchWebServicesgChangeKey = "";
             }
             try {
-                this.exchWebServicesgFolderIdOfShare = exchWebServicesCalPrefs.getCharPref("folderIDOfShare");
+                this.exchWebServicesgFolderIdOfShare = exchWebServicesCalPrefs.getStringPref("folderIDOfShare");
                 this._document.getElementById("exchWebService_folderidofshare").value = this.exchWebServicesgFolderIdOfShare;
             }
             catch (err) {
@@ -957,14 +968,17 @@ exchSettingsOverlay.prototype = {
         }
 
         if ((exchWebServicesCalPrefs) && (!isNewDirectory)) {
-            exchWebServicesCalPrefs.setCharPref("description", this._document.getElementById("exchWebService_contact_description").value);
-            exchWebServicesCalPrefs.setCharPref("server", this.exchWebServicesgServer);
-            exchWebServicesCalPrefs.setCharPref("user", this.exchWebServicesgUser);
-            exchWebServicesCalPrefs.setCharPref("domain", this.exchWebServicesgDomain);
-            exchWebServicesCalPrefs.setCharPref("folderpath", this.exchWebServicesgFolderPath);
+            exchWebServicesCalPrefs.setStringPref(
+                "description",
+                this._document.getElementById("exchWebService_contact_description").value
+            );
+            exchWebServicesCalPrefs.setStringPref("server", this.exchWebServicesgServer);
+            exchWebServicesCalPrefs.setStringPref("user", this.exchWebServicesgUser);
+            exchWebServicesCalPrefs.setStringPref("domain", this.exchWebServicesgDomain);
+            exchWebServicesCalPrefs.setStringPref("folderpath", this.exchWebServicesgFolderPath);
             this.globalFunctions.LOG("exchWebServicesSaveExchangeSettingsByContactUUID: folderbase:" + this.exchWebServicesgFolderBase);
-            exchWebServicesCalPrefs.setCharPref("folderbase", this.exchWebServicesgFolderBase);
-            exchWebServicesCalPrefs.setCharPref("mailbox", this.exchWebServicesgMailbox);
+            exchWebServicesCalPrefs.setStringPref("folderbase", this.exchWebServicesgFolderBase);
+            exchWebServicesCalPrefs.setStringPref("mailbox", this.exchWebServicesgMailbox);
         }
 
         if (this.exchWebServicesgFolderPath == "/") {
@@ -973,9 +987,9 @@ exchSettingsOverlay.prototype = {
         }
 
         if (!isNewDirectory) {
-            exchWebServicesCalPrefs.setCharPref("folderid", this.exchWebServicesgFolderID);
-            exchWebServicesCalPrefs.setCharPref("changekey", this.exchWebServicesgChangeKey);
-            exchWebServicesCalPrefs.setCharPref("folderIDOfShare", this.exchWebServicesgFolderIdOfShare);
+            exchWebServicesCalPrefs.setStringPref("folderid", this.exchWebServicesgFolderID);
+            exchWebServicesCalPrefs.setStringPref("changekey", this.exchWebServicesgChangeKey);
+            exchWebServicesCalPrefs.setStringPref("folderIDOfShare", this.exchWebServicesgFolderIdOfShare);
         }
 
         return {

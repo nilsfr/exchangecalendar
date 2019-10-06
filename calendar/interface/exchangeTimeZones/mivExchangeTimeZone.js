@@ -20,16 +20,16 @@
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://calendar/modules/calProviderUtils.jsm");
+ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
-Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
+ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 function mivExchangeTimeZone() {
     this._timeZone = null;
@@ -68,7 +68,6 @@ mivExchangeTimeZone.prototype = {
     classID: components.ID("{" + mivExchangeTimeZoneGUID + "}"),
     contractID: "@1st-setup.nl/exchange/timezone;1",
     flags: Ci.nsIClassInfo.THREADSAFE,
-    implementationLanguage: Ci.nsIProgrammingLanguage.JAVASCRIPT,
 
     // void getInterfaces(out PRUint32 count, [array, size_is(count), retval] out nsIIDPtr array);
     getInterfaces: function _getInterfaces(count) {
@@ -129,7 +128,7 @@ mivExchangeTimeZone.prototype = {
             return null;
         }
         if (!aDate) {
-            aDate = cal.now();
+            aDate = cal.dtz.now();
         }
         var indexDateStr = this.dateTimeToStrExchange(aDate);
 
@@ -145,11 +144,13 @@ mivExchangeTimeZone.prototype = {
         var absoluteDateTransitions = xml2json.XPath(aValue, "/t:Transitions/t:AbsoluteDateTransition");
         var lastDate = "1900-01-01T00:00:00";
         var transitionIndex = 0;
-        for each(var absoluteDateTransition in absoluteDateTransitions) {
-            var newDate = xml2json.getTagValue(absoluteDateTransition, "t:DateTime", lastDate);
-            if ((newDate >= lastDate) && (newDate <= indexDateStr)) {
-                lastDate = xml2json.getTagValue(absoluteDateTransition, "t:DateTime", lastDate);
-                transitionIndex = xml2json.getTagValue(absoluteDateTransition, "t:To", 0);
+        if (absoluteDateTransitions) {
+            for (var absoluteDateTransition of Object.values(absoluteDateTransitions)) {
+                var newDate = xml2json.getTagValue(absoluteDateTransition, "t:DateTime", lastDate);
+                if ((newDate >= lastDate) && (newDate <= indexDateStr)) {
+                    lastDate = xml2json.getTagValue(absoluteDateTransition, "t:DateTime", lastDate);
+                    transitionIndex = xml2json.getTagValue(absoluteDateTransition, "t:To", 0);
+                }
             }
         }
         absoluteDateTransitions = null;
@@ -162,14 +163,16 @@ mivExchangeTimeZone.prototype = {
         // Get Standard and Daylight transitionId's
         var standardTransition = null;
         var daylightTransition = null;
-        for each(var transition in transitions) {
-            var tmpId = xml2json.getTagValue(transition, "t:To", "");
-            if (tmpId.indexOf("-Standard") >= 0) {
-                standardTransition = transition;
-            }
-            else {
-                if (tmpId.indexOf("-Daylight") >= 0) {
-                    daylightTransition = transition;
+        if (transitions) {
+            for (var transition of Object.values(transitions)) {
+                var tmpId = xml2json.getTagValue(transition, "t:To", "");
+                if (tmpId.indexOf("-Standard") >= 0) {
+                    standardTransition = transition;
+                }
+                else {
+                    if (tmpId.indexOf("-Daylight") >= 0) {
+                        daylightTransition = transition;
+                    }
                 }
             }
         }
@@ -229,7 +232,7 @@ mivExchangeTimeZone.prototype = {
         }
 
         if (!aDate) {
-            aDate = cal.now();
+            aDate = cal.dtz.now();
         }
         var indexDateStr = this.dateTimeToStrCal(aDate);
 
@@ -238,7 +241,7 @@ mivExchangeTimeZone.prototype = {
         var tmpNames = aValue.tzid.split("/");
 
         this._names = new Array();
-        for each(var name in tmpNames) {
+        for (var name of tmpNames) {
                 this._names.push(name);
             }
             //dump(" setCalTimezone: this._names:"+this._names+"\n");

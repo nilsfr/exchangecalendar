@@ -1,6 +1,6 @@
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 
 
 function lightningTimzone(aDocument, aWindow) {
@@ -17,13 +17,13 @@ function lightningTimzone(aDocument, aWindow) {
 lightningTimzone.prototype = {
     onload: function _onload() {
         this.resetTimezone = this.globalFunctions.safeGetBoolPref(this.prefs, "calendar.timezone.local.auto");
-        var timezone = this.globalFunctions.safeGetCharPref(this.prefs, "calendar.timezone.local");
+        var timezone = this.globalFunctions.safeGetStringPref(this.prefs, "calendar.timezone.local");
         if (timezone) {
             try {
                 if (this.resetTimezone == true) {
                     var self = this;
                     setTimeout(function () {
-                            self.prefs.setCharPref("calendar.timezone.local", "");
+                            self.prefs.setStringPref("calendar.timezone.local", "");
                             self.infoPopup("Timezone Information", "System timezone changed and set to lightning automatically!");
                             self.globalFunctions.LOG("lightningTimzone : Timzone Changed");
                         },
@@ -31,7 +31,7 @@ lightningTimzone.prototype = {
                 }
             }
             catch (e) {
-                this.prefs.setCharPref("calendar.timezone.local", timezone);
+                this.prefs.setStringPref("calendar.timezone.local", timezone);
             }
         }
 
@@ -51,7 +51,7 @@ lightningTimzone.prototype = {
                 currentOffset = nowdate.getTimezoneOffset();
 
                 if (oldOffset != currentOffset && oldOffset != undefined && currentOffset != undefined) {
-                    self.prefs.setCharPref("calendar.timezone.local", "");
+                    self.prefs.setStringPref("calendar.timezone.local", "");
                     self.globalFunctions.LOG("lightningTimzone : Timzone Changed");
                 }
                 oldOffset = currentOffset;

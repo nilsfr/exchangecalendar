@@ -34,17 +34,17 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 
-var Cu = Components.utils;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource://exchangecommon/ecExchangeRequest.js");
-Cu.import("resource://exchangecommon/soapFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 
-Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
+ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
+ChromeUtils.import("resource://exchangecommon/soapFunctions.js");
+
+ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 const MAPI_PidLidTaskAccepted = "33032";
 const MAPI_PidLidTaskLastUpdate = "33045";
@@ -179,11 +179,15 @@ erGetMeetingRequestByUIDRequest.prototype = {
         var includesLastItemInRange = xml2json.getAttribute(rootFolder[0], "IncludesLastItemInRange", "true");
 
         var aMeetingRequests = [];
-        for each(var tmpItem in xml2json.XPath(rootFolder[0], "/t:Items/*")) {
-            if (xml2json.getTagValue(tmpItem, "t:UID") == this.argument.uid) {
-                aMeetingRequests.push(tmpItem);
+        var tmpItem_result = xml2json.XPath(rootFolder[0], "/t:Items/*");
+        if (tmpItem_result) {
+            for (var tmpItem of Object.values(tmpItem_result)) {
+                if (xml2json.getTagValue(tmpItem, "t:UID") == this.argument.uid) {
+                    aMeetingRequests.push(tmpItem);
+                }
             }
         }
+        tmpItem_result = null;
         rootFolder = null;
 
         if (this.mCbOk) {

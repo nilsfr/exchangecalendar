@@ -1,8 +1,8 @@
-<!ENTITY label.acceptbutton "Select">
-<!ENTITY label.cancelbutton "Cancel">
+<!ENTITY label.acceptbutton "Vybrať">
+<!ENTITY label.cancelbutton "Zrušiť">
 
-<!ENTITY description.selectews "Choose an EWS server from the list which is suitable for your current location.">
-<!ENTITY label.selectews "EWS server list:">
+<!ENTITY description.selectews "Zo zoznamu vyberte EWS server, ktorý je vhodný pre vaše aktuálne umiestnenie.">
+<!ENTITY label.selectews "Zoznam serverov EWS:">
 
 
 

@@ -38,15 +38,15 @@
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://exchangecommon/ecFunctions.js");
-Cu.import("resource://exchangecommon/ecExchangeRequest.js");
-Cu.import("resource://exchangecommon/soapFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
+ChromeUtils.import("resource://exchangecommon/soapFunctions.js");
 
-Cu.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
+ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 var EXPORTED_SYMBOLS = ["erGetItemsRequest"];
 
@@ -402,18 +402,20 @@ erGetItemsRequest.prototype = {
         */
 
         var itemids = xml2json.addTag(req, "ItemIds", "nsMessages", null);
-        for each(var item in this.ids) {
-            var itemId = xml2json.addTag(itemids, "ItemId", "nsTypes", null);
-            xml2json.setAttribute(itemId, "Id", item.Id);
-            this.requestedItemId.push(item.Id);
-            if (item.ChangeKey) {
-                xml2json.setAttribute(itemId, "ChangeKey", item.ChangeKey);
+        if (this.ids) {
+            for (var item of Object.values(this.ids)) {
+                var itemId = xml2json.addTag(itemids, "ItemId", "nsTypes", null);
+                xml2json.setAttribute(itemId, "Id", item.Id);
+                this.requestedItemId.push(item.Id);
+                if (item.ChangeKey) {
+                    xml2json.setAttribute(itemId, "ChangeKey", item.ChangeKey);
+                }
+                if (item.index) {
+                    //exchWebService.commonFunctions.LOG("erGetTaskItemsRequest.execute. We have an index.");
+                    this.argument.occurrenceIndexes[item.Id] = item.index;
+                }
+                itemId = null;
             }
-            if (item.index) {
-                //exchWebService.commonFunctions.LOG("erGetTaskItemsRequest.execute. We have an index.");
-                this.argument.occurrenceIndexes[item.Id] = item.index;
-            }
-            itemId = null;
         }
         itemids = null;
 

@@ -35,14 +35,14 @@
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
 
-Cu.import("resource://gre/modules/Services.jsm");
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
-Cu.import("resource://exchangecommon/ecFunctions.js");
-Cu.import("resource://exchangecommon/ecExchangeRequest.js");
-Cu.import("resource://exchangecommon/erForewardItem.js");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
+ChromeUtils.import("resource://exchangecommon/erForewardItem.js");
 
 
 //if (! exchWebService) var exchWebService = {};
@@ -154,12 +154,14 @@ exchEventSummaryDialog.prototype = {
         var attendees = item.getAttendees({});
         var optionalAttendeeList = new Array();
         var requiredAttendeeList = new Array();
-        for each(var attendee in attendees) {
-            if (attendee.role == "OPT-PARTICIPANT") {
-                optionalAttendeeList.push(attendee);
-            }
-            else {
-                requiredAttendeeList.push(attendee);
+        if (attendees) {
+            for (var attendee of Object.values(attendees)) {
+                if (attendee.role == "OPT-PARTICIPANT") {
+                    optionalAttendeeList.push(attendee);
+                }
+                else {
+                    requiredAttendeeList.push(attendee);
+                }
             }
         }
 
@@ -201,7 +203,8 @@ exchEventSummaryDialog.prototype = {
         var list = listbox.getElementsByTagName("listitem");
         var page = 0;
         var line = 0;
-        for each(var attendee in attendees) {
+        if (attendees) {
+            for (var attendee of Object.values(attendees)) {
                 var itemNode = list[line];
                 var listcell = itemNode.getElementsByTagName("listcell")[page];
                 if (attendee.commonName && attendee.commonName.length) {
@@ -221,6 +224,7 @@ exchEventSummaryDialog.prototype = {
                 }
 
             } //end of for
+        }
 
     },
 
@@ -258,9 +262,10 @@ exchEventSummaryDialog.prototype = {
 
         var self = this;
         var tmpObject = new erForewardItemRequest({
-                user: this.globalFunctions.safeGetCharPref(calPrefs, "ecDomain") + "\\" + this.globalFunctions.safeGetCharPref(calPrefs, "ecUser"),
-                mailbox: this.globalFunctions.safeGetCharPref(calPrefs, "ecMailbox"),
-                serverUrl: this.globalFunctions.safeGetCharPref(calPrefs, "ecServer"),
+                user: this.globalFunctions.safeGetStringPref(calPrefs, "ecDomain") + "\\" +
+                    this.globalFunctions.safeGetStringPref(calPrefs, "ecUser"),
+                mailbox: this.globalFunctions.safeGetStringPref(calPrefs, "ecMailbox"),
+                serverUrl: this.globalFunctions.safeGetStringPref(calPrefs, "ecServer"),
                 item: item,
                 attendees: attendee
             },
@@ -374,9 +379,9 @@ exchEventSummaryDialog.prototype = {
     loadInlineAttachment: function _loadInLineAttachment(aAttachmentId, aCalendarId, inlineCount) {
         var prefs = "extensions.exchangecalendar@extensions.1st-setup.nl." + aCalendarId + ".";
 
-        var serverUrl = this.globalFunctions.safeGetCharPref(null, prefs + "ecServer", "");
-        var username = this.globalFunctions.safeGetCharPref(null, prefs + "ecUser", "");
-        var domain = this.globalFunctions.safeGetCharPref(null, prefs + "ecDomain", "");
+        var serverUrl = this.globalFunctions.safeGetStringPref(null, prefs + "ecServer", "");
+        var username = this.globalFunctions.safeGetStringPref(null, prefs + "ecUser", "");
+        var domain = this.globalFunctions.safeGetStringPref(null, prefs + "ecDomain", "");
         if (username.indexOf("@") == -1) {
             if (domain != "") {
                 username = domain + "\\" + username;
@@ -449,7 +454,7 @@ exchEventSummaryDialog.prototype = {
         //dump("this.inlineImages.length:"+this.inlineImages.length+"\n");
 
         if (aAttachments.length > 0) {
-            for (var index in aAttachments) {
+            for (var index of aAttachments) {
                 if (aAttachments[index].contentId) {
                     // Find the image this attachment is for.
                     for (var i = 0; i < this.inlineImages.length; i++) {
@@ -548,7 +553,7 @@ exchEventSummaryDialog.prototype = {
             if (calendar.getProperty("exchWebService.offlineOrNotConnected")) {
                 var tmpArray = tmpButtons.split(",");
                 var newArray = [];
-                for (var index in tmpArray) {
+                for (var index of tmpArray) {
                     if (tmpArray[index] != "extra1") {
                         newArray.push(tmpArray[index]);
                     }
@@ -670,7 +675,7 @@ exchEventSummaryDialog.prototype = {
             if (extProtService.isExposedProtocol(scheme)) {
                 var ioService = Cc["@mozilla.org/network/io-service;1"]
                     .getService(Ci.nsIIOService);
-                extProtService.loadUrl(ioService.newURI(href, null, null));
+                extProtService.loadURI(ioService.newURI(href, null, null));
             }
         }
         catch (ex) {
@@ -683,8 +688,10 @@ exchEventSummaryDialog.prototype = {
 
     unLoad: function _unLoad(aEvent) {
         //dump("unLoading window:"+aEvent.type+"\n");
-        for each(var cachedImage in this.imageCache) {
-            cachedImage.remove(false);
+        if (this.imageCache) {
+            for (var cachedImage of Object.values(this.imageCache)) {
+                cachedImage.remove(false);
+            }
         }
     },
 }

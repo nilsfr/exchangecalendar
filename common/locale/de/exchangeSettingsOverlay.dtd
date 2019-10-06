@@ -1,4 +1,4 @@
-<!ENTITY ecautodiscover "Exchanges Autodiscovery-Funktion nutzen.">
+<!ENTITY ecautodiscover "Exchange Autodiscovery-Funktion nutzen">
 <!ENTITY ecfolderbase.label "Hauptordner:">
 <!ENTITY ecfolderpath.label "Pfad unterhalb des Hauptordners:">
 <!ENTITY ecfolderidofshare.label "Freigabeordner-ID:">
@@ -38,6 +38,7 @@
 <!ENTITY button.label.serverandmailboxcheck "Server und Postfach prüfen">
 <!ENTITY button.label.servercheck "Server und Konto prüfen">
 
+<!ENTITY ecmailbox.server_url.label "Server-URL:">
 <!ENTITY ecmailbox.label "Postfachname:">
 <!ENTITY ecmailbox.tooltip "Wenn Sie kein Postfach angeben, können Sie nur auf die öffentlichen Ordner zugreifen.">
 <!ENTITY ecwindowsuser.label "Benutzername:">

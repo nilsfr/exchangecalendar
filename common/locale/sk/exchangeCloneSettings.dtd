@@ -1,6 +1,4 @@
-<!ENTITY label.acceptbutton "Save">
-<!ENTITY label.cancelbutton "Cancel">
+<!ENTITY label.acceptbutton "Uložiť">
+<!ENTITY label.cancelbutton "Zrušiť">
 
-<!ENTITY label.ecExchangeSettings.title "New description:">
-
-
+<!ENTITY label.ecExchangeSettings.title "Calendar name:">

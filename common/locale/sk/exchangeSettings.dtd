@@ -1,54 +1,54 @@
-<!ENTITY label.acceptbutton "Save and reset">
-<!ENTITY label.cancelbutton "Cancel">
-<!ENTITY ecsettings.title "EWS calendar and mail settings">
-<!ENTITY ecsettings.tab.adsettings "Exchange/Windows AD">
-<!ENTITY ecsettings.tab.meetingrequestsettings "Meeting requests">
-<!ENTITY ecsettings.tab.calendarfolderproperties "Folder properties">
+<!ENTITY label.acceptbutton "Uložiť a nastaviť">
+<!ENTITY label.cancelbutton "Zrušiť">
+<!ENTITY ecsettings.title "Nastavenia kalendára a e-mailu EWS">
+<!ENTITY ecsettings.tab.adsettings "Exchange / Windows AD">
+<!ENTITY ecsettings.tab.meetingrequestsettings "Požiadavky na stretnutie">
+<!ENTITY ecsettings.tab.calendarfolderproperties "Vlastnosti priečinka">
 
-<!ENTITY label.ecExchangeSettings.title "Settings for calendar:">
+<!ENTITY label.ecExchangeSettings.title "Nastavenia pre kalendár:">
 
-<!ENTITY label.poll.inbox "Poll inbox for requests, changes and cancellations.">
-<!ENTITY label.poll.inbox.interval "Frequency (in seconds) to poll inbox:">
-<!ENTITY label.poll.calendar.interval "Frequency (in seconds) to poll calendar:">
+<!ENTITY label.poll.inbox "Dopytovať inbox na požiadavky, zmeny a zrušenia.">
+<!ENTITY label.poll.inbox.interval "Frekvencia (v sekundách) na dopytovanie inboxu:">
+<!ENTITY label.poll.calendar.interval "Frekvencia (v sekundách) na dopytovanie kalendára:">
 
-<!ENTITY label.nomeetingrequestsettings "You cannot set a meeting request because you did not select the main calendar for the mailbox">
+<!ENTITY label.nomeetingrequestsettings "Nemôžete zadať požiadavku na stretnutie, lebo ste nezvolili hlavný kalendár pre tento e-mailový účet.">
 
-<!ENTITY label.autorespond.meetingrequest "Automatically respond to a new invitation with ">
+<!ENTITY label.autorespond.meetingrequest "Automaticky odpovedať na novú pozvánku s">
 
-<!ENTITY menuitem.label.ec-autorespond-answer.tentative "I might attend">
-<!ENTITY menuitem.label.ec-autorespond-answer.accepted "I will attend">
-<!ENTITY menuitem.label.ec-autorespond-answer.declined "I will not attend">
+<!ENTITY menuitem.label.ec-autorespond-answer.tentative "Možno sa zúčastním">
+<!ENTITY menuitem.label.ec-autorespond-answer.accepted "Zúčastním sa">
+<!ENTITY menuitem.label.ec-autorespond-answer.declined "Nezúčastním sa">
 
-<!ENTITY label.autoremove.invitation_cancellation1 "Automatically remove the invitation and accompanying cancelation message if you did not yet respond to the invitation request.">
-<!ENTITY label.autoremove.invitation_cancellation2 "Automatically remove a confirmed invitation when you receive a cancelation message.">
+<!ENTITY label.autoremove.invitation_cancellation1 "Autovaticky odstrániť pozvánku a sprievodnú správu o zrušení, ak ste ešte na požiadavku na pozvánku neodpovedali.">
+<!ENTITY label.autoremove.invitation_cancellation2 "Automaticky odstrániť potvrdenú pozvánku keď bude prijatá správa o jej zrušení.">
 
-<!ENTITY label.autoremove.invitation_response1 "Automatically remove a response from others to a meeting invitation of which you are not the organizer.">
+<!ENTITY label.autoremove.invitation_response1 "Automaticky odstrániť odpoveď od iných na pozvánku na stretnutie, ak nie ste jej organizátor.">
 
-<!ENTITY label.doautorespond.meetingrequest.message "Send the following message with responses instead of asking for a message.">
-<!ENTITY label.autorespond.meetingrequest.message "Your message:">
+<!ENTITY label.doautorespond.meetingrequest.message "Odoslať nasledovnú správu s odpoveďami namiesto pýtania sa na správu.">
+<!ENTITY label.autorespond.meetingrequest.message "Vaša správa:">
 
-<!ENTITY treecol.label.userid "User ID">
-<!ENTITY treecol.label.email "Email">
+<!ENTITY treecol.label.userid "ID používateľa">
+<!ENTITY treecol.label.email "E-mail">
 
 
-<!ENTITY ecsettings.tab.offlineCachingproperties "Offline caching">
+<!ENTITY ecsettings.tab.offlineCachingproperties "Medzipamäť pre stav odpojenia ">
 
-<!ENTITY label.offlineCacheproperties.cachingStartDate "Start date of caching:">
-<!ENTITY label.offlineCacheproperties.cachingEndDate "End date of caching:">
-<!ENTITY label.offlineCacheproperties.totalEvents "Total number of events cached:">
-<!ENTITY label.offlineCacheproperties.totalTasks "Total number of tasks cached:">
+<!ENTITY label.offlineCacheproperties.cachingStartDate "Počiatočný dátum ukladania:">
+<!ENTITY label.offlineCacheproperties.cachingEndDate "Koncový dátum ukladania:">
+<!ENTITY label.offlineCacheproperties.totalEvents "Celkový počet uložených udalostí:">
+<!ENTITY label.offlineCacheproperties.totalTasks "Celkový počet uložených úloh:">
 
-<!ENTITY label.offlineCacheproperties.monthsBeforeStartDate "Number of months to cache items prior to today:">
-<!ENTITY label.offlineCacheproperties.monthsBeforeEndDate "Number of months to cache items after today:">
+<!ENTITY label.offlineCacheproperties.monthsBeforeStartDate "Počet mesiacov na ukladanie položiek pred dneškom:">
+<!ENTITY label.offlineCacheproperties.monthsBeforeEndDate "Počet mesiacov na ukladanie položiek po dnešku:">
 
-<!ENTITY button.offlineCacheproperties.clearCache "Clear offline cached data">
-<!ENTITY ecsettings.tab.autoprocessingproperties "Automatic processing">
-<!ENTITY ecsettings.tab.mailitemsProperties "EWS settings (mail)">
+<!ENTITY button.offlineCacheproperties.clearCache "Vyčistiť údaje medzipamäte pre stav odpojenia">
+<!ENTITY ecsettings.tab.autoprocessingproperties "Automatické spracovanie">
+<!ENTITY ecsettings.tab.mailitemsProperties "Nastavenia EWS (e-mail)">
 
-<!ENTITY label.syncmailitems.interval "Delay syncing mail items (tags, etc.)">
-<!ENTITY label.autoprocessingproperties.deletecancelleditems "Automatically remove canceled events">
-<!ENTITY label.autoprocessingproperties.markeventtentative "Automatically mark event as tentative and send response to organizer">
-<!ENTITY label.syncmailitems.active "Keep enabled syncing mail items (tags, etc.)">
+<!ENTITY label.syncmailitems.interval "Pozdržať synchronizáciu položiek e-mailu (značky, atď.)">
+<!ENTITY label.autoprocessingproperties.deletecancelleditems "Automaticky odstrániť zrušené udalosti">
+<!ENTITY label.autoprocessingproperties.markeventtentative "Automaticky označiť udalosť ako neistú a odoslať odpoveď organizátorovi">
+<!ENTITY label.syncmailitems.active "Ponechať povolené položky e-mailov (značky, atď)">
 
-<!ENTITY label.syncfollowup.deactivtate "Disable followup task">
+<!ENTITY label.syncfollowup.deactivtate "Zakázať nadväzujúcu úlohu">
  

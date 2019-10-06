@@ -22,18 +22,18 @@
  * ***** BEGIN LICENSE BLOCK *****/
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
+
 var Cr = Components.results;
 var components = Components;
 
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
+ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-Cu.import("resource:///modules/mailServices.js");
+ChromeUtils.import("resource:///modules/mailServices.js");
 
-Cu.import("resource://exchangecommon/ecFunctions.js");
-Cu.import("resource://exchangeaddress/exchangeAbFunctions.js");
-Cu.import("resource://exchangecommon/erGetAttachments.js");
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("resource://exchangeaddress/exchangeAbFunctions.js");
+ChromeUtils.import("resource://exchangecommon/erGetAttachments.js");
 
 var photoHandlerInline = {
     onLoad: function _onLoad(aCard, aDocument) {
@@ -63,7 +63,7 @@ var photoHandlerExternal = {
     onShow: function _onShow(aCard, aDocument, aTargetID) {
         if ((aCard) && (aCard.getProperty("PhotoData", ""))) {
             this.downloadAttachment(aDocument.getElementById(aTargetID), aCard);
-            aDocument.getElementById(aTargetID).setAttribute("src", "chrome://exchangecontacts/content/loading-from-server.png");
+            aDocument.getElementById(aTargetID).setAttribute("src", "chrome://exchangecommon-common/skin/images/loading-from-server.png");
             return true;
         }
         else {
@@ -108,7 +108,7 @@ var photoHandlerExternal = {
 
     onDownloadAttachmentError: function _onDownloadAttachmentError(aExchangeRequest, aCode, aMsg) {
         //dump("photoHandlerExternal.onDownloadAttachmentError: aCode:"+aCode+", aMsg:"+aMsg+"\n");
-        aExchangeRequest.argument.img.setAttribute("src", "chrome://exchangecontacts/content/error-loading-from-server.png");
+        aExchangeRequest.argument.img.setAttribute("src", "chrome://exchangecommon-common/skin/images/error-loading-from-server.png");
     },
 
 }

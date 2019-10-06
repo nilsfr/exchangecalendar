@@ -25,12 +25,11 @@
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var Cu = Components.utils;
 
 
-Cu.import("resource://exchangecommon/ecFunctions.js");
-Cu.import("chrome://exchangecommon/content/msgHdrUtils.js");
-Cu.import("resource:///modules/gloda/utils.js");
+
+ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+ChromeUtils.import("chrome://exchangecommon/content/msgHdrUtils.js");
 
 if (!exchWebService) var exchWebService = {};
 
