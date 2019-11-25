@@ -24,7 +24,6 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 function mivExchangeAbCard() {
@@ -32,8 +31,7 @@ function mivExchangeAbCard() {
     this._abCard = Cc["@mozilla.org/addressbook/cardproperty;1"]
         .createInstance(Ci.nsIAbCard);
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
     this._readOnly = false;
 
@@ -52,10 +50,6 @@ mivExchangeAbCard.prototype = {
       in nsIIDRef uuid,
       [iid_is(uuid),retval] out nsQIResult result
     );	 */
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivExchangeAbCard,
-        Ci.nsIAbItem,
-        Ci.nsISupports
-    ]),
 
     // Attributes from nsIClassInfo
 
@@ -547,23 +541,4 @@ mivExchangeAbCard.prototype = {
         }
     },
 
-}
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivExchangeAbCard) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivExchangeAbCard = XPCOMUtils.generateNSGetFactory([mivExchangeAbCard]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mivExchangeAbCard(cid);
 }

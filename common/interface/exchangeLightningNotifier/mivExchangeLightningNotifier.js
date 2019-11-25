@@ -24,7 +24,6 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
@@ -37,8 +36,7 @@ function mivExchangeLightningNotifier() {
     this.observerService = Cc["@mozilla.org/observer-service;1"]
         .getService(Ci.nsIObserverService);
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
 }
 
@@ -49,9 +47,6 @@ var mivExchangeLightningNotifierGUID = "3b2d58f7-9528-44cf-8cd7-865dc209590c";
 mivExchangeLightningNotifier.prototype = {
 
     // methods from nsISupport
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivExchangeLightningNotifier,
-        Ci.nsISupports
-    ]),
 
     // Attributes from nsIClassInfo
     classDescription: "Load balancer in sending observer notify request to Lightning.",
@@ -99,23 +94,4 @@ mivExchangeLightningNotifier.prototype = {
         }
     },
 
-}
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivExchangeLightningNotifier) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivExchangeLightningNotifier = XPCOMUtils.generateNSGetFactory([mivExchangeLightningNotifier]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mivExchangeLightningNotifier(cid);
 }

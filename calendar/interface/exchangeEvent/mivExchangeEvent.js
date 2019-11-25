@@ -24,24 +24,21 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
 
 ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
-ChromeUtils.import("resource://exchangecommoninterfaces/exchangeBaseItem/mivExchangeBaseItem.js");
+const { mivExchangeBaseItem } = ChromeUtils.import("resource://exchangecommoninterfaces/exchangeBaseItem/mivExchangeBaseItem.js");
 ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 
 var EXPORTED_SYMBOLS = ["mivExchangeEvent"];
 
-var exchGlobalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-    .getService(Ci.mivFunctions);
+var exchGlobalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
-var exchTimeZones = Cc["@1st-setup.nl/exchange/timezones;1"]
-    .getService(Ci.mivExchangeTimeZones);
+var exchTimeZones = (new (ChromeUtils.import("resource://interfacescalendartask/exchangeTimeZones/mivExchangeTimeZones.js").mivExchangeTimeZones)());
 
 
 function mivExchangeEvent() {
@@ -58,14 +55,6 @@ mivExchangeEvent.prototype = {
 
     __proto__: mivExchangeBaseItem.prototype,
 
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivExchangeEvent,
-        Ci.mivExchangeBaseItem,
-        Ci.calIInternalShallowCopy,
-        Ci.calIEvent,
-        Ci.calIItemBase,
-        Ci.nsIClassInfo,
-        Ci.nsISupports
-    ]),
 
     _className: "mivExchangeEvent",
     _mainTag: "CalendarItem",
@@ -651,22 +640,3 @@ mivExchangeEvent.prototype = {
     },
 
 };
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivExchangeEvent) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivExchangeEvent = XPCOMUtils.generateNSGetFactory([mivExchangeEvent]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mivExchangeEvent(cid);
-}

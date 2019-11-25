@@ -40,7 +40,6 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
@@ -54,8 +53,7 @@ var EXPORTED_SYMBOLS = ["erGetTimeZonesRequest"];
 
 function erGetTimeZonesRequest(aArgument, aCbOk, aCbError, aListener) {
     // Check if we have at least Exchange server version 2010.
-    this.exchangeStatistics = Cc["@1st-setup.nl/exchange/statistics;1"]
-        .getService(Ci.mivExchangeStatistics);
+    this.exchangeStatistics = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeStatistics/mivExchangeStatistics.js").mivExchangeStatistics)());
 
     /*	if (this.exchangeStatistics.getServerVersion(aArgument.serverUrl).indexOf("2010") == -1) {
     		return;

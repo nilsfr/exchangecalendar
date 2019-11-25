@@ -38,7 +38,6 @@ var Ci = Components.interfaces;
 
 
 ChromeUtils.import("resource://gre/modules/Services.jsm");
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 
 ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
@@ -48,17 +47,11 @@ ChromeUtils.import("resource://exchangecommon/erForewardItem.js");
 //if (! exchWebService) var exchWebService = {};
 
 function exchEventSummaryBrowserProgressListener(aDialog) {
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
     this.dialog = aDialog;
 }
 
 exchEventSummaryBrowserProgressListener.prototype = {
-
-    QueryInterface: XPCOMUtils.generateQI([Ci.nsISupportsWeakReference,
-        Ci.nsIWebProgressListener,
-        Ci.nsISupports
-    ]),
 
     GetWeakReference: function _GetWeakReference() {
         Cc["@mozilla.org/consoleservice;1"]
@@ -137,11 +130,9 @@ function exchEventSummaryDialog(aDocument, aWindow) {
     this._document = aDocument;
     this._window = aWindow;
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
-    this.loadBalancer = Cc["@1st-setup.nl/exchange/loadbalancer;1"]
-        .getService(Ci.mivExchangeLoadBalancer);
+    this.loadBalancer = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeLoadBalancer/mivExchangeLoadBalancer.js").mivExchangeLoadBalancer)());
 
     this.imageCache = {};
 }

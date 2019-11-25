@@ -2,14 +2,12 @@
 var Ci = Components.interfaces;
 var Cc = Components.classes;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 
 function exchCalendarEventDialog(aDocument, aWindow) {
     this._document = aDocument;
     this._window = aWindow;
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 }
 
 exchCalendarEventDialog.prototype = {

@@ -91,8 +91,7 @@ function ExchangeRequest(aArgument, aCbOk, aCbError, aListener) {
     this.badCertCount = 0;
     this.channelCallbackEcAuthPrompt2 = null;
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
     this.uuid = this.globalFunctions.getUUID();
 
@@ -103,8 +102,7 @@ function ExchangeRequest(aArgument, aCbOk, aCbError, aListener) {
     this.prefB = Cc["@mozilla.org/preferences-service;1"]
         .getService(Ci.nsIPrefBranch);
 
-    this.exchangeStatistics = Cc["@1st-setup.nl/exchange/statistics;1"]
-        .getService(Ci.mivExchangeStatistics);
+    this.exchangeStatistics = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeStatistics/mivExchangeStatistics.js").mivExchangeStatistics)());
 
     this.exchangeBadCertListener2 = Cc["@1st-setup.nl/exchange/badcertlistener2;1"]
         .getService(Ci.mivExchangeBadCertListener2);
@@ -114,8 +112,7 @@ function ExchangeRequest(aArgument, aCbOk, aCbError, aListener) {
         .getService(Ci.nsIObserverService);
     this.observerService.addObserver(this, "http-on-modify-request", true);
 
-    this.timeZones = Cc["@1st-setup.nl/exchange/timezones;1"]
-        .getService(Ci.mivExchangeTimeZones);
+    this.timeZones = (new (ChromeUtils.import("resource://interfacescalendartask/exchangeTimeZones/mivExchangeTimeZones.js").mivExchangeTimeZones)());
 
     this.xml2json = false;
 }
@@ -1383,8 +1380,7 @@ var ecPasswordErrorList = {};
 function ecnsIAuthPrompt2(aExchangeRequest) {
     this.exchangeRequest = aExchangeRequest;
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
     this.uuid = this.globalFunctions.getUUID();
 
     this.callback = null;

@@ -21,10 +21,6 @@ overlay chrome://calendar/content/calendar-summary-dialog.xul chrome://exchangec
 
 overlay chrome://lightning/content/lightning-item-iframe.xul chrome://exchangecalendar/content/lightning-item-iframe.xul
 
-manifest interface/exchangeCalendar/mivExchangeCalendar.manifest
-manifest interface/exchangeTimeZones/mivExchangeTimeZones.manifest
-manifest interface/exchangeEvent/mivExchangeEvent.manifest
-manifest interface/exchangeTodo/mivExchangeTodo.manifest
 manifest interface/exchangeRecurrenceInfo/mivExchangeRecurrenceInfo.manifest
 
 locale exchangecalendar en    locale/en/

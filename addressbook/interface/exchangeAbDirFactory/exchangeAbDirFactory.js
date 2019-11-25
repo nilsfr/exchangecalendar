@@ -24,7 +24,6 @@ var Ci = Components.interfaces;
 
 var Cr = Components.results;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 ChromeUtils.import("resource:///modules/mailServices.js");
 ChromeUtils.import("resource:///modules/iteratorUtils.jsm");
@@ -41,7 +40,6 @@ exchangeAbDirFactory.prototype = {
     contractID: "@mozilla.org/addressbook/directory-factory;1?name=exchangecalendar-addressbook",
     classDescription: "Exchange 2007/2010 Contacts DirFactory",
 
-    QueryInterface: XPCOMUtils.generateQI([Ci.nsIAbDirFactory]),
 
     getDirectories: function _getDirectories(aDirName, aURI, aPrefName) {
         exchWebService.commonAbFunctions.logInfo("getDirectories aDirName:" + aDirName + ", aUri:" + aURI + ", aPrefName:" + aPrefName + "\n");
@@ -66,26 +64,3 @@ exchangeAbDirFactory.prototype = {
         throw Cr.NS_ERROR_NOT_IMPLEMENTED;
     },
 }
-
-function NSGetFactory(cid) {
-
-    exchWebService.commonAbFunctions.logInfo("NSGetFactory for exchangeAbDirFactory 1");
-    try {
-        if (!NSGetFactory.exchWebService_ab1) {
-            exchWebService.commonAbFunctions.logInfo("NSGetFactory for exchangeAbDirFactory 1a");
-
-            NSGetFactory.exchWebService_ab1 = XPCOMUtils.generateNSGetFactory([exchangeAbDirFactory]);
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        exchWebService.commonAbFunctions.logInfo(e);
-        throw e;
-    }
-
-    exchWebService.commonAbFunctions.logInfo("NSGetFactory for exchangeAbDirFactory 2");
-    return NSGetFactory.exchWebService_ab1(cid);
-}
-
-exchWebService.commonAbFunctions.logInfo("exchangeAbDirFactory: init.");

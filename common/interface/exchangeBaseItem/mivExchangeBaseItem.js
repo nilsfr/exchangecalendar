@@ -24,7 +24,6 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
@@ -221,8 +220,7 @@ const monthMap = {
 
 var EXPORTED_SYMBOLS = ["mivExchangeBaseItem"];
 
-var exchGlobalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-    .getService(Ci.mivFunctions);
+var exchGlobalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
 function mivExchangeBaseItem() {
 
@@ -269,8 +267,6 @@ mivExchangeBaseItem.prototype = {
 
         this._cloneCount = 0;
 
-        //		this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        //					.getService(Ci.mivFunctions);
 
         //		this.timeZones = Cc["@1st-setup.nl/exchange/timezones;1"]
         //					.getService(Ci.mivExchangeTimeZones);
@@ -285,12 +281,6 @@ mivExchangeBaseItem.prototype = {
       in nsIIDRef uuid,
       [iid_is(uuid),retval] out nsQIResult result
     );	 */
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivExchangeBaseItem,
-        Ci.calIInternalShallowCopy,
-        Ci.calIItemBase,
-        Ci.nsIClassInfo,
-        Ci.nsISupports
-    ]),
 
     // Attributes from nsIClassInfo
 
@@ -3901,23 +3891,4 @@ mivExchangeBaseItem.prototype = {
 
         this._exchangeData = null;
     },
-}
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivExchangeBaseItem) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivExchangeBaseItem = XPCOMUtils.generateNSGetFactory([mivExchangeBaseItem]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mivExchangeBaseItem(cid);
 }

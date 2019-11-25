@@ -26,7 +26,6 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
@@ -58,11 +57,9 @@ const nsIAM = Ci.nsIActivityManager;
 function exchangeAbFolderDirectory() {
     exchWebService.commonAbFunctions.logInfo("new exchangeAbFolderDirectory");
 
-    this.loadBalancer = Cc["@1st-setup.nl/exchange/loadbalancer;1"]
-        .getService(Ci.mivExchangeLoadBalancer);
+    this.loadBalancer = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeLoadBalancer/mivExchangeLoadBalancer.js").mivExchangeLoadBalancer)());
 
-    this.exchangeStatistics = Cc["@1st-setup.nl/exchange/statistics;1"]
-        .getService(Ci.mivExchangeStatistics);
+    this.exchangeStatistics = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeStatistics/mivExchangeStatistics.js").mivExchangeStatistics)());
 
     this._isRoot = true;
 
@@ -106,12 +103,6 @@ exchangeAbFolderDirectory.prototype = {
 
 
     // void getInterfaces(out PRUint32 count, [array, size_is(count), retval] out nsIIDPtr array);
-    QueryInterface: XPCOMUtils.generateQI([Ci, exchangeAbFolderDirectory,
-        Ci.nsIAbDirectory,
-        Ci.nsIAbCollection,
-        Ci.nsIAbItem,
-        Ci.nsISupports
-    ]),
 
     /**
      * A universally-unique identifier for this item.
@@ -1503,27 +1494,3 @@ exchangeAbFolderDirectory.prototype = {
     },
 
 };
-
-
-function NSGetFactory(cid) {
-
-    exchWebService.commonAbFunctions.logInfo("exchangeAbFolderDirectory: NSGetFactory for exchangeAbFolderDirectory 1");
-    try {
-        if (!NSGetFactory.exchWebService_ab4) {
-            exchWebService.commonAbFunctions.logInfo("exchangeAbFolderDirectory: NSGetFactory for exchangeAbFolderDirectory 1a");
-
-            NSGetFactory.exchWebService_ab4 = XPCOMUtils.generateNSGetFactory([exchangeAbFolderDirectory]);
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        exchWebService.commonAbFunctions.logInfo(e);
-        throw e;
-    }
-
-    exchWebService.commonAbFunctions.logInfo("exchangeAbFolderDirectory: NSGetFactory for exchangeAbFolderDirectory 2");
-    return NSGetFactory.exchWebService_ab4(cid);
-}
-
-exchWebService.commonAbFunctions.logInfo("exchangeAbFolderDirectory: init.");

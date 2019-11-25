@@ -24,22 +24,19 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
 
 ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
-ChromeUtils.import("resource://exchangecommoninterfaces/exchangeBaseItem/mivExchangeBaseItem.js");
+const { mivExchangeBaseItem } = ChromeUtils.import("resource://exchangecommoninterfaces/exchangeBaseItem/mivExchangeBaseItem.js");
 
 ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
-var exchGlobalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-    .getService(Ci.mivFunctions);
+var exchGlobalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
-var exchTimeZones = Cc["@1st-setup.nl/exchange/timezones;1"]
-    .getService(Ci.mivExchangeTimeZones);
+var exchTimeZones = (new (ChromeUtils.import("resource://interfacescalendartask/exchangeTimeZones/mivExchangeTimeZones.js").mivExchangeTimeZones)());
 
 var EXPORTED_SYMBOLS = ["mivExchangeTodo"];
 
@@ -59,14 +56,6 @@ mivExchangeTodo.prototype = {
 
     __proto__: mivExchangeBaseItem.prototype,
 
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivExchangeTodo,
-        Ci.mivExchangeBaseItem,
-        Ci.calIInternalShallowCopy,
-        Ci.calITodo,
-        Ci.calIItemBase,
-        Ci.nsIClassInfo,
-        Ci.nsISupports
-    ]),
 
     _className: "mivExchangeTodo",
     _mainTag: "Task",
@@ -1175,22 +1164,3 @@ mivExchangeTodo.prototype = {
     },
 
 };
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivExchangeTodo) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivExchangeTodo = XPCOMUtils.generateNSGetFactory([mivExchangeTodo]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mivExchangeTodo(cid);
-}

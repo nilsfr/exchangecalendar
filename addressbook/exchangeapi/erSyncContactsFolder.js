@@ -26,7 +26,6 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
@@ -100,8 +99,7 @@ erSyncContactsFolderRequest.prototype = {
         additionalProperties.addChildTag("FieldURI", "nsTypes", null).setAttribute("FieldURI", "item:Subject");
         //		additionalProperties.addChildTag("FieldURI", "nsTypes", null).setAttribute("FieldURI", "folder:DisplayName"); // Not allowed for this request
 
-        this.exchangeStatistics = Cc["@1st-setup.nl/exchange/statistics;1"]
-            .getService(Ci.mivExchangeStatistics);
+        this.exchangeStatistics = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeStatistics/mivExchangeStatistics.js").mivExchangeStatistics)());
 
         if ((this.exchangeStatistics.getServerVersion(this.serverUrl).indexOf("2007") == -1)
             && (this.exchangeStatistics.getServerVersion(this.serverUrl).indexOf("2010_SP1") == -1)) {

@@ -10,8 +10,7 @@ var components = Components;
 ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
-const globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-    .getService(Ci.mivFunctions);
+const globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 const gMessenger = Cc["@mozilla.org/messenger;1"].createInstance(Ci.nsIMessenger);
 
 function displayElement(id, flag) {

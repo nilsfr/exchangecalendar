@@ -42,10 +42,9 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
+const { cal } = ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
 ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 ChromeUtils.import("resource://exchangecommon/soapFunctions.js");
@@ -93,10 +92,10 @@ var gActivityManager;
 
 if (Cc["@mozilla.org/activity-manager;1"]) {
     gActivityManager = Cc["@mozilla.org/activity-manager;1"].getService(nsIAM);
-    Cc["@1st-setup.nl/global/functions;1"].getService(Ci.mivFunctions).LOG("-- ActivityManager available. Enabling it.");
+    (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)()).LOG("-- ActivityManager available. Enabling it.");
 }
 else {
-    Cc["@1st-setup.nl/global/functions;1"].getService(Ci.mivFunctions).LOG("-- ActivityManager not available.");
+    (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)()).LOG("-- ActivityManager not available.");
 }
 
 
@@ -304,11 +303,9 @@ function calExchangeCalendar() {
 
         this.initProviderBase();
 
-        this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-            .getService(Ci.mivFunctions);
+        this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
-        this.timeZones = Cc["@1st-setup.nl/exchange/timezones;1"]
-            .getService(Ci.mivExchangeTimeZones);
+        this.timeZones = (new (ChromeUtils.import("resource://interfacescalendartask/exchangeTimeZones/mivExchangeTimeZones.js").mivExchangeTimeZones)());
 
         this.noDB = true;
         this.dbInit = false;
@@ -376,11 +373,9 @@ function calExchangeCalendar() {
         this.lightningNotifier = Cc["@1st-setup.nl/exchange/lightningnotifier;1"]
             .getService(Ci.mivExchangeLightningNotifier);
 
-        this.loadBalancer = Cc["@1st-setup.nl/exchange/loadbalancer;1"]
-            .getService(Ci.mivExchangeLoadBalancer);
+        this.loadBalancer = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeLoadBalancer/mivExchangeLoadBalancer.js").mivExchangeLoadBalancer)());
 
-        this.exchangeStatistics = Cc["@1st-setup.nl/exchange/statistics;1"]
-            .getService(Ci.mivExchangeStatistics);
+        this.exchangeStatistics = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeStatistics/mivExchangeStatistics.js").mivExchangeStatistics)());
 
         this.calendarPoller = null;
 
@@ -469,17 +464,6 @@ calExchangeCalendar.prototype = {
 
     // Begin nsISupports
     // void QueryInterface(in nsIIDRef uuid, [iid_is(uuid),retval] out nsQIResult result);
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivExchangeCalendar,
-        Ci.calICalendarACLManager,
-        Ci.calICalendar,
-        Ci.calICalendarProvider,
-        Ci.calIFreeBusyService,
-        Ci.calIItipTransport,
-        Ci.calISchedulingSupport,
-        Ci.calICalendarProvider,
-        Ci.nsIClassInfo,
-        Ci.nsISupports
-    ]),
     // End nsISupports
 
     // Begin calICalendarProvider
@@ -10892,7 +10876,7 @@ function convertToVersion1() {
         .getService(Ci.nsIPrefService)
         .getBranch("calendar.registry.");
 
-    var mivFunctions = Cc["@1st-setup.nl/global/functions;1"].getService(Ci.mivFunctions);
+    var mivFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
     var children = tmpPrefs.getChildList("");
     if (children.length > 0) {
@@ -10942,7 +10926,7 @@ exchWebService.check4addon = {
     alreadyLogged: false,
 
     checkAddOnIsInstalledCallback: function _checkAddOnIsInstalledCallback(aAddOn) {
-        let mivFunctions = Cc["@1st-setup.nl/global/functions;1"].getService(Ci.mivFunctions);
+        let mivFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
         if (!aAddOn) {
             mivFunctions.LOG("Exchange Calendar and Tasks add-on is NOT installed.");
         }
@@ -10974,23 +10958,3 @@ exchWebService.check4addon = {
         AddonManager.getAddonByID("exchangecalendar@extensions.1st-setup.nl", exchWebService.check4addon.checkAddOnIsInstalledCallback);
     }
 };
-
-function NSGetFactory(cid) {
-    try {
-        if (!NSGetFactory.mainEC) {
-            // Load main script from lightning that we need.
-            convertToVersion1();
-
-            NSGetFactory.mainEC = XPCOMUtils.generateNSGetFactory([calExchangeCalendar]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mainEC(cid);
-}

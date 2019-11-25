@@ -24,7 +24,6 @@ var Cu = Components.utils;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
@@ -33,20 +32,19 @@ ChromeUtils.import("resource://exchangecalendar/erGetTimeZones.js");
 
 //ChromeUtils.import("resource://exchangecommoninterfaces/xml2jxon/mivIxml2jxon.js");
 
-ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
+const { xml2json } = ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 Cu.importGlobalProperties(["XMLHttpRequest"]);
+
+var EXPORTED_SYMBOLS = ["mivExchangeTimeZones"];
 
 function mivExchangeTimeZones() {
     this._timeZones = {};
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
-    this.loadBalancer = Cc["@1st-setup.nl/exchange/loadbalancer;1"]
-        .getService(Ci.mivExchangeLoadBalancer);
+    this.loadBalancer = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeLoadBalancer/mivExchangeLoadBalancer.js").mivExchangeLoadBalancer)());
 
-    this.exchangeStatistics = Cc["@1st-setup.nl/exchange/statistics;1"]
-        .getService(Ci.mivExchangeStatistics);
+    this.exchangeStatistics = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeStatistics/mivExchangeStatistics.js").mivExchangeStatistics)());
 
     this.timezoneService = Cc["@mozilla.org/calendar/timezone-service;1"]
         .getService(Ci.calITimezoneProvider);
@@ -69,10 +67,6 @@ mivExchangeTimeZones.prototype = {
       in nsIIDRef uuid,
       [iid_is(uuid),retval] out nsQIResult result
     );	 */
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivExchangeTimeZones,
-        Ci.nsIClassInfo,
-        Ci.nsISupports
-    ]),
 
     // Attributes from nsIClassInfo
 
@@ -431,26 +425,8 @@ mivExchangeTimeZones.prototype = {
                 this.addExchangeTimeZones(root, "Exchange2007_SP1");
             }
         }).bind(this);
-        req.open("GET", "chrome://exchangeTimeZones/content/ewsTimesZoneDefinitions_2007.xml", false);
+        req.open("GET", "resource://interfacescalendartask/exchangeTimeZones/ewsTimesZoneDefinitions_2007.xml", false);
         req.send(null);
     },
 
-}
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivExchangeTimeZones) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivExchangeTimeZones = XPCOMUtils.generateNSGetFactory([mivExchangeTimeZones]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-    return NSGetFactory.mivExchangeTimeZones(cid);
 }

@@ -24,16 +24,16 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
+
+var EXPORTED_SYMBOLS = ["mivExchangeStatistics"];
 
 function mivExchangeStatistics() {
     this.serverVersions = {};
     this.majorVersions = {};
     this.minorVersions = {};
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
     this.dataRead = {};
     this.dataSend = {};
@@ -53,10 +53,6 @@ mivExchangeStatistics.prototype = {
       in nsIIDRef uuid,
       [iid_is(uuid),retval] out nsQIResult result
     );	 */
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivExchangeStatistics,
-        Ci.nsIClassInfo,
-        Ci.nsISupports
-    ]),
 
     // Attributes from nsIClassInfo
 
@@ -183,23 +179,4 @@ mivExchangeStatistics.prototype = {
     get xml2jxonCount() {
         return this._xml2jxonCount;
     },
-}
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivExchangeStatistics) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivExchangeStatistics = XPCOMUtils.generateNSGetFactory([mivExchangeStatistics]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mivExchangeStatistics(cid);
 }

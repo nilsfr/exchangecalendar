@@ -10,7 +10,6 @@ var Ci = Components.interfaces;
 
 
 ChromeUtils.import("resource://gre/modules/Services.jsm");
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 
 ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
@@ -25,10 +24,8 @@ ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 function exchDelegateCalendarSettings(aDocument, aWindow) {
     this._document = aDocument;
     this._window = aWindow;
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
-    this.loadBalancer = Cc["@1st-setup.nl/exchange/loadbalancer;1"]
-        .getService(Ci.mivExchangeLoadBalancer);
+    this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
+    this.loadBalancer = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeLoadBalancer/mivExchangeLoadBalancer.js").mivExchangeLoadBalancer)());
     this.calId = null;
     this.calPrefs = null;
     this.delegatesList = [];

@@ -40,8 +40,7 @@ exchWebService.manageEWSAccounts = {
     accountManager: Cc["@1st-setup.nl/exchange/accountmanager;1"]
         .getService(Ci.mivExchangeAccountManager),
 
-    globalFunctions: Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions),
+    globalFunctions: (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)()),
 
     set detailsChecked(aValue) {
         this._detailsChecked = aValue;

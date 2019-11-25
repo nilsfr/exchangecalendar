@@ -41,8 +41,7 @@ function exchChangeCalendarPropertiesReminder(aDocument, aWindow, aArgument) {
     this._window = aWindow;
     this._argument = aArgument;
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 }
 
 exchChangeCalendarPropertiesReminder.prototype = {

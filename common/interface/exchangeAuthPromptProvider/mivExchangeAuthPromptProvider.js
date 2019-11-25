@@ -24,13 +24,11 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 function mivExchangeAuthPromptProvider() {
     //dump("\nmivExchangeAuthPromptProvider.init\n");
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 }
 
 var mivExchangeAuthPromptProviderGUID = "1bf6e930-20fc-11e2-81c1-0800200c9a66";
@@ -41,9 +39,6 @@ mivExchangeAuthPromptProvider.prototype = {
       in nsIIDRef uuid,
       [iid_is(uuid),retval] out nsQIResult result
     );	 */
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivExchangeAuthPromptProvider,
-        Ci.nsISupports
-    ]),
 
     // Attributes from nsIClassInfo
 
@@ -80,23 +75,4 @@ mivExchangeAuthPromptProvider.prototype = {
         }
     },
 
-}
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivExchangeAuthPromptProvider) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivExchangeAuthPromptProvider = XPCOMUtils.generateNSGetFactory([mivExchangeAuthPromptProvider]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mivExchangeAuthPromptProvider(cid);
 }

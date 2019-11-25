@@ -52,8 +52,7 @@ const publicFoldersMap = {
 
 // This is the xml2jxon version.
 function makeParentFolderIds2(aParentItem, aArgument) {
-    var globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    var globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
     var ParentFolderIds = globalFunctions.xmlToJxon('<nsMessages:' + aParentItem + ' xmlns:nsMessages="' + nsMessagesStr + '" xmlns:nsTypes="' + nsTypesStr + '"/>');
 

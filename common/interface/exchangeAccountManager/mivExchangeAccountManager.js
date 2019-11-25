@@ -24,7 +24,6 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 function mivExchangeAccountManager() {
@@ -33,8 +32,7 @@ function mivExchangeAccountManager() {
         .getService(Ci.nsIPrefService)
         .getBranch("extensions.exchangeWebServices.accounts."),
 
-        this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+        this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
 }
 
@@ -48,9 +46,6 @@ mivExchangeAccountManager.prototype = {
       in nsIIDRef uuid,
       [iid_is(uuid),retval] out nsQIResult result
     );	 */
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivExchangeAccountManager,
-        Ci.nsISupports
-    ]),
 
     // Attributes from nsIClassInfo
 
@@ -214,23 +209,4 @@ mivExchangeAccountManager.prototype = {
         } */
     },
 
-}
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivExchangeAccountManager) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivExchangeAccountManager = XPCOMUtils.generateNSGetFactory([mivExchangeAccountManager]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mivExchangeAccountManager(cid);
 }

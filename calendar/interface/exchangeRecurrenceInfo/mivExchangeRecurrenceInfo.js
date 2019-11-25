@@ -24,7 +24,6 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 function mivExchangeRecurrenceInfo() {
@@ -32,8 +31,7 @@ function mivExchangeRecurrenceInfo() {
     this._recurrenceInfo = Cc["@mozilla.org/calendar/recurrence-info;1"]
         .createInstance(Ci.calIRecurrenceInfo);
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
 }
 
@@ -57,11 +55,6 @@ mivExchangeRecurrenceInfo.prototype = {
       in nsIIDRef uuid,
       [iid_is(uuid),retval] out nsQIResult result
     );	 */
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivExchangeRecurrenceInfo,
-        Ci.nsISupports,
-        Ci.calIRecurrenceInfo,
-        Ci.nsIClassInfo
-    ]),
 
     // Attributes from nsIClassInfo
 
@@ -441,22 +434,4 @@ mivExchangeRecurrenceInfo.prototype = {
         }
     },
 
-}
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivExchangeRecurrenceInfo) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivExchangeRecurrenceInfo = XPCOMUtils.generateNSGetFactory([mivExchangeRecurrenceInfo]);
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mivExchangeRecurrenceInfo(cid);
 }

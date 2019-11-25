@@ -40,7 +40,6 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
@@ -119,8 +118,7 @@ erCreateAttachmentRequest.prototype = {
 
         var attachments = req.addChildTag("Attachments", "nsMessages", null);
 
-        this.exchangeStatistics = Cc["@1st-setup.nl/exchange/statistics;1"]
-            .getService(Ci.mivExchangeStatistics);
+        this.exchangeStatistics = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeStatistics/mivExchangeStatistics.js").mivExchangeStatistics)());
 
         for (var index in this.createAttachments) {
             var fileData = this.readFile(this.createAttachments[index].uri.QueryInterface(Ci.nsIFileURL).file);

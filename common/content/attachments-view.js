@@ -31,15 +31,13 @@
 var Ci = Components.interfaces;
 var Cc = Components.classes;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://exchangecommon/erGetAttachments.js");
 
 function exchAttachments(aDocument, aWindow) {
     this._document = aDocument;
     this._window = aWindow;
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 }
 
 exchAttachments.prototype = {
@@ -552,8 +550,7 @@ exchAttachments.prototype = {
     },
 
     onDownloadAttachmentOk: function _onDownloadAttachmentOk(aExchangeRequest, aAttachments) {
-        var globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-            .getService(Ci.mivFunctions);
+        var globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
         globalFunctions.LOG("exchWebService.attachments.onDownloadAttachmentOk:" + aAttachments.length);
 
@@ -631,8 +628,7 @@ exchAttachments.prototype = {
     },
 
     onDownloadAttachmentError: function _onDownloadAttachmentError(aExchangeRequest, aCode, aMsg) {
-        var globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-            .getService(Ci.mivFunctions);
+        var globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
         globalFunctions.LOG("exchWebService.attachments.onDownloadAttachmentError: aCode:" + aCode + ", aMsg:" + aMsg);
     },
 

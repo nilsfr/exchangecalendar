@@ -42,8 +42,7 @@ ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 
 if (!exchWebService) var exchWebService = {};
 
-var exchangeStatistics = Cc["@1st-setup.nl/exchange/statistics;1"]
-    .getService(Ci.mivExchangeStatistics);
+var exchangeStatistics = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeStatistics/mivExchangeStatistics.js").mivExchangeStatistics)());
 
 exchWebService.invitationResponse = {
 

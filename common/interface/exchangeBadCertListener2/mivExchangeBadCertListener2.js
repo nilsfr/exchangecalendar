@@ -24,7 +24,6 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 function mivExchangeBadCertListener2() {
@@ -32,8 +31,7 @@ function mivExchangeBadCertListener2() {
     this.targetSites = {};
     this.userCanceled = {};
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
 }
 
@@ -49,10 +47,6 @@ mivExchangeBadCertListener2.prototype = {
       in nsIIDRef uuid,
       [iid_is(uuid),retval] out nsQIResult result
     );	 */
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivExchangeBadCertListener2,
-        Ci.nsIBadCertListener2,
-        Ci.nsISupports
-    ]),
 
     // Attributes from nsIClassInfo
 
@@ -153,23 +147,4 @@ mivExchangeBadCertListener2.prototype = {
         }
     },
 
-}
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivExchangeBadCertListener2) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivExchangeBadCertListener2 = XPCOMUtils.generateNSGetFactory([mivExchangeBadCertListener2]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mivExchangeBadCertListener2(cid);
 }

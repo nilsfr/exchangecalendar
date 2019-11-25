@@ -25,8 +25,7 @@ var calWinId = window.arguments[0].calendar.id;
 var calPreferences = Cc["@mozilla.org/preferences-service;1"]
     .getService(Ci.nsIPrefService)
     .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl." + calWinId + ".");
-var globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-    .getService(Ci.mivFunctions);
+var globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 searchemail = globalFunctions.safeGetStringPref(calPreferences, "ecMailbox");
 var calendarEmail = searchemail;
 

@@ -26,7 +26,6 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
@@ -56,11 +55,9 @@ const nsIAM = Ci.nsIActivityManager;
 function exchangeAbDistListDirectory() {
     exchWebService.commonAbFunctions.logInfo("new exchangeAbDistListDirectory");
 
-    this.loadBalancer = Cc["@1st-setup.nl/exchange/loadbalancer;1"]
-        .getService(Ci.mivExchangeLoadBalancer);
+    this.loadBalancer = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeLoadBalancer/mivExchangeLoadBalancer.js").mivExchangeLoadBalancer)());
 
-    this.exchangeStatistics = Cc["@1st-setup.nl/exchange/statistics;1"]
-        .getService(Ci.mivExchangeStatistics);
+    this.exchangeStatistics = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeStatistics/mivExchangeStatistics.js").mivExchangeStatistics)());
 
     this._isRoot = true;
 
@@ -100,12 +97,6 @@ exchangeAbDistListDirectory.prototype = {
     classDescription: "Exchange 2007/2010 Distribution List",
 
     // void getInterfaces(out PRUint32 count, [array, size_is(count), retval] out nsIIDPtr array);
-    QueryInterface: XPCOMUtils.generateQI([Ci.exchangeAbDistListDirectory,
-        Ci.nsIAbDirectory,
-        Ci.nsIAbCollection,
-        Ci.nsIAbItem,
-        Ci.nsISupports
-    ]),
 
     /**
      * A universally-unique identifier for this item.
@@ -1413,27 +1404,3 @@ exchangeAbDistListDirectory.prototype = {
     },
 
 };
-
-
-function NSGetFactory(cid) {
-
-    exchWebService.commonAbFunctions.logInfo("exchangeAbDistListDirectory: NSGetFactory for exchangeAbDistListDirectory 1");
-    try {
-        if (!NSGetFactory.exchWebService_ab5) {
-            exchWebService.commonAbFunctions.logInfo("exchangeAbDistListDirectory: NSGetFactory for exchangeAbDistListDirectory 1a");
-
-            NSGetFactory.exchWebService_ab5 = XPCOMUtils.generateNSGetFactory([exchangeAbDistListDirectory]);
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        exchWebService.commonAbFunctions.logInfo(e);
-        throw e;
-    }
-
-    exchWebService.commonAbFunctions.logInfo("exchangeAbDistListDirectory: NSGetFactory for exchangeAbDistListDirectory 2");
-    return NSGetFactory.exchWebService_ab5(cid);
-}
-
-exchWebService.commonAbFunctions.logInfo("exchangeAbDistListDirectory: init.");

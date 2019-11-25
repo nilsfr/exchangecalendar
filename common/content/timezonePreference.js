@@ -4,8 +4,7 @@ var Ci = Components.interfaces;
 
 var prefs = Cc["@mozilla.org/preferences-service;1"]
     .getService(Ci.nsIPrefService);
-var globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-    .getService(Ci.mivFunctions);
+var globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
 function autoTimezone(aState) {
 

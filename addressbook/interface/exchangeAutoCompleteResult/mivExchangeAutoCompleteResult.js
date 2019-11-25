@@ -21,7 +21,6 @@
 var Ci = Components.interfaces;
 var Cu = Components.utils;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource:///modules/mailServices.js");
@@ -39,12 +38,6 @@ mivExchangeAutoCompleteResult.prototype = {
 
     _searchString: "",
     _searchResult: this.RESULT_NOMATCH_ONGOING,
-
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivExchangeAutoCompleteResult,
-        Ci.nsIAutoCompleteResult,
-        Ci.nsIClassInfo,
-        Ci.nsISupports
-    ]),
 
     classDescription: "Exchange Autocomplete Search Result",
 
@@ -287,20 +280,3 @@ mivExchangeAutoCompleteResult.prototype = {
     },
 
 };
-
-function NSGetFactory(cid) {
-    try {
-        if (!NSGetFactory.mivExchangeAutoCompleteResult) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivExchangeAutoCompleteResult = XPCOMUtils.generateNSGetFactory([mivExchangeAutoCompleteResult]);
-        }
-    }
-    catch (e) {
-        Cu.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mivExchangeAutoCompleteResult(cid);
-}
-

@@ -24,7 +24,6 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
@@ -38,8 +37,7 @@ function mivExchangeTimeZone() {
     this._standardBias = 0;
     this._daylightBias = 0;
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
     this._names = new Array();
     this._hasDaylight = false;
@@ -57,10 +55,6 @@ mivExchangeTimeZone.prototype = {
       in nsIIDRef uuid,
       [iid_is(uuid),retval] out nsQIResult result
     );	 */
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivExchangeTimeZone,
-        Ci.nsIClassInfo,
-        Ci.nsISupports
-    ]),
 
     // Attributes from nsIClassInfo
 
@@ -403,22 +397,4 @@ mivExchangeTimeZone.prototype = {
         this._indexDate = aValue;
         if (this._timeZone) this.timeZone = this._timeZone;
     },
-}
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivExchangeTimeZone) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivExchangeTimeZone = XPCOMUtils.generateNSGetFactory([mivExchangeTimeZone]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-    return NSGetFactory.mivExchangeTimeZone(cid);
 }

@@ -146,8 +146,7 @@ erGetItemsRequest.prototype = {
         xml2json.parseXML(additionalProperties, "<nsTypes:FieldURI FieldURI='item:EffectiveRights'/>");
         //xml2json.parseXML(additionalProperties,"<nsTypes:FieldURI FieldURI='item:MimeContent'/>");
 
-        this.exchangeStatistics = Cc["@1st-setup.nl/exchange/statistics;1"]
-            .getService(Ci.mivExchangeStatistics);
+        this.exchangeStatistics = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeStatistics/mivExchangeStatistics.js").mivExchangeStatistics)());
 
         if ((this.exchangeStatistics.getServerVersion(this.serverUrl).indexOf("Exchange2010") > -1) || (this.exchangeStatistics.getServerVersion(this.serverUrl).indexOf("Exchange2013") > -1)) {
             xml2json.parseXML(additionalProperties, "<nsTypes:FieldURI FieldURI='item:UniqueBody'/>");

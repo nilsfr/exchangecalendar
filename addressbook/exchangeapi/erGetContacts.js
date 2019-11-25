@@ -26,7 +26,6 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
@@ -79,8 +78,7 @@ erGetContactsRequest.prototype = {
         var additionalProperties = itemShape.addChildTag("AdditionalProperties", "nsTypes", null);
 
 
-        this.exchangeStatistics = Cc["@1st-setup.nl/exchange/statistics;1"]
-            .getService(Ci.mivExchangeStatistics);
+        this.exchangeStatistics = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeStatistics/mivExchangeStatistics.js").mivExchangeStatistics)());
 
         if (this.exchangeStatistics.getServerVersion(this.serverUrl).indexOf("Exchange2007") == -1) {
             additionalProperties.addChildTag("FieldURI", "nsTypes", null).setAttribute("FieldURI", "contacts:HasPicture");

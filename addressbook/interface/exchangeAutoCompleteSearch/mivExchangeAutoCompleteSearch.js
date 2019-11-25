@@ -24,7 +24,6 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource:///modules/mailServices.js");
@@ -33,8 +32,7 @@ ChromeUtils.import("resource://exchangeaddress/exchangeAbFunctions.js");
 
 function mivExchangeAutoCompleteSearch() {
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
     MailServices.ab.addAddressBookListener(this, Ci.nsIAbListener.itemAdded);
 }
@@ -47,12 +45,6 @@ mivExchangeAutoCompleteSearch.prototype = {
     _observer: null,
     _galSearches: {},
     _firstCall: true,
-
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivExchangeAutoCompleteSearch,
-        Ci.nsIAutoCompleteSearch,
-        Ci.nsIClassInfo,
-        Ci.nsISupports
-    ]),
 
     classDescription: "Exchange Autocomplete Search",
 
@@ -221,22 +213,3 @@ mivExchangeAutoCompleteSearch.prototype = {
 
 
 };
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivExchangeAutoCompleteSearch) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivExchangeAutoCompleteSearch = XPCOMUtils.generateNSGetFactory([mivExchangeAutoCompleteSearch]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mivExchangeAutoCompleteSearch(cid);
-}

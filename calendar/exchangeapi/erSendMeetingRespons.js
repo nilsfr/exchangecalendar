@@ -38,7 +38,6 @@
 var Ci = Components.interfaces;
 var Cc = Components.classes;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
@@ -124,8 +123,7 @@ erSendMeetingResponsRequest.prototype = {
         referenceItemId.setAttribute("Id", this.item.id);
         referenceItemId.setAttribute("ChangeKey", this.item.changeKey);
 
-        this.exchangeStatistics = Cc["@1st-setup.nl/exchange/statistics;1"]
-            .getService(Ci.mivExchangeStatistics);
+        this.exchangeStatistics = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeStatistics/mivExchangeStatistics.js").mivExchangeStatistics)());
 
 
         if (this.exchangeStatistics.getServerVersion(this.serverUrl).indexOf("Exchange2013") > -1) {

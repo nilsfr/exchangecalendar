@@ -211,8 +211,7 @@ function rtews(identity) {
 
     if (this.prefs) {
         this.pollOffset = this.globalFunctions.safeGetIntPref(this.prefs, "syncMailItems.Interval", 15) * 1000; //time for getevents   
-        this.loadBalancer = Cc["@1st-setup.nl/exchange/loadbalancer;1"]
-            .getService(Ci.mivExchangeLoadBalancer);
+        this.loadBalancer = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeLoadBalancer/mivExchangeLoadBalancer.js").mivExchangeLoadBalancer)());
     }
     else {
         this.prefs = null;

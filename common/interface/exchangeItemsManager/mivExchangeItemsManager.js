@@ -24,13 +24,11 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 function mivExchangeItemsManager() {
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 
     this._exchangeAccountId = null;
     this._exchangeAccount = null;
@@ -51,8 +49,7 @@ function mivExchangeItemsManager() {
     this._accountManager = Cc["@1st-setup.nl/exchange/accountmanager;1"]
         .getService(Ci.mivExchangeAccountManager);
 
-    this._loadBalancer = Cc["@1st-setup.nl/exchange/loadbalancer;1"]
-        .getService(Ci.mivExchangeLoadBalancer);
+    this._loadBalancer = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeLoadBalancer/mivExchangeLoadBalancer.js").mivExchangeLoadBalancer)());
 
     this.uuid = this.globalFunctions.getUUID();
 
@@ -70,10 +67,6 @@ mivExchangeItemsManager.prototype = {
       in nsIIDRef uuid,
       [iid_is(uuid),retval] out nsQIResult result
     );	 */
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivExchangeItemsManager,
-        Ci.nsIClassInfo,
-        Ci.nsISupports
-    ]),
 
     // Attributes from nsIClassInfo
 
@@ -216,22 +209,3 @@ mivExchangeItemsManager.prototype = {
         this.globalFunctions.LOG("mivExchangeItemsManager: " + aMsg);
     },
 };
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivExchangeItemsManager) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivExchangeItemsManager = XPCOMUtils.generateNSGetFactory([mivExchangeItemsManager]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mivExchangeItemsManager(cid);
-}
