@@ -24,8 +24,10 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
+const { mivFunctions } = Components.utils.import("resource://exchangecommoninterfaces/global/mivFunctions.js");
+
+var EXPORTED_SYMBOLS = [ "mivExchangeLoadBalancer" ];
 
 function jobObject(aJob, aServer, aLoadBalancer) {
     this.job = aJob;
@@ -273,8 +275,7 @@ function mivExchangeLoadBalancer() {
     this.observerService = Cc["@mozilla.org/observer-service;1"]
         .getService(Ci.nsIObserverService);
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = new mivFunctions();
 
 }
 
@@ -285,9 +286,6 @@ var mivExchangeLoadBalancerGUID = "2db8c940-1927-11e2-892e-0800200c9a55";
 mivExchangeLoadBalancer.prototype = {
 
     // methods from nsISupport
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivExchangeLoadBalancer,
-        Ci.nsISupports
-    ]),
 
     // Attributes from nsIClassInfo
     classDescription: "Load balancer for requests to Exchange server.",
@@ -364,23 +362,4 @@ mivExchangeLoadBalancer.prototype = {
         }
     },
 
-}
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivExchangeLoadBalancer) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivExchangeLoadBalancer = XPCOMUtils.generateNSGetFactory([mivExchangeLoadBalancer]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mivExchangeLoadBalancer(cid);
 }

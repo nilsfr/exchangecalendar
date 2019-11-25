@@ -69,14 +69,14 @@ const nsMsgFolderFlags_Drafts = 0x00000400;
 const nsMsgFolderFlags_Archive = 0x00004000;
 const nsMsgFolderFlags_Inbox = 0x00001000;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm"); // for defineLazyServiceGetter
 ChromeUtils.import("resource:///modules/iteratorUtils.jsm"); // for toXPCOMArray
-ChromeUtils.import("resource:///modules/mailServices.js");
+const { MailServices } = ChromeUtils.import("resource:///modules/MailServices.jsm");
 
+MailServices.messenger = Cc["@mozilla.org/messenger;1"].createInstance(Ci.nsIMessenger);
 // Adding a messenger lazy getter to the MailServices even though it's not a service
-XPCOMUtils.defineLazyGetter(MailServices, "messenger", function () {
-    return Cc["@mozilla.org/messenger;1"].createInstance(Ci.nsIMessenger);
-});
+//XPCOMUtils.defineLazyGetter(MailServices, "messenger", function () {
+    //return Cc["@mozilla.org/messenger;1"].createInstance(Ci.nsIMessenger);
+//});
 
 /**
  * Get a given message header's uri.
@@ -354,7 +354,6 @@ function createStreamListener(k) {
         _data: "",
         _stream: null,
 
-        QueryInterface: XPCOMUtils.generateQI([Ci.nsIStreamListener, Ci.nsIRequestObserver]),
 
         // nsIRequestObserver
         onStartRequest: function (aRequest, aContext) {},

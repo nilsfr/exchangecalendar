@@ -23,7 +23,6 @@ overlay chrome://lightning/content/lightning-item-iframe.xul chrome://exchangeca
 
 manifest interface/exchangeCalendar/mivExchangeCalendar.manifest
 manifest interface/exchangeTimeZones/mivExchangeTimeZones.manifest
-manifest interface/exchangeAttendee/mivExchangeAttendee.manifest
 manifest interface/exchangeEvent/mivExchangeEvent.manifest
 manifest interface/exchangeTodo/mivExchangeTodo.manifest
 manifest interface/exchangeRecurrenceInfo/mivExchangeRecurrenceInfo.manifest

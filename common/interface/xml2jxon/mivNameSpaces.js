@@ -22,9 +22,8 @@ var Cc = Components.classes;
 var Ci = Components.interfaces;
 
 var Cr = Components.results;
-var components = Components;
+//var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 const nsSoapStr = "http://schemas.xmlsoap.org/soap/envelope/";
@@ -36,6 +35,8 @@ const nsAutodiscover2010Str = "http://schemas.microsoft.com/exchange/2010/Autodi
 const nsWSAStr = "http://www.w3.org/2005/08/addressing";
 const nsXSIStr = "http://www.w3.org/2001/XMLSchema-instance";
 const nsErrors = "http://schemas.microsoft.com/exchange/services/2006/errors";
+
+var EXPORTED_SYMBOLS = ["mivNameSpaces"];
 
 function mivNameSpaces() {
     this.nameSpaces = new Array();
@@ -57,19 +58,20 @@ mivNameSpaces.prototype = {
       in nsIIDRef uuid,
       [iid_is(uuid),retval] out nsQIResult result
     );	 */
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivNameSpaces,
+    /*QueryInterface: XPCOMUtils.generateQI([Ci.mivNameSpaces,
         Ci.nsIClassInfo,
         Ci.nsISupports
-    ]),
+    ]), */
 
     // Attributes from nsIClassInfo
 
-    classDescription: "XML NameSpace manager.",
-    classID: components.ID("{" + mivNameSpacesGUID + "}"),
-    contractID: "@1st-setup.nl/conversion/namespaces;1",
-    flags: Ci.nsIClassInfo.SINGLETON || Ci.nsIClassInfo.THREADSAFE,
+    //classDescription: "XML NameSpace manager.",
+    //classID: components.ID("{" + mivNameSpacesGUID + "}"),
+    //contractID: "@1st-setup.nl/conversion/namespaces;1",
+    //flags: Ci.nsIClassInfo.SINGLETON || Ci.nsIClassInfo.THREADSAFE,
 
     // void getInterfaces(out PRUint32 count, [array, size_is(count), retval] out nsIIDPtr array);
+   /*
     getInterfaces: function _getInterfaces(count) {
         var ifaces = [Ci.mivNameSpaces,
             Ci.nsIClassInfo,
@@ -78,6 +80,7 @@ mivNameSpaces.prototype = {
         count.value = ifaces.length;
         return ifaces;
     },
+    */
 
     getHelperForLanguage: function _getHelperForLanguage(language) {
         return null;
@@ -124,23 +127,4 @@ mivNameSpaces.prototype = {
         return null;
     },
 
-}
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivNameSpaces) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivNameSpaces = XPCOMUtils.generateNSGetFactory([mivNameSpaces]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mivNameSpaces(cid);
 }

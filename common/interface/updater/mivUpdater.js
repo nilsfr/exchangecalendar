@@ -24,10 +24,11 @@ var Cu = Components.utils;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 Cu.importGlobalProperties(["XMLHttpRequest"]);
+
+var EXPORTED_SYMBOLS = ['mivUpdater'];
 
 function installListener(aUpdater) {
     this._updater = aUpdater;
@@ -142,10 +143,6 @@ mivUpdater.prototype = {
       in nsIIDRef uuid,
       [iid_is(uuid),retval] out nsQIResult result
     );	 */
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivUpdater,
-        Ci.nsIClassInfo,
-        Ci.nsISupports
-    ]),
 
     //nsrefcnt Release();
     Release: function _Release() {
@@ -459,23 +456,4 @@ mivUpdater.prototype = {
         }
     },
 
-}
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivUpdater) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivUpdater = XPCOMUtils.generateNSGetFactory([mivUpdater]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mivUpdater(cid);
 }

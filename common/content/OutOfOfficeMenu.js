@@ -46,8 +46,7 @@ function exchToolsMenu(aDocument, aWindow) {
     this._document = aDocument;
     this._window = aWindow;
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = new mivFunctions();
 }
 
 exchToolsMenu.prototype = {

@@ -31,6 +31,7 @@ var Cc = Components.classes;
 var Ci = Components.interfaces;
 
 
+const { mivExchangeLoadBalancer } = Components.utils.import("resource://exchangecommoninterfaces/exchangeLoadBalancer/mivExchangeLoadBalancer.js");
 //ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 
 //if (! exchWebService) var exchWebService = {};
@@ -39,8 +40,7 @@ function exchProgressPanel(aDocument, aWindow) {
     this._document = aDocument;
     this._window = aWindow;
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = new mivFunctions();
 }
 
 exchProgressPanel.prototype = {
@@ -58,8 +58,7 @@ exchProgressPanel.prototype = {
         image3: "chrome://exchangecommon-common/skin/images/arrow-circle-225.png",
         image4: "chrome://exchangecommon-common/skin/images/arrow-circle-135.png"
     },
-    loadBalancer: Cc["@1st-setup.nl/exchange/loadbalancer;1"]
-        .getService(Ci.mivExchangeLoadBalancer),
+    loadBalancer: new mivExchangeLoadBalancer(),
     timerRunning: false,
 
     notify: function _notify() {

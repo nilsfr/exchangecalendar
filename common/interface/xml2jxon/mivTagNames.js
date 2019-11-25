@@ -24,7 +24,6 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 const nsSoapStr = "http://schemas.xmlsoap.org/soap/envelope/";
@@ -37,6 +36,8 @@ const nsWSAStr = "http://www.w3.org/2005/08/addressing";
 const nsXSIStr = "http://www.w3.org/2001/XMLSchema-instance";
 const nsErrors = "http://schemas.microsoft.com/exchange/services/2006/errors";
 
+var EXPORTED_SYMBOLS = ["mivTagNames"];
+
 function mivTagNames() {
     this.tagNames = new Array();
 }
@@ -44,6 +45,7 @@ function mivTagNames() {
 var mivTagNamesGUID = "b7309b24-96c6-4393-9ae4-05f3e7e8a4ac";
 
 mivTagNames.prototype = {
+  /*
     QueryInterface: XPCOMUtils.generateQI([Ci.mivTagNames, Ci.nsIClassInfo, Ci.nsISupports]),
     classDescription: "XML TagNames manager.",
     classID: components.ID("{" + mivTagNamesGUID + "}"),
@@ -54,6 +56,7 @@ mivTagNames.prototype = {
         count.value = ifaces.length;
         return ifaces;
     },
+    */
     getHelperForLanguage: function _getHelperForLanguage(language) {
         return null;
     },
@@ -70,23 +73,4 @@ mivTagNames.prototype = {
         this.tagNames.push(aValue);
         return (this.tagNames.length - 1);
     },
-}
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivTagNames) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivTagNames = XPCOMUtils.generateNSGetFactory([mivTagNames]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mivTagNames(cid);
 }

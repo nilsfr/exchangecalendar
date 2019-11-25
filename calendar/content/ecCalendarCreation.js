@@ -37,13 +37,13 @@
 var Cc = Components.classes;
 var Ci = Components.interfaces;
 
+const { mivFunctions } = Components.utils.import("resource://exchangecommoninterfaces/global/mivFunctions.js");
 
 function exchCalendarCreation(aDocument, aWindow) {
     this._document = aDocument;
     this._window = aWindow;
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = new mivFunctions();
 }
 
 exchCalendarCreation.prototype = {

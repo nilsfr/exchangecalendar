@@ -24,7 +24,6 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
@@ -56,11 +55,6 @@ mivExchangeAttendee.prototype = {
       in nsIIDRef uuid,
       [iid_is(uuid),retval] out nsQIResult result
     );	 */
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivExchangeAttendee,
-        Ci.calIAttendee,
-        Ci.nsIClassInfo,
-        Ci.nsISupports
-    ]),
 
     // Attributes from nsIClassInfo
 
@@ -318,23 +312,4 @@ mivExchangeAttendee.prototype = {
         }
     },
 
-}
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivExchangeAttendee) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivExchangeAttendee = XPCOMUtils.generateNSGetFactory([mivExchangeAttendee]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mivExchangeAttendee(cid);
 }

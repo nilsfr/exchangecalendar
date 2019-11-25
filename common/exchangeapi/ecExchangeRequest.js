@@ -40,7 +40,6 @@ var Cu = Components.utils;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
@@ -160,7 +159,6 @@ ExchangeRequest.prototype = {
 
     ERR_PASSWORD_ERROR: -300, // To many password errors.
 
-    QueryInterface: XPCOMUtils.generateQI([Ci.nsISupportsWeakReference, Ci.nsIObserver]),
 
     /*
     In Mozilla bug 1221320, changes were done to XMLHttpRequest so that the authPrompt dialog only appears
@@ -1406,10 +1404,6 @@ function ecnsIAuthPrompt2(aExchangeRequest) {
 }
 
 ecnsIAuthPrompt2.prototype = {
-        QueryInterface: XPCOMUtils.generateQI([Ci.nsIAuthPrompt2, Ci.nsIBadCertListener2, Ci.nsIProgressEventSink,
-            Ci.nsISecureBrowserUI, Ci.nsIDocShellTreeItem, Ci.nsIAuthPromptProvider,
-            Ci.nsIChannelEventSink, Ci.nsIRedirectResultListener
-        ]),
 
         getInterface: function (iid) {
             if ((Ci.nsIAuthPrompt2) && (iid.equals(Ci.nsIAuthPrompt2))) { // id == 651395eb-8612-4876-8ac0-a88d4dce9e1e

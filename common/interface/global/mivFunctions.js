@@ -27,7 +27,8 @@ var Cu = Components.utils;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+var EXPORTED_SYMBOLS = ["mivFunctions"];
+
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 ChromeUtils.import("resource://gre/modules/Console.jsm");
 
@@ -36,10 +37,8 @@ ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 function mivFunctions() {
     // Mozilla helpers
-    this.domParser = Cc["@mozilla.org/xmlextras/domparser;1"]
-        .getService(Ci.nsIDOMParser);
-    this.xmlSerializer = Cc["@mozilla.org/xmlextras/xmlserializer;1"]
-        .createInstance(Ci.nsIDOMSerializer);
+    this.domParser = new DOMParser();
+    this.xmlSerializer = new XMLSerializer();
 
     let prefB = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefBranch);
     this.setIsWriteLog(this.safeGetBoolPref(prefB, "extensions.1st-setup.debug.log", false, true));
@@ -54,9 +53,11 @@ mivFunctions.prototype = {
       in nsIIDRef uuid,
       [iid_is(uuid),retval] out nsQIResult result
     );	 */
+    /*
     QueryInterface: XPCOMUtils.generateQI([Ci.mivFunctions,
         Ci.nsISupports
     ]),
+    */
 
     // Attributes from nsIClassInfo
 
@@ -594,7 +595,7 @@ mivFunctions.prototype = {
     CreateSimpleEnumerator: function _CreateSimpleEnumerator(aArray) {
         return {
             _i: 0,
-            QueryInterface: XPCOMUtils.generateQI([Ci.nsISimpleEnumerator]),
+            //QueryInterface: XPCOMUtils.generateQI([Ci.nsISimpleEnumerator]),
             hasMoreElements: function CSE_hasMoreElements() {
                 return this._i < aArray.length;
             },
@@ -608,7 +609,7 @@ mivFunctions.prototype = {
         return {
             _i: 0,
             _keys: Object.keys(aObj),
-            QueryInterface: XPCOMUtils.generateQI([Ci.nsISimpleEnumerator]),
+            //QueryInterface: XPCOMUtils.generateQI([Ci.nsISimpleEnumerator]),
             hasMoreElements: function CSOE_hasMoreElements() {
                 return this._i < this._keys.length;
             },
@@ -875,21 +876,3 @@ mivFunctions.prototype = {
         return this.xmlSerializer.serializeToString(parsedHtml);
     },
 };
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.mivFunctions) {
-            // Load main script from lightning that we need.
-            NSGetFactory.mivFunctions = XPCOMUtils.generateNSGetFactory([mivFunctions]);
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.mivFunctions(cid);
-}

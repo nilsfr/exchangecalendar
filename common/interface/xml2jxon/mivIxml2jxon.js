@@ -26,7 +26,6 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 function typeString(o) {
@@ -227,11 +226,13 @@ function convertSpecialCharatersToXML(aStr) {
     return result;
 }
 
-var nameSpaceMgr = Cc["@1st-setup.nl/conversion/namespaces;1"]
-    .getService(Ci.mivNameSpaces);
 
-var tagNameMgr = Cc["@1st-setup.nl/conversion/tagnames;1"]
-    .getService(Ci.mivTagNames);
+const {mivNameSpaces} = ChromeUtils.import("resource://exchangecommoninterfaces/xml2jxon/mivNameSpaces.js");
+
+const nameSpaceMgr = new mivNameSpaces();
+
+const {mivTagNames} = ChromeUtils.import("resource://exchangecommoninterfaces/xml2jxon/mivTagNames.js");
+const tagNameMgr = new mivTagNames();
 
 const cId = "@1st-setup.nl/conversion/xml2jxon;1";
 
@@ -252,7 +253,7 @@ const xguid = "d7165a60-7d64-42b2-ac48-6ccfc0962abb";
 const tsep = ":";
 
 mivIxml2jxon.prototype = {
-    QueryInterface: XPCOMUtils.generateQI([Ci.mivIxml2jxon, Ci.nsIClassInfo, Ci.nsISupports]),
+    //QueryInterface: XPCOMUtils.generateQI([Ci.mivIxml2jxon, Ci.nsIClassInfo, Ci.nsISupports]),
     getHelperForLanguage: function _getHelperForLanguage(language) {
         return null;
     },
@@ -1165,23 +1166,4 @@ function ifFunction(aCondition, aXMLObject) {
         lastOperator = compareList[index].operator;
     }
     return totalResult;
-}
-
-function NSGetFactory(cid) {
-
-    try {
-        if (!NSGetFactory.xml2json) {
-            // Load main script from lightning that we need.
-            NSGetFactory.xml2json = XPCOMUtils.generateNSGetFactory([mivIxml2jxon]);
-
-        }
-
-    }
-    catch (e) {
-        Components.utils.reportError(e);
-        dump(e);
-        throw e;
-    }
-
-    return NSGetFactory.xml2json(cid);
 }

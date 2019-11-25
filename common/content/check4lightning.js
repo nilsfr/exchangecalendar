@@ -31,14 +31,17 @@ var Cc = Components.classes;
 var Ci = Components.interfaces;
 
 
-ChromeUtils.import("resource:///modules/mailServices.js");
+ChromeUtils.import("resource:///modules/MailServices.jsm");
+const { mivFunctions } = Components.utils.import("resource://exchangecommoninterfaces/global/mivFunctions.js");
+
+
 
 function exchCheck4Lightning(aDocument, aWindow) {
+
     this._document = aDocument;
     this._window = aWindow;
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = new mivFunctions();
 }
 
 exchCheck4Lightning.prototype = {
@@ -167,14 +170,14 @@ exchCheck4Lightning.prototype = {
     onLoad: function _onLoad(event) {
 
         // We preload the exchange Address book
-        var rootDir = MailServices.ab.getDirectory("exchangecalendar-addressbook://");
-        var folders = rootDir.childNodes;
+        //var rootDir = MailServices.ab.getDirectory("exchangecalendar-addressbook://");
+        //var folders = rootDir.childNodes;
 
         this.checkLightningIsInstalled();
 
         if ((this.globalFunctions.safeGetBoolPref(null, "extensions.1st-setup.others.checkForNewAddOnVersion", true, true)) && (!this.updateCheckDone)) {
-            var updatecheck = Cc["@1st-setup.nl/checkers/updater;1"]
-                .getService(Ci.mivUpdater);
+          const { mivUpdater } = Components.utils.import("resource://exchangecommoninterfaces/updater/mivUpdater.js");
+          const updatecheck = new mivUpdater();
             var self = this;
             updatecheck.checkForUpdate("exchangecalendar@extensions.1st-setup.nl", function (aResult) {
                 self.updaterCallBack(aResult);

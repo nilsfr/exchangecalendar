@@ -27,7 +27,6 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 var EXPORTED_SYMBOLS = ["exchWebService"];
@@ -39,7 +38,6 @@ exchWebService.commonFunctions = {
     CreateSimpleEnumerator: function _CreateSimpleEnumerator(aArray) {
         return {
             _i: 0,
-            QueryInterface: XPCOMUtils.generateQI([Ci.nsISimpleEnumerator]),
             hasMoreElements: function CSE_hasMoreElements() {
                 return this._i < aArray.length;
             },
@@ -53,7 +51,6 @@ exchWebService.commonFunctions = {
         return {
             _i: 0,
             _keys: Object.keys(aObj),
-            QueryInterface: XPCOMUtils.generateQI([Ci.nsISimpleEnumerator]),
             hasMoreElements: function CSOE_hasMoreElements() {
                 return this._i < this._keys.length;
             },
@@ -64,7 +61,8 @@ exchWebService.commonFunctions = {
     }
 };
 
-let mivFunctions = Cc["@1st-setup.nl/global/functions;1"].getService(Ci.mivFunctions);
+const { mivFunctions: _mivFunctions } = Components.utils.import("resource://exchangecommoninterfaces/global/mivFunctions.js");
+const mivFunctions = new _mivFunctions();
 exchWebService.commonFunctions.doEncodeFolderSpecialChars = mivFunctions.doEncodeFolderSpecialChars;
 exchWebService.commonFunctions.encodeFolderSpecialChars = mivFunctions.encodeFolderSpecialChars;
 exchWebService.commonFunctions.doDecodeFolderSpecialChars = mivFunctions.doDecodeFolderSpecialChars;

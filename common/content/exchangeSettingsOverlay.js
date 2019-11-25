@@ -37,7 +37,6 @@ var Cc = Components.classes;
 var Ci = Components.interfaces;
 
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource://exchangecommon/erAutoDiscover.js");
@@ -54,8 +53,7 @@ function exchSettingsOverlay(aDocument, aWindow) {
     this._document = aDocument;
     this._window = aWindow;
 
-    this.globalFunctions = Cc["@1st-setup.nl/global/functions;1"]
-        .getService(Ci.mivFunctions);
+    this.globalFunctions = new mivFunctions();
 }
 
 exchSettingsOverlay.prototype = {

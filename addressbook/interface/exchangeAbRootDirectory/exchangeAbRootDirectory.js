@@ -25,16 +25,18 @@ var Ci = Components.interfaces;
 
 var Cr = Components.results;
 
-ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+//ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
 
-ChromeUtils.import("resource:///modules/mailServices.js");
+const { MailServices } = ChromeUtils.import("resource:///modules/MailServices.js");
 ChromeUtils.import("resource:///modules/iteratorUtils.jsm");
 
 ChromeUtils.import("resource://exchangeaddress/exchangeAbFunctions.js");
+
+var EXPORTED_SYMBOLS = ["exchangeAbRootDirectory"];
 
 //
 // exchangeAbRootDirectory
@@ -801,6 +803,7 @@ exchangeAbRootDirectory.prototype = {
 };
 
 
+/*
 function NSGetFactory(cid) {
 
     exchWebService.commonAbFunctions.logInfo("exchangeAbRootDirectory: NSGetFactory for exchangeAbRootDirectory 1");
@@ -821,5 +824,6 @@ function NSGetFactory(cid) {
     exchWebService.commonAbFunctions.logInfo("exchangeAbRootDirectory: NSGetFactory for exchangeAbRootDirectory 2");
     return NSGetFactory.exchWebService_ab2(cid);
 }
+*/
 
 exchWebService.commonAbFunctions.logInfo("exchangeAbRootDirectory. init.");

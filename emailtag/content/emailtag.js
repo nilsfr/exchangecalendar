@@ -22,19 +22,13 @@ ChromeUtils.import("resource://exchangecommon/erUnsubscribe.js");
 
 const eventTypes = ["NewMailEvent", "ModifiedEvent", "MovedEvent", "CopiedEvent", "CreatedEvent"];
 
-const mivFunctions = Cc["@1st-setup.nl/global/functions;1"]
-    .getService(Ci.mivFunctions);
-
-if (Cc["@1st-setup.nl/global/functions;1"]
-    .getService(Ci.mivFunctions)) {
-    dump("\EwsTagging(exception) 2 :");
-}
+const globalFunctions = new mivFunctions();
 
 function LOG(msg, user) {
     if (user) {
-        mivFunctions.LOG("ewsTagger(" + user + "): " + msg);
+        globalFunctions.LOG("ewsTagger(" + user + "): " + msg);
     } else {
-        mivFunctions.LOG("ewsTagger-----: " + msg);
+        globalFunctions.LOG("ewsTagger-----: " + msg);
     }
 }
 
@@ -211,7 +205,7 @@ function rtews(identity) {
 
     this.retry = true;
 
-    this.globalFunctions = mivFunctions;
+    this.globalFunctions = globalFunctions;
 
     this.prefs = identity.prefs;
 
@@ -233,7 +227,7 @@ rtews.prototype = {
      *use Calendar queue for xml request
      */
     addToQueue: function _addToQueue(aRequest, aArgument, aCbOk, aCbError, aListener) {
-        if (mivFunctions.safeGetBoolPref(this.prefs, "mailsync.active", false) == false) {
+        if (globalFunctions.safeGetBoolPref(this.prefs, "mailsync.active", false) == false) {
             LOG("Not adding to queue because we are disabled,  " + this.serverUrl, this.user);
             this.Running = false;
             return;
@@ -1010,7 +1004,7 @@ function init() {
     LOG("Initializing Remote tagger.");
     LOG("Total accounts after filtering -  " + identities.length);
 
-    LOG("debug =  " + debug);
+    //LOG("debug =  " + debug);
     for (var account = 0, len = identities.length; account < len; account++) {
         if (identities[account].ewsUrl && identities[account].enabled) {
 
@@ -1106,17 +1100,17 @@ function getAllAccounts() {
 
                     var details = null;
 
-                    if (calAccount && mivFunctions) {
-                        enabled = mivFunctions.safeGetBoolPref(calAccount, "mailsync.active", false);
+                    if (calAccount && globalFunctions) {
+                        enabled = globalFunctions.safeGetBoolPref(calAccount, "mailsync.active", false);
                         details = {
                             "server": account.incomingServer.prettyName,
                             "serverURI": account.incomingServer.serverURI,
-                            "email": mivFunctions.safeGetStringPref(calAccount, "ecMailbox"),
-                            "username": mivFunctions.safeGetStringPref(calAccount, "ecUser"),
+                            "email": globalFunctions.safeGetStringPref(calAccount, "ecMailbox"),
+                            "username": globalFunctions.safeGetStringPref(calAccount, "ecUser"),
                             "name": identity.fullName,
-                            "domain": mivFunctions.safeGetStringPref(calAccount, "ecDomain"),
+                            "domain": globalFunctions.safeGetStringPref(calAccount, "ecDomain"),
                             "enabled": enabled,
-                            "ewsUrl": mivFunctions.safeGetStringPref(calAccount, "ecServer"),
+                            "ewsUrl": globalFunctions.safeGetStringPref(calAccount, "ecServer"),
                             "prefs": calAccount,
                         };
                     }
@@ -1147,17 +1141,17 @@ function getAllAccounts() {
 
                     let details = null;
 
-                    if (calAccount && mivFunctions) {
-                        enabled = mivFunctions.safeGetBoolPref(calAccount, "mailsync.active", false);
+                    if (calAccount && globalFunctions) {
+                        enabled = globalFunctions.safeGetBoolPref(calAccount, "mailsync.active", false);
                         details = {
                             "server": account.incomingServer.prettyName,
                             "serverURI": account.incomingServer.serverURI,
-                            "email": mivFunctions.safeGetStringPref(calAccount, "ecMailbox"),
-                            "username": mivFunctions.safeGetStringPref(calAccount, "ecUser"),
+                            "email": globalFunctions.safeGetStringPref(calAccount, "ecMailbox"),
+                            "username": globalFunctions.safeGetStringPref(calAccount, "ecUser"),
                             "name": identity.fullName,
-                            "domain": mivFunctions.safeGetStringPref(calAccount, "ecDomain"),
+                            "domain": globalFunctions.safeGetStringPref(calAccount, "ecDomain"),
                             "enabled": enabled,
-                            "ewsUrl": mivFunctions.safeGetStringPref(calAccount, "ecServer"),
+                            "ewsUrl": globalFunctions.safeGetStringPref(calAccount, "ecServer"),
                             "prefs": calAccount,
                         };
                     }

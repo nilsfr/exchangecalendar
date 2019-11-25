@@ -24,13 +24,7 @@ manifest interface/exchangeAuthPromptProvider/mivExchangeAuthPromptProvider.mani
 manifest interface/exchangeBadCertListener2/mivExchangeBadCertListener2.manifest
 manifest interface/exchangeBaseItem/mivExchangeBaseItem.manifest
 manifest interface/exchangeLightningNotifier/mivExchangeLightningNotifier.manifest
-manifest interface/exchangeLoadBalancer/mivExchangeLoadBalancer.manifest
 manifest interface/exchangeStatistics/mivExchangeStatistics.manifest
-manifest interface/global/mivFunctions.manifest
-manifest interface/updater/mivUpdater.manifest
-manifest interface/xml2jxon/mivIxml2jxon.manifest
-manifest interface/xml2jxon/mivNameSpaces.manifest
-manifest interface/xml2jxon/mivTagNames.manifest
 
 content exchangecommon content/
 
