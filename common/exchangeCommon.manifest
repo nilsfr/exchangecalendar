@@ -19,11 +19,7 @@ locale exchangecommon sv locale/sv/
 locale exchangecommon tr locale/tr/
 
 manifest interface/exchangeAccountManager/mivExchangeAccountManager.manifest
-manifest interface/exchangeAuthPrompt2/mivExchangeAuthPrompt2.manifest
-manifest interface/exchangeAuthPromptProvider/mivExchangeAuthPromptProvider.manifest
-manifest interface/exchangeBadCertListener2/mivExchangeBadCertListener2.manifest
 manifest interface/exchangeLightningNotifier/mivExchangeLightningNotifier.manifest
-manifest interface/exchangeStatistics/mivExchangeStatistics.manifest
 
 content exchangecommon content/
 

@@ -4267,7 +4267,7 @@ calExchangeCalendar.prototype = {
             }
 
             //dump("\resetCalendar\n");
-            var myAuthPrompt2 = Cc["@1st-setup.nl/exchange/authprompt2;1"].getService(Ci.mivExchangeAuthPrompt2);
+            var myAuthPrompt2 = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeAuthPrompt2/mivExchangeAuthPrompt2.js").mivExchangeAuthPrompt2)());
             myAuthPrompt2.removeUserCanceled(this.serverUrl);
         }
         catch (err) {

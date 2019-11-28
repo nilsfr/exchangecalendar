@@ -26,6 +26,8 @@ var components = Components;
 
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
+var EXPORTED_SYMBOLS = ["mivExchangeAuthPrompt2"];
+
 function mivExchangeAuthPrompt2() {
 
     this.passwordCache = {};

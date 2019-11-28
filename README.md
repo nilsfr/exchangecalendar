@@ -19,6 +19,7 @@ This extension requires:
   for preview builds of ExchangeCalendar version 5 with Thunderbird 60 support.
   * Lightning extension corresponding to the Thunderbird release.
   * The Exchange server has to provide an Exchange Web Service.
+  * The [Provider for Google Calendar](https://addons.thunderbird.net/en-US/thunderbird/addon/provider-for-google-calendar/) must be installed.
 
 ExchangeCalendar is developed by a community of interested developers. 
 Support is best effort and cannot be guaranteed. Contributions are welcome.

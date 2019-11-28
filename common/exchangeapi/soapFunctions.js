@@ -40,7 +40,7 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
+const { nsMessagesStr, nsTypesStr } = ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
 //ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 

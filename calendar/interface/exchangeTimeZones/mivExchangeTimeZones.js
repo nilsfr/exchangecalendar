@@ -32,7 +32,7 @@ ChromeUtils.import("resource://exchangecalendar/erGetTimeZones.js");
 
 //ChromeUtils.import("resource://exchangecommoninterfaces/xml2jxon/mivIxml2jxon.js");
 
-const { xml2json } = ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
+const { xml2json, telements } = ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 Cu.importGlobalProperties(["XMLHttpRequest"]);
 
 var EXPORTED_SYMBOLS = ["mivExchangeTimeZones"];
@@ -209,9 +209,7 @@ mivExchangeTimeZones.prototype = {
         if (this._tzCache[timeZoneId]) {
             return this._tzCache[timeZoneId];
         }
-
-        this._tzCache[timeZoneId] = Cc["@1st-setup.nl/exchange/timezone;1"]
-            .createInstance(Ci.mivExchangeTimeZone);
+        this._tzCache[timeZoneId] = (new (ChromeUtils.import("resource://interfacescalendartask/exchangeTimeZones/mivExchangeTimeZone.js").mivExchangeTimeZone)())
 
         this._tzCache[timeZoneId].indexDate = aIndexDate;
         this._tzCache[timeZoneId].timeZone = aTimeZone;

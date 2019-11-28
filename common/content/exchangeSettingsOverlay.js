@@ -41,10 +41,10 @@ ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource://exchangecommon/erAutoDiscover.js");
 ChromeUtils.import("resource://exchangecommon/erAutoDiscoverySOAP.js");
-ChromeUtils.import("resource://exchangecommon/erPrimarySMTPCheck.js");
+const { erPrimarySMTPCheckRequest } = ChromeUtils.import("resource://exchangecommon/erPrimarySMTPCheck.js");
 ChromeUtils.import("resource://exchangecommon/erConvertID.js");
 ChromeUtils.import("resource://exchangecommon/erFindFolder.js");
-ChromeUtils.import("resource://exchangecommon/erGetFolder.js");
+const { erGetFolderRequest } = ChromeUtils.import("resource://exchangecommon/erGetFolder.js");
 ChromeUtils.import("resource://exchangecommon/erGetUserAvailability.js");
 
 ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
@@ -340,7 +340,7 @@ exchSettingsOverlay.prototype = {
 
         var folderIdOfShare = this.exchWebServicesgFolderIdOfShare;
 
-        var myAuthPrompt2 = Cc["@1st-setup.nl/exchange/authprompt2;1"].getService(Ci.mivExchangeAuthPrompt2);
+        var myAuthPrompt2 = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeAuthPrompt2/mivExchangeAuthPrompt2.js").mivExchangeAuthPrompt2)())
         myAuthPrompt2.removeUserCanceled(this.exchWebServicesgServer);
 
         try {
@@ -572,6 +572,7 @@ exchSettingsOverlay.prototype = {
         catch (err) {
             this._window.setCursor("auto");
             this.globalFunctions.ERROR("Warning: Error during creation of erGetFolderRequest. Err=" + err + "\n");
+            throw err;
         }
     },
 

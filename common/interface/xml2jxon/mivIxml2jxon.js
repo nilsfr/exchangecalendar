@@ -253,6 +253,12 @@ const xguid = "d7165a60-7d64-42b2-ac48-6ccfc0962abb";
 const tsep = ":";
 
 mivIxml2jxon.prototype = {
+    ERR_MISSING_SPECIAL_TAG: 1,
+    ERR_INVALID_TAG: 2,
+    ERR_INVALID_SPECIAL_TAG: 3,
+    ERR_WRONG_CLOSING_TAG: 4,
+    ERR_WRONG_ATTRIBUTE_SEPARATOR: 5,
+    ERR_ATTRIBUTE_VALUE_QUOTES: 6,
     //QueryInterface: XPCOMUtils.generateQI([Ci.mivIxml2jxon, Ci.nsIClassInfo, Ci.nsISupports]),
     getHelperForLanguage: function _getHelperForLanguage(language) {
         return null;
@@ -279,7 +285,7 @@ mivIxml2jxon.prototype = {
         a = a.replace(/\n/g, "").replace(/\r/g, "").replace(/\t/g, "");
         var sp = a.indexOf("=");
         if (sp == -1) {
-            throw Ci.mivIxml2jxon.ERR_WRONG_ATTRIBUTE_SEPARATOR;
+            throw mivIxml2jxon.ERR_WRONG_ATTRIBUTE_SEPARATOR;
         }
         var an = a.substr(0, sp).trim();
         var av = a.substr(sp + 1).trim();
@@ -290,7 +296,7 @@ mivIxml2jxon.prototype = {
                 av = av.substr(1, vl - 2);
             }
             else {
-                throw Ci.mivIxml2jxon.ERR_ATTRIBUTE_VALUE_QUOTES;
+                throw mivIxml2jxon.ERR_ATTRIBUTE_VALUE_QUOTES;
             }
         }
         if (an.toLowerCase().indexOf("xmlns") == 0) {
@@ -372,7 +378,7 @@ mivIxml2jxon.prototype = {
         var rt;
         for (let index in this.tags) {
             let childTag = this.tags[index];
-            if ((childTag instanceof Ci.mivIxml2jxon) || (childTag instanceof mivIxml2jxon)) {
+            if ((childTag instanceof mivIxml2jxon) || (childTag instanceof mivIxml2jxon)) {
                 ri = childTag.realTagName(index);
                 rt = childTag.realTagName(a);
                 if (ri == rt) {
@@ -772,15 +778,15 @@ function checkClosingElement(aStr, aPos, aXMLObject, aParent) {
                 return true;
             }
             else {
-                throw Ci.mivIxml2jxon.ERR_WRONG_CLOSING_TAG;
+                throw mivIxml2jxon.ERR_WRONG_CLOSING_TAG;
             }
         }
         else {
-            throw Ci.mivIxml2jxon.ERR_INVALID_TAG;
+            throw mivIxml2jxon.ERR_INVALID_TAG;
         }
     }
     else {
-        throw Ci.mivIxml2jxon.ERR_INVALID_TAG;
+        throw mivIxml2jxon.ERR_INVALID_TAG;
     }
 }
 
@@ -798,14 +804,14 @@ function hasXMLHeader(aStr, aSP) {
             if (aStr.substr(pos, 4) == "xml ") {
                 var tmpPos = findString(aStr, pos, "?>");
                 if (tmpPos == -1) {
-                    throw Ci.mivIxml2jxon.ERR_INVALID_SPECIAL_TAG;
+                    throw mivIxml2jxon.ERR_INVALID_SPECIAL_TAG;
                 }
                 else {
                     return (tmpPos + 2);
                 }
             }
             else {
-                throw Ci.mivIxml2jxon.ERR_MISSING_SPECIAL_TAG;
+                throw mivIxml2jxon.ERR_MISSING_SPECIAL_TAG;
             }
         }
     }
@@ -915,14 +921,14 @@ function processXMLStringEXT(aStr, aSP, aParent, aXMLObject) {
                                 }
                                 else {
                                     if (!((tmpStart < strLength) && (tc == ">"))) {
-                                        throw Ci.mivIxml2jxon.ERR_WRONG_CLOSING_TAG;
+                                        throw mivIxml2jxon.ERR_WRONG_CLOSING_TAG;
                                     }
                                 }
 
                             }
                             else {
                                 if (!((tmpStart < strLength) && (tc == ">"))) {
-                                    throw Ci.mivIxml2jxon.ERR_WRONG_CLOSING_TAG;
+                                    throw mivIxml2jxon.ERR_WRONG_CLOSING_TAG;
                                 }
                             }
                         }
@@ -942,11 +948,11 @@ function processXMLStringEXT(aStr, aSP, aParent, aXMLObject) {
                         aXMLObject.lastPos = tmpPos;
                     }
                     else {
-                        throw Ci.mivIxml2jxon.ERR_INVALID_TAG;
+                        throw mivIxml2jxon.ERR_INVALID_TAG;
                     }
                 }
                 else {
-                    throw Ci.mivIxml2jxon.ERR_INVALID_TAG;
+                    throw mivIxml2jxon.ERR_INVALID_TAG;
                 }
             }
         }

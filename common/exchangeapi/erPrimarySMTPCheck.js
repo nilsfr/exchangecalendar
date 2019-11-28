@@ -38,10 +38,10 @@
 
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
-ChromeUtils.import("resource://exchangecommon/soapFunctions.js");
+const { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+const { makeParentFolderIds2 } = ChromeUtils.import("resource://exchangecommon/soapFunctions.js");
 
-ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
+const { ExchangeRequest, nsMessagesStr, nsTypesStr } = ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
 
 var EXPORTED_SYMBOLS = ["erPrimarySMTPCheckRequest"];
 

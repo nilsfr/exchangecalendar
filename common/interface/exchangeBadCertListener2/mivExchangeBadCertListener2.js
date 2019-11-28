@@ -26,6 +26,8 @@ var components = Components;
 
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
+var EXPORTED_SYMBOLS = ["mivExchangeBadCertListener2"];
+
 function mivExchangeBadCertListener2() {
 
     this.targetSites = {};

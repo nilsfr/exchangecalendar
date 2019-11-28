@@ -26,9 +26,11 @@ var components = Components;
 
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
+const { cal } = ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
-ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
+const { xml2json, telements } = ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
+
+var EXPORTED_SYMBOLS = ['mivExchangeTimeZone'];
 
 function mivExchangeTimeZone() {
     this._timeZone = null;

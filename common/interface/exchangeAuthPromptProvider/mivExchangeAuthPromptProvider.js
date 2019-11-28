@@ -26,6 +26,8 @@ var components = Components;
 
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
+var EXPORTED_SYMBOLS = ["mivExchangeAuthPromptProvider"];
+
 function mivExchangeAuthPromptProvider() {
     //dump("\nmivExchangeAuthPromptProvider.init\n");
     this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
@@ -54,7 +56,7 @@ mivExchangeAuthPromptProvider.prototype = {
         this.logInfo("  --- mivExchangeAuthPromptProvider.getAuthPrompt:aPromptReason:" + aPromptReason + ", iid:" + iid);
         if (iid.equals(Ci.nsIAuthPrompt2)) { // id == 651395eb-8612-4876-8ac0-a88d4dce9e1e
             this.logInfo("  --- ecnsIAuthPrompt2.getAuthPrompt: iid=nsIAuthPrompt2");
-            return Cc["@1st-setup.nl/exchange/authprompt2;1"].getService();
+            return (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeAuthPrompt2/mivExchangeAuthPrompt2.js").mivExchangeAuthPrompt2)());
         }
 
         this.logInfo("  --- mivExchangeAuthPromptProvider.getAuthPrompt:aPromptReason:" + aPromptReason + ", iid:" + iid);

@@ -42,12 +42,12 @@ var components = Components;
 
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
+const { cal } = ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
 ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 
-ChromeUtils.import("resource://exchangecommoninterfaces/xml2jxon/mivIxml2jxon.js");
-ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
+const { mivIxml2jxon } = ChromeUtils.import("resource://exchangecommoninterfaces/xml2jxon/mivIxml2jxon.js");
+const { mivIxml2json } = ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 Cu.importGlobalProperties(["XMLHttpRequest"]);
 
@@ -104,13 +104,19 @@ function ExchangeRequest(aArgument, aCbOk, aCbError, aListener) {
 
     this.exchangeStatistics = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeStatistics/mivExchangeStatistics.js").mivExchangeStatistics)());
 
-    this.exchangeBadCertListener2 = Cc["@1st-setup.nl/exchange/badcertlistener2;1"]
-        .getService(Ci.mivExchangeBadCertListener2);
+    this.exchangeBadCertListener2 = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeBadCertListener2/mivExchangeBadCertListener2.js").mivExchangeBadCertListener2)());
 
     this.showPassword = this.globalFunctions.safeGetBoolPref(null, "extensions.1st-setup.authentication.showpassword", false, true);
     this.observerService = Cc["@mozilla.org/observer-service;1"]
         .getService(Ci.nsIObserverService);
-    this.observerService.addObserver(this, "http-on-modify-request", true);
+
+    /*
+    observerService.addObserver({
+        observe: (function(aSubject, aTopic) {
+            this.observe(aSubject);
+        }).bind(this)
+    }, "http-on-modify-request", true);
+    */
 
     this.timeZones = (new (ChromeUtils.import("resource://interfacescalendartask/exchangeTimeZones/mivExchangeTimeZones.js").mivExchangeTimeZones)());
 
@@ -166,7 +172,7 @@ ExchangeRequest.prototype = {
     Further changes to authentication are all controlled through these asyncPromptAuth calls which never occur, hence failure. What we
     do with the observer is reverse the effect of that bug, adding back the calls to asyncPromptAuth
     */
-    observe(aSubject, aTopic, aData) {
+    observe(aSubject) {
         let channel = aSubject.QueryInterface(Components.interfaces.nsIHttpChannel);
 
         // Local variables to display URIs in logs according to showPassword preference
@@ -275,8 +281,7 @@ ExchangeRequest.prototype = {
         var openUser = this.mArgument.user;
         var password = null;
 
-        var myAuthPrompt2 = Cc["@1st-setup.nl/exchange/authprompt2;1"].getService(
-            Ci.mivExchangeAuthPrompt2);
+        var myAuthPrompt2 = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeAuthPrompt2/mivExchangeAuthPrompt2.js").mivExchangeAuthPrompt2)());
 
         if (myAuthPrompt2.getUserCanceled(this.currentUrl)) {
             this.fail(this.ER_ERROR_USER_ABORT_AUTHENTICATION,
@@ -1037,7 +1042,7 @@ ExchangeRequest.prototype = {
                     + ": " + errMsg + "\nURL:" + this.currentUrl + "\n"
                     + xmlReq.responseText);
 
-                var myAuthPrompt2 = Cc["@1st-setup.nl/exchange/authprompt2;1"].getService(Ci.mivExchangeAuthPrompt2);
+                var myAuthPrompt2 = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeAuthPrompt2/mivExchangeAuthPrompt2.js").mivExchangeAuthPrompt2)());
                 if (this.urllist.length > 0 && !myAuthPrompt2.getUserCanceled(this.currentUrl)) {
                     if (this.tryNextURL()) {
                         return true;
@@ -1404,12 +1409,12 @@ ecnsIAuthPrompt2.prototype = {
         getInterface: function (iid) {
             if ((Ci.nsIAuthPrompt2) && (iid.equals(Ci.nsIAuthPrompt2))) { // id == 651395eb-8612-4876-8ac0-a88d4dce9e1e
                 this.logInfo("ecnsIAuthPrompt2.getInterface: Ci.nsIAuthPrompt2");
-                return Cc["@1st-setup.nl/exchange/authprompt2;1"].getService(Ci.mivExchangeAuthPrompt2);
+                return (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeAuthPrompt2/mivExchangeAuthPrompt2.js").mivExchangeAuthPrompt2)());
             }
 
             if ((Ci.nsIBadCertListener2) && (iid.equals(Ci.nsIBadCertListener2))) {
                 this.logInfo("ecnsIAuthPrompt2.getInterface: Ci.nsIBadCertListener2");
-                return Cc["@1st-setup.nl/exchange/badcertlistener2;1"].getService(Ci.mivExchangeBadCertListener2);
+                return (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeBadCertListener2/mivExchangeBadCertListener2.js").mivExchangeBadCertListener2)());
             }
 
             if ((Ci.nsIProgressEventSink) && (iid.equals(Ci.nsIProgressEventSink))) { // iid == d974c99e-4148-4df9-8d98-de834a2f6462
@@ -1429,7 +1434,7 @@ ecnsIAuthPrompt2.prototype = {
 
             if ((Ci.nsIAuthPromptProvider) && (iid.equals(Ci.nsIAuthPromptProvider))) { // iid == bd9dc0fa-68ce-47d0-8859-6418c2ae8576
                 this.logInfo("ecnsIAuthPrompt2.getInterface: Ci.nsIAuthPromptProvider");
-                return Cc["@1st-setup.nl/exchange/authpromptprovider;1"].getService();
+                return (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeAuthPromptProvider/mivExchangeAuthPromptProvider.js").mivExchangeAuthPromptProvider)());
             }
 
             if ((Ci.nsIChannelEventSink) && (iid.equals(Ci.nsIChannelEventSink))) { // iid == a430d870-df77-4502-9570-d46a8de33154
@@ -1569,7 +1574,7 @@ ecnsIAuthPrompt2.prototype = {
             this.URL = aURL;
 
             var password;
-            var myAuthPrompt2 = Cc["@1st-setup.nl/exchange/authprompt2;1"].getService(Ci.mivExchangeAuthPrompt2);
+            var myAuthPrompt2 = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeAuthPrompt2/mivExchangeAuthPrompt2.js").mivExchangeAuthPrompt2)());
             if (myAuthPrompt2.getUserCanceled(aURL)) {
                 return null;
             }

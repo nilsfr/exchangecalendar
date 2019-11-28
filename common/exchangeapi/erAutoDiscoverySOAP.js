@@ -82,7 +82,7 @@ erAutoDiscoverySOAPRequest.prototype = {
         var domain = parts[1];
         exchWebService.commonFunctions.LOG("autodiscoverSOAP email:" + email + ", domain:" + domain + "\n");
 
-        var myAuthPrompt2 = Cc["@1st-setup.nl/exchange/authprompt2;1"].getService(Ci.mivExchangeAuthPrompt2);
+        var myAuthPrompt2 = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeAuthPrompt2/mivExchangeAuthPrompt2.js").mivExchangeAuthPrompt2)());
         myAuthPrompt2.removeUserCanceled("https://" + domain + "/autodiscover/autodiscover.svc");
         myAuthPrompt2.removeUserCanceled("https://autodiscover." + domain + "/autodiscover/autodiscover.svc");
         myAuthPrompt2.removeUserCanceled("http://autodiscover." + domain + "/autodiscover/autodiscover.svc");

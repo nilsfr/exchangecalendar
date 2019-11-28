@@ -32,7 +32,7 @@ var EXPORTED_SYMBOLS = ["mivFunctions"];
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 ChromeUtils.import("resource://gre/modules/Console.jsm");
 
-ChromeUtils.import("resource://exchangecommoninterfaces/xml2jxon/mivIxml2jxon.js");
+const { mivIxml2jxon } = ChromeUtils.import("resource://exchangecommoninterfaces/xml2jxon/mivIxml2jxon.js");
 ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 function mivFunctions() {
@@ -513,6 +513,7 @@ mivFunctions.prototype = {
      * @param aMessage error message
      */
     ERROR: function _ERROR(aMessage) {
+        console.error("error", aMessage);
         console.error("1st-setup: Error: " + aMessage + '\n');
         var scriptError = Cc["@mozilla.org/scripterror;1"].createInstance(Ci.nsIScriptError);
         scriptError.init("1st-setup: " + aMessage, null, null, 0, 0,
@@ -652,7 +653,7 @@ mivFunctions.prototype = {
             var result = new mivIxml2jxon(aXMLString, 0, null);
         }
         catch (exc) {
-            this.LOG("xmlToJxon: Error processXMLString:" + exc + ".(" + aXMLString + ")");
+            this.ERROR("xmlToJxon: Error processXMLString:" + exc + ".(" + aXMLString + ")");
             result = null;
         }
 
