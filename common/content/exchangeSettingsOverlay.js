@@ -39,8 +39,8 @@ var Ci = Components.interfaces;
 
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-ChromeUtils.import("resource://exchangecommon/erAutoDiscover.js");
-ChromeUtils.import("resource://exchangecommon/erAutoDiscoverySOAP.js");
+const { erAutoDiscoverRequest } = ChromeUtils.import("resource://exchangecommon/erAutoDiscover.js");
+const { erAutoDiscoverySOAPRequest } = ChromeUtils.import("resource://exchangecommon/erAutoDiscoverySOAP.js");
 const { erPrimarySMTPCheckRequest } = ChromeUtils.import("resource://exchangecommon/erPrimarySMTPCheck.js");
 ChromeUtils.import("resource://exchangecommon/erConvertID.js");
 ChromeUtils.import("resource://exchangecommon/erFindFolder.js");

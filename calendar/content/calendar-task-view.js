@@ -7,7 +7,7 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+const { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
 const globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());

@@ -38,9 +38,8 @@ var Cc = Components.classes;
 var Ci = Components.interfaces;
 
 
-ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
-
-if (!exchWebService) var exchWebService = {};
+var { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+//if (!exchWebService) var exchWebService = {};
 
 exchWebService.debugPreferences = {
 

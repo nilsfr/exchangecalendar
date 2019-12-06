@@ -44,8 +44,6 @@ ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 const { cal } = ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
-ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
-
 const { mivIxml2jxon } = ChromeUtils.import("resource://exchangecommoninterfaces/xml2jxon/mivIxml2jxon.js");
 const { mivIxml2json } = ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
@@ -64,12 +62,10 @@ const nsAutodiscover2010Str = "http://schemas.microsoft.com/exchange/2010/Autodi
 const nsWSAStr = "http://www.w3.org/2005/08/addressing";
 const nsXSIStr = "http://www.w3.org/2001/XMLSchema-instance";
 const nsErrors = "http://schemas.microsoft.com/exchange/services/2006/errors";
+const gExchangeRequestVersion = "0.1";
 
-var gExchangeRequestVersion = "0.1";
-
-if (!exchWebService) {
-    var exchWebService = {};
-}
+var { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+//if (!exchWebService) var exchWebService = {};
 
 exchWebService.prePasswords = {};
 
@@ -1591,4 +1587,4 @@ ecnsIAuthPrompt2.prototype = {
         logInfo: function _logInfo(aMsg) {
             this.globalFunctions.LOG(this.uuid + ": " + aMsg);
         },
-    }; // End of ecnsIAuthPrompt2 prototype
+}; // End of ecnsIAuthPrompt2 prototype

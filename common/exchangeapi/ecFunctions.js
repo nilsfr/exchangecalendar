@@ -31,7 +31,7 @@ ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 var EXPORTED_SYMBOLS = ["exchWebService"];
 
-if (!exchWebService) var exchWebService = {};
+var exchWebService = {};
 
 exchWebService.commonFunctions = {
 

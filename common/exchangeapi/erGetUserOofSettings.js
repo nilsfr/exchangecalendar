@@ -41,8 +41,12 @@ ChromeUtils.import("resource://gre/modules/Services.jsm");
 ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
 ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
-ChromeUtils.import("resource://exchangecommon/soapFunctions.js");
-ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+const {
+    makeParentFolderIds2,
+    makeParentFolderIds3,
+    publicFoldersMap
+} = ChromeUtils.import("resource://exchangecommon/soapFunctions.js");
+const { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 
 var EXPORTED_SYMBOLS = ["erGetUserOofSettingsRequest"];
 

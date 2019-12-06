@@ -29,11 +29,10 @@ var components = Components;
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 ChromeUtils.import("resource:///modules/iteratorUtils.jsm");
 
-ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
-
 var EXPORTED_SYMBOLS = [];
 
-if (!exchWebService) var exchWebService = {};
+var { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+//if (!exchWebService) var exchWebService = {};
 
 exchWebService.commonAbFunctions = {
 

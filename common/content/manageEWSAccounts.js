@@ -23,13 +23,12 @@
 var Cc = Components.classes;
 var Ci = Components.interfaces;
 
-
-ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 ChromeUtils.import("resource://exchangecommon/erAutoDiscover.js");
 ChromeUtils.import("resource://exchangecommon/erPrimarySMTPCheck.js");
 ChromeUtils.import("resource://exchangecommon/erGetFolder.js");
 
-if (!exchWebService) var exchWebService = {};
+var { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+//if (!exchWebService) var exchWebService = {};
 
 exchWebService.manageEWSAccounts = {
 

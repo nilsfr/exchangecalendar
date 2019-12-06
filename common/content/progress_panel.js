@@ -32,8 +32,7 @@ var Ci = Components.interfaces;
 
 
 const { mivExchangeLoadBalancer } = Components.utils.import("resource://exchangecommoninterfaces/exchangeLoadBalancer/mivExchangeLoadBalancer.js");
-//ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
-
+//const { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 //if (! exchWebService) var exchWebService = {};
 
 function exchProgressPanel(aDocument, aWindow) {

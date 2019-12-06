@@ -30,10 +30,9 @@
 var Cc = Components.classes;
 var Ci = Components.interfaces;
 
-
-//ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
+var { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 //if (! exchWebService) var exchWebService = {};
 
 function exchTaskDelegation(aDocument, aWindow) {

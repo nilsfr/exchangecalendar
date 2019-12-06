@@ -38,12 +38,10 @@ var Ci = Components.interfaces;
 
 
 ChromeUtils.import("resource://gre/modules/Services.jsm");
-
-ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
 ChromeUtils.import("resource://exchangecommon/erForewardItem.js");
 
-
+var { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 //if (! exchWebService) var exchWebService = {};
 
 function exchEventSummaryBrowserProgressListener(aDialog) {

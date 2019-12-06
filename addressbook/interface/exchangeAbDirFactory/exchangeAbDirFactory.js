@@ -28,7 +28,7 @@ ChromeUtils.import("resource://gre/modules/Services.jsm");
 ChromeUtils.import("resource:///modules/mailServices.js");
 ChromeUtils.import("resource:///modules/iteratorUtils.jsm");
 
-ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+const { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 ChromeUtils.import("resource://exchangeaddress/exchangeAbFunctions.js");
 
 

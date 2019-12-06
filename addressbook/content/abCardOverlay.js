@@ -30,7 +30,7 @@ ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 ChromeUtils.import("resource:///modules/mailServices.js");
 
-ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+const { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 ChromeUtils.import("resource://exchangeaddress/exchangeAbFunctions.js");
 ChromeUtils.import("resource://exchangecommon/erGetAttachments.js");
 

@@ -37,7 +37,7 @@
 var Cc = Components.classes;
 var Ci = Components.interfaces;
 
-const { mivFunctions } = Components.utils.import("resource://exchangecommoninterfaces/global/mivFunctions.js");
+const { mivFunctions } = ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js");
 
 function exchCalendarCreation(aDocument, aWindow) {
     this._document = aDocument;

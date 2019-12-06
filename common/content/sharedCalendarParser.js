@@ -26,12 +26,10 @@
 var Cc = Components.classes;
 var Ci = Components.interfaces;
 
-
-
-ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+var { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 ChromeUtils.import("chrome://exchangecommon/content/msgHdrUtils.js");
 
-if (!exchWebService) var exchWebService = {};
+//if (!exchWebService) exchWebService = {};
 
 exchWebService.hdrView = {
 

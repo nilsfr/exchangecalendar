@@ -41,7 +41,7 @@ var Cr = Components.results;
 var components = Components;
 
 const { nsMessagesStr, nsTypesStr } = ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
-//ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+//const { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 var EXPORTED_SYMBOLS = ["makeParentFolderIds2", "makeParentFolderIds3", "publicFoldersMap"];

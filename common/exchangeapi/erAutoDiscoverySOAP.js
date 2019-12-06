@@ -42,9 +42,16 @@ var components = Components;
 
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+const { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 
-ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
+const {
+    ExchangeRequest,
+    nsSoapStr,
+    nsAutodiscover2010Str,
+    nsWSAStr,
+    nsXSIStr,
+    xml_tag
+} = ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
 
 var EXPORTED_SYMBOLS = ["erAutoDiscoverySOAPRequest"];
 

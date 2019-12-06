@@ -46,8 +46,11 @@ ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 const { cal } = ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
-ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
-ChromeUtils.import("resource://exchangecommon/soapFunctions.js");
+const {
+    makeParentFolderIds2,
+    makeParentFolderIds3,
+    publicFoldersMap
+} = ChromeUtils.import("resource://exchangecommon/soapFunctions.js");
 ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
 
 ChromeUtils.import("resource://exchangecommon/erFindFolder.js");
@@ -81,6 +84,9 @@ ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 ChromeUtils.import("resource://interfacescalendartask/exchangeTodo/mivExchangeTodo.js");
 ChromeUtils.import("resource://interfacescalendartask/exchangeEvent/mivExchangeEvent.js");
+
+var { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+//if (!exchWebService) var exchWebService = {};
 
 var globalStart = new Date().getTime();
 
@@ -10918,8 +10924,6 @@ function convertToVersion1() {
     }
 
 }
-
-if (!exchWebService) var exchWebService = {};
 
 exchWebService.check4addon = {
 

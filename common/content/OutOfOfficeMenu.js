@@ -38,8 +38,7 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
-
+var { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 //if (! exchWebService) var exchWebService = {};
 
 function exchToolsMenu(aDocument, aWindow) {

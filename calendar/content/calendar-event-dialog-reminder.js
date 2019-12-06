@@ -33,8 +33,8 @@ var Cc = Components.classes;
 
 ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 ChromeUtils.import("resource://gre/modules/Preferences.jsm");
-
-if (!exchWebService) var exchWebService = {};
+var { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+//if (!exchWebService) var exchWebService = {};
 
 function exchChangeCalendarPropertiesReminder(aDocument, aWindow, aArgument) {
     this._document = aDocument;
