@@ -46,10 +46,13 @@ function mivExchangeItemsManager() {
         .getService(Ci.nsIPrefBranch)
         .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl.");
 
-    this._accountManager = Cc["@1st-setup.nl/exchange/accountmanager;1"]
-        .getService(Ci.mivExchangeAccountManager);
+    this._accountManager = (new (ChromeUtils.import(
+        "resource://exchangecommoninterfaces/exchangeAccountManager/mivExchangeAccountManager.js")
+        .mivExchangeAccountManager)());
 
-    this._loadBalancer = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeLoadBalancer/mivExchangeLoadBalancer.js").mivExchangeLoadBalancer)());
+    this._loadBalancer = (new (ChromeUtils.import(
+        "resource://exchangecommoninterfaces/exchangeLoadBalancer/mivExchangeLoadBalancer.js")
+        .mivExchangeLoadBalancer)());
 
     this.uuid = this.globalFunctions.getUUID();
 

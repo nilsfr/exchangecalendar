@@ -22,10 +22,8 @@ var Cc = Components.classes;
 var Ci = Components.interfaces;
 
 var Cr = Components.results;
-var components = Components;
 
-ChromeUtils.import("resource://gre/modules/Services.jsm");
-ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
+var EXPORTED_SYMBOLS = ["mivExchangeLightningNotifier"];
 
 function mivExchangeLightningNotifier() {
     this.queue = [];
@@ -42,20 +40,7 @@ function mivExchangeLightningNotifier() {
 
 var PREF_MAINPART = 'extensions.1st-setup.exchangecalendar.lightningnotifier.';
 
-var mivExchangeLightningNotifierGUID = "3b2d58f7-9528-44cf-8cd7-865dc209590c";
-
 mivExchangeLightningNotifier.prototype = {
-
-    // methods from nsISupport
-
-    // Attributes from nsIClassInfo
-    classDescription: "Load balancer in sending observer notify request to Lightning.",
-    classID: components.ID("{" + mivExchangeLightningNotifierGUID + "}"),
-    contractID: "@1st-setup.nl/exchange/lightningnotifier;1",
-    flags: Ci.nsIClassInfo.SINGLETON,
-
-    // External methods
-
     // Internal methods.
     notify: function _notify() {
         this.processQueue();

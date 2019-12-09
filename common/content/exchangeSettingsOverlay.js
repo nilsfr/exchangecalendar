@@ -36,18 +36,15 @@
 var Cc = Components.classes;
 var Ci = Components.interfaces;
 
-
-ChromeUtils.import("resource://gre/modules/Services.jsm");
-
+(function() {
 const { erAutoDiscoverRequest } = ChromeUtils.import("resource://exchangecommon/erAutoDiscover.js");
 const { erAutoDiscoverySOAPRequest } = ChromeUtils.import("resource://exchangecommon/erAutoDiscoverySOAP.js");
 const { erPrimarySMTPCheckRequest } = ChromeUtils.import("resource://exchangecommon/erPrimarySMTPCheck.js");
-ChromeUtils.import("resource://exchangecommon/erConvertID.js");
-ChromeUtils.import("resource://exchangecommon/erFindFolder.js");
+const { erConvertIDRequest } = ChromeUtils.import("resource://exchangecommon/erConvertID.js");
 const { erGetFolderRequest } = ChromeUtils.import("resource://exchangecommon/erGetFolder.js");
-ChromeUtils.import("resource://exchangecommon/erGetUserAvailability.js");
-
-ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
+const { erGetUserAvailabilityRequest } = ChromeUtils.import("resource://exchangecommon/erGetUserAvailability.js");
+const { mivFunctions } = ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js");
+const { cal } = ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
 function exchSettingsOverlay(aDocument, aWindow) {
     this._document = aDocument;
@@ -1005,4 +1002,6 @@ exchSettingsOverlay.prototype = {
         };
     },
 }
-var tmpSettingsOverlay = new exchSettingsOverlay(document, window);
+this.exchSettingsOverlay = exchSettingsOverlay;
+this.tmpSettingsOverlay = new exchSettingsOverlay(document, this);
+}.call(window));

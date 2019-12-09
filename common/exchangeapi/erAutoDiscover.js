@@ -40,11 +40,12 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/Services.jsm");
+var { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 
-const { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
-
-ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
+var {
+    ExchangeRequest,
+    xml_tag
+} = ChromeUtils.import("resource://exchangecommon/ecExchangeRequest.js");
 
 var EXPORTED_SYMBOLS = ["erAutoDiscoverRequest"];
 

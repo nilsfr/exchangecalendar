@@ -22,11 +22,11 @@ var Cc = Components.classes;
 var Ci = Components.interfaces;
 
 var Cr = Components.results;
-var components = Components;
-
-ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 var EXPORTED_SYMBOLS = ["mivExchangeAuthPrompt2"];
+
+var { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
+var { cal } = ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
 function mivExchangeAuthPrompt2() {
 
@@ -37,28 +37,17 @@ function mivExchangeAuthPrompt2() {
 
     this.timer = Cc["@mozilla.org/timer;1"].createInstance(Ci.nsITimer);
 
-    this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
+    this.globalFunctions = (new (ChromeUtils.import(
+        "resource://exchangecommoninterfaces/global/mivFunctions.js")
+        .mivFunctions)());
 }
 
-var mivExchangeAuthPrompt2GUID = "b3ab11c0-20f7-11e2-81c1-0800200c9a66";
-
 mivExchangeAuthPrompt2.prototype = {
-
-    // methods from nsISupport
-
-    /* void QueryInterface(
-      in nsIIDRef uuid,
-      [iid_is(uuid),retval] out nsQIResult result
-    );     */
-
-    // Attributes from nsIClassInfo
-
-    classDescription: "Exchange Add-on AuthPrompt2 interface",
-    classID: components.ID("{" + mivExchangeAuthPrompt2GUID + "}"),
-    contractID: "@1st-setup.nl/exchange/authprompt2;1",
-    flags: Ci.nsIClassInfo.SINGLETON || Ci.nsIClassInfo.THREADSAFE,
-
-    // External methods
+    QueryInterface: cal.generateQI([
+        Ci.mivExchangeAuthPrompt2,
+        Ci.nsIAuthPrompt2,
+        Ci.nsISupports
+    ]),
 
     getUserCanceled: function _getUserCanceled(aURL) {
         if (this.details[aURL]) {
@@ -719,9 +708,7 @@ mivExchangeAuthPrompt2.prototype = {
             };
         }
 
-        let watcher = Cc["@mozilla.org/embedcomp/window-watcher;1"].getService(Ci.nsIWindowWatcher);
-
-        let prompter = watcher.getNewPrompter(null);
+        let prompter = Services.ww.getNewPrompter(null);
 
         // Only show the save password box if we are supposed to.
         let savePasswordMsg = this.globalFunctions.getString("passwordmgr", "rememberPassword", null, "passwordmgr");
@@ -737,11 +724,14 @@ mivExchangeAuthPrompt2.prototype = {
             value: false
         };
 
-        let result = prompter.promptPassword(aTitle,
+        let result = prompter.promptPassword(
+            aTitle,
             aText,
             aPassword,
             savePasswordMsg,
-            aSavePassword);
+            aSavePassword
+        );
+        this.logInfo(result);
         return {
             result: result,
             password: aPassword.value,
@@ -796,5 +786,4 @@ mivExchangeAuthPrompt2.prototype = {
             this.globalFunctions.LOG("mivExchangeAuthPrompt2: " + aMsg + " (" + this.globalFunctions.STACKshort() + ")");
         }
     },
-
-}
+};

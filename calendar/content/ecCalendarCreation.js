@@ -37,6 +37,8 @@
 var Cc = Components.classes;
 var Ci = Components.interfaces;
 
+(function() {
+const { cal } = ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 const { mivFunctions } = ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js");
 
 function exchCalendarCreation(aDocument, aWindow) {
@@ -66,16 +68,29 @@ exchCalendarCreation.prototype = {
             this.oldNextPage = aCustomizePage.getAttribute("next");
             this.oldOnPageAdvanced = aCustomizePage.getAttribute("onpageadvanced");
 
+            let exchangeSettings = this._document
+                .getElementById('calendar-wizard')
+                .getPageById("exchWebService_exchange1");
+            if (exchangeSettings.pageIndex == -1) {
+                document.documentElement._initPages();
+            }
+            exchangeSettings.addEventListener("pageshow", () => {
+                this.initExchange1();
+                checkRequired();
+            });
+            exchangeSettings.addEventListener("pageadvanced", () => {
+                this.saveSettings();
+                checkRequired();
+            });
             this.firstTime = false;
         }
 
         if (type == "exchangecalendar") {
-
             // Get the next page to set back new values.
             let aCustomizePage = this._document.getElementById('calendar-wizard').getPageById("customizePage");
             aCustomizePage.removeAttribute("next");
-            aCustomizePage.removeAttribute("onpageadvanced");
             aCustomizePage.setAttribute("next", "exchWebService_exchange1");
+            aCustomizePage.removeEventListener("pageadvanced", doCreateCalendar);
             aCustomizePage.setAttribute("onpageadvanced", "return true;");
 
             this.oldLocationTextBox = this._document.getElementById("calendar-uri").value;
@@ -91,16 +106,16 @@ exchCalendarCreation.prototype = {
             if (this._document.getElementById("exchange-cache-row")) {
                 this._document.getElementById("exchange-cache-row").hidden = false;
             }
-            tmpSettingsOverlay.exchWebServicesCheckRequired();
+            this._window.tmpSettingsOverlay.exchWebServicesCheckRequired();
 
         }
         else {
             this._document.getElementById("calendar-uri").value = "";
             this._document.getElementById("calendar-uri").removeAttribute("disabled", false);
-
             // Get the next page to set back  how it should advance.
             var aCustomizePage = this._document.getElementById('calendar-wizard').getPageById("customizePage");
             aCustomizePage.setAttribute("next", this.oldNextPage);
+            aCustomizePage.addEventListener("pageadvanced", doCreateCalendar);
             aCustomizePage.setAttribute("onpageadvanced", this.oldOnPageAdvanced);
 
             this._document.getElementById("cache").parentNode.hidden = false;
@@ -127,7 +142,9 @@ exchCalendarCreation.prototype = {
 
                 this._document.getElementById("exchWebService_mailbox").value =
                     identityPrefs.getStringPref("useremail");
-                tmpSettingsOverlay.exchWebServicesInitMailbox(this._document.getElementById("exchWebService_mailbox").value);
+                tmpSettingsOverlay.exchWebServicesInitMailbox(
+                    this._document.getElementById("exchWebService_mailbox").value
+                );
                 this.createPrefs.setStringPref(
                     "mailbox",
                     this._document.getElementById("exchWebService_mailbox").value
@@ -166,7 +183,7 @@ exchCalendarCreation.prototype = {
         tmpSettingsOverlay.exchWebServicesSaveExchangeSettingsByCalId(newCalId);
 
         // Need to save the useOfflineCache preference separetly because it is not part of the main.
-        this.prefs = Cc["@mozilla.org/preferences-service;1"]
+        this.prefs = Cc["@mozilla.org/preferences-servce;1"]
             .getService(Ci.nsIPrefService)
             .getBranch("extensions.exchangecalendar@extensions.1st-setup.nl." + newCalId + ".");
         this.prefs.setBoolPref("useOfflineCache", this._document.getElementById("exchange-cache").checked);
@@ -185,8 +202,7 @@ exchCalendarCreation.prototype = {
 
         // Create the new calendar object
         // Should be synced with Lightning doCreateCalendar() code
-        var calManager = Cc["@mozilla.org/calendar/manager;1"]
-            .getService(Ci.calICalendarManager);
+        var calManager = cal2.getCalendarManager();
 
         var newCal = calManager.createCalendar("exchangecalendar", tmpURI);
 
@@ -222,4 +238,6 @@ exchCalendarCreation.prototype = {
     },
 }
 
-var tmpCalendarCreation = new exchCalendarCreation(document, window);
+this.exchCalendarCreation = exchCalendarCreation;
+this.tmpCalendarCreation = new exchCalendarCreation(document, this);
+}.call(window));

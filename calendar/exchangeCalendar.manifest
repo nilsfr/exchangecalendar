@@ -1,4 +1,5 @@
 content exchangecalendar content/
+content exchangeTimeZones interface/exchangeTimeZones
 
 resource exchangecalendar exchangeapi/
 resource interfacescalendartask interface/
@@ -21,7 +22,7 @@ overlay chrome://calendar/content/calendar-summary-dialog.xul chrome://exchangec
 
 overlay chrome://lightning/content/lightning-item-iframe.xul chrome://exchangecalendar/content/lightning-item-iframe.xul
 
-manifest interface/exchangeRecurrenceInfo/mivExchangeRecurrenceInfo.manifest
+#manifest interface/exchangeCalendar/mivExchangeCalendar.manifest
 
 locale exchangecalendar en    locale/en/
 

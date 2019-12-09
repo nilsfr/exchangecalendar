@@ -36,12 +36,13 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-<!DOCTYPE dialog
+<!DOCTYPE overlay
 [
     <!ENTITY % dtd1 SYSTEM "chrome://exchangecommon/locale/exchangeSettingsOverlay.dtd" > %dtd1;
 ]>
 <overlay id="calendarCreation"
-         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+         xmlns:html="http://www.w3.org/1999/xhtml">
 
     <script type="application/javascript"
             src="chrome://exchangecommon/content/exchangeSettingsOverlay.js" />

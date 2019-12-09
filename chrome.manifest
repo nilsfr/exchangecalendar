@@ -28,5 +28,6 @@ overlay chrome://messenger/content/preferences/preferences.xul chrome://exchange
 
 manifest addressbook/exchangeAddressBook.manifest
 manifest calendar/exchangeCalendar.manifest
+manifest calendar/interface/exchangeCalendar/mivExchangeCalendar.manifest
 manifest common/exchangeCommon.manifest
 manifest emailtag/exchangeEmailTag.manifest

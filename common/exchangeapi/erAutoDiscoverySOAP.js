@@ -42,9 +42,9 @@ var components = Components;
 
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-const { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
+var { exchWebService } = ChromeUtils.import("resource://exchangecommon/ecFunctions.js");
 
-const {
+var {
     ExchangeRequest,
     nsSoapStr,
     nsAutodiscover2010Str,

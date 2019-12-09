@@ -38,7 +38,6 @@ var Cc = Components.classes;
 var Ci = Components.interfaces;
 var Cu = Components.utils;
 var Cr = Components.results;
-var components = Components;
 
 ChromeUtils.import("resource://gre/modules/Services.jsm");
 
@@ -277,7 +276,9 @@ ExchangeRequest.prototype = {
         var openUser = this.mArgument.user;
         var password = null;
 
-        var myAuthPrompt2 = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeAuthPrompt2/mivExchangeAuthPrompt2.js").mivExchangeAuthPrompt2)());
+        var myAuthPrompt2 = (new (ChromeUtils.import(
+            "resource://exchangecommoninterfaces/exchangeAuthPrompt2/mivExchangeAuthPrompt2.js")
+            .mivExchangeAuthPrompt2)());
 
         if (myAuthPrompt2.getUserCanceled(this.currentUrl)) {
             this.fail(this.ER_ERROR_USER_ABORT_AUTHENTICATION,
@@ -356,6 +357,7 @@ ExchangeRequest.prototype = {
                 // If we don't have a password, we need to reach one time the URL
                 // to get a NTML challenge
                 // TODO: check if this comment is correct
+                this.logDebug("We do not have a prePassword");
                 this.xmlReq.open("POST", this.currentUrl, true, openUser);
             }
         }
@@ -790,9 +792,14 @@ ExchangeRequest.prototype = {
         this.logDebug(": ExchangeRequest.onLoad :" + xmlReq.responseText);
 
         if (xmlReq.readyState != xmlReq.DONE) {
-            this.logInfo("readyState is not DONE inside the onLoad internal function. THIS SHOULD NEVER HAPPEN. PLEASE REPORT.");
-            this.fail(this.ER_ERROR_OPEN_FAILED,
-                "Ready state != 4, readyState:" + xmlReq.readyState);
+            this.logInfo(
+                "readyState is not DONE inside the onLoad internal function."
+               + "THIS SHOULD NEVER HAPPEN. PLEASE REPORT."
+            );
+            this.fail(
+                this.ER_ERROR_OPEN_FAILED,
+                "Ready state != 4, readyState:" + xmlReq.readyState
+            );
             return;
         }
 
@@ -886,7 +893,11 @@ ExchangeRequest.prototype = {
         }
 
         newXML = null;
-        this.observerService.notifyObservers(this.channelCallbackEcAuthPrompt2, "onExchangeConnectionOk", this.currentUrl);
+        this.observerService.notifyObservers(
+            this.channelCallbackEcAuthPrompt2,
+            "onExchangeConnectionOk",
+            this.currentUrl
+        );
     },
 
     retryCurrentUrl: function () {
@@ -1038,7 +1049,9 @@ ExchangeRequest.prototype = {
                     + ": " + errMsg + "\nURL:" + this.currentUrl + "\n"
                     + xmlReq.responseText);
 
-                var myAuthPrompt2 = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeAuthPrompt2/mivExchangeAuthPrompt2.js").mivExchangeAuthPrompt2)());
+                var myAuthPrompt2 = (new (ChromeUtils.import(
+                    "resource://exchangecommoninterfaces/exchangeAuthPrompt2/mivExchangeAuthPrompt2.js")
+                    .mivExchangeAuthPrompt2)());
                 if (this.urllist.length > 0 && !myAuthPrompt2.getUserCanceled(this.currentUrl)) {
                     if (this.tryNextURL()) {
                         return true;
@@ -1401,6 +1414,17 @@ function ecnsIAuthPrompt2(aExchangeRequest) {
 }
 
 ecnsIAuthPrompt2.prototype = {
+        QueryInterface: cal.generateQI([
+            Ci.nsIInterfaceRequestor,
+            Ci.nsIAuthPrompt2,
+            Ci.nsIBadCertListener2,
+            Ci.nsIProgressEventSink,
+            Ci.nsISecureBrowserUI,
+            Ci.nsIDocShellTreeItem,
+            Ci.nsIAuthPromptProvider,
+            Ci.nsIChannelEventSink,
+            Ci.nsIRedirectResultListener
+        ]),
 
         getInterface: function (iid) {
             if ((Ci.nsIAuthPrompt2) && (iid.equals(Ci.nsIAuthPrompt2))) { // id == 651395eb-8612-4876-8ac0-a88d4dce9e1e
@@ -1454,7 +1478,7 @@ ecnsIAuthPrompt2.prototype = {
                 this.logInfo("ecnsIAuthPrompt2.getInterface: Ci.nsIApplicationCacheContainer");
                 return Cr.NS_NOINTERFACE; // We do not support this.
             }
-
+            this.logInfo("ecnsIAuthPrompt2 IID: " + iid)
             throw Cr.NS_NOINTERFACE;
         },
 
@@ -1570,7 +1594,9 @@ ecnsIAuthPrompt2.prototype = {
             this.URL = aURL;
 
             var password;
-            var myAuthPrompt2 = (new (ChromeUtils.import("resource://exchangecommoninterfaces/exchangeAuthPrompt2/mivExchangeAuthPrompt2.js").mivExchangeAuthPrompt2)());
+            var myAuthPrompt2 = (new (ChromeUtils.import(
+                "resource://exchangecommoninterfaces/exchangeAuthPrompt2/mivExchangeAuthPrompt2.js")
+                .mivExchangeAuthPrompt2)());
             if (myAuthPrompt2.getUserCanceled(aURL)) {
                 return null;
             }

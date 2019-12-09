@@ -18,9 +18,6 @@ locale exchangecommon sk locale/sk/
 locale exchangecommon sv locale/sv/
 locale exchangecommon tr locale/tr/
 
-manifest interface/exchangeAccountManager/mivExchangeAccountManager.manifest
-manifest interface/exchangeLightningNotifier/mivExchangeLightningNotifier.manifest
-
 content exchangecommon content/
 
 resource exchangecommon exchangeapi/

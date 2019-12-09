@@ -22,31 +22,26 @@ var Cc = Components.classes;
 var Ci = Components.interfaces;
 
 var Cr = Components.results;
-var components = Components;
-
-ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 var EXPORTED_SYMBOLS = ["mivExchangeAuthPromptProvider"];
+
+var { XPCOMUtils } = ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+var { cal } = ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
 function mivExchangeAuthPromptProvider() {
     //dump("\nmivExchangeAuthPromptProvider.init\n");
     this.globalFunctions = (new (ChromeUtils.import("resource://exchangecommoninterfaces/global/mivFunctions.js").mivFunctions)());
 }
 
-var mivExchangeAuthPromptProviderGUID = "1bf6e930-20fc-11e2-81c1-0800200c9a66";
-
 mivExchangeAuthPromptProvider.prototype = {
-
-    /* void QueryInterface(
-      in nsIIDRef uuid,
-      [iid_is(uuid),retval] out nsQIResult result
-    );	 */
-
+    classID: mivExchangeAuthPromptProviderGUID,
     // Attributes from nsIClassInfo
-
-    classDescription: "Exchange Add-on AuthPromptProvider interface",
-    classID: components.ID("{" + mivExchangeAuthPromptProviderGUID + "}"),
-    contractID: "@1st-setup.nl/exchange/authpromptprovider;1",
+    classInfo: cal.generateCI({
+        classDescription: "Exchange Add-on AuthPromptProvider interface",
+        classID: mivExchangeAuthPromptProviderGUID,
+        contractID: "@1st-setup.nl/exchange/authpromptprovider;1",
+        interfaces: [Ci.nsIAuthPromptProvider]
+    }),
     flags: Ci.nsIClassInfo.SINGLETON || Ci.nsIClassInfo.THREADSAFE,
 
     // External methods

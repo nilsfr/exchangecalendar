@@ -36,7 +36,7 @@
  *
  * ***** BEGIN LICENSE BLOCK *****/
 -->
-<!DOCTYPE dialog
+<!DOCTYPE overlay
 [
     <!ENTITY % dtd1 SYSTEM "chrome://calendar/locale/calendarCreation.dtd" > %dtd1;
     <!ENTITY % dtd2 SYSTEM "chrome://calendar/locale/calendar.dtd" > %dtd2;
@@ -44,14 +44,15 @@
 ]>
 <?xul-overlay href="chrome://exchangecommon/content/exchangeSettingsOverlay.xul"?>
 <overlay id="calendarCreation"
-         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+         xmlns:html="http://www.w3.org/1999/xhtml">
 
     <script type="application/javascript"
             src="chrome://exchangecalendar/content/ecCalendarCreation.js" />
-    <script type="application/javascript"
-            src="chrome://gdata-provider/content/gdata-calendar-creation.js" />
+    <!--script type="application/javascript"
+            src="chrome://gdata-provider/content/gdata-calendar-creation.js" /-->
     <radiogroup id="calendar-format"
-                onselect="tmpCalendarCreation.doRadioExchangeCalendar(this.value);">
+                onselect="onSelectProvider(this.value);tmpCalendarCreation.doRadioExchangeCalendar(this.value);">
 
         <vbox>
             <radio value="exchangecalendar"
@@ -67,16 +68,22 @@
             </hbox>
         </vbox>
     </radiogroup>
-    <wizard id="calendar-wizard"
-            xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-        <wizardpage pageid="exchWebService_exchange1"
-                    next="finishPage"
-                    label="&wizard.label;"
-                    description="&exchange1.description;"
-                    onpageshow="checkRequired();tmpCalendarCreation.initExchange1();"
-                    onpageadvanced="tmpCalendarCreation.saveSettings();">
-                    
+    <!--html:table id="customize-table">
+        <html:tr id="exchWebService-settings-row">
+            <html:td>
+                <vbox id="exchWebService-exchange-settings" />
+            </html:td>
+        </html:tr>
+    </html:table-->
+
+    <wizard id="calendar-wizard">
+        <wizardpage
+            pageid="exchWebService_exchange1"
+            next="finishPage"
+            label="&wizard.label;"
+            description="&exchange1.description;"
+        >
             <vbox id="exchWebService-exchange-settings" />
         </wizardpage>
     </wizard>

@@ -6,12 +6,12 @@ overlay chrome://messenger/content/addressbook/abCardOverlay.xul chrome://exchan
 
 resource exchangeaddress exchangeapi/
 
-manifest interface/exchangeAbCard/mivExchangeAbCard.manifest
-manifest interface/exchangeAbDirFactory/exchangeAbDirFactory.manifest
-manifest interface/exchangeAbDistListDirectory/exchangeAbDistListDirectory.manifest
-manifest interface/exchangeAbFolderDirectory/exchangeAbFolderDirectory.manifest
-manifest interface/exchangeAutoCompleteSearch/mivExchangeAutoCompleteSearch.manifest
-manifest interface/exchangeAutoCompleteResult/mivExchangeAutoCompleteResult.manifest
+#manifest interface/exchangeAbCard/mivExchangeAbCard.manifest
+#manifest interface/exchangeAbDirFactory/exchangeAbDirFactory.manifest
+#manifest interface/exchangeAbDistListDirectory/exchangeAbDistListDirectory.manifest
+#manifest interface/exchangeAbFolderDirectory/exchangeAbFolderDirectory.manifest
+#manifest interface/exchangeAutoCompleteSearch/mivExchangeAutoCompleteSearch.manifest
+#manifest interface/exchangeAutoCompleteResult/mivExchangeAutoCompleteResult.manifest
 
 locale exchangecontacts en    locale/en/
 

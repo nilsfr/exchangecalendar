@@ -24,7 +24,10 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 var components = Components;
 
-ChromeUtils.import("resource://gre/modules/Services.jsm");
+var EXPORTED_SYMBOLS = ["mivExchangeAccountManager"];
+
+var { XPCOMUtils } = ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+var { cal } = ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
 function mivExchangeAccountManager() {
 
@@ -36,22 +39,18 @@ function mivExchangeAccountManager() {
 
 }
 
-var mivExchangeAccountManagerGUID = "41397c22-bcea-4e98-a562-2f5f435c6111";
+var mivExchangeAccountManagerGUID = Components.ID("{41397c22-bcea-4e98-a562-2f5f435c6111}");
 
 mivExchangeAccountManager.prototype = {
-
-    // methods from nsISupport
-
-    /* void QueryInterface(
-      in nsIIDRef uuid,
-      [iid_is(uuid),retval] out nsQIResult result
-    );	 */
+    classID: mivExchangeAccountManagerGUID,
 
     // Attributes from nsIClassInfo
-
-    classDescription: "Exchange Account Manager.",
-    classID: components.ID("{" + mivExchangeAccountManagerGUID + "}"),
-    contractID: "@1st-setup.nl/exchange/accountmanager;1",
+    classInfo: cal.generateCI({
+        classDescription: "Exchange Account Manager.",
+        classID: mivExchangeAccountManagerGUID,
+        contractID: "@1st-setup.nl/exchange/accountmanager;1",
+        interfaces: []
+    });
     flags: Ci.nsIClassInfo.SINGLETON || Ci.nsIClassInfo.THREADSAFE,
 
     // External methods 
@@ -208,5 +207,4 @@ mivExchangeAccountManager.prototype = {
         	this.globalFunctions.LOG("mivExchangeAccountManager: "+aMsg);
         } */
     },
-
-}
+};
