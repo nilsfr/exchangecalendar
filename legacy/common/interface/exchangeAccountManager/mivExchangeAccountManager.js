@@ -50,10 +50,10 @@ mivExchangeAccountManager.prototype = {
         classID: mivExchangeAccountManagerGUID,
         contractID: "@1st-setup.nl/exchange/accountmanager;1",
         interfaces: []
-    });
+    }),
     flags: Ci.nsIClassInfo.SINGLETON || Ci.nsIClassInfo.THREADSAFE,
 
-    // External methods 
+    // External methods
     getAccountIds: function _getAccountIds() {
         var ids = this.globalFunctions.safeGetStringPref(this.prefs, "ids", "");
         this.logInfo("ids:" + ids);
@@ -194,7 +194,7 @@ mivExchangeAccountManager.prototype = {
         this.prefs.setStringPref("ids", newIds);
     },
 
-    // Internal methods 
+    // Internal methods
     logInfo: function _logInfo(aMsg, aDebugLevel) {
         return;
         /* if (!aDebugLevel) aDebugLevel = 1;

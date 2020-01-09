@@ -44,7 +44,7 @@ ChromeUtils.import("resource://gre/modules/Services.jsm");
 const { cal } = ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
 
 const { mivIxml2jxon } = ChromeUtils.import("resource://exchangecommoninterfaces/xml2jxon/mivIxml2jxon.js");
-const { mivIxml2json } = ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
+const { xml2json } = ChromeUtils.import("resource://exchangecommoninterfaces/xml2json/xml2json.js");
 
 Cu.importGlobalProperties(["XMLHttpRequest"]);
 

@@ -1,0 +1,37 @@
+{
+  "name": "exchangecalendar",
+  "description": "Exchange Calendar",
+  "version": "6.0.0a1",
+  "private": true,
+  "author": "ExchangeCalendar community",
+  "license": "GPL-3.0",
+  "directories": {
+    "test": "testing"
+  },
+  "homepage": "https://github.com/ExchangeCalendar/exchangecalendar",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ExchangeCalendar/exchangecalendar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ExchangeCalendar/exchangecalendar/issues"
+  },
+  "scripts": {
+    "release": "npm run build-release && npm run pack",
+    "build": "webpack --mode=development",
+    "build-release": "webpack --mode=production",
+    "pack": "make build",
+    "test": "action-thunderbird-tests testing/xpcshell/xpcshell.ini -c release -V 68.11.0",
+    "clean": "rm exchangecalendar-v.xpi"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@actions/tool-cache": "^1.6.0",
+    "action-thunderbird-tests": "github:nilsfr/action-thunderbird-tests#release-versions-of-thunderbird",
+    "typescript": "^3.9.2",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "awesome-typescript-loader": "^5.2.1",
+    "source-map-loader": "^1.0.2"
+  }
+}

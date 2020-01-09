@@ -1,0 +1,11 @@
+skin exchangecommon fugue common/theme/unix/
+skin exchangecommon fugue common/theme/win/ os=WINNT
+skin exchangecommon fugue common/theme/winaero/ os=WINNT osversion>=6
+skin exchangecommon fugue common/theme/mac/ os=Darwin
+skin exchangecommon-common fugue common/theme/common/
+
+#manifest addressbook/exchangeAddressBook.manifest
+manifest calendar/exchangeCalendar.manifest
+manifest calendar/exchangeCalendarProvider.manifest
+manifest common/exchangeCommon.manifest
+#manifest emailtag/exchangeEmailTag.manifest

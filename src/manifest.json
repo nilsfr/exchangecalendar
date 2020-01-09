@@ -8,7 +8,7 @@
   },
   "name": "Exchange Calendar",
   "description": "Synchronize calendars, tasks, and contacts with Microsoft Exchange.",
-  "version": "5.0.0.2",
+  "version": "6.0.0a1",
   "icons": {
     "32": "common/theme/common/images/lightningexchangecalendar.png"
   },

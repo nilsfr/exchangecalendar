@@ -14,10 +14,10 @@
  * -- Exchange 2007/2010 Calendar and Tasks Provider.
  * -- For Thunderbird with the Lightning add-on.
  *
- * This work is a combination of the Storage calendar, part of the default Lightning add-on, and 
+ * This work is a combination of the Storage calendar, part of the default Lightning add-on, and
  * the "Exchange Data Provider for Lightning" add-on currently, october 2011, maintained by Simon Schubert.
- * Primarily made because the "Exchange Data Provider for Lightning" add-on is a continuation 
- * of old code and this one is build up from the ground. It still uses some parts from the 
+ * Primarily made because the "Exchange Data Provider for Lightning" add-on is a continuation
+ * of old code and this one is build up from the ground. It still uses some parts from the
  * "Exchange Data Provider for Lightning" project.
  *
  * Author: Michel Verbraak (info@1st-setup.nl)
@@ -75,7 +75,7 @@ erAutoDiscoverRequest.prototype = {
 
     execute: function _execute() {
         // This autodiscover is of the type POX (http://msdn.microsoft.com/en-us/library/bb204189.aspx)
-        // This is compatible with exchange 2007 and 2010. For 2010 we could also 
+        // This is compatible with exchange 2007 and 2010. For 2010 we could also
         // use SOAP (http://msdn.microsoft.com/en-us/library/dd877096%28v=EXCHG.140%29.aspx)
 
         //		exchWebService.commonFunctions.LOG("sendAutodiscover\n");

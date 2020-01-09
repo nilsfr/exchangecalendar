@@ -202,7 +202,7 @@ exchCalendarCreation.prototype = {
 
         // Create the new calendar object
         // Should be synced with Lightning doCreateCalendar() code
-        var calManager = cal2.getCalendarManager();
+        var calManager = cal.getCalendarManager();
 
         var newCal = calManager.createCalendar("exchangecalendar", tmpURI);
 

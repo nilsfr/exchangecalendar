@@ -436,11 +436,15 @@ mivFunctions.prototype = {
 
         let output;
         if (!(aArg instanceof String) && !(typeof (aArg) === "string")) {
-            output = "1st-setup: Logging object...\n";
+            output = "1st-setup: Logging object... | ";
             for (let prop in aArg) {
-                output += prop + ': ' + aArg[prop] + '\n';
+                try {
+                    output += prop + ': ' + aArg[prop] + ' | ';
+                } catch (e) {
+                    output += prop + ': ' + e + ' | ';
+                }
             }
-            output += "End object\n";
+            output += "End object";
         }
         else {
             let dt = new Date();
@@ -455,7 +459,7 @@ mivFunctions.prototype = {
 
         var file = this.safeGetStringPref(prefB, "extensions.1st-setup.debug.file", "/tmp/exchangecalendar.log", true);
         if (file != "") {
-            // file is nsIFile, data is a string  
+            // file is nsIFile, data is a string
             var localFile = Cc["@mozilla.org/file/local;1"]
                 .createInstance(Ci.nsIFile);
 
@@ -470,7 +474,7 @@ mivFunctions.prototype = {
             createInstance(Ci.nsIFileOutputStream);
 
             try {
-                // On startup create a new file otherwise append.  
+                // On startup create a new file otherwise append.
                 if (!this.debugFileInitialized) {
                     foStream.init(localFile, 0x02 | 0x08 | 0x20, parseInt("0666", 8), 0);
                     this.debugFileInitialized = true;
@@ -483,13 +487,13 @@ mivFunctions.prototype = {
                 return;
             }
 
-            // if you are sure there will never ever be any non-ascii text in data you can   
-            // also call foStream.writeData directly  
+            // if you are sure there will never ever be any non-ascii text in data you can
+            // also call foStream.writeData directly
             var converter = Cc["@mozilla.org/intl/converter-output-stream;1"].
             createInstance(Ci.nsIConverterOutputStream);
             converter.init(foStream, "UTF-8", 0, 0);
             converter.writeString(aString + "\n");
-            converter.close(); // this closes foStream  
+            converter.close(); // this closes foStream
         }
     },
 
