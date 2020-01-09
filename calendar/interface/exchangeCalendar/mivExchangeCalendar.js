@@ -14,10 +14,10 @@
  * -- Exchange 2007/2010 Calendar and Tasks Provider.
  * -- For Thunderbird with the Lightning add-on.
  *
- * This work is a combination of the Storage calendar, part of the default Lightning add-on, and 
+ * This work is a combination of the Storage calendar, part of the default Lightning add-on, and
  * the "Exchange Data Provider for Lightning" add-on currently, october 2011, maintained by Simon Schubert.
- * Primarily made because the "Exchange Data Provider for Lightning" add-on is a continuation 
- * of old code and this one is build up from the ground. It still uses some parts from the 
+ * Primarily made because the "Exchange Data Provider for Lightning" add-on is a continuation
+ * of old code and this one is build up from the ground. It still uses some parts from the
  * "Exchange Data Provider for Lightning" project.
  *
  * Author: Michel Verbraak (info@1st-setup.nl)
@@ -25,7 +25,7 @@
  * email: exchangecalendar@extensions.1st-setup.nl
  *
  * Contributor: Krzysztof Nowicki (krissn@op.pl)
- * 
+ *
  *
  * This code uses parts of the Microsoft Exchange Calendar Provider code on which the
  * "Exchange Data Provider for Lightning" was based.
@@ -40,7 +40,10 @@ var Ci = Components.interfaces;
 var Cr = Components.results;
 
 var { XPCOMUtils } = ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
+var { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
+
 var { cal } = ChromeUtils.import("resource://calendar/modules/calUtils.jsm");
+
 var { publicFoldersMap } = ChromeUtils.import(
     "resource://exchangecommon/soapFunctions.js");
 
@@ -1218,7 +1221,7 @@ calExchangeCalendar.prototype = {
             if (erGetMeetingRequestByUIDRequest.argument.item.organizer) {
                 this.logInfo(" >>>>>>> 2 We have a organizer and SCHEDULE-AGENT=" + erGetMeetingRequestByUIDRequest.argument.item.organizer.getProperty("SCHEDULE-AGENT"));
                 if (erGetMeetingRequestByUIDRequest.argument.item.organizer.getProperty("SCHEDULE-AGENT") == "CLIENT") {
-                    // looks like iTIP because SCHEDULE-AGENT is set. 
+                    // looks like iTIP because SCHEDULE-AGENT is set.
                     this.logInfo(" >>>>>>> 2 We have a organizer and SCHEDULE-AGENT=" + erGetMeetingRequestByUIDRequest.argument.item.organizer.getProperty("SCHEDULE-AGENT"));
                     this.logInfo(" !!!!!!!!!!!!!! THIS SHOULD NEVER HAPPEN ON AN iTIP. DO WE HAVE AN iTIP");
                     this.logInfo("iCalString:" + erGetMeetingRequestByUIDRequest.argument.item.icalString);
@@ -1335,7 +1338,7 @@ calExchangeCalendar.prototype = {
             }
         }
 
-        // We send a modify for the master. But we do not show the masters in the calendar 
+        // We send a modify for the master. But we do not show the masters in the calendar
         //miv		this.notifyTheObservers("onModifyItem", [aModifiedMaster, this.recurringMasterCache[aModifiedMaster.uid]]);
         // Because we do not want it to be visible and the previous modify made it visible.
         //miv		this.notifyTheObservers("onDeleteItem", [aModifiedMaster]);
@@ -1708,7 +1711,7 @@ calExchangeCalendar.prototype = {
                     else {
                         this.logInfo("modifyItem: No changes for master.");
                         // No changes to a master could means that one of the occurrences
-                        // was deleted. 
+                        // was deleted.
                         var removedOccurrence = this.getRemovedOccurrence(aOldItem, aNewItem);
                         if (removedOccurrence) {
                             // Delete this occurrence; multi
@@ -1934,7 +1937,7 @@ calExchangeCalendar.prototype = {
                     action: "deleteItem",
                     itemType: "occurrence",
                     whichOccurrence: "occurrence"
-                }, //dialogArg.answer}, 
+                }, //dialogArg.answer},
                 function (erGetOccurrenceIndexRequest, aIndex, aMasterId, aMasterChangeKey) {
                     self.getOccurrenceIndexOk(erGetOccurrenceIndexRequest, aIndex, aMasterId, aMasterChangeKey);
                 },
@@ -2038,7 +2041,7 @@ calExchangeCalendar.prototype = {
             var isInvitation = this.isInvitation(aItem, true);
 
             if ((isInvitation) && (!isCancelled)) {
-                //			if ((this.folderBase == "calendar") && (!this.folderID) && 
+                //			if ((this.folderBase == "calendar") && (!this.folderID) &&
                 //			    (!iAmOrganizer) && (aItem.getProperty("STATUS") != "DECLINED") &&
                 //			    (aItem.getProperty("STATUS") != "NONE") && (!isCancelled)) {
                 //var aOldItem = aItem.clone();
@@ -2147,7 +2150,7 @@ calExchangeCalendar.prototype = {
                         action: "deleteItem",
                         itemType: "occurrence",
                         whichOccurrence: "occurrence"
-                    }, //dialogArg.answer}, 
+                    }, //dialogArg.answer},
                     function (erGetOccurrenceIndexRequest, aIndex, aMasterId, aMasterChangeKey) {
                         self.getOccurrenceIndexOk(erGetOccurrenceIndexRequest, aIndex, aMasterId, aMasterChangeKey);
                     },
@@ -2260,7 +2263,7 @@ calExchangeCalendar.prototype = {
         					break;
         				}
         			}
-        		}  
+        		}
         	}*/
 
         if (!item) {
@@ -2324,7 +2327,7 @@ calExchangeCalendar.prototype = {
             aId,
             null);
         /*
-        aListener.onGetResult (this, 
+        aListener.onGetResult (this,
                                Cr.NS_OK,
                                item_iid, null,
                                1, [item]);*/
@@ -2936,8 +2939,8 @@ calExchangeCalendar.prototype = {
         //dump(this.name+": Getting period from: "+aStartDate+" until "+aEndDate+"\n");
 
         /*      		var self = this;
-        		this.addToQueue( erFindCalendarItemsRequest, 
-        			{user: this.user, 
+        		this.addToQueue( erFindCalendarItemsRequest,
+        			{user: this.user,
         			 mailbox: this.mailbox,
         			 serverUrl: this.serverUrl,
         			 count: aCount,
@@ -2947,8 +2950,8 @@ calExchangeCalendar.prototype = {
         			 itemFilter: aItemFilter,
         			 folderID: this.folderID,
         			 changeKey: this.changeKey,
-        			 actionStart: Date.now() }, 
-        			function(erFindCalendarItemsRequest, aIds, aOccurrences) { self.findCalendarItemsOK(erFindCalendarItemsRequest, aIds, aOccurrences);}, 
+        			 actionStart: Date.now() },
+        			function(erFindCalendarItemsRequest, aIds, aOccurrences) { self.findCalendarItemsOK(erFindCalendarItemsRequest, aIds, aOccurrences);},
         			function(erFindCalendarItemsRequest, aCode, aMsg) { self.findCalendarItemsError(erFindCalendarItemsRequest, aCode, aMsg);},
         			null);
 
@@ -4078,7 +4081,7 @@ calExchangeCalendar.prototype = {
         if (this.doAfutoRemoveInvitationResponse1) {
             if (this.meetingResponsesCache) {
                 for (var response of Object.values(this.meetingResponsesCache)) {
-                    // Check if we have this meeting 
+                    // Check if we have this meeting
                     var tmpUID = xml2json.getTagValue(response, "t:UID");
                     var inCalendar = false;
 
@@ -4712,7 +4715,7 @@ calExchangeCalendar.prototype = {
                 tmpStr = aMaster.getProperty("X-MOZ-SNOOZE-TIME-" + aItem.recurrenceId.nativeTime);
                 this.logInfo("getMasterSnoozeStates: Master has a X-MOZ-SNOOZE-TIME value for this occurrence. startDate:" + aItem.startDate.icalString + ", X-MOZ-SNOOZE-TIME:" + tmpStr);
 
-                // What value does alarmLastAck has?? This will determine what to send to 
+                // What value does alarmLastAck has?? This will determine what to send to
             }
             else {
                 this.logInfo("getMasterSnoozeStates: Master has NO X-MOZ-SNOOZE-TIME value for this occurrence. startDate:" + aItem.startDate.icalString);
@@ -7347,7 +7350,7 @@ calExchangeCalendar.prototype = {
         			}
         			if (extendedProperty.getAttributeByTag("t:ExtendedFieldURI","PropertyId") == "33045") {
         				item.setProperty("X-exchWebService-PidLidTaskLastUpdate",extendedProperty.getTagValue("t:Value"));
-        				// Date of last update. 
+        				// Date of last update.
         			}
         			if (extendedProperty.getAttributeByTag("t:ExtendedFieldURI","PropertyId") == "33066") {
         				item.setProperty("X-exchWebService-PidLidTaskAcceptanceState",extendedProperty.getTagValue("t:Value"));
@@ -7596,7 +7599,7 @@ calExchangeCalendar.prototype = {
                 //convertedItems.push(item);
                 else if (!this.itemCacheById[item.id]) {
                     // This is a new unknown item
-                    //this.itemCacheById[item.id] = item;  
+                    //this.itemCacheById[item.id] = item;
                     if ((this.isEmailTodo(item, aItems[index]) === false) && (this.isEmail(item) === true)) {
                         //We are not adding this item because its no longer email followup
                     }
@@ -7632,7 +7635,7 @@ calExchangeCalendar.prototype = {
                     //dump("updateCalendar: onModifyItem:"+ item.title);
 
                     if ((this.isEmail(item) === true) && (this.isEmailTodo(item, aItems[index]) === false)) {
-                        //We are removing this item from cache because its no longer email followup  
+                        //We are removing this item from cache because its no longer email followup
                         this.notifyTheObservers("onDeleteItem", [this.itemCacheById[item.id]]);
                         this.removeFromOfflineCache(item);
                         this.removeItemFromCache(this.itemCacheById[item.id]);
@@ -7701,7 +7704,7 @@ calExchangeCalendar.prototype = {
 
         if (isOldCacheItem) {
             //NoResponseReceived
-            //t:MyResponseType 
+            //t:MyResponseType
             this.logInfo("setTentative 2: This item : " + aItem.title + " is Old and responded with - " + xml2json.getTagValue(exchangeItem, "t:MyResponseType"));
             return;
         }
@@ -8001,7 +8004,7 @@ calExchangeCalendar.prototype = {
                     else {
                         this.logInfo("modifyEventImmediate:  No changes for master.");
                         // No changes to a master could means that one of the occurrences
-                        // was deleted. 
+                        // was deleted.
                         var removedOccurrence = this.getRemovedOccurrence(aOldItem, aNewItem);
                         if (removedOccurrence) {
                             // Delete this occurrence; multi
@@ -8068,7 +8071,7 @@ calExchangeCalendar.prototype = {
                 }
             }
         }
-        //this.notifyTheObservers("onModifyItem", [aNewItem, aOldItem]); 
+        //this.notifyTheObservers("onModifyItem", [aNewItem, aOldItem]);
         this.notifyOperationComplete(aListener,
             result,
             Ci.calIOperationListener.MODIFY,
@@ -8820,7 +8823,7 @@ calExchangeCalendar.prototype = {
         var itemStartDate = item.startDate || item.entryDate;
         var itemEndDate = item.endDate || item.dueDate;
 
-        /*if (this.itemCacheById[item.id]) { 
+        /*if (this.itemCacheById[item.id]) {
         	dump("addItemToCache: item.title:"+item.title+", startDate:"+itemDate+". IS AL READY IN CACHE.\n");
         }
         else {
@@ -9040,10 +9043,10 @@ calExchangeCalendar.prototype = {
 
     },
 
-    checkExchCalAddonVerion: function _checkExchCalAddonVersion() {
+    checkExchCalAddonVersion: function _checkExchCalAddonVersion() {
 
         try {
-            this.logInfo("checkExchCalAddonVerion: ");
+            this.logInfo("checkExchCalAddonVersion: ");
             const { AddonManager } = ChromeUtils.import("resource://gre/modules/AddonManager.jsm");
             var self = this;
             AddonManager.getAddonByID("exchangecalendar@extensions.1st-setup.nl", function (Addon) {
@@ -9051,7 +9054,7 @@ calExchangeCalendar.prototype = {
             });
         }
         catch (ex) {
-            this.logInfo("checkExchCalAddonVerion:  Exception occured ");
+            this.logInfo("checkExchCalAddonVersion:  Exception occured ");
         }
     },
 
@@ -9178,7 +9181,7 @@ calExchangeCalendar.prototype = {
             }
 
             //Check exchange calendar version clear cache
-            if (!this.mIsOffline) this.checkExchCalAddonVerion();
+            if (!this.mIsOffline) this.checkExchCalAddonVersion();
 
             //			if (dbVersion < latestDBVersion) {
             if (!this.offlineCacheDB.tableExists("version")) {
@@ -10703,7 +10706,7 @@ calExchangeCalendar.prototype = {
         istream.init(file, -1, -1, 0);
         istream.QueryInterface(Components.interfaces.nsILineInputStream);
 
-        // read lines into array  
+        // read lines into array
         var line = {},
             lines = "",
             hasmore;
@@ -10737,7 +10740,7 @@ calExchangeCalendar.prototype = {
             file.remove(false);
         }
 
-        //		file.create(Components.interfaces.nsIFile.NORMAL_FILE_TYPE, 0777);  
+        //		file.create(Components.interfaces.nsIFile.NORMAL_FILE_TYPE, 0777);
 
         var foStream = Components.classes["@mozilla.org/network/file-output-stream;1"].
         createInstance(Components.interfaces.nsIFileOutputStream);
@@ -10814,7 +10817,7 @@ ecObserver.prototype = {
 
     observe: function (subject, topic, data) {
         // Do your stuff here.
-        //LOG("ecObserver.observe. topic="+topic+",data="+data+"\n"); 
+        //LOG("ecObserver.observe. topic="+topic+",data="+data+"\n");
         switch (topic) {
         case "onCalReset":
             if (data == this.calendar.id) {

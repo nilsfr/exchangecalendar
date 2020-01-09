@@ -1,1 +1,3 @@
 /exchangecalendar-v*.xpi
+/node_modules
+/build

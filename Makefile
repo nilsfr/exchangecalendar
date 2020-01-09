@@ -1,5 +1,5 @@
 version = $(shell jq -r '.version' manifest.json)
-excludefromxpi = .\* \*/.gitignore \*.xpi \*.sh update\*.txt Makefile
+excludefromxpi = .\* \*/.gitignore \*.xpi \*.sh update\*.txt Makefile build/\* node_modules/\*
 update = disable
 xpi = exchangecalendar-v$(version).xpi
 

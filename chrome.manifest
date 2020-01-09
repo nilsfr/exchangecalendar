@@ -26,8 +26,8 @@ overlay chrome://messenger/content/preferences/preferences.xul chrome://exchange
 overlay chrome://messenger/content/preferences/preferences.xul chrome://exchangecommon/content/otherPreferences.xul
 overlay chrome://messenger/content/preferences/preferences.xul chrome://exchangecommon/content/timezonePreference.xul
 
-manifest addressbook/exchangeAddressBook.manifest
+#manifest addressbook/exchangeAddressBook.manifest
 manifest calendar/exchangeCalendar.manifest
 manifest calendar/interface/exchangeCalendar/mivExchangeCalendar.manifest
 manifest common/exchangeCommon.manifest
-manifest emailtag/exchangeEmailTag.manifest
+#manifest emailtag/exchangeEmailTag.manifest
